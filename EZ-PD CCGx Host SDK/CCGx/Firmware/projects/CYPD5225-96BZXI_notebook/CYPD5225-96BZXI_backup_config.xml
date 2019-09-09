@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config_table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://cypress.com/xsd/ezpdconfiguration">
+    <!--The following node represents the device information.
+    family:  This attribute represents the CCGx device family (CCG1, CCG2 etc.).
+    part_number: The string has to match one of the CCGx part numbers. Do not modify this field in the template.
+    The supported strings are:
+
+        CYPD1103-35FNXI, CYPD1104-35FNXI, CYPD1105-35FNXI, CYPD1120-35FNXI, CYPD1120-40LQXI, CYPD1121-40LQXI,
+        CYPD1122-40LQXI, CYPD1131-35FNXI, CYPD1132-16SXI, CYPD1134-40LQXI, CYPD2103-20FNXI, CYPD2103-14LHXI,
+        CYPD2104-20FNXI, CYPD2105-20FNXI, CYPD2122-24LQXI, CYPD2122-20FNXI, CYPD2134-24LQXI, CYPD2120-24LQXI,
+        CYPD2119-24LQXI, CYPD2123-24LQXI, CYPD2124-24LQXI, CYPD2121-24LQXI, CYPD2125-24LQXI, CYPD3120-40LQXI,
+        CYPD3105-42FNXI, CYPD3121-40LQXI, CYPD3122-40LQXI, CYPD3125-40LQXI, CYPD3135-40LQXI, CYPD3135-16SXQ,
+        CYPD3123-40LQXI, CYPD4225-40LQXI, CYPD4125-40LQXI, CYPD4235-40LQXI, CYPD4135-40LQXI, CYPD4226-40LQXI,
+        CYPD4126-40LQXI, CYPD4126-24LQXI, CYPD4236-40LQXI, CYPD4136-40LQXI, CYPD4136-24LQXI, CYPD3174-24LQXQ,
+        CYPD3174-16SXQ, CYPD3175-24LQXQ, CYPD3171-24LQXQ, CYPDC1185-32LQXQ, CYPDC1186-30FNXI, CYPD5225-96BZXI,
+        CYPD5125-40LQXI, CYPD5235-96BZXI, CYPD5236-96BZXI, CYPD5237-96BZXI, CYPD5227-96BZXI, CYPD5135-40LQXI,
+        CYPD6125-40LQXI, CYPD5126-40LQXI
+    device_type: This attribute represents the type of Type-C application being implemented.
+    -->
+    <device_info
+        family="CCG5"
+        part_number="CYPD5225-96BZXI"
+        device_type="NOTEBOOK"
+    />
+    <!--The following node represents the table information. The values should be modified only if required.
+    The fields can only change if the firmware on the device changes accordingly. Use the value provided by
+    template.
+    type: 0 = Reserved, 1 = EMCA, 2 = DFP, 3 = UFP, 4 = DRP.
+    sub_type: 0 = NOTEBOOK, 1 = TABLET, 2 = PASSIVE_CABLE, 3 = ACTIVE_CABLE, 4 = POWER_ADAPTER,
+              5 = MONITOR, 6 = CABLE_ADAPTER, 7 = CTD_UPSTREAM, 8 = CTD_DOWNSTREAM, 9 = POWER_BANK, 20 = GENERIC
+    *version: Should not be changed unless the firmware and converter changes accordingly.-->
+    <table_info
+        type="4"
+        sub_type="0"
+        major_version="2"
+        minor_version="0"
+        patch_version="0"
+    />
+    <!--The following node contains device specific parameters.-->
+    <dev_param
+        flashing_vid="0x04B4"
+        flashing_mode="1"
+        manufacturer_info="[0xB4, 0x04, 0xE0, 0xF6, 0x43, 0x79, 0x70, 0x72, 0x65, 0x73, 0x73]"
+    />
+    <port index="0">
+        <!--The following node represents the structured VDM response information. The values need to be modified
+        for configuring the firmware.
+        *response: The responses are two dimensional arrays, each indicating individual response. If no response is
+                expected, then a NULL array "[[]]" should be created. The array formation should not be changed.
+                If there are multiple entries, it should be comma seperated.
+        discover_id_response: This can have only packet one response.
+        discover_svid_response: Currently only one packet response is supported by firmware (allowing a maximum
+                of eleven SVIDs).
+        discover_mode_response: Each SVID in the SVID response must have an entry in this response. Each SVID mode
+                response shall be an array.
+        source_cap_extended: The Source Cap Extended response for this PD port. -->
+        <vdm_info
+            discover_id_response="[[0xFF008041, 0x900004B4, 0x00000000, 0xF6E00000]]"
+            discover_svid_response="[]"
+            discover_mode_response="[]"
+            source_cap_extended="[0xB4, 0x04, 0xE0, 0xF6, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x3C]"
+        />
+        <!-- The following node contains parameters specific to an EMCA implementation.
+        ra_timeout: Delay in ms that the EMCA firmware should apply before removing Ra. -->
+        <emca_info
+            ra_timeout="1000"
+        />
+        <!--The following node represents the PD port specific information. The values need to be modified based on design.
+        port_role: Port role. 0=Sink, 1=Source, 2=Dual
+        dflt_port_role: Default port role in case of dual role. 0=Sink, 1=Source
+        cur_level: Default current level. 0=USB_default, 1=1.5A, 2=3A
+        is_src_bat: Whether the source is directly connected to a battery
+        is_snk_bat: Whether the sink is directly connected to a battery
+        sink_usb_suspend: Whether sink allows USB-Suspend mode. 0=Not supported, 1=Supported.
+        sink_usb_comm: Whether sink supports USB data communication. 0=Not supported, 1=Supported.
+        dr_swap_response: Response to a DR_SWAP request. 0=ACCEPT, 1=REJECT, 2=WAIT, 3=NOT_SUPPORTED.
+                If NOT_SUPPORTED response is selected, NOT_SUPPORTED is used when in PD 3.0 and REJECT when in PD 2.0.
+        pr_swap_response: Response to a PR_SWAP request. 0=ACCEPT, 1=REJECT, 2=WAIT, 3=NOT_SUPPORTED.
+                If NOT_SUPPORTED response is selected, NOT_SUPPORTED is used when in PD 3.0 and REJECT when in PD 2.0.
+        vconn_swap_response: Response to a VCONN_SWAP request. 0=ACCEPT, 1=REJECT, 2=WAIT, 3=NOT_SUPPORTED.
+                If NOT_SUPPORTED response is selected, NOT_SUPPORTED is used when in PD 3.0 and REJECT when in PD 2.0.
+        rp_rd_toggle: Whether to enable DRP toggle in case of dual role port. 0=Disable, 1=Enable.
+        default_src_pdo_mask:
+                Bits[6:0] hold the source PDOs enabled by default. 0=Disabled, 1=Enabled.
+                Bit7 indicates whether the device is externally powered or not. 1=Externally powered.
+        default_sink_pdo_mask:
+                Bits[6:0] hold the sink PDOs enabled by default. 0=Disabled, 1=Enabled.
+                Bit7 indicates whether the device is externally powered or not. 1=Externally powered.
+        rp_supported:
+                BIT0: Rp for default USB current: 1=Present, 0=Absent
+                BIT1: Rp for 1.5A USB current: 1=Present, 0=Absent
+                BIT2: Rp for 3A USB current: 1=Present, 0=Absent
+        usbpd_supported: 1=PD Communication supported, 0=Not supported.
+        try_src_en: 2=Try.SNK state enabled, 1=Try.SRC state enabled, 0=Disabled.
+        cable_disc_en: 1=Cable discovery enabled, 0=Disabled.
+        dead_bat_en: Dead battery handling enable. 1=Enabled, 0=Disabled.
+        err_recov_en: PD error recovery enable. 1=Enabled, 0=Disabled.
+        port_disable: PD port disable flag. 1=Port is disabled, 0=Port is enabled.
+        frs_enable: Fast Role Swap Enable. 0 = None, 1 = RX, 2 = TX.
+        vconn_retain: Set to 1 to leave VConn enabled as VConn source.
+        src_pdo: This is the source capability response PDO array. If no response is required, 
+                create an empty array "[]". Maximum PDO count is seven.
+        sink_pdo: This is the sink capability response PDO array. If no response is required, 
+                create an empty array "[]". Maximum PDO count is seven.
+        sink_min_max_current: Min/Max Current settings per Sink PDO.
+        -->
+        <port_info
+            port_role="2"
+            dflt_port_role="1"
+            cur_level="2"
+            is_src_bat="0"
+            is_snk_bat="0"
+            sink_usb_suspend="0"
+            sink_usb_comm="1"
+            rp_rd_toggle="1"
+            default_src_pdo_mask="0x0F"
+            default_sink_pdo_mask="0x03"
+            rp_supported="0x07"
+            usbpd_supported="1"
+            try_src_en="1"
+            cable_disc_en="1"
+            dead_bat_en="1"
+            err_recov_en="1"
+            port_disable="0"
+            frs_enable="1"
+            vconn_retain="0"
+            dr_swap_response="0"
+            pr_swap_response="0"
+            vconn_swap_response="0"
+            src_pdo="[0x2601912C, 0x0002D12C, 0x0004B12C, 0x0006412C]"
+            sink_pdo="[0x2601905A, 0x9A42305A]"
+            sink_min_max_current="[0x005A, 0x005A]"
+        />
+        <!-- This node represents the DisplayPort parameter configuration.
+        dp_mode_supported: DP Pin Configurations supported. 0x00=DP Not supported, Bit0=Reserved,
+                Bit1=Reserved, Bit2=Pin C, Bit3=Pin D, Bit4=Pin E, Bit5=Pin F. Multiple bits can be set.
+        dp_mux_control: 0=CCG Controls the MUX, 1=EC Controls the MUX
+        dp_mode_trigger: 0=No trigger needed, 1=EC triggers DP Mode handling.
+        dp_oper: Bit0=DP sink support, Bit1=DP source support.
+        dp_pref_mode: Bit0: 1=Multi-function mode preferred. 0=4 lane mode preferred. -->
+        <dp_info
+            dp_mode_supported="0x3C"
+            dp_mux_control="0"
+            dp_mode_trigger="0"
+            dp_oper="0"
+            dp_pref_mode="0"
+        />
+        <power_protection>
+            <!-- This node represents VBUS Over Voltage Protection (OVP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Voltage threshold percentage (0-100) above the contract voltage to trigger fault.
+            debounce: Fault event debounce period in us (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255). -->
+            <vbus_ovp
+                enable="1"
+                threshold="20"
+                debounce="10"
+                retry_cnt="2"
+            />
+            <!-- This node represents VBUS Over Current Protection (OCP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Current threshold percentage (0-100) above the contract current to trigger fault.
+            debounce: Fault event debounce period in ms (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255).
+            threshold2: Current threshold percentage (0-100) above the contract current to trigger
+                    fault at a lower debounce level. Needs corresponding firmware support.
+            debounce2: Fault event debounce period in ms (0-255) for higher fault (threshold2).
+            sense_res: Sense Resistor impedance in milli-Ohm units.
+            cs_res: Current sense tuning resistor impedance in 100 Ohm units. -->
+            <vbus_ocp
+                enable="1"
+                threshold="20"
+                debounce="10"
+                retry_cnt="2"
+                threshold2="50"
+                debounce2="1"
+                sense_res="10"
+                cs_res="0"
+            />
+            <!-- This node represents VBUS Under Voltage Protection (UVP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Voltage threshold percentage (0-100) below the contract voltage to trigger fault.
+            debounce: Fault event debounce period in us (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255). -->
+            <vbus_uvp
+                enable="0"
+                threshold="70"
+                debounce="1"
+                retry_cnt="0"
+            />
+            <!-- This node represents VBUS Short Circuit Protection (SCP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Current threshold percentage (0-100) above the contract current to trigger fault.
+            debounce: Fault event debounce period in us (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255). -->
+            <vbus_scp
+                enable="0"
+                threshold="50"
+                debounce="1"
+                retry_cnt="0"
+            />
+            <!-- This node represents VCONN Over Current Protection (OCP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Current threshold percentage (0-100) above the contract current to trigger fault.
+            debounce: Fault event debounce period in ms (0-255). -->
+            <vconn_ocp
+                enable="1"
+                threshold="30"
+                debounce="1"
+            />
+            <!-- This node represents Over Temperature Protection (OTP) parameters.
+            enable: 0=Disable, 1=Enable.
+            therm_type: 0=Negative Temperature Coefficient (NTC), 1=Positive Temperature Coefficient
+            cutoff_volt: Voltage at thermistor when cut-off voltage is reached in mV units.
+            restart_volt: Voltage at thermistor for normal operation in mV units.
+            debounce: Fault event debounce period in ms. -->
+            <otp
+                enable="0"
+                therm_type="0"
+                cutoff_volt="0"
+                restart_volt="0"
+                debounce="0"
+            />
+        </power_protection>
+    </port>
+    <port index="1">
+        <!--The following node represents the structured VDM response information. The values need to be modified
+        for configuring the firmware.
+        *response: The responses are two dimensional arrays, each indicating individual response. If no response is
+                expected, then a NULL array "[[]]" should be created. The array formation should not be changed.
+                If there are multiple entries, it should be comma seperated.
+        discover_id_response: This can have only packet one response.
+        discover_svid_response: Currently only one packet response is supported by firmware (allowing a maximum
+                of eleven SVIDs).
+        discover_mode_response: Each SVID in the SVID response must have an entry in this response. Each SVID mode
+                response shall be an array.
+        source_cap_extended: The Source Cap Extended response for this PD port. -->
+        <vdm_info
+            discover_id_response="[[0xFF008041, 0x900004B4, 0x00000000, 0xF6E00000]]"
+            discover_svid_response="[]"
+            discover_mode_response="[]"
+            source_cap_extended="[0xB4, 0x04, 0xE0, 0xF6, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x3C]"
+        />
+        <!-- The following node contains parameters specific to an EMCA implementation.
+        ra_timeout: Delay in ms that the EMCA firmware should apply before removing Ra. -->
+        <emca_info
+            ra_timeout="1000"
+        />
+        <!--The following node represents the PD port specific information. The values need to be modified based on design.
+        port_role: Port role. 0=Sink, 1=Source, 2=Dual
+        dflt_port_role: Default port role in case of dual role. 0=Sink, 1=Source
+        cur_level: Default current level. 0=USB_default, 1=1.5A, 2=3A
+        is_src_bat: Whether the source is directly connected to a battery
+        is_snk_bat: Whether the sink is directly connected to a battery
+        sink_usb_suspend: Whether sink allows USB-Suspend mode. 0=Not supported, 1=Supported.
+        sink_usb_comm: Whether sink supports USB data communication. 0=Not supported, 1=Supported.
+        dr_swap_response: Response to a DR_SWAP request. 0=ACCEPT, 1=REJECT, 2=WAIT, 3=NOT_SUPPORTED.
+                If NOT_SUPPORTED response is selected, NOT_SUPPORTED is used when in PD 3.0 and REJECT when in PD 2.0.
+        pr_swap_response: Response to a PR_SWAP request. 0=ACCEPT, 1=REJECT, 2=WAIT, 3=NOT_SUPPORTED.
+                If NOT_SUPPORTED response is selected, NOT_SUPPORTED is used when in PD 3.0 and REJECT when in PD 2.0.
+        vconn_swap_response: Response to a VCONN_SWAP request. 0=ACCEPT, 1=REJECT, 2=WAIT, 3=NOT_SUPPORTED.
+                If NOT_SUPPORTED response is selected, NOT_SUPPORTED is used when in PD 3.0 and REJECT when in PD 2.0.
+        rp_rd_toggle: Whether to enable DRP toggle in case of dual role port. 0=Disable, 1=Enable.
+        default_src_pdo_mask:
+                Bits[6:0] hold the source PDOs enabled by default. 0=Disabled, 1=Enabled.
+                Bit7 indicates whether the device is externally powered or not. 1=Externally powered.
+        default_sink_pdo_mask:
+                Bits[6:0] hold the sink PDOs enabled by default. 0=Disabled, 1=Enabled.
+                Bit7 indicates whether the device is externally powered or not. 1=Externally powered.
+        rp_supported:
+                BIT0: Rp for default USB current: 1=Present, 0=Absent
+                BIT1: Rp for 1.5A USB current: 1=Present, 0=Absent
+                BIT2: Rp for 3A USB current: 1=Present, 0=Absent
+        usbpd_supported: 1=PD Communication supported, 0=Not supported.
+        try_src_en: 2=Try.SNK state enabled, 1=Try.SRC state enabled, 0=Disabled.
+        cable_disc_en: 1=Cable discovery enabled, 0=Disabled.
+        dead_bat_en: Dead battery handling enable. 1=Enabled, 0=Disabled.
+        err_recov_en: PD error recovery enable. 1=Enabled, 0=Disabled.
+        port_disable: PD port disable flag. 1=Port is disabled, 0=Port is enabled.
+        frs_enable: Fast Role Swap Enable. 0 = None, 1 = RX, 2 = TX.
+        vconn_retain: Set to 1 to leave VConn enabled as VConn source.
+        src_pdo: This is the source capability response PDO array. If no response is required, 
+                create an empty array "[]". Maximum PDO count is seven.
+        sink_pdo: This is the sink capability response PDO array. If no response is required, 
+                create an empty array "[]". Maximum PDO count is seven.
+        sink_min_max_current: Min/Max Current settings per Sink PDO.
+        -->
+        <port_info
+            port_role="2"
+            dflt_port_role="1"
+            cur_level="2"
+            is_src_bat="0"
+            is_snk_bat="0"
+            sink_usb_suspend="0"
+            sink_usb_comm="1"
+            rp_rd_toggle="1"
+            default_src_pdo_mask="0x0F"
+            default_sink_pdo_mask="0x03"
+            rp_supported="0x07"
+            usbpd_supported="1"
+            try_src_en="1"
+            cable_disc_en="1"
+            dead_bat_en="1"
+            err_recov_en="1"
+            port_disable="0"
+            frs_enable="1"
+            vconn_retain="0"
+            dr_swap_response="0"
+            pr_swap_response="0"
+            vconn_swap_response="0"
+            src_pdo="[0x2601912C, 0x0002D12C, 0x0004B12C, 0x0006412C]"
+            sink_pdo="[0x2601905A, 0x9A42305A]"
+            sink_min_max_current="[0x005A, 0x005A]"
+        />
+        <!-- This node represents the DisplayPort parameter configuration.
+        dp_mode_supported: DP Pin Configurations supported. 0x00=DP Not supported, Bit0=Reserved,
+                Bit1=Reserved, Bit2=Pin C, Bit3=Pin D, Bit4=Pin E, Bit5=Pin F. Multiple bits can be set.
+        dp_mux_control: 0=CCG Controls the MUX, 1=EC Controls the MUX
+        dp_mode_trigger: 0=No trigger needed, 1=EC triggers DP Mode handling.
+        dp_oper: Bit0=DP sink support, Bit1=DP source support.
+        dp_pref_mode: Bit0: 1=Multi-function mode preferred. 0=4 lane mode preferred. -->
+        <dp_info
+            dp_mode_supported="0x3C"
+            dp_mux_control="0"
+            dp_mode_trigger="0"
+            dp_oper="0"
+            dp_pref_mode="0"
+        />
+        <power_protection>
+            <!-- This node represents VBUS Over Voltage Protection (OVP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Voltage threshold percentage (0-100) above the contract voltage to trigger fault.
+            debounce: Fault event debounce period in us (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255). -->
+            <vbus_ovp
+                enable="1"
+                threshold="20"
+                debounce="10"
+                retry_cnt="2"
+            />
+            <!-- This node represents VBUS Over Current Protection (OCP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Current threshold percentage (0-100) above the contract current to trigger fault.
+            debounce: Fault event debounce period in ms (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255).
+            threshold2: Current threshold percentage (0-100) above the contract current to trigger
+                    fault at a lower debounce level. Needs corresponding firmware support.
+            debounce2: Fault event debounce period in ms (0-255) for higher fault (threshold2).
+            sense_res: Sense Resistor impedance in milli-Ohm units.
+            cs_res: Current sense tuning resistor impedance in 100 Ohm units. -->
+            <vbus_ocp
+                enable="1"
+                threshold="20"
+                debounce="10"
+                retry_cnt="2"
+                threshold2="50"
+                debounce2="1"
+                sense_res="10"
+                cs_res="0"
+            />
+            <!-- This node represents VBUS Under Voltage Protection (UVP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Voltage threshold percentage (0-100) below the contract voltage to trigger fault.
+            debounce: Fault event debounce period in us (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255). -->
+            <vbus_uvp
+                enable="0"
+                threshold="70"
+                debounce="1"
+                retry_cnt="0"
+            />
+            <!-- This node represents VBUS Short Circuit Protection (SCP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Current threshold percentage (0-100) above the contract current to trigger fault.
+            debounce: Fault event debounce period in us (0-255).
+            retry_cnt: Number of times to retry recovery from fault (0-255). -->
+            <vbus_scp
+                enable="0"
+                threshold="50"
+                debounce="1"
+                retry_cnt="0"
+            />
+            <!-- This node represents VCONN Over Current Protection (OCP) parameters.
+            enable: 0=Disable, 1=Enable.
+            threshold: Current threshold percentage (0-100) above the contract current to trigger fault.
+            debounce: Fault event debounce period in ms (0-255). -->
+            <vconn_ocp
+                enable="1"
+                threshold="30"
+                debounce="1"
+            />
+            <!-- This node represents Over Temperature Protection (OTP) parameters.
+            enable: 0=Disable, 1=Enable.
+            therm_type: 0=Negative Temperature Coefficient (NTC), 1=Positive Temperature Coefficient
+            cutoff_volt: Voltage at thermistor when cut-off voltage is reached in mV units.
+            restart_volt: Voltage at thermistor for normal operation in mV units.
+            debounce: Fault event debounce period in ms. -->
+            <otp
+                enable="0"
+                therm_type="0"
+                cutoff_volt="0"
+                restart_volt="0"
+                debounce="0"
+            />
+        </power_protection>
+    </port>
+    <!--The following node contains user specific parameters.-->
+    <user_parameter
+        parameter_1="0x00000000"
+        parameter_2="0x00000000"
+        parameter_3="0x00000000"
+        parameter_4="0x00000000"
+        parameter_5="0x00000000"
+        parameter_6="0x00000000"
+        parameter_7="0x00000000"
+        parameter_8="0x00000000"
+    />
+</config_table>

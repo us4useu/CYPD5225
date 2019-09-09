@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\solution\solution.c">
+<ExpandedNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr\Pins</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr\Clocks</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr\Interrupts</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr\System</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr\Directives</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.cydwr\Flash Security</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\alt_mode\alt_mode_hw.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\alt_mode\alt_modes_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\alt_mode\dp_sid.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\alt_mode\vdm_task_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app\app.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app\pdo.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app\psink.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app\psource.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app\swap.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\app\vdm.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\hpiss</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\hpiss\hpi.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_hal\chgb_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_hal\hal_ccgx.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_hal\hpd.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_hal\pdss_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_stack</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_stack\dpm.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_stack\pd.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_stack\pd_policy_engine.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_stack\pd_protocol.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\pd_stack\typec_manager.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\scb</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\scb\i2c.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\alt_modes_config.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\app_version.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\config.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\cyapicallbacks.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\flash_config.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\instrumentation.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\NCP81239_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\solution\solution.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\boot.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\ccgx_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\ccgx_version.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\flash.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\gpio.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\status.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\system.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\timer.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Header Files\system\utils.h</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\alt_mode\alt_mode_hw.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\alt_mode\alt_modes_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\alt_mode\dp_sid.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\alt_mode\vdm_task_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app\app.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app\pdo.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app\psink.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app\psource.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app\swap.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\app\vdm.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\pd_hal\hal_ccgx.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\pd_hal\pdss_mx_hal.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\solution\config.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\solution\instrumentation.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\solution\main.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\solution\solution.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system\boot.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system\flash.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system\gpio.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system\system.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system\timer.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Source Files\system\utils.c</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Generated_Source\PSoC4</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Pins</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Clocks</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Interrupts</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\System</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Directives</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Flash Security</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\alt_mode_hw.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\alt_modes_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\dp_sid.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\vdm_task_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\app.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\pdo.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\psink.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\psource.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\swap.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\vdm.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\hpiss</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\hpiss\hpi.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\chgb_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\hal_ccgx.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\hpd.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\pdss_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\dpm.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\pd.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\pd_policy_engine.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\pd_protocol.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\typec_manager.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\scb</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\scb\i2c.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\alt_modes_config.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\app_version.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\config.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\cyapicallbacks.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\flash_config.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\instrumentation.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\NCP81239_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\solution.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\boot.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\ccgx_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\ccgx_version.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\flash.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\gpio.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\status.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\system.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\timer.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\utils.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\alt_mode_hw.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\alt_modes_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\dp_sid.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\intel_ridge.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\intel_vid.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\vdm_task_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\app.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\pdo.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\psink.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\psource.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\swap.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\vdm.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\pd_hal\hal_ccgx.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\pd_hal\pdss_mx_hal.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\solution\config.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\solution\instrumentation.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\solution\main.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\solution\solution.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system\boot.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system\flash.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system\gpio.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system\system.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system\timer.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\system\utils.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Generated_Source</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Generated_Source\PSoC4</v>
+<v>CYPD5225-96BZXI_notebook\noboot</v>
+<v>CYPD5225-96BZXI_notebook\noboot\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr\Pins</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr\Clocks</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr\Interrupts</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr\System</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr\Directives</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.cydwr\Flash Security</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\alt_mode\alt_mode_hw.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\alt_mode\alt_modes_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\alt_mode\dp_sid.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\alt_mode\vdm_task_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app\app.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app\pdo.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app\psink.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app\psource.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app\swap.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\app\vdm.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\hpiss</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\hpiss\hpi.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_hal\chgb_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_hal\hal_ccgx.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_hal\hpd.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_hal\pdss_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_stack</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_stack\dpm.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_stack\pd.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_stack\pd_policy_engine.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_stack\pd_protocol.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\pd_stack\typec_manager.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\scb</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\scb\i2c.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\alt_modes_config.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\app_version.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\config.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\cyapicallbacks.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\flash_config.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\instrumentation.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\NCP81239_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\solution\solution.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\boot.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\ccgx_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\ccgx_version.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\flash.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\gpio.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\status.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\system.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\timer.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Header Files\system\utils.h</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode\alt_mode_hw.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode\alt_modes_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode\dp_sid.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode\intel_ridge.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode\intel_vid.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\alt_mode\vdm_task_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app\app.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app\pdo.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app\psink.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app\psource.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app\swap.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\app\vdm.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\pd_hal\hal_ccgx.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\pd_hal\pdss_mx_hal.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\solution\config.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\solution\instrumentation.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\solution\main.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\solution\solution.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system\boot.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system\flash.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system\gpio.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system\system.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system\timer.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Source Files\system\utils.c</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Generated_Source</v>
+<v>CYPD5225-96BZXI_notebook\noboot\Generated_Source\PSoC4</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Pins</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Clocks</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Interrupts</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\System</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Directives</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydwr\Flash Security</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\alt_mode_hw.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\alt_modes_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\dp_sid.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\alt_mode\vdm_task_mngr.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\app.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\pdo.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\psink.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\psource.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\swap.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\app\vdm.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\hpiss</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\hpiss\hpi.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\chgb_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\hal_ccgx.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\hpd.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_hal\pdss_hal.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\dpm.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\pd.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\pd_policy_engine.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\pd_protocol.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\pd_stack\typec_manager.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\scb</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\scb\i2c.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\alt_modes_config.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\app_version.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\config.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\cyapicallbacks.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\flash_config.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\instrumentation.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\NCP81239_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\solution\solution.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\boot.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\ccgx_regs.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\ccgx_version.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\flash.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\gpio.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\status.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\system.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\timer.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Header Files\system\utils.h</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\alt_mode_hw.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\alt_modes_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\dp_sid.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\intel_ridge.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\intel_vid.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\alt_mode\vdm_task_mngr.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\app.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\pdo.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\psink.c</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Source Files\app\psource.c</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="CYPD5225-96BZXI_notebook">
+<ExpandedNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\TopDesign\TopDesign.cysch</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\TopDesign\TopDesign.cysch</v>
+<v>CYPD5225-96BZXI_notebook\noboot</v>
+<v>CYPD5225-96BZXI_notebook\noboot\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\noboot\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\TopDesign\TopDesign.cysch</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\TopDesign\TopDesign.cysch</v>
+<v>CYPD5225-96BZXI_notebook\noboot</v>
+<v>CYPD5225-96BZXI_notebook\noboot\TopDesign</v>
+<v>CYPD5225-96BZXI_notebook\noboot\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\alt_mode_hw.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\alt_modes_mngr.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\app.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\boot.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\Bootloadable_1.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\config.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\cybootloader.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P1.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P1_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P2.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P2_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\dp_sid.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\EC_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\EC_INT_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\flash.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\FW_LED.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\FW_LED_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\gpio.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\hal_ccgx.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_SLAVE.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_SCB_IRQ.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_SCBCLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_scl.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_scl_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_sda.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_sda_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_CFG.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_CFG_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_MASTER.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_SCB_IRQ.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_SCBCLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_scl.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_scl_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_sda.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_sda_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\instrumentation.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P1.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P1_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P2.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P2_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\pdo.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\pdss_mx_hal.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_FILT1_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_RX_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_SAR_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_TX_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORTX_REFGEN_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\psink.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\psource.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\solution.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\swap.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\system.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\timer.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\utils.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\vdm.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\Listing Files\vdm_task_mngr.lst</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw.hex</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw_1.cyacd</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw_1.elf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw_1.map</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw_2.cyacd</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw_2.elf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CortexM0\ARM_GCC_541\Debug\backup_fw_2.map</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.gpdsc</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw.rpt</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\backup_fw_timing.html</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\alt_mode_hw.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\alt_modes_mngr.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\app.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\boot.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\Bootloadable_1.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\config.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\cybootloader.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P1.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P1_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P2.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P2_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\dp_sid.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\EC_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\EC_INT_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\flash.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\FW_LED.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\FW_LED_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\gpio.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\hal_ccgx.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_SLAVE.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_SCB_IRQ.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_SCBCLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_scl.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_scl_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_sda.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_sda_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_CFG.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_CFG_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_MASTER.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_SCB_IRQ.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_SCBCLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_scl.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_scl_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_sda.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_sda_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\instrumentation.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\intel_ridge.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\intel_vid.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P1.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P1_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P2.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P2_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\pdo.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\pdss_mx_hal.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_FILT1_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_RX_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_SAR_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_SWAP_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_TX_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORTX_REFGEN_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\psink.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\psource.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\solution.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\swap.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\system.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\timer.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\utils.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\vdm.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\Listing Files\vdm_task_mngr.lst</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.cyacd</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.elf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.hex</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.map</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.gpdsc</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.rpt</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook_timing.html</v>
+<v>CYPD5225-96BZXI_notebook\noboot</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\alt_mode_hw.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\alt_modes_mngr.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\app.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\boot.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\Cm0Start.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\config.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\cy_em_eeprom.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\CyBootAsmGnu.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\CyFlash.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLFClk.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\CyLib.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\cyPm.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\cyutils.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P1.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P1_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P2.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\DP_HPD_P2_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\dp_sid.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\EC_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\EC_INT_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\flash.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\FW_LED.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\FW_LED_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\gpio.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\hal_ccgx.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_I2C_SLAVE.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_SCB_IRQ.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_SCBCLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_scl.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_scl_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_sda.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\HPI_IF_sda_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_BOOT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_INT.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_I2C_MASTER.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_SCB_IRQ.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_SCBCLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_scl.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_scl_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_sda.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\I2C_MSTR_sda_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\instrumentation.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\intel_ridge.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\intel_vid.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\main.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P1.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P1_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P2.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\NCP81239_EN_P2_PM.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\pdo.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\pdss_mx_hal.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_FILT1_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_RX_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_SAR_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_SWAP_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORT0_TX_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\PDSS_PORTX_REFGEN_CLK.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\psink.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\psource.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\solution.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\swap.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\system.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\timer.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\utils.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\vdm.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\Listing Files\vdm_task_mngr.lst</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\noboot.elf</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\noboot.hex</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CortexM0\ARM_GCC_541\Debug\noboot.map</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.gpdsc</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot.rpt</v>
+<v>CYPD5225-96BZXI_notebook\noboot\noboot_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\PSoC 4 Architecture TRM</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CCG5 Family Datasheet</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\System Reference Guides</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\System Reference Guides\cy_boot_v5_70</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Bootloadable_v1_60.pdf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_clock_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_pins_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\SCB_P4_v4_0</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\SCB_P4_v4_0\SCB_P4_v4_0.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\PSoC 4 Architecture TRM</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CCG5 Family Datasheet</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\System Reference Guides</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\System Reference Guides\cy_boot_v5_70</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Bootloadable_v1_60.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_clock_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_pins_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\SCB_P4_v4_0</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\SCB_P4_v4_0\SCB_P4_v4_0.pdf</v>
+<v>CYPD5225-96BZXI_notebook\noboot</v>
+<v>CYPD5225-96BZXI_notebook\noboot\PSoC 4 Architecture TRM</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CCG5 Family Datasheet</v>
+<v>CYPD5225-96BZXI_notebook\noboot\System Reference Guides</v>
+<v>CYPD5225-96BZXI_notebook\noboot\System Reference Guides\cy_boot_v5_70</v>
+<v>CYPD5225-96BZXI_notebook\noboot\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_clock_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_pins_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\noboot\SCB_P4_v4_0</v>
+<v>CYPD5225-96BZXI_notebook\noboot\SCB_P4_v4_0\SCB_P4_v4_0.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\PSoC 4 Architecture TRM</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\CCG5 Family Datasheet</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\System Reference Guides</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\System Reference Guides\cy_boot_v5_70</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\Bootloadable_v1_60.pdf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_clock_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_pins_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\SCB_P4_v4_0</v>
+<v>CYPD5225-96BZXI_notebook\backup_fw\SCB_P4_v4_0\SCB_P4_v4_0.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\PSoC 4 Architecture TRM</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\CCG5 Family Datasheet</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\System Reference Guides</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\System Reference Guides\cy_boot_v5_70</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\Bootloadable_v1_60.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_clock_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_pins_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\SCB_P4_v4_0</v>
+<v>CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook\SCB_P4_v4_0\SCB_P4_v4_0.pdf</v>
+<v>CYPD5225-96BZXI_notebook\noboot</v>
+<v>CYPD5225-96BZXI_notebook\noboot\PSoC 4 Architecture TRM</v>
+<v>CYPD5225-96BZXI_notebook\noboot\CCG5 Family Datasheet</v>
+<v>CYPD5225-96BZXI_notebook\noboot\System Reference Guides</v>
+<v>CYPD5225-96BZXI_notebook\noboot\System Reference Guides\cy_boot_v5_70</v>
+<v>CYPD5225-96BZXI_notebook\noboot\System Reference Guides\cy_lfclk_v1_20</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_clock_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_clock_v2_20\cy_clock_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_pins_v2_20</v>
+<v>CYPD5225-96BZXI_notebook\noboot\cy_pins_v2_20\cy_pins_v2_20.pdf</v>
+<v>CYPD5225-96BZXI_notebook\noboot\SCB_P4_v4_0</v>
+<v>CYPD5225-96BZXI_notebook\noboot\SCB_P4_v4_0\SCB_P4_v4_0.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+<dataGuid v="5f2be1a5-0687-4501-bb8c-cf21cb8211bf">
+<CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf type_name="CyDesigner.Common.ProjMgmt.GUI.CyBookmarkData" version="1">
+<indicators />
+</CyGuid_5f2be1a5-0687-4501-bb8c-cf21cb8211bf>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\CYPD5225-96BZXI_notebook.cydsn\config.h" />
+<name v=".\CYPD5225-96BZXI_notebook.cydsn\src\app\alt_mode\dp_sid.h" />
+<name v=".\CYPD5225-96BZXI_notebook.cydsn\src\app\alt_mode\alt_mode_hw.h" />
+<name v=".\CYPD5225-96BZXI_notebook.cydsn\common\solution.c" />
+<name v=".\CYPD5225-96BZXI_notebook.cydsn\common\solution.h" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1861, 902" SelectedTabbedMdiWindow="e2004899-ae8a-4470-9600-ae4b1dcc65c5"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="8e6ba229-825d-4814-9c75-d6ddff590291" /><DocumentWindow Key="C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\config.h" Guid="4284bf6b-9d2f-422c-b4d7-20f6f8be9a27" /><DocumentWindow Key="C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\src\app\alt_mode\dp_sid.h" Guid="a0ec779c-5a2b-49b5-bb4a-5d7fca844521" /><DocumentWindow Key="C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\src\app\alt_mode\alt_mode_hw.h" Guid="ded63b3d-834a-44d0-8860-5dd767a11d43" /><DocumentWindow Key="C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\common\solution.c" Guid="e2004899-ae8a-4470-9600-ae4b1dcc65c5" /><DocumentWindow Key="C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\common\solution.h" Guid="319bd2cd-7480-4243-9a24-cbaadd8d548d" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

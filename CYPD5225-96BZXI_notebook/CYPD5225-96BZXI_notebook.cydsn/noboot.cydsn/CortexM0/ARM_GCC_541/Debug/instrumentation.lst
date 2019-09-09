@@ -1,0 +1,1486 @@
+ARM GAS  e:\temp\cc4YJHBF.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"instrumentation.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.watchdog_timer_cb,"ax",%progbits
+  20              		.align	2
+  21              		.global	watchdog_timer_cb
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	watchdog_timer_cb, %function
+  25              	watchdog_timer_cb:
+  26              	.LFB32:
+  27              		.file 1 "..\\common\\instrumentation.c"
+   1:..\common/instrumentation.c **** /**
+   2:..\common/instrumentation.c ****  * @file instrumentation.c
+   3:..\common/instrumentation.c ****  *
+   4:..\common/instrumentation.c ****  * @brief @{Source file containing application level instrumentation code.
+   5:..\common/instrumentation.c ****  *
+   6:..\common/instrumentation.c ****  * This USB-PD port controller application supports high level instrumentation
+   7:..\common/instrumentation.c ****  * to track the task execution latencies and runtime stack usage. This source
+   8:..\common/instrumentation.c ****  * file contains the code associated with these functions.@}
+   9:..\common/instrumentation.c ****  */
+  10:..\common/instrumentation.c **** 
+  11:..\common/instrumentation.c **** /*
+  12:..\common/instrumentation.c ****  * Copyright (2016-2018), Cypress Semiconductor Corporation or a subsidiary of
+  13:..\common/instrumentation.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  14:..\common/instrumentation.c ****  *
+  15:..\common/instrumentation.c ****  * This software, including source code, documentation and related materials
+  16:..\common/instrumentation.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  17:..\common/instrumentation.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  18:..\common/instrumentation.c ****  * protection (United States and foreign), United States copyright laws and
+  19:..\common/instrumentation.c ****  * international treaty provisions. Therefore, you may use this Software only
+  20:..\common/instrumentation.c ****  * as provided in the license agreement accompanying the software package from
+  21:..\common/instrumentation.c ****  * which you obtained this Software (“EULA”).
+  22:..\common/instrumentation.c ****  *
+  23:..\common/instrumentation.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  24:..\common/instrumentation.c ****  * non-transferable license to copy, modify, and compile the Software source
+  25:..\common/instrumentation.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  26:..\common/instrumentation.c ****  * products. Any reproduction, modification, translation, compilation, or
+  27:..\common/instrumentation.c ****  * representation of this Software except as specified above is prohibited
+  28:..\common/instrumentation.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  29:..\common/instrumentation.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  30:..\common/instrumentation.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+ARM GAS  e:\temp\cc4YJHBF.s 			page 2
+
+
+  31:..\common/instrumentation.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  32:..\common/instrumentation.c ****  * right to make changes to the Software without notice. Cypress does not
+  33:..\common/instrumentation.c ****  * assume any liability arising out of the application or use of the Software
+  34:..\common/instrumentation.c ****  * or any product or circuit described in the Software. Cypress does not
+  35:..\common/instrumentation.c ****  * authorize its products for use in any products where a malfunction or
+  36:..\common/instrumentation.c ****  * failure of the Cypress product may reasonably be expected to result in
+  37:..\common/instrumentation.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  38:..\common/instrumentation.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  39:..\common/instrumentation.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  40:..\common/instrumentation.c ****  * indemnify Cypress against all liability.
+  41:..\common/instrumentation.c ****  */
+  42:..\common/instrumentation.c **** 
+  43:..\common/instrumentation.c **** #include <project.h>
+  44:..\common/instrumentation.c **** #include <flash_config.h>
+  45:..\common/instrumentation.c **** #include <system.h>
+  46:..\common/instrumentation.c **** #include <app.h>
+  47:..\common/instrumentation.c **** #include <timer.h>
+  48:..\common/instrumentation.c **** #include <hpi.h>
+  49:..\common/instrumentation.c **** #include <boot.h>
+  50:..\common/instrumentation.c **** #include <flash.h>
+  51:..\common/instrumentation.c **** #include <status.h>
+  52:..\common/instrumentation.c **** #include <utils.h>
+  53:..\common/instrumentation.c **** #include <gpio.h>
+  54:..\common/instrumentation.c **** 
+  55:..\common/instrumentation.c **** /* Run-time stack lower limit defined in linker script. */
+  56:..\common/instrumentation.c **** extern int __cy_stack_limit;
+  57:..\common/instrumentation.c **** 
+  58:..\common/instrumentation.c **** #if RESET_ON_ERROR_ENABLE
+  59:..\common/instrumentation.c **** 
+  60:..\common/instrumentation.c **** /* RAM based signature and offset used to check whether reset data is valid. */
+  61:..\common/instrumentation.c **** #define RESET_DATA_VALID_OFFSET         (0)
+  62:..\common/instrumentation.c **** #define RESET_DATA_VALID_SIG            (0xDEADBEEF)
+  63:..\common/instrumentation.c **** 
+  64:..\common/instrumentation.c **** /* RAM based signature and offset used to check whether watchdog reset has happened. */
+  65:..\common/instrumentation.c **** #define WATCHDOG_RESET_OFFSET           (1)
+  66:..\common/instrumentation.c **** #define WATCHDOG_RESET_SIG              (0xC003300C)
+  67:..\common/instrumentation.c **** 
+  68:..\common/instrumentation.c **** /* RAM offset where the watchdog reset count is maintained. */
+  69:..\common/instrumentation.c **** #define RESET_COUNT_OFFSET              (2)
+  70:..\common/instrumentation.c **** 
+  71:..\common/instrumentation.c **** /* Size of the reset tracking data structure in DWORDs. */
+  72:..\common/instrumentation.c **** #define RESET_DATA_STRUCT_SIZE          (3)
+  73:..\common/instrumentation.c **** 
+  74:..\common/instrumentation.c **** /* Address of the run-time instrumentation data structure. */
+  75:..\common/instrumentation.c ****          uint32_t *gRunTimeDataAddr = (uint32_t *)CYDEV_SRAM_BASE;
+  76:..\common/instrumentation.c **** 
+  77:..\common/instrumentation.c **** /* Variable used to identify whether main loop has been run. */
+  78:..\common/instrumentation.c **** volatile uint32_t gMainLoopDelay = 0;
+  79:..\common/instrumentation.c **** 
+  80:..\common/instrumentation.c **** /* Margin (in ms) available until watchdog reset. */
+  81:..\common/instrumentation.c **** volatile uint16_t gMinResetMargin = WATCHDOG_RESET_PERIOD_MS;
+  82:..\common/instrumentation.c **** 
+  83:..\common/instrumentation.c **** /* Timer callback to reset device if main loop has not been run as expected. */
+  84:..\common/instrumentation.c **** void watchdog_timer_cb (
+  85:..\common/instrumentation.c ****     uint8_t port,
+  86:..\common/instrumentation.c ****     timer_id_t id)
+  87:..\common/instrumentation.c **** {
+ARM GAS  e:\temp\cc4YJHBF.s 			page 3
+
+
+  28              		.loc 1 87 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  88:..\common/instrumentation.c ****     /*
+  89:..\common/instrumentation.c ****      * It is possible that this timer is the only reason for the device to wake from sleep.
+  90:..\common/instrumentation.c ****      * Hence allow two consecutive timer expiries before resetting the device.
+  91:..\common/instrumentation.c ****      */
+  92:..\common/instrumentation.c ****     gMainLoopDelay++;
+  37              		.loc 1 92 0
+  38 0002 0A4B     		ldr	r3, .L3
+  39 0004 1A68     		ldr	r2, [r3]
+  40 0006 0132     		adds	r2, r2, #1
+  41 0008 1A60     		str	r2, [r3]
+  93:..\common/instrumentation.c ****     if (gMainLoopDelay >= 2)
+  42              		.loc 1 93 0
+  43 000a 1B68     		ldr	r3, [r3]
+  44 000c 012B     		cmp	r3, #1
+  45 000e 05D9     		bls	.L2
+  94:..\common/instrumentation.c ****     {
+  95:..\common/instrumentation.c ****         /* Store the reset signature into RAM. */
+  96:..\common/instrumentation.c ****         gRunTimeDataAddr[WATCHDOG_RESET_OFFSET] = WATCHDOG_RESET_SIG;
+  46              		.loc 1 96 0
+  47 0010 074B     		ldr	r3, .L3+4
+  48 0012 1B68     		ldr	r3, [r3]
+  49 0014 074A     		ldr	r2, .L3+8
+  50 0016 5A60     		str	r2, [r3, #4]
+  97:..\common/instrumentation.c ****         CySoftwareReset ();
+  51              		.loc 1 97 0
+  52 0018 FFF7FEFF 		bl	CySoftwareReset
+  53              	.LVL1:
+  54              	.L2:
+  98:..\common/instrumentation.c ****     }
+  99:..\common/instrumentation.c **** 
+ 100:..\common/instrumentation.c ****     /* Start the timer again. */
+ 101:..\common/instrumentation.c ****     timer_start (0, WATCHDOG_TIMER_ID, WATCHDOG_RESET_PERIOD_MS, watchdog_timer_cb);
+  55              		.loc 1 101 0
+  56 001c 064B     		ldr	r3, .L3+12
+  57 001e 074A     		ldr	r2, .L3+16
+  58 0020 D021     		movs	r1, #208
+  59 0022 0020     		movs	r0, #0
+  60 0024 FFF7FEFF 		bl	timer_start
+  61              	.LVL2:
+ 102:..\common/instrumentation.c **** }
+  62              		.loc 1 102 0
+  63              		@ sp needed
+  64 0028 10BD     		pop	{r4, pc}
+  65              	.L4:
+  66 002a C046     		.align	2
+  67              	.L3:
+  68 002c 00000000 		.word	.LANCHOR0
+  69 0030 00000000 		.word	.LANCHOR1
+ARM GAS  e:\temp\cc4YJHBF.s 			page 4
+
+
+  70 0034 0C3003C0 		.word	-1073532916
+  71 0038 00000000 		.word	watchdog_timer_cb
+  72 003c EE020000 		.word	750
+  73              		.cfi_endproc
+  74              	.LFE32:
+  75              		.size	watchdog_timer_cb, .-watchdog_timer_cb
+  76              		.section	.text.instrumentation_init,"ax",%progbits
+  77              		.align	2
+  78              		.global	instrumentation_init
+  79              		.code	16
+  80              		.thumb_func
+  81              		.type	instrumentation_init, %function
+  82              	instrumentation_init:
+  83              	.LFB33:
+ 103:..\common/instrumentation.c **** 
+ 104:..\common/instrumentation.c **** #endif /* RESET_ON_ERROR_ENABLE */
+ 105:..\common/instrumentation.c **** 
+ 106:..\common/instrumentation.c **** #if STACK_USAGE_CHECK_ENABLE
+ 107:..\common/instrumentation.c ****     
+ 108:..\common/instrumentation.c **** /*
+ 109:..\common/instrumentation.c ****  * Minimum run-time stack usage value. This many bytes at the top of the stack
+ 110:..\common/instrumentation.c ****  * will not be tracked for usage.
+ 111:..\common/instrumentation.c ****  */
+ 112:..\common/instrumentation.c **** #define MIN_STACK_USAGE     (128u)
+ 113:..\common/instrumentation.c **** 
+ 114:..\common/instrumentation.c **** /* Signature used to track stack usage. */
+ 115:..\common/instrumentation.c **** #define STACK_UNUSED_SIG    (0x00555500)
+ 116:..\common/instrumentation.c **** 
+ 117:..\common/instrumentation.c **** /* Address of the bottom location of the run-time stack. */
+ 118:..\common/instrumentation.c ****          uint32_t *gStackBottom  = (uint32_t *)CYDEV_SRAM_BASE;
+ 119:..\common/instrumentation.c **** volatile uint16_t gMinStackMargin   = 0;
+ 120:..\common/instrumentation.c **** 
+ 121:..\common/instrumentation.c **** #endif /* STACK_USAGE_CHECK_ENABLE */
+ 122:..\common/instrumentation.c **** 
+ 123:..\common/instrumentation.c **** void instrumentation_init(void)
+ 124:..\common/instrumentation.c **** {
+  84              		.loc 1 124 0
+  85              		.cfi_startproc
+  86              		@ args = 0, pretend = 0, frame = 0
+  87              		@ frame_needed = 0, uses_anonymous_args = 0
+  88 0000 10B5     		push	{r4, lr}
+  89              		.cfi_def_cfa_offset 8
+  90              		.cfi_offset 4, -8
+  91              		.cfi_offset 14, -4
+  92              	.LVL3:
+ 125:..\common/instrumentation.c ****     uint32_t wdr_cnt = 0;
+ 126:..\common/instrumentation.c ****     (void)wdr_cnt;
+ 127:..\common/instrumentation.c **** 
+ 128:..\common/instrumentation.c **** #if STACK_USAGE_CHECK_ENABLE
+ 129:..\common/instrumentation.c ****     uint32_t *addr_p;
+ 130:..\common/instrumentation.c **** 
+ 131:..\common/instrumentation.c ****     /* Store the stack bottom location. */
+ 132:..\common/instrumentation.c ****     gStackBottom = (uint32_t *)&__cy_stack_limit;
+ 133:..\common/instrumentation.c **** #if RESET_ON_ERROR_ENABLE
+ 134:..\common/instrumentation.c ****     /* If we have watchdog reset tracking enabled, the lowest twelve bytes of stack cannot be used.
+ 135:..\common/instrumentation.c ****     gStackBottom += RESET_DATA_STRUCT_SIZE;
+ 136:..\common/instrumentation.c **** #endif /* RESET_ON_ERROR_ENABLE */
+ARM GAS  e:\temp\cc4YJHBF.s 			page 5
+
+
+ 137:..\common/instrumentation.c **** 
+ 138:..\common/instrumentation.c ****     /* Fill the stack memory with unused signature. */
+ 139:..\common/instrumentation.c ****     for (addr_p = gStackBottom; addr_p < (uint32_t *)((CYDEV_SRAM_BASE + CYDEV_SRAM_SIZE) - MIN_STA
+ 140:..\common/instrumentation.c ****     {
+ 141:..\common/instrumentation.c ****         *addr_p = STACK_UNUSED_SIG;
+ 142:..\common/instrumentation.c ****     }
+ 143:..\common/instrumentation.c ****     
+ 144:..\common/instrumentation.c ****     /* Initialize the stack margin value. */
+ 145:..\common/instrumentation.c ****     gMinStackMargin = (uint16_t)((uint32_t)addr_p - (uint32_t)gStackBottom);
+ 146:..\common/instrumentation.c **** 
+ 147:..\common/instrumentation.c **** #if CCG_HPI_ENABLE
+ 148:..\common/instrumentation.c ****     hpi_set_reserved_reg_37 (gMinStackMargin);
+ 149:..\common/instrumentation.c **** #endif /* CCG_HPI_ENABLE */
+ 150:..\common/instrumentation.c **** 
+ 151:..\common/instrumentation.c **** #endif /* STACK_USAGE_CHECK_ENABLE */
+ 152:..\common/instrumentation.c **** 
+ 153:..\common/instrumentation.c **** #if RESET_ON_ERROR_ENABLE
+ 154:..\common/instrumentation.c ****     gRunTimeDataAddr = (uint32_t *)&__cy_stack_limit;
+  93              		.loc 1 154 0
+  94 0002 124B     		ldr	r3, .L10
+  95 0004 124A     		ldr	r2, .L10+4
+  96 0006 1360     		str	r3, [r2]
+ 155:..\common/instrumentation.c ****     if (gRunTimeDataAddr[RESET_DATA_VALID_OFFSET] == RESET_DATA_VALID_SIG)
+  97              		.loc 1 155 0
+  98 0008 1A68     		ldr	r2, [r3]
+  99 000a 124B     		ldr	r3, .L10+8
+ 100 000c 9A42     		cmp	r2, r3
+ 101 000e 07D1     		bne	.L8
+ 156:..\common/instrumentation.c ****     {
+ 157:..\common/instrumentation.c ****         wdr_cnt = gRunTimeDataAddr[RESET_COUNT_OFFSET];
+ 102              		.loc 1 157 0
+ 103 0010 0E4B     		ldr	r3, .L10
+ 104 0012 9C68     		ldr	r4, [r3, #8]
+ 105              	.LVL4:
+ 158:..\common/instrumentation.c ****         if (gRunTimeDataAddr[WATCHDOG_RESET_OFFSET] == WATCHDOG_RESET_SIG)
+ 106              		.loc 1 158 0
+ 107 0014 5A68     		ldr	r2, [r3, #4]
+ 108 0016 104B     		ldr	r3, .L10+12
+ 109 0018 9A42     		cmp	r2, r3
+ 110 001a 02D1     		bne	.L6
+ 159:..\common/instrumentation.c ****             wdr_cnt++;
+ 111              		.loc 1 159 0
+ 112 001c 0134     		adds	r4, r4, #1
+ 113              	.LVL5:
+ 114 001e 00E0     		b	.L6
+ 115              	.LVL6:
+ 116              	.L8:
+ 125:..\common/instrumentation.c ****     (void)wdr_cnt;
+ 117              		.loc 1 125 0
+ 118 0020 0024     		movs	r4, #0
+ 119              	.LVL7:
+ 120              	.L6:
+ 160:..\common/instrumentation.c ****     }
+ 161:..\common/instrumentation.c **** 
+ 162:..\common/instrumentation.c ****     /*
+ 163:..\common/instrumentation.c ****      * Store the reset data valid signature and current reset count.
+ 164:..\common/instrumentation.c ****      * Also clear the reset detected signature.
+ARM GAS  e:\temp\cc4YJHBF.s 			page 6
+
+
+ 165:..\common/instrumentation.c ****      */
+ 166:..\common/instrumentation.c ****     gRunTimeDataAddr[RESET_DATA_VALID_OFFSET] = RESET_DATA_VALID_SIG;
+ 121              		.loc 1 166 0
+ 122 0022 0A4B     		ldr	r3, .L10
+ 123 0024 0B4A     		ldr	r2, .L10+8
+ 124 0026 1A60     		str	r2, [r3]
+ 167:..\common/instrumentation.c ****     gRunTimeDataAddr[WATCHDOG_RESET_OFFSET]   = 0;
+ 125              		.loc 1 167 0
+ 126 0028 0022     		movs	r2, #0
+ 127 002a 5A60     		str	r2, [r3, #4]
+ 168:..\common/instrumentation.c ****     gRunTimeDataAddr[RESET_COUNT_OFFSET]      = wdr_cnt;
+ 128              		.loc 1 168 0
+ 129 002c 9C60     		str	r4, [r3, #8]
+ 169:..\common/instrumentation.c ****     
+ 170:..\common/instrumentation.c ****     gMinResetMargin = 2 * WATCHDOG_RESET_PERIOD_MS;
+ 130              		.loc 1 170 0
+ 131 002e 084B     		ldr	r3, .L10+4
+ 132 0030 0A4A     		ldr	r2, .L10+16
+ 133 0032 9A80     		strh	r2, [r3, #4]
+ 171:..\common/instrumentation.c **** 
+ 172:..\common/instrumentation.c **** #if CCG_HPI_ENABLE
+ 173:..\common/instrumentation.c ****     hpi_set_reserved_reg_35 (gMinResetMargin);
+ 134              		.loc 1 173 0
+ 135 0034 9888     		ldrh	r0, [r3, #4]
+ 136 0036 80B2     		uxth	r0, r0
+ 137 0038 FFF7FEFF 		bl	hpi_set_reserved_reg_35
+ 138              	.LVL8:
+ 174:..\common/instrumentation.c **** #endif /* CCG_HPI_ENABLE */
+ 175:..\common/instrumentation.c **** 
+ 176:..\common/instrumentation.c **** #endif /* RESET_ON_ERROR_ENABLE */
+ 177:..\common/instrumentation.c **** 
+ 178:..\common/instrumentation.c **** #if ((CCG_HPI_ENABLE) && (HPI_WATCHDOG_RESET_ENABLE))
+ 179:..\common/instrumentation.c ****     /* Store the reset count into the HPI register. */
+ 180:..\common/instrumentation.c ****     if (wdr_cnt > 0xFFu)
+ 139              		.loc 1 180 0
+ 140 003c FF2C     		cmp	r4, #255
+ 141 003e 00D9     		bls	.L7
+ 181:..\common/instrumentation.c ****         wdr_cnt = 0xFFu;
+ 142              		.loc 1 181 0
+ 143 0040 FF24     		movs	r4, #255
+ 144              	.LVL9:
+ 145              	.L7:
+ 182:..\common/instrumentation.c ****     hpi_set_reset_count (wdr_cnt);
+ 146              		.loc 1 182 0
+ 147 0042 E0B2     		uxtb	r0, r4
+ 148 0044 FFF7FEFF 		bl	hpi_set_reset_count
+ 149              	.LVL10:
+ 183:..\common/instrumentation.c **** #endif /* CCG_HPI_ENABLE */
+ 184:..\common/instrumentation.c **** }
+ 150              		.loc 1 184 0
+ 151              		@ sp needed
+ 152              	.LVL11:
+ 153 0048 10BD     		pop	{r4, pc}
+ 154              	.L11:
+ 155 004a C046     		.align	2
+ 156              	.L10:
+ 157 004c 00000000 		.word	__cy_stack_limit
+ARM GAS  e:\temp\cc4YJHBF.s 			page 7
+
+
+ 158 0050 00000000 		.word	.LANCHOR1
+ 159 0054 EFBEADDE 		.word	-559038737
+ 160 0058 0C3003C0 		.word	-1073532916
+ 161 005c DC050000 		.word	1500
+ 162              		.cfi_endproc
+ 163              	.LFE33:
+ 164              		.size	instrumentation_init, .-instrumentation_init
+ 165              		.section	.text.instrumentation_start,"ax",%progbits
+ 166              		.align	2
+ 167              		.global	instrumentation_start
+ 168              		.code	16
+ 169              		.thumb_func
+ 170              		.type	instrumentation_start, %function
+ 171              	instrumentation_start:
+ 172              	.LFB34:
+ 185:..\common/instrumentation.c **** 
+ 186:..\common/instrumentation.c **** void instrumentation_start(void)
+ 187:..\common/instrumentation.c **** {
+ 173              		.loc 1 187 0
+ 174              		.cfi_startproc
+ 175              		@ args = 0, pretend = 0, frame = 0
+ 176              		@ frame_needed = 0, uses_anonymous_args = 0
+ 177 0000 10B5     		push	{r4, lr}
+ 178              		.cfi_def_cfa_offset 8
+ 179              		.cfi_offset 4, -8
+ 180              		.cfi_offset 14, -4
+ 188:..\common/instrumentation.c **** #if RESET_ON_ERROR_ENABLE
+ 189:..\common/instrumentation.c ****     /* Start the timer used for watchdog reset. */
+ 190:..\common/instrumentation.c ****     timer_start (0, WATCHDOG_TIMER_ID, WATCHDOG_RESET_PERIOD_MS, watchdog_timer_cb);
+ 181              		.loc 1 190 0
+ 182 0002 034B     		ldr	r3, .L13
+ 183 0004 034A     		ldr	r2, .L13+4
+ 184 0006 D021     		movs	r1, #208
+ 185 0008 0020     		movs	r0, #0
+ 186 000a FFF7FEFF 		bl	timer_start
+ 187              	.LVL12:
+ 191:..\common/instrumentation.c **** #endif /* RESET_ON_ERROR_ENABLE */
+ 192:..\common/instrumentation.c **** }
+ 188              		.loc 1 192 0
+ 189              		@ sp needed
+ 190 000e 10BD     		pop	{r4, pc}
+ 191              	.L14:
+ 192              		.align	2
+ 193              	.L13:
+ 194 0010 00000000 		.word	watchdog_timer_cb
+ 195 0014 EE020000 		.word	750
+ 196              		.cfi_endproc
+ 197              	.LFE34:
+ 198              		.size	instrumentation_start, .-instrumentation_start
+ 199              		.section	.text.instrumentation_task,"ax",%progbits
+ 200              		.align	2
+ 201              		.global	instrumentation_task
+ 202              		.code	16
+ 203              		.thumb_func
+ 204              		.type	instrumentation_task, %function
+ 205              	instrumentation_task:
+ 206              	.LFB35:
+ARM GAS  e:\temp\cc4YJHBF.s 			page 8
+
+
+ 193:..\common/instrumentation.c **** 
+ 194:..\common/instrumentation.c **** void instrumentation_task(void)
+ 195:..\common/instrumentation.c **** {
+ 207              		.loc 1 195 0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211              		@ link register save eliminated.
+ 196:..\common/instrumentation.c **** #if STACK_USAGE_CHECK_ENABLE
+ 197:..\common/instrumentation.c ****     uint32_t *addr_p = gStackBottom;
+ 198:..\common/instrumentation.c **** #endif /* STACK_USAGE_CHECK_ENABLE */
+ 199:..\common/instrumentation.c **** 
+ 200:..\common/instrumentation.c **** #if RESET_ON_ERROR_ENABLE
+ 201:..\common/instrumentation.c **** 
+ 202:..\common/instrumentation.c ****     /* Clear the variable to indicate main loop has been run. */
+ 203:..\common/instrumentation.c ****     gMainLoopDelay = 0;
+ 212              		.loc 1 203 0
+ 213 0000 0022     		movs	r2, #0
+ 214 0002 014B     		ldr	r3, .L16
+ 215 0004 1A60     		str	r2, [r3]
+ 204:..\common/instrumentation.c **** 
+ 205:..\common/instrumentation.c **** #if CALCULATE_TIMER_MARGINS
+ 206:..\common/instrumentation.c ****     /* Calculate how much time is left before device could get reset. */
+ 207:..\common/instrumentation.c ****     gMinResetMargin = GET_MIN(gMinResetMargin,
+ 208:..\common/instrumentation.c ****             ((1 - gMainLoopDelay) * WATCHDOG_RESET_PERIOD_MS) + timer_get_count(0, WATCHDOG_TIMER_I
+ 209:..\common/instrumentation.c **** #if CCG_HPI_ENABLE
+ 210:..\common/instrumentation.c ****     hpi_set_reserved_reg_35 (gMinResetMargin);
+ 211:..\common/instrumentation.c **** #endif /* CCG_HPI_ENABLE */
+ 212:..\common/instrumentation.c **** 
+ 213:..\common/instrumentation.c ****     /* Stop and restart the timer. */
+ 214:..\common/instrumentation.c ****     timer_stop (0, WATCHDOG_TIMER_ID);
+ 215:..\common/instrumentation.c ****     timer_start (0, WATCHDOG_TIMER_ID, WATCHDOG_RESET_PERIOD_MS, watchdog_timer_cb);
+ 216:..\common/instrumentation.c **** #endif /* CALCULATE_TIMER_MARGINS */
+ 217:..\common/instrumentation.c **** 
+ 218:..\common/instrumentation.c **** #endif /* RESET_ON_ERROR_ENABLE */
+ 219:..\common/instrumentation.c **** 
+ 220:..\common/instrumentation.c **** #if STACK_USAGE_CHECK_ENABLE
+ 221:..\common/instrumentation.c ****     for (addr_p = gStackBottom; addr_p < (uint32_t *)((CYDEV_SRAM_BASE + CYDEV_SRAM_SIZE) - MIN_STA
+ 222:..\common/instrumentation.c ****     {
+ 223:..\common/instrumentation.c ****         if (*addr_p != STACK_UNUSED_SIG)
+ 224:..\common/instrumentation.c ****         {
+ 225:..\common/instrumentation.c ****             break;
+ 226:..\common/instrumentation.c ****         }
+ 227:..\common/instrumentation.c ****     }
+ 228:..\common/instrumentation.c ****     
+ 229:..\common/instrumentation.c ****     /* Calculate the minimum stack availability margin and update debug register. */
+ 230:..\common/instrumentation.c ****     gMinStackMargin = GET_MIN(gMinStackMargin, ((uint32_t)addr_p - (uint32_t)gStackBottom));
+ 231:..\common/instrumentation.c **** #if CCG_HPI_ENABLE
+ 232:..\common/instrumentation.c ****     hpi_set_reserved_reg_37(gMinStackMargin);
+ 233:..\common/instrumentation.c **** #endif /* CCG_HPI_ENABLE */
+ 234:..\common/instrumentation.c **** 
+ 235:..\common/instrumentation.c **** #endif /* STACK_USAGE_CHECK_ENABLE */
+ 236:..\common/instrumentation.c **** }
+ 216              		.loc 1 236 0
+ 217              		@ sp needed
+ 218 0006 7047     		bx	lr
+ 219              	.L17:
+ARM GAS  e:\temp\cc4YJHBF.s 			page 9
+
+
+ 220              		.align	2
+ 221              	.L16:
+ 222 0008 00000000 		.word	.LANCHOR0
+ 223              		.cfi_endproc
+ 224              	.LFE35:
+ 225              		.size	instrumentation_task, .-instrumentation_task
+ 226              		.section	.text.CyBoot_IntDefaultHandler_Exception_EntryCallback,"ax",%progbits
+ 227              		.align	2
+ 228              		.global	CyBoot_IntDefaultHandler_Exception_EntryCallback
+ 229              		.code	16
+ 230              		.thumb_func
+ 231              		.type	CyBoot_IntDefaultHandler_Exception_EntryCallback, %function
+ 232              	CyBoot_IntDefaultHandler_Exception_EntryCallback:
+ 233              	.LFB36:
+ 237:..\common/instrumentation.c **** 
+ 238:..\common/instrumentation.c **** void CyBoot_IntDefaultHandler_Exception_EntryCallback(void)
+ 239:..\common/instrumentation.c **** {
+ 234              		.loc 1 239 0
+ 235              		.cfi_startproc
+ 236              		@ args = 0, pretend = 0, frame = 0
+ 237              		@ frame_needed = 0, uses_anonymous_args = 0
+ 238 0000 10B5     		push	{r4, lr}
+ 239              		.cfi_def_cfa_offset 8
+ 240              		.cfi_offset 4, -8
+ 241              		.cfi_offset 14, -4
+ 240:..\common/instrumentation.c **** #if RESET_ON_ERROR_ENABLE
+ 241:..\common/instrumentation.c ****     /* Store the reset signature into RAM. */
+ 242:..\common/instrumentation.c ****     gRunTimeDataAddr[WATCHDOG_RESET_OFFSET] = WATCHDOG_RESET_SIG;
+ 242              		.loc 1 242 0
+ 243 0002 034B     		ldr	r3, .L19
+ 244 0004 1B68     		ldr	r3, [r3]
+ 245 0006 034A     		ldr	r2, .L19+4
+ 246 0008 5A60     		str	r2, [r3, #4]
+ 243:..\common/instrumentation.c ****     CySoftwareReset ();
+ 247              		.loc 1 243 0
+ 248 000a FFF7FEFF 		bl	CySoftwareReset
+ 249              	.LVL13:
+ 244:..\common/instrumentation.c **** #endif /* RESET_ON_ERROR_ENABLE */
+ 245:..\common/instrumentation.c **** }
+ 250              		.loc 1 245 0
+ 251              		@ sp needed
+ 252 000e 10BD     		pop	{r4, pc}
+ 253              	.L20:
+ 254              		.align	2
+ 255              	.L19:
+ 256 0010 00000000 		.word	.LANCHOR1
+ 257 0014 0C3003C0 		.word	-1073532916
+ 258              		.cfi_endproc
+ 259              	.LFE36:
+ 260              		.size	CyBoot_IntDefaultHandler_Exception_EntryCallback, .-CyBoot_IntDefaultHandler_Exception_Entry
+ 261              		.global	gMinResetMargin
+ 262              		.global	gMainLoopDelay
+ 263              		.global	gRunTimeDataAddr
+ 264              		.data
+ 265              		.align	2
+ 266              		.set	.LANCHOR1,. + 0
+ 267              		.type	gRunTimeDataAddr, %object
+ARM GAS  e:\temp\cc4YJHBF.s 			page 10
+
+
+ 268              		.size	gRunTimeDataAddr, 4
+ 269              	gRunTimeDataAddr:
+ 270 0000 00000020 		.word	536870912
+ 271              		.type	gMinResetMargin, %object
+ 272              		.size	gMinResetMargin, 2
+ 273              	gMinResetMargin:
+ 274 0004 EE02     		.short	750
+ 275              		.bss
+ 276              		.align	2
+ 277              		.set	.LANCHOR0,. + 0
+ 278              		.type	gMainLoopDelay, %object
+ 279              		.size	gMainLoopDelay, 4
+ 280              	gMainLoopDelay:
+ 281 0000 00000000 		.space	4
+ 282              		.text
+ 283              	.Letext0:
+ 284              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 285              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 286              		.file 4 "..\\src\\system/timer.h"
+ 287              		.file 5 "Generated_Source\\PSoC4/CyLib.h"
+ 288              		.file 6 "..\\src\\hpiss/hpi.h"
+ 289              		.section	.debug_info,"",%progbits
+ 290              	.Ldebug_info0:
+ 291 0000 65020000 		.4byte	0x265
+ 292 0004 0400     		.2byte	0x4
+ 293 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 294 000a 04       		.byte	0x4
+ 295 000b 01       		.uleb128 0x1
+ 296 000c 31000000 		.4byte	.LASF35
+ 297 0010 0C       		.byte	0xc
+ 298 0011 F1010000 		.4byte	.LASF36
+ 299 0015 73020000 		.4byte	.LASF37
+ 300 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 301 001d 00000000 		.4byte	0
+ 302 0021 00000000 		.4byte	.Ldebug_line0
+ 303 0025 02       		.uleb128 0x2
+ 304 0026 01       		.byte	0x1
+ 305 0027 06       		.byte	0x6
+ 306 0028 38030000 		.4byte	.LASF0
+ 307 002c 03       		.uleb128 0x3
+ 308 002d 12000000 		.4byte	.LASF3
+ 309 0031 02       		.byte	0x2
+ 310 0032 1D       		.byte	0x1d
+ 311 0033 37000000 		.4byte	0x37
+ 312 0037 02       		.uleb128 0x2
+ 313 0038 01       		.byte	0x1
+ 314 0039 08       		.byte	0x8
+ 315 003a 3F010000 		.4byte	.LASF1
+ 316 003e 02       		.uleb128 0x2
+ 317 003f 02       		.byte	0x2
+ 318 0040 05       		.byte	0x5
+ 319 0041 E7000000 		.4byte	.LASF2
+ 320 0045 03       		.uleb128 0x3
+ 321 0046 9B010000 		.4byte	.LASF4
+ 322 004a 02       		.byte	0x2
+ 323 004b 2B       		.byte	0x2b
+ 324 004c 50000000 		.4byte	0x50
+ARM GAS  e:\temp\cc4YJHBF.s 			page 11
+
+
+ 325 0050 02       		.uleb128 0x2
+ 326 0051 02       		.byte	0x2
+ 327 0052 07       		.byte	0x7
+ 328 0053 70010000 		.4byte	.LASF5
+ 329 0057 02       		.uleb128 0x2
+ 330 0058 04       		.byte	0x4
+ 331 0059 05       		.byte	0x5
+ 332 005a 23030000 		.4byte	.LASF6
+ 333 005e 03       		.uleb128 0x3
+ 334 005f C5010000 		.4byte	.LASF7
+ 335 0063 02       		.byte	0x2
+ 336 0064 41       		.byte	0x41
+ 337 0065 69000000 		.4byte	0x69
+ 338 0069 02       		.uleb128 0x2
+ 339 006a 04       		.byte	0x4
+ 340 006b 07       		.byte	0x7
+ 341 006c 4D010000 		.4byte	.LASF8
+ 342 0070 02       		.uleb128 0x2
+ 343 0071 08       		.byte	0x8
+ 344 0072 05       		.byte	0x5
+ 345 0073 60020000 		.4byte	.LASF9
+ 346 0077 02       		.uleb128 0x2
+ 347 0078 08       		.byte	0x8
+ 348 0079 07       		.byte	0x7
+ 349 007a 28010000 		.4byte	.LASF10
+ 350 007e 04       		.uleb128 0x4
+ 351 007f 04       		.byte	0x4
+ 352 0080 05       		.byte	0x5
+ 353 0081 696E7400 		.ascii	"int\000"
+ 354 0085 02       		.uleb128 0x2
+ 355 0086 04       		.byte	0x4
+ 356 0087 07       		.byte	0x7
+ 357 0088 18020000 		.4byte	.LASF11
+ 358 008c 03       		.uleb128 0x3
+ 359 008d 4F020000 		.4byte	.LASF12
+ 360 0091 03       		.byte	0x3
+ 361 0092 18       		.byte	0x18
+ 362 0093 2C000000 		.4byte	0x2c
+ 363 0097 03       		.uleb128 0x3
+ 364 0098 01030000 		.4byte	.LASF13
+ 365 009c 03       		.byte	0x3
+ 366 009d 24       		.byte	0x24
+ 367 009e 45000000 		.4byte	0x45
+ 368 00a2 03       		.uleb128 0x3
+ 369 00a3 1A030000 		.4byte	.LASF14
+ 370 00a7 03       		.byte	0x3
+ 371 00a8 30       		.byte	0x30
+ 372 00a9 5E000000 		.4byte	0x5e
+ 373 00ad 02       		.uleb128 0x2
+ 374 00ae 04       		.byte	0x4
+ 375 00af 04       		.byte	0x4
+ 376 00b0 22010000 		.4byte	.LASF15
+ 377 00b4 02       		.uleb128 0x2
+ 378 00b5 08       		.byte	0x8
+ 379 00b6 04       		.byte	0x4
+ 380 00b7 A6010000 		.4byte	.LASF16
+ 381 00bb 02       		.uleb128 0x2
+ARM GAS  e:\temp\cc4YJHBF.s 			page 12
+
+
+ 382 00bc 01       		.byte	0x1
+ 383 00bd 08       		.byte	0x8
+ 384 00be 6E020000 		.4byte	.LASF17
+ 385 00c2 02       		.uleb128 0x2
+ 386 00c3 08       		.byte	0x8
+ 387 00c4 04       		.byte	0x4
+ 388 00c5 2C030000 		.4byte	.LASF18
+ 389 00c9 02       		.uleb128 0x2
+ 390 00ca 04       		.byte	0x4
+ 391 00cb 07       		.byte	0x7
+ 392 00cc 57020000 		.4byte	.LASF19
+ 393 00d0 05       		.uleb128 0x5
+ 394 00d1 A2000000 		.4byte	0xa2
+ 395 00d5 05       		.uleb128 0x5
+ 396 00d6 97000000 		.4byte	0x97
+ 397 00da 02       		.uleb128 0x2
+ 398 00db 01       		.byte	0x1
+ 399 00dc 02       		.byte	0x2
+ 400 00dd 44030000 		.4byte	.LASF20
+ 401 00e1 03       		.uleb128 0x3
+ 402 00e2 0D020000 		.4byte	.LASF21
+ 403 00e6 04       		.byte	0x4
+ 404 00e7 5D       		.byte	0x5d
+ 405 00e8 8C000000 		.4byte	0x8c
+ 406 00ec 06       		.uleb128 0x6
+ 407 00ed 00000000 		.4byte	.LASF23
+ 408 00f1 01       		.byte	0x1
+ 409 00f2 54       		.byte	0x54
+ 410 00f3 00000000 		.4byte	.LFB32
+ 411 00f7 40000000 		.4byte	.LFE32-.LFB32
+ 412 00fb 01       		.uleb128 0x1
+ 413 00fc 9C       		.byte	0x9c
+ 414 00fd 4D010000 		.4byte	0x14d
+ 415 0101 07       		.uleb128 0x7
+ 416 0102 EB020000 		.4byte	.LASF22
+ 417 0106 01       		.byte	0x1
+ 418 0107 55       		.byte	0x55
+ 419 0108 8C000000 		.4byte	0x8c
+ 420 010c 00000000 		.4byte	.LLST0
+ 421 0110 08       		.uleb128 0x8
+ 422 0111 696400   		.ascii	"id\000"
+ 423 0114 01       		.byte	0x1
+ 424 0115 56       		.byte	0x56
+ 425 0116 E1000000 		.4byte	0xe1
+ 426 011a 21000000 		.4byte	.LLST1
+ 427 011e 09       		.uleb128 0x9
+ 428 011f 1C000000 		.4byte	.LVL1
+ 429 0123 3A020000 		.4byte	0x23a
+ 430 0127 0A       		.uleb128 0xa
+ 431 0128 28000000 		.4byte	.LVL2
+ 432 012c 45020000 		.4byte	0x245
+ 433 0130 0B       		.uleb128 0xb
+ 434 0131 01       		.uleb128 0x1
+ 435 0132 50       		.byte	0x50
+ 436 0133 01       		.uleb128 0x1
+ 437 0134 30       		.byte	0x30
+ 438 0135 0B       		.uleb128 0xb
+ARM GAS  e:\temp\cc4YJHBF.s 			page 13
+
+
+ 439 0136 01       		.uleb128 0x1
+ 440 0137 51       		.byte	0x51
+ 441 0138 02       		.uleb128 0x2
+ 442 0139 09       		.byte	0x9
+ 443 013a D0       		.byte	0xd0
+ 444 013b 0B       		.uleb128 0xb
+ 445 013c 01       		.uleb128 0x1
+ 446 013d 52       		.byte	0x52
+ 447 013e 03       		.uleb128 0x3
+ 448 013f 0A       		.byte	0xa
+ 449 0140 EE02     		.2byte	0x2ee
+ 450 0142 0B       		.uleb128 0xb
+ 451 0143 01       		.uleb128 0x1
+ 452 0144 53       		.byte	0x53
+ 453 0145 05       		.uleb128 0x5
+ 454 0146 03       		.byte	0x3
+ 455 0147 00000000 		.4byte	watchdog_timer_cb
+ 456 014b 00       		.byte	0
+ 457 014c 00       		.byte	0
+ 458 014d 06       		.uleb128 0x6
+ 459 014e D0010000 		.4byte	.LASF24
+ 460 0152 01       		.byte	0x1
+ 461 0153 7B       		.byte	0x7b
+ 462 0154 00000000 		.4byte	.LFB33
+ 463 0158 60000000 		.4byte	.LFE33-.LFB33
+ 464 015c 01       		.uleb128 0x1
+ 465 015d 9C       		.byte	0x9c
+ 466 015e 8B010000 		.4byte	0x18b
+ 467 0162 0C       		.uleb128 0xc
+ 468 0163 BD010000 		.4byte	.LASF38
+ 469 0167 01       		.byte	0x1
+ 470 0168 7D       		.byte	0x7d
+ 471 0169 A2000000 		.4byte	0xa2
+ 472 016d 42000000 		.4byte	.LLST2
+ 473 0171 09       		.uleb128 0x9
+ 474 0172 3C000000 		.4byte	.LVL8
+ 475 0176 50020000 		.4byte	0x250
+ 476 017a 0A       		.uleb128 0xa
+ 477 017b 48000000 		.4byte	.LVL10
+ 478 017f 5C020000 		.4byte	0x25c
+ 479 0183 0B       		.uleb128 0xb
+ 480 0184 01       		.uleb128 0x1
+ 481 0185 50       		.byte	0x50
+ 482 0186 02       		.uleb128 0x2
+ 483 0187 74       		.byte	0x74
+ 484 0188 00       		.sleb128 0
+ 485 0189 00       		.byte	0
+ 486 018a 00       		.byte	0
+ 487 018b 06       		.uleb128 0x6
+ 488 018c 25020000 		.4byte	.LASF25
+ 489 0190 01       		.byte	0x1
+ 490 0191 BA       		.byte	0xba
+ 491 0192 00000000 		.4byte	.LFB34
+ 492 0196 18000000 		.4byte	.LFE34-.LFB34
+ 493 019a 01       		.uleb128 0x1
+ 494 019b 9C       		.byte	0x9c
+ 495 019c C6010000 		.4byte	0x1c6
+ARM GAS  e:\temp\cc4YJHBF.s 			page 14
+
+
+ 496 01a0 0A       		.uleb128 0xa
+ 497 01a1 0E000000 		.4byte	.LVL12
+ 498 01a5 45020000 		.4byte	0x245
+ 499 01a9 0B       		.uleb128 0xb
+ 500 01aa 01       		.uleb128 0x1
+ 501 01ab 50       		.byte	0x50
+ 502 01ac 01       		.uleb128 0x1
+ 503 01ad 30       		.byte	0x30
+ 504 01ae 0B       		.uleb128 0xb
+ 505 01af 01       		.uleb128 0x1
+ 506 01b0 51       		.byte	0x51
+ 507 01b1 02       		.uleb128 0x2
+ 508 01b2 09       		.byte	0x9
+ 509 01b3 D0       		.byte	0xd0
+ 510 01b4 0B       		.uleb128 0xb
+ 511 01b5 01       		.uleb128 0x1
+ 512 01b6 52       		.byte	0x52
+ 513 01b7 03       		.uleb128 0x3
+ 514 01b8 0A       		.byte	0xa
+ 515 01b9 EE02     		.2byte	0x2ee
+ 516 01bb 0B       		.uleb128 0xb
+ 517 01bc 01       		.uleb128 0x1
+ 518 01bd 53       		.byte	0x53
+ 519 01be 05       		.uleb128 0x5
+ 520 01bf 03       		.byte	0x3
+ 521 01c0 00000000 		.4byte	watchdog_timer_cb
+ 522 01c4 00       		.byte	0
+ 523 01c5 00       		.byte	0
+ 524 01c6 0D       		.uleb128 0xd
+ 525 01c7 1C000000 		.4byte	.LASF39
+ 526 01cb 01       		.byte	0x1
+ 527 01cc C2       		.byte	0xc2
+ 528 01cd 00000000 		.4byte	.LFB35
+ 529 01d1 0C000000 		.4byte	.LFE35-.LFB35
+ 530 01d5 01       		.uleb128 0x1
+ 531 01d6 9C       		.byte	0x9c
+ 532 01d7 06       		.uleb128 0x6
+ 533 01d8 F1000000 		.4byte	.LASF26
+ 534 01dc 01       		.byte	0x1
+ 535 01dd EE       		.byte	0xee
+ 536 01de 00000000 		.4byte	.LFB36
+ 537 01e2 18000000 		.4byte	.LFE36-.LFB36
+ 538 01e6 01       		.uleb128 0x1
+ 539 01e7 9C       		.byte	0x9c
+ 540 01e8 F6010000 		.4byte	0x1f6
+ 541 01ec 09       		.uleb128 0x9
+ 542 01ed 0E000000 		.4byte	.LVL13
+ 543 01f1 3A020000 		.4byte	0x23a
+ 544 01f5 00       		.byte	0
+ 545 01f6 0E       		.uleb128 0xe
+ 546 01f7 5F010000 		.4byte	.LASF27
+ 547 01fb 01       		.byte	0x1
+ 548 01fc 38       		.byte	0x38
+ 549 01fd 7E000000 		.4byte	0x7e
+ 550 0201 0F       		.uleb128 0xf
+ 551 0202 F0020000 		.4byte	.LASF28
+ 552 0206 01       		.byte	0x1
+ARM GAS  e:\temp\cc4YJHBF.s 			page 15
+
+
+ 553 0207 4B       		.byte	0x4b
+ 554 0208 12020000 		.4byte	0x212
+ 555 020c 05       		.uleb128 0x5
+ 556 020d 03       		.byte	0x3
+ 557 020e 00000000 		.4byte	gRunTimeDataAddr
+ 558 0212 10       		.uleb128 0x10
+ 559 0213 04       		.byte	0x4
+ 560 0214 A2000000 		.4byte	0xa2
+ 561 0218 0F       		.uleb128 0xf
+ 562 0219 4A030000 		.4byte	.LASF29
+ 563 021d 01       		.byte	0x1
+ 564 021e 4E       		.byte	0x4e
+ 565 021f D0000000 		.4byte	0xd0
+ 566 0223 05       		.uleb128 0x5
+ 567 0224 03       		.byte	0x3
+ 568 0225 00000000 		.4byte	gMainLoopDelay
+ 569 0229 0F       		.uleb128 0xf
+ 570 022a AD010000 		.4byte	.LASF30
+ 571 022e 01       		.byte	0x1
+ 572 022f 51       		.byte	0x51
+ 573 0230 D5000000 		.4byte	0xd5
+ 574 0234 05       		.uleb128 0x5
+ 575 0235 03       		.byte	0x3
+ 576 0236 00000000 		.4byte	gMinResetMargin
+ 577 023a 11       		.uleb128 0x11
+ 578 023b 0A030000 		.4byte	.LASF31
+ 579 023f 0A030000 		.4byte	.LASF31
+ 580 0243 05       		.byte	0x5
+ 581 0244 E4       		.byte	0xe4
+ 582 0245 11       		.uleb128 0x11
+ 583 0246 E5010000 		.4byte	.LASF32
+ 584 024a E5010000 		.4byte	.LASF32
+ 585 024e 04       		.byte	0x4
+ 586 024f 97       		.byte	0x97
+ 587 0250 12       		.uleb128 0x12
+ 588 0251 83010000 		.4byte	.LASF33
+ 589 0255 83010000 		.4byte	.LASF33
+ 590 0259 06       		.byte	0x6
+ 591 025a 9E01     		.2byte	0x19e
+ 592 025c 12       		.uleb128 0x12
+ 593 025d 3B020000 		.4byte	.LASF34
+ 594 0261 3B020000 		.4byte	.LASF34
+ 595 0265 06       		.byte	0x6
+ 596 0266 9701     		.2byte	0x197
+ 597 0268 00       		.byte	0
+ 598              		.section	.debug_abbrev,"",%progbits
+ 599              	.Ldebug_abbrev0:
+ 600 0000 01       		.uleb128 0x1
+ 601 0001 11       		.uleb128 0x11
+ 602 0002 01       		.byte	0x1
+ 603 0003 25       		.uleb128 0x25
+ 604 0004 0E       		.uleb128 0xe
+ 605 0005 13       		.uleb128 0x13
+ 606 0006 0B       		.uleb128 0xb
+ 607 0007 03       		.uleb128 0x3
+ 608 0008 0E       		.uleb128 0xe
+ 609 0009 1B       		.uleb128 0x1b
+ARM GAS  e:\temp\cc4YJHBF.s 			page 16
+
+
+ 610 000a 0E       		.uleb128 0xe
+ 611 000b 55       		.uleb128 0x55
+ 612 000c 17       		.uleb128 0x17
+ 613 000d 11       		.uleb128 0x11
+ 614 000e 01       		.uleb128 0x1
+ 615 000f 10       		.uleb128 0x10
+ 616 0010 17       		.uleb128 0x17
+ 617 0011 00       		.byte	0
+ 618 0012 00       		.byte	0
+ 619 0013 02       		.uleb128 0x2
+ 620 0014 24       		.uleb128 0x24
+ 621 0015 00       		.byte	0
+ 622 0016 0B       		.uleb128 0xb
+ 623 0017 0B       		.uleb128 0xb
+ 624 0018 3E       		.uleb128 0x3e
+ 625 0019 0B       		.uleb128 0xb
+ 626 001a 03       		.uleb128 0x3
+ 627 001b 0E       		.uleb128 0xe
+ 628 001c 00       		.byte	0
+ 629 001d 00       		.byte	0
+ 630 001e 03       		.uleb128 0x3
+ 631 001f 16       		.uleb128 0x16
+ 632 0020 00       		.byte	0
+ 633 0021 03       		.uleb128 0x3
+ 634 0022 0E       		.uleb128 0xe
+ 635 0023 3A       		.uleb128 0x3a
+ 636 0024 0B       		.uleb128 0xb
+ 637 0025 3B       		.uleb128 0x3b
+ 638 0026 0B       		.uleb128 0xb
+ 639 0027 49       		.uleb128 0x49
+ 640 0028 13       		.uleb128 0x13
+ 641 0029 00       		.byte	0
+ 642 002a 00       		.byte	0
+ 643 002b 04       		.uleb128 0x4
+ 644 002c 24       		.uleb128 0x24
+ 645 002d 00       		.byte	0
+ 646 002e 0B       		.uleb128 0xb
+ 647 002f 0B       		.uleb128 0xb
+ 648 0030 3E       		.uleb128 0x3e
+ 649 0031 0B       		.uleb128 0xb
+ 650 0032 03       		.uleb128 0x3
+ 651 0033 08       		.uleb128 0x8
+ 652 0034 00       		.byte	0
+ 653 0035 00       		.byte	0
+ 654 0036 05       		.uleb128 0x5
+ 655 0037 35       		.uleb128 0x35
+ 656 0038 00       		.byte	0
+ 657 0039 49       		.uleb128 0x49
+ 658 003a 13       		.uleb128 0x13
+ 659 003b 00       		.byte	0
+ 660 003c 00       		.byte	0
+ 661 003d 06       		.uleb128 0x6
+ 662 003e 2E       		.uleb128 0x2e
+ 663 003f 01       		.byte	0x1
+ 664 0040 3F       		.uleb128 0x3f
+ 665 0041 19       		.uleb128 0x19
+ 666 0042 03       		.uleb128 0x3
+ARM GAS  e:\temp\cc4YJHBF.s 			page 17
+
+
+ 667 0043 0E       		.uleb128 0xe
+ 668 0044 3A       		.uleb128 0x3a
+ 669 0045 0B       		.uleb128 0xb
+ 670 0046 3B       		.uleb128 0x3b
+ 671 0047 0B       		.uleb128 0xb
+ 672 0048 27       		.uleb128 0x27
+ 673 0049 19       		.uleb128 0x19
+ 674 004a 11       		.uleb128 0x11
+ 675 004b 01       		.uleb128 0x1
+ 676 004c 12       		.uleb128 0x12
+ 677 004d 06       		.uleb128 0x6
+ 678 004e 40       		.uleb128 0x40
+ 679 004f 18       		.uleb128 0x18
+ 680 0050 9742     		.uleb128 0x2117
+ 681 0052 19       		.uleb128 0x19
+ 682 0053 01       		.uleb128 0x1
+ 683 0054 13       		.uleb128 0x13
+ 684 0055 00       		.byte	0
+ 685 0056 00       		.byte	0
+ 686 0057 07       		.uleb128 0x7
+ 687 0058 05       		.uleb128 0x5
+ 688 0059 00       		.byte	0
+ 689 005a 03       		.uleb128 0x3
+ 690 005b 0E       		.uleb128 0xe
+ 691 005c 3A       		.uleb128 0x3a
+ 692 005d 0B       		.uleb128 0xb
+ 693 005e 3B       		.uleb128 0x3b
+ 694 005f 0B       		.uleb128 0xb
+ 695 0060 49       		.uleb128 0x49
+ 696 0061 13       		.uleb128 0x13
+ 697 0062 02       		.uleb128 0x2
+ 698 0063 17       		.uleb128 0x17
+ 699 0064 00       		.byte	0
+ 700 0065 00       		.byte	0
+ 701 0066 08       		.uleb128 0x8
+ 702 0067 05       		.uleb128 0x5
+ 703 0068 00       		.byte	0
+ 704 0069 03       		.uleb128 0x3
+ 705 006a 08       		.uleb128 0x8
+ 706 006b 3A       		.uleb128 0x3a
+ 707 006c 0B       		.uleb128 0xb
+ 708 006d 3B       		.uleb128 0x3b
+ 709 006e 0B       		.uleb128 0xb
+ 710 006f 49       		.uleb128 0x49
+ 711 0070 13       		.uleb128 0x13
+ 712 0071 02       		.uleb128 0x2
+ 713 0072 17       		.uleb128 0x17
+ 714 0073 00       		.byte	0
+ 715 0074 00       		.byte	0
+ 716 0075 09       		.uleb128 0x9
+ 717 0076 898201   		.uleb128 0x4109
+ 718 0079 00       		.byte	0
+ 719 007a 11       		.uleb128 0x11
+ 720 007b 01       		.uleb128 0x1
+ 721 007c 31       		.uleb128 0x31
+ 722 007d 13       		.uleb128 0x13
+ 723 007e 00       		.byte	0
+ARM GAS  e:\temp\cc4YJHBF.s 			page 18
+
+
+ 724 007f 00       		.byte	0
+ 725 0080 0A       		.uleb128 0xa
+ 726 0081 898201   		.uleb128 0x4109
+ 727 0084 01       		.byte	0x1
+ 728 0085 11       		.uleb128 0x11
+ 729 0086 01       		.uleb128 0x1
+ 730 0087 31       		.uleb128 0x31
+ 731 0088 13       		.uleb128 0x13
+ 732 0089 00       		.byte	0
+ 733 008a 00       		.byte	0
+ 734 008b 0B       		.uleb128 0xb
+ 735 008c 8A8201   		.uleb128 0x410a
+ 736 008f 00       		.byte	0
+ 737 0090 02       		.uleb128 0x2
+ 738 0091 18       		.uleb128 0x18
+ 739 0092 9142     		.uleb128 0x2111
+ 740 0094 18       		.uleb128 0x18
+ 741 0095 00       		.byte	0
+ 742 0096 00       		.byte	0
+ 743 0097 0C       		.uleb128 0xc
+ 744 0098 34       		.uleb128 0x34
+ 745 0099 00       		.byte	0
+ 746 009a 03       		.uleb128 0x3
+ 747 009b 0E       		.uleb128 0xe
+ 748 009c 3A       		.uleb128 0x3a
+ 749 009d 0B       		.uleb128 0xb
+ 750 009e 3B       		.uleb128 0x3b
+ 751 009f 0B       		.uleb128 0xb
+ 752 00a0 49       		.uleb128 0x49
+ 753 00a1 13       		.uleb128 0x13
+ 754 00a2 02       		.uleb128 0x2
+ 755 00a3 17       		.uleb128 0x17
+ 756 00a4 00       		.byte	0
+ 757 00a5 00       		.byte	0
+ 758 00a6 0D       		.uleb128 0xd
+ 759 00a7 2E       		.uleb128 0x2e
+ 760 00a8 00       		.byte	0
+ 761 00a9 3F       		.uleb128 0x3f
+ 762 00aa 19       		.uleb128 0x19
+ 763 00ab 03       		.uleb128 0x3
+ 764 00ac 0E       		.uleb128 0xe
+ 765 00ad 3A       		.uleb128 0x3a
+ 766 00ae 0B       		.uleb128 0xb
+ 767 00af 3B       		.uleb128 0x3b
+ 768 00b0 0B       		.uleb128 0xb
+ 769 00b1 27       		.uleb128 0x27
+ 770 00b2 19       		.uleb128 0x19
+ 771 00b3 11       		.uleb128 0x11
+ 772 00b4 01       		.uleb128 0x1
+ 773 00b5 12       		.uleb128 0x12
+ 774 00b6 06       		.uleb128 0x6
+ 775 00b7 40       		.uleb128 0x40
+ 776 00b8 18       		.uleb128 0x18
+ 777 00b9 9742     		.uleb128 0x2117
+ 778 00bb 19       		.uleb128 0x19
+ 779 00bc 00       		.byte	0
+ 780 00bd 00       		.byte	0
+ARM GAS  e:\temp\cc4YJHBF.s 			page 19
+
+
+ 781 00be 0E       		.uleb128 0xe
+ 782 00bf 34       		.uleb128 0x34
+ 783 00c0 00       		.byte	0
+ 784 00c1 03       		.uleb128 0x3
+ 785 00c2 0E       		.uleb128 0xe
+ 786 00c3 3A       		.uleb128 0x3a
+ 787 00c4 0B       		.uleb128 0xb
+ 788 00c5 3B       		.uleb128 0x3b
+ 789 00c6 0B       		.uleb128 0xb
+ 790 00c7 49       		.uleb128 0x49
+ 791 00c8 13       		.uleb128 0x13
+ 792 00c9 3F       		.uleb128 0x3f
+ 793 00ca 19       		.uleb128 0x19
+ 794 00cb 3C       		.uleb128 0x3c
+ 795 00cc 19       		.uleb128 0x19
+ 796 00cd 00       		.byte	0
+ 797 00ce 00       		.byte	0
+ 798 00cf 0F       		.uleb128 0xf
+ 799 00d0 34       		.uleb128 0x34
+ 800 00d1 00       		.byte	0
+ 801 00d2 03       		.uleb128 0x3
+ 802 00d3 0E       		.uleb128 0xe
+ 803 00d4 3A       		.uleb128 0x3a
+ 804 00d5 0B       		.uleb128 0xb
+ 805 00d6 3B       		.uleb128 0x3b
+ 806 00d7 0B       		.uleb128 0xb
+ 807 00d8 49       		.uleb128 0x49
+ 808 00d9 13       		.uleb128 0x13
+ 809 00da 3F       		.uleb128 0x3f
+ 810 00db 19       		.uleb128 0x19
+ 811 00dc 02       		.uleb128 0x2
+ 812 00dd 18       		.uleb128 0x18
+ 813 00de 00       		.byte	0
+ 814 00df 00       		.byte	0
+ 815 00e0 10       		.uleb128 0x10
+ 816 00e1 0F       		.uleb128 0xf
+ 817 00e2 00       		.byte	0
+ 818 00e3 0B       		.uleb128 0xb
+ 819 00e4 0B       		.uleb128 0xb
+ 820 00e5 49       		.uleb128 0x49
+ 821 00e6 13       		.uleb128 0x13
+ 822 00e7 00       		.byte	0
+ 823 00e8 00       		.byte	0
+ 824 00e9 11       		.uleb128 0x11
+ 825 00ea 2E       		.uleb128 0x2e
+ 826 00eb 00       		.byte	0
+ 827 00ec 3F       		.uleb128 0x3f
+ 828 00ed 19       		.uleb128 0x19
+ 829 00ee 3C       		.uleb128 0x3c
+ 830 00ef 19       		.uleb128 0x19
+ 831 00f0 6E       		.uleb128 0x6e
+ 832 00f1 0E       		.uleb128 0xe
+ 833 00f2 03       		.uleb128 0x3
+ 834 00f3 0E       		.uleb128 0xe
+ 835 00f4 3A       		.uleb128 0x3a
+ 836 00f5 0B       		.uleb128 0xb
+ 837 00f6 3B       		.uleb128 0x3b
+ARM GAS  e:\temp\cc4YJHBF.s 			page 20
+
+
+ 838 00f7 0B       		.uleb128 0xb
+ 839 00f8 00       		.byte	0
+ 840 00f9 00       		.byte	0
+ 841 00fa 12       		.uleb128 0x12
+ 842 00fb 2E       		.uleb128 0x2e
+ 843 00fc 00       		.byte	0
+ 844 00fd 3F       		.uleb128 0x3f
+ 845 00fe 19       		.uleb128 0x19
+ 846 00ff 3C       		.uleb128 0x3c
+ 847 0100 19       		.uleb128 0x19
+ 848 0101 6E       		.uleb128 0x6e
+ 849 0102 0E       		.uleb128 0xe
+ 850 0103 03       		.uleb128 0x3
+ 851 0104 0E       		.uleb128 0xe
+ 852 0105 3A       		.uleb128 0x3a
+ 853 0106 0B       		.uleb128 0xb
+ 854 0107 3B       		.uleb128 0x3b
+ 855 0108 05       		.uleb128 0x5
+ 856 0109 00       		.byte	0
+ 857 010a 00       		.byte	0
+ 858 010b 00       		.byte	0
+ 859              		.section	.debug_loc,"",%progbits
+ 860              	.Ldebug_loc0:
+ 861              	.LLST0:
+ 862 0000 00000000 		.4byte	.LVL0
+ 863 0004 1B000000 		.4byte	.LVL1-1
+ 864 0008 0100     		.2byte	0x1
+ 865 000a 50       		.byte	0x50
+ 866 000b 1B000000 		.4byte	.LVL1-1
+ 867 000f 40000000 		.4byte	.LFE32
+ 868 0013 0400     		.2byte	0x4
+ 869 0015 F3       		.byte	0xf3
+ 870 0016 01       		.uleb128 0x1
+ 871 0017 50       		.byte	0x50
+ 872 0018 9F       		.byte	0x9f
+ 873 0019 00000000 		.4byte	0
+ 874 001d 00000000 		.4byte	0
+ 875              	.LLST1:
+ 876 0021 00000000 		.4byte	.LVL0
+ 877 0025 1B000000 		.4byte	.LVL1-1
+ 878 0029 0100     		.2byte	0x1
+ 879 002b 51       		.byte	0x51
+ 880 002c 1B000000 		.4byte	.LVL1-1
+ 881 0030 40000000 		.4byte	.LFE32
+ 882 0034 0400     		.2byte	0x4
+ 883 0036 F3       		.byte	0xf3
+ 884 0037 01       		.uleb128 0x1
+ 885 0038 51       		.byte	0x51
+ 886 0039 9F       		.byte	0x9f
+ 887 003a 00000000 		.4byte	0
+ 888 003e 00000000 		.4byte	0
+ 889              	.LLST2:
+ 890 0042 02000000 		.4byte	.LVL3
+ 891 0046 14000000 		.4byte	.LVL4
+ 892 004a 0200     		.2byte	0x2
+ 893 004c 30       		.byte	0x30
+ 894 004d 9F       		.byte	0x9f
+ARM GAS  e:\temp\cc4YJHBF.s 			page 21
+
+
+ 895 004e 14000000 		.4byte	.LVL4
+ 896 0052 20000000 		.4byte	.LVL6
+ 897 0056 0100     		.2byte	0x1
+ 898 0058 54       		.byte	0x54
+ 899 0059 20000000 		.4byte	.LVL6
+ 900 005d 22000000 		.4byte	.LVL7
+ 901 0061 0200     		.2byte	0x2
+ 902 0063 30       		.byte	0x30
+ 903 0064 9F       		.byte	0x9f
+ 904 0065 22000000 		.4byte	.LVL7
+ 905 0069 48000000 		.4byte	.LVL11
+ 906 006d 0100     		.2byte	0x1
+ 907 006f 54       		.byte	0x54
+ 908 0070 00000000 		.4byte	0
+ 909 0074 00000000 		.4byte	0
+ 910              		.section	.debug_aranges,"",%progbits
+ 911 0000 3C000000 		.4byte	0x3c
+ 912 0004 0200     		.2byte	0x2
+ 913 0006 00000000 		.4byte	.Ldebug_info0
+ 914 000a 04       		.byte	0x4
+ 915 000b 00       		.byte	0
+ 916 000c 0000     		.2byte	0
+ 917 000e 0000     		.2byte	0
+ 918 0010 00000000 		.4byte	.LFB32
+ 919 0014 40000000 		.4byte	.LFE32-.LFB32
+ 920 0018 00000000 		.4byte	.LFB33
+ 921 001c 60000000 		.4byte	.LFE33-.LFB33
+ 922 0020 00000000 		.4byte	.LFB34
+ 923 0024 18000000 		.4byte	.LFE34-.LFB34
+ 924 0028 00000000 		.4byte	.LFB35
+ 925 002c 0C000000 		.4byte	.LFE35-.LFB35
+ 926 0030 00000000 		.4byte	.LFB36
+ 927 0034 18000000 		.4byte	.LFE36-.LFB36
+ 928 0038 00000000 		.4byte	0
+ 929 003c 00000000 		.4byte	0
+ 930              		.section	.debug_ranges,"",%progbits
+ 931              	.Ldebug_ranges0:
+ 932 0000 00000000 		.4byte	.LFB32
+ 933 0004 40000000 		.4byte	.LFE32
+ 934 0008 00000000 		.4byte	.LFB33
+ 935 000c 60000000 		.4byte	.LFE33
+ 936 0010 00000000 		.4byte	.LFB34
+ 937 0014 18000000 		.4byte	.LFE34
+ 938 0018 00000000 		.4byte	.LFB35
+ 939 001c 0C000000 		.4byte	.LFE35
+ 940 0020 00000000 		.4byte	.LFB36
+ 941 0024 18000000 		.4byte	.LFE36
+ 942 0028 00000000 		.4byte	0
+ 943 002c 00000000 		.4byte	0
+ 944              		.section	.debug_line,"",%progbits
+ 945              	.Ldebug_line0:
+ 946 0000 D2010000 		.section	.debug_str,"MS",%progbits,1
+ 946      02005801 
+ 946      00000201 
+ 946      FB0E0D00 
+ 946      01010101 
+ 947              	.LASF23:
+ARM GAS  e:\temp\cc4YJHBF.s 			page 22
+
+
+ 948 0000 77617463 		.ascii	"watchdog_timer_cb\000"
+ 948      68646F67 
+ 948      5F74696D 
+ 948      65725F63 
+ 948      6200
+ 949              	.LASF3:
+ 950 0012 5F5F7569 		.ascii	"__uint8_t\000"
+ 950      6E74385F 
+ 950      7400
+ 951              	.LASF39:
+ 952 001c 696E7374 		.ascii	"instrumentation_task\000"
+ 952      72756D65 
+ 952      6E746174 
+ 952      696F6E5F 
+ 952      7461736B 
+ 953              	.LASF35:
+ 954 0031 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 954      43313120 
+ 954      352E342E 
+ 954      31203230 
+ 954      31363036 
+ 955 0064 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 955      20726576 
+ 955      6973696F 
+ 955      6E203233 
+ 955      37373135 
+ 956 0097 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 956      66756E63 
+ 956      74696F6E 
+ 956      2D736563 
+ 956      74696F6E 
+ 957 00ca 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 957      6F6E7320 
+ 957      2D666E6F 
+ 957      2D737472 
+ 957      6963742D 
+ 958              	.LASF2:
+ 959 00e7 73686F72 		.ascii	"short int\000"
+ 959      7420696E 
+ 959      7400
+ 960              	.LASF26:
+ 961 00f1 4379426F 		.ascii	"CyBoot_IntDefaultHandler_Exception_EntryCallback\000"
+ 961      6F745F49 
+ 961      6E744465 
+ 961      6661756C 
+ 961      7448616E 
+ 962              	.LASF15:
+ 963 0122 666C6F61 		.ascii	"float\000"
+ 963      7400
+ 964              	.LASF10:
+ 965 0128 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 965      206C6F6E 
+ 965      6720756E 
+ 965      7369676E 
+ 965      65642069 
+ 966              	.LASF1:
+ 967 013f 756E7369 		.ascii	"unsigned char\000"
+ARM GAS  e:\temp\cc4YJHBF.s 			page 23
+
+
+ 967      676E6564 
+ 967      20636861 
+ 967      7200
+ 968              	.LASF8:
+ 969 014d 6C6F6E67 		.ascii	"long unsigned int\000"
+ 969      20756E73 
+ 969      69676E65 
+ 969      6420696E 
+ 969      7400
+ 970              	.LASF27:
+ 971 015f 5F5F6379 		.ascii	"__cy_stack_limit\000"
+ 971      5F737461 
+ 971      636B5F6C 
+ 971      696D6974 
+ 971      00
+ 972              	.LASF5:
+ 973 0170 73686F72 		.ascii	"short unsigned int\000"
+ 973      7420756E 
+ 973      7369676E 
+ 973      65642069 
+ 973      6E7400
+ 974              	.LASF33:
+ 975 0183 6870695F 		.ascii	"hpi_set_reserved_reg_35\000"
+ 975      7365745F 
+ 975      72657365 
+ 975      72766564 
+ 975      5F726567 
+ 976              	.LASF4:
+ 977 019b 5F5F7569 		.ascii	"__uint16_t\000"
+ 977      6E743136 
+ 977      5F7400
+ 978              	.LASF16:
+ 979 01a6 646F7562 		.ascii	"double\000"
+ 979      6C6500
+ 980              	.LASF30:
+ 981 01ad 674D696E 		.ascii	"gMinResetMargin\000"
+ 981      52657365 
+ 981      744D6172 
+ 981      67696E00 
+ 982              	.LASF38:
+ 983 01bd 7764725F 		.ascii	"wdr_cnt\000"
+ 983      636E7400 
+ 984              	.LASF7:
+ 985 01c5 5F5F7569 		.ascii	"__uint32_t\000"
+ 985      6E743332 
+ 985      5F7400
+ 986              	.LASF24:
+ 987 01d0 696E7374 		.ascii	"instrumentation_init\000"
+ 987      72756D65 
+ 987      6E746174 
+ 987      696F6E5F 
+ 987      696E6974 
+ 988              	.LASF32:
+ 989 01e5 74696D65 		.ascii	"timer_start\000"
+ 989      725F7374 
+ 989      61727400 
+ 990              	.LASF36:
+ARM GAS  e:\temp\cc4YJHBF.s 			page 24
+
+
+ 991 01f1 2E2E5C63 		.ascii	"..\\common\\instrumentation.c\000"
+ 991      6F6D6D6F 
+ 991      6E5C696E 
+ 991      73747275 
+ 991      6D656E74 
+ 992              	.LASF21:
+ 993 020d 74696D65 		.ascii	"timer_id_t\000"
+ 993      725F6964 
+ 993      5F7400
+ 994              	.LASF11:
+ 995 0218 756E7369 		.ascii	"unsigned int\000"
+ 995      676E6564 
+ 995      20696E74 
+ 995      00
+ 996              	.LASF25:
+ 997 0225 696E7374 		.ascii	"instrumentation_start\000"
+ 997      72756D65 
+ 997      6E746174 
+ 997      696F6E5F 
+ 997      73746172 
+ 998              	.LASF34:
+ 999 023b 6870695F 		.ascii	"hpi_set_reset_count\000"
+ 999      7365745F 
+ 999      72657365 
+ 999      745F636F 
+ 999      756E7400 
+ 1000              	.LASF12:
+ 1001 024f 75696E74 		.ascii	"uint8_t\000"
+ 1001      385F7400 
+ 1002              	.LASF19:
+ 1003 0257 73697A65 		.ascii	"sizetype\000"
+ 1003      74797065 
+ 1003      00
+ 1004              	.LASF9:
+ 1005 0260 6C6F6E67 		.ascii	"long long int\000"
+ 1005      206C6F6E 
+ 1005      6720696E 
+ 1005      7400
+ 1006              	.LASF17:
+ 1007 026e 63686172 		.ascii	"char\000"
+ 1007      00
+ 1008              	.LASF37:
+ 1009 0273 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 1009      73657273 
+ 1009      5C41646D 
+ 1009      696E5C44 
+ 1009      65736B74 
+ 1010 02a0 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 1010      355C4359 
+ 1010      50443532 
+ 1010      32352D39 
+ 1010      36425A58 
+ 1011 02d1 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 1011      6F6B2E63 
+ 1011      7964736E 
+ 1011      5C6E6F62 
+ 1011      6F6F742E 
+ARM GAS  e:\temp\cc4YJHBF.s 			page 25
+
+
+ 1012              	.LASF22:
+ 1013 02eb 706F7274 		.ascii	"port\000"
+ 1013      00
+ 1014              	.LASF28:
+ 1015 02f0 6752756E 		.ascii	"gRunTimeDataAddr\000"
+ 1015      54696D65 
+ 1015      44617461 
+ 1015      41646472 
+ 1015      00
+ 1016              	.LASF13:
+ 1017 0301 75696E74 		.ascii	"uint16_t\000"
+ 1017      31365F74 
+ 1017      00
+ 1018              	.LASF31:
+ 1019 030a 4379536F 		.ascii	"CySoftwareReset\000"
+ 1019      66747761 
+ 1019      72655265 
+ 1019      73657400 
+ 1020              	.LASF14:
+ 1021 031a 75696E74 		.ascii	"uint32_t\000"
+ 1021      33325F74 
+ 1021      00
+ 1022              	.LASF6:
+ 1023 0323 6C6F6E67 		.ascii	"long int\000"
+ 1023      20696E74 
+ 1023      00
+ 1024              	.LASF18:
+ 1025 032c 6C6F6E67 		.ascii	"long double\000"
+ 1025      20646F75 
+ 1025      626C6500 
+ 1026              	.LASF0:
+ 1027 0338 7369676E 		.ascii	"signed char\000"
+ 1027      65642063 
+ 1027      68617200 
+ 1028              	.LASF20:
+ 1029 0344 5F426F6F 		.ascii	"_Bool\000"
+ 1029      6C00
+ 1030              	.LASF29:
+ 1031 034a 674D6169 		.ascii	"gMainLoopDelay\000"
+ 1031      6E4C6F6F 
+ 1031      7044656C 
+ 1031      617900
+ 1032              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

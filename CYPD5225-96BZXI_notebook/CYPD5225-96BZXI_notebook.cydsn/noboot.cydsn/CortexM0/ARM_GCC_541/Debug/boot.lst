@@ -1,0 +1,3193 @@
+ARM GAS  e:\temp\ccvz51Lv.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"boot.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.get_boot_mode_reason,"ax",%progbits
+  20              		.align	2
+  21              		.global	get_boot_mode_reason
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	get_boot_mode_reason, %function
+  25              	get_boot_mode_reason:
+  26              	.LFB32:
+  27              		.file 1 "..\\src\\system\\boot.c"
+   1:..\src\system/boot.c **** /**
+   2:..\src\system/boot.c ****  * @file boot.c
+   3:..\src\system/boot.c ****  *
+   4:..\src\system/boot.c ****  * @brief @{Bootloader support functions.@}
+   5:..\src\system/boot.c ****  */
+   6:..\src\system/boot.c **** 
+   7:..\src\system/boot.c **** /*
+   8:..\src\system/boot.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+   9:..\src\system/boot.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  10:..\src\system/boot.c ****  *
+  11:..\src\system/boot.c ****  * This software, including source code, documentation and related materials
+  12:..\src\system/boot.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  13:..\src\system/boot.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  14:..\src\system/boot.c ****  * protection (United States and foreign), United States copyright laws and
+  15:..\src\system/boot.c ****  * international treaty provisions. Therefore, you may use this Software only
+  16:..\src\system/boot.c ****  * as provided in the license agreement accompanying the software package from
+  17:..\src\system/boot.c ****  * which you obtained this Software (“EULA”).
+  18:..\src\system/boot.c ****  *
+  19:..\src\system/boot.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  20:..\src\system/boot.c ****  * non-transferable license to copy, modify, and compile the Software source
+  21:..\src\system/boot.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  22:..\src\system/boot.c ****  * products. Any reproduction, modification, translation, compilation, or
+  23:..\src\system/boot.c ****  * representation of this Software except as specified above is prohibited
+  24:..\src\system/boot.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  25:..\src\system/boot.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  26:..\src\system/boot.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  27:..\src\system/boot.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  28:..\src\system/boot.c ****  * right to make changes to the Software without notice. Cypress does not
+  29:..\src\system/boot.c ****  * assume any liability arising out of the application or use of the Software
+  30:..\src\system/boot.c ****  * or any product or circuit described in the Software. Cypress does not
+ARM GAS  e:\temp\ccvz51Lv.s 			page 2
+
+
+  31:..\src\system/boot.c ****  * authorize its products for use in any products where a malfunction or
+  32:..\src\system/boot.c ****  * failure of the Cypress product may reasonably be expected to result in
+  33:..\src\system/boot.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  34:..\src\system/boot.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  35:..\src\system/boot.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  36:..\src\system/boot.c ****  * indemnify Cypress against all liability.
+  37:..\src\system/boot.c ****  */
+  38:..\src\system/boot.c **** 
+  39:..\src\system/boot.c **** #include <stdbool.h>
+  40:..\src\system/boot.c **** #include <config.h>
+  41:..\src\system/boot.c **** #include <flash_config.h>
+  42:..\src\system/boot.c **** #include <app_version.h>
+  43:..\src\system/boot.c **** #include <utils.h>
+  44:..\src\system/boot.c **** #include <status.h>
+  45:..\src\system/boot.c **** #include <system.h>
+  46:..\src\system/boot.c **** #include <flash.h>
+  47:..\src\system/boot.c **** #include <boot.h>
+  48:..\src\system/boot.c **** 
+  49:..\src\system/boot.c **** #if (SECURE_FW_UPDATE == 1)
+  50:..\src\system/boot.c **** #include <secure_boot.h>
+  51:..\src\system/boot.c **** #include <crypto_hal.h>
+  52:..\src\system/boot.c **** #endif /* SECURE_FW_UPDATE */
+  53:..\src\system/boot.c **** 
+  54:..\src\system/boot.c **** /* Structure to hold reason for boot mode. */
+  55:..\src\system/boot.c **** fw_img_status_t gl_img_status;
+  56:..\src\system/boot.c **** 
+  57:..\src\system/boot.c **** #if CCG_DUALAPP_DISABLE
+  58:..\src\system/boot.c **** /* If Dual-App bootloading is disabled, provide stub variable to keep the compiler happy. */
+  59:..\src\system/boot.c **** volatile uint8_t Bootloader_1_activeApp = 0;
+  60:..\src\system/boot.c **** #endif
+  61:..\src\system/boot.c **** 
+  62:..\src\system/boot.c **** #if (CCG_PSEUDO_METADATA_DISABLE == 0)
+  63:..\src\system/boot.c **** 
+  64:..\src\system/boot.c **** /* Pointer to Image-1 FW pseudo-metadata table. */
+  65:..\src\system/boot.c **** sys_fw_metadata_t *gl_img1_fw_pseudo_metadata;
+  66:..\src\system/boot.c **** 
+  67:..\src\system/boot.c **** /* Pointer to Image-2 FW pseudo-metadata table. */
+  68:..\src\system/boot.c **** sys_fw_metadata_t *gl_img2_fw_pseudo_metadata =
+  69:..\src\system/boot.c ****     (sys_fw_metadata_t *)(CCG_IMG2_FW_PSEUDO_METADATA_ADDR);
+  70:..\src\system/boot.c **** 
+  71:..\src\system/boot.c **** #endif /* CCG_PSEUDO_METADATA_DISABLE */
+  72:..\src\system/boot.c **** 
+  73:..\src\system/boot.c **** /* Boot-wait duration specified by firmware metadata. */
+  74:..\src\system/boot.c **** static volatile uint16_t gl_boot_wait_delay = CCG_BL_WAIT_DEFAULT;
+  75:..\src\system/boot.c **** 
+  76:..\src\system/boot.c **** /* Pointer to Image-1 FW metadata table. */
+  77:..\src\system/boot.c **** sys_fw_metadata_t *gl_img1_fw_metadata = 
+  78:..\src\system/boot.c ****         (sys_fw_metadata_t *)(CCG_IMG1_FW_METADATA_ADDR);
+  79:..\src\system/boot.c ****         
+  80:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+  81:..\src\system/boot.c **** /* Pointer to Image-2 FW metadata table. */
+  82:..\src\system/boot.c **** sys_fw_metadata_t *gl_img2_fw_metadata = 
+  83:..\src\system/boot.c ****         (sys_fw_metadata_t *)(CCG_IMG2_FW_METADATA_ADDR);
+  84:..\src\system/boot.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+  85:..\src\system/boot.c **** 
+  86:..\src\system/boot.c **** fw_img_status_t get_boot_mode_reason(void)
+  87:..\src\system/boot.c **** {
+ARM GAS  e:\temp\ccvz51Lv.s 			page 3
+
+
+  28              		.loc 1 87 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  88:..\src\system/boot.c ****     /* Return the reason for boot mode. */
+  89:..\src\system/boot.c ****     return gl_img_status;
+  33              		.loc 1 89 0
+  34 0000 014B     		ldr	r3, .L2
+  35 0002 1878     		ldrb	r0, [r3]
+  90:..\src\system/boot.c **** }
+  36              		.loc 1 90 0
+  37              		@ sp needed
+  38 0004 7047     		bx	lr
+  39              	.L3:
+  40 0006 C046     		.align	2
+  41              	.L2:
+  42 0008 00000000 		.word	gl_img_status
+  43              		.cfi_endproc
+  44              	.LFE32:
+  45              		.size	get_boot_mode_reason, .-get_boot_mode_reason
+  46              		.section	.text.boot_validate_configtable,"ax",%progbits
+  47              		.align	2
+  48              		.global	boot_validate_configtable
+  49              		.code	16
+  50              		.thumb_func
+  51              		.type	boot_validate_configtable, %function
+  52              	boot_validate_configtable:
+  53              	.LFB33:
+  91:..\src\system/boot.c **** 
+  92:..\src\system/boot.c **** /* Check whether configuration table checksum is good. */
+  93:..\src\system/boot.c **** ccg_status_t boot_validate_configtable(uint8_t *table_p)
+  94:..\src\system/boot.c **** {
+  54              		.loc 1 94 0
+  55              		.cfi_startproc
+  56              		@ args = 0, pretend = 0, frame = 0
+  57              		@ frame_needed = 0, uses_anonymous_args = 0
+  58              	.LVL0:
+  59 0000 10B5     		push	{r4, lr}
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 4, -8
+  62              		.cfi_offset 14, -4
+  95:..\src\system/boot.c ****     uint16_t size = MAKE_WORD (table_p[CONFIGTABLE_SIZE_OFFSET + 1], table_p[CONFIGTABLE_SIZE_OFFSE
+  63              		.loc 1 95 0
+  64 0002 C179     		ldrb	r1, [r0, #7]
+  65 0004 0902     		lsls	r1, r1, #8
+  66 0006 8379     		ldrb	r3, [r0, #6]
+  67 0008 1943     		orrs	r1, r3
+  68              	.LVL1:
+  96:..\src\system/boot.c **** 
+  97:..\src\system/boot.c ****     if (((uint32_t)table_p >= CCG_FLASH_SIZE) ||
+  69              		.loc 1 97 0
+  70 000a 0C4B     		ldr	r3, .L9
+  71 000c 9842     		cmp	r0, r3
+  72 000e 0FD8     		bhi	.L6
+  98:..\src\system/boot.c ****             (MAKE_WORD (table_p[1], table_p[0]) != CONFIGTABLE_SIGNATURE))
+  73              		.loc 1 98 0 discriminator 1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 4
+
+
+  74 0010 4378     		ldrb	r3, [r0, #1]
+  75 0012 1B02     		lsls	r3, r3, #8
+  76 0014 0278     		ldrb	r2, [r0]
+  77 0016 1343     		orrs	r3, r2
+  97:..\src\system/boot.c ****             (MAKE_WORD (table_p[1], table_p[0]) != CONFIGTABLE_SIGNATURE))
+  78              		.loc 1 97 0 discriminator 1
+  79 0018 094A     		ldr	r2, .L9+4
+  80 001a 9342     		cmp	r3, r2
+  81 001c 0AD1     		bne	.L7
+  99:..\src\system/boot.c ****     {
+ 100:..\src\system/boot.c ****         return CCG_STAT_INVALID_FW;
+ 101:..\src\system/boot.c ****     }
+ 102:..\src\system/boot.c **** 
+ 103:..\src\system/boot.c ****     if (table_p[CONFIGTABLE_CHECKSUM_OFFSET] != mem_calculate_byte_checksum (
+  82              		.loc 1 103 0
+  83 001e 047A     		ldrb	r4, [r0, #8]
+ 104:..\src\system/boot.c ****                 table_p + CONFIGTABLE_CHECKSUM_START, size - CONFIGTABLE_CHECKSUM_START))
+  84              		.loc 1 104 0
+  85 0020 0A39     		subs	r1, r1, #10
+  86              	.LVL2:
+ 103:..\src\system/boot.c ****                 table_p + CONFIGTABLE_CHECKSUM_START, size - CONFIGTABLE_CHECKSUM_START))
+  87              		.loc 1 103 0
+  88 0022 0A30     		adds	r0, r0, #10
+  89              	.LVL3:
+  90 0024 FFF7FEFF 		bl	mem_calculate_byte_checksum
+  91              	.LVL4:
+  92 0028 8442     		cmp	r4, r0
+  93 002a 05D0     		beq	.L8
+ 105:..\src\system/boot.c ****     {
+ 106:..\src\system/boot.c ****         return CCG_STAT_INVALID_FW;
+  94              		.loc 1 106 0
+  95 002c 0620     		movs	r0, #6
+  96 002e 04E0     		b	.L5
+  97              	.LVL5:
+  98              	.L6:
+ 100:..\src\system/boot.c ****     }
+  99              		.loc 1 100 0
+ 100 0030 0620     		movs	r0, #6
+ 101              	.LVL6:
+ 102 0032 02E0     		b	.L5
+ 103              	.LVL7:
+ 104              	.L7:
+ 105 0034 0620     		movs	r0, #6
+ 106              	.LVL8:
+ 107 0036 00E0     		b	.L5
+ 108              	.LVL9:
+ 109              	.L8:
+ 107:..\src\system/boot.c ****     }
+ 108:..\src\system/boot.c **** 
+ 109:..\src\system/boot.c ****     return CCG_STAT_SUCCESS;
+ 110              		.loc 1 109 0
+ 111 0038 0020     		movs	r0, #0
+ 112              	.L5:
+ 110:..\src\system/boot.c **** }
+ 113              		.loc 1 110 0
+ 114              		@ sp needed
+ 115 003a 10BD     		pop	{r4, pc}
+ARM GAS  e:\temp\ccvz51Lv.s 			page 5
+
+
+ 116              	.L10:
+ 117              		.align	2
+ 118              	.L9:
+ 119 003c FFFF0100 		.word	131071
+ 120 0040 59430000 		.word	17241
+ 121              		.cfi_endproc
+ 122              	.LFE33:
+ 123              		.size	boot_validate_configtable, .-boot_validate_configtable
+ 124              		.section	.text.boot_validate_fw,"ax",%progbits
+ 125              		.align	2
+ 126              		.global	boot_validate_fw
+ 127              		.code	16
+ 128              		.thumb_func
+ 129              		.type	boot_validate_fw, %function
+ 130              	boot_validate_fw:
+ 131              	.LFB34:
+ 111:..\src\system/boot.c **** 
+ 112:..\src\system/boot.c **** ccg_status_t boot_validate_fw(sys_fw_metadata_t *fw_metadata)
+ 113:..\src\system/boot.c **** {
+ 132              		.loc 1 113 0
+ 133              		.cfi_startproc
+ 134              		@ args = 0, pretend = 0, frame = 0
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136              	.LVL10:
+ 137 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 138              		.cfi_def_cfa_offset 24
+ 139              		.cfi_offset 3, -24
+ 140              		.cfi_offset 4, -20
+ 141              		.cfi_offset 5, -16
+ 142              		.cfi_offset 6, -12
+ 143              		.cfi_offset 7, -8
+ 144              		.cfi_offset 14, -4
+ 145              	.LVL11:
+ 114:..\src\system/boot.c ****     ccg_status_t status = CCG_STAT_SUCCESS;
+ 115:..\src\system/boot.c ****     /* Pointer to FW image start address. */
+ 116:..\src\system/boot.c ****     uint32_t fw_start = 0;
+ 117:..\src\system/boot.c ****     /* Size of FW image. */
+ 118:..\src\system/boot.c ****     uint32_t fw_size = 0;
+ 119:..\src\system/boot.c ****    
+ 120:..\src\system/boot.c ****     fw_start = ((fw_metadata->boot_last_row << CCG_FLASH_ROW_SHIFT_NUM)
+ 146              		.loc 1 120 0
+ 147 0002 4379     		ldrb	r3, [r0, #5]
+ 148 0004 8579     		ldrb	r5, [r0, #6]
+ 149 0006 2D02     		lsls	r5, r5, #8
+ 150 0008 1D43     		orrs	r5, r3
+ 151 000a 2D02     		lsls	r5, r5, #8
+ 152 000c 6E1C     		adds	r6, r5, #1
+ 153 000e FF36     		adds	r6, r6, #255
+ 154              	.LVL12:
+ 121:..\src\system/boot.c ****             + CCG_FLASH_ROW_SIZE);
+ 122:..\src\system/boot.c ****     fw_size = fw_metadata->fw_size;
+ 155              		.loc 1 122 0
+ 156 0010 447A     		ldrb	r4, [r0, #9]
+ 157 0012 837A     		ldrb	r3, [r0, #10]
+ 158 0014 1B02     		lsls	r3, r3, #8
+ 159 0016 2343     		orrs	r3, r4
+ 160 0018 1A00     		movs	r2, r3
+ARM GAS  e:\temp\ccvz51Lv.s 			page 6
+
+
+ 161 001a C17A     		ldrb	r1, [r0, #11]
+ 162 001c 0904     		lsls	r1, r1, #16
+ 163 001e 0B00     		movs	r3, r1
+ 164 0020 1343     		orrs	r3, r2
+ 165 0022 017B     		ldrb	r1, [r0, #12]
+ 166 0024 0906     		lsls	r1, r1, #24
+ 167 0026 1943     		orrs	r1, r3
+ 168              	.LVL13:
+ 123:..\src\system/boot.c ****     
+ 124:..\src\system/boot.c ****     /*
+ 125:..\src\system/boot.c ****      * Validate:
+ 126:..\src\system/boot.c ****      * 1) FW size.
+ 127:..\src\system/boot.c ****      * 2) FW checksum.
+ 128:..\src\system/boot.c ****      * 3) FW entry.
+ 129:..\src\system/boot.c ****      */
+ 130:..\src\system/boot.c ****     if (
+ 169              		.loc 1 130 0
+ 170 0028 1DD0     		beq	.L13
+ 131:..\src\system/boot.c ****             (fw_size == 0) ||
+ 132:..\src\system/boot.c ****             ((fw_start + fw_size) >= CCG_FLASH_SIZE) ||
+ 171              		.loc 1 132 0
+ 172 002a 7418     		adds	r4, r6, r1
+ 131:..\src\system/boot.c ****             (fw_size == 0) ||
+ 173              		.loc 1 131 0
+ 174 002c 134B     		ldr	r3, .L18
+ 175 002e 9C42     		cmp	r4, r3
+ 176 0030 1BD8     		bhi	.L14
+ 133:..\src\system/boot.c ****             (fw_metadata->fw_entry < fw_start) ||
+ 177              		.loc 1 133 0
+ 178 0032 4778     		ldrb	r7, [r0, #1]
+ 179 0034 8278     		ldrb	r2, [r0, #2]
+ 180 0036 1202     		lsls	r2, r2, #8
+ 181 0038 3A43     		orrs	r2, r7
+ 182 003a C378     		ldrb	r3, [r0, #3]
+ 183 003c 1B04     		lsls	r3, r3, #16
+ 184 003e 1A43     		orrs	r2, r3
+ 185 0040 0379     		ldrb	r3, [r0, #4]
+ 186 0042 1B06     		lsls	r3, r3, #24
+ 187 0044 1343     		orrs	r3, r2
+ 132:..\src\system/boot.c ****             (fw_metadata->fw_entry < fw_start) ||
+ 188              		.loc 1 132 0
+ 189 0046 9E42     		cmp	r6, r3
+ 190 0048 11D8     		bhi	.L15
+ 191              		.loc 1 133 0
+ 192 004a 9C42     		cmp	r4, r3
+ 193 004c 11D9     		bls	.L16
+ 134:..\src\system/boot.c ****             (fw_metadata->fw_entry >= (fw_start + fw_size)) ||
+ 135:..\src\system/boot.c ****             (fw_metadata->fw_checksum != mem_calculate_byte_checksum ((uint8_t *)fw_start, fw_size)
+ 194              		.loc 1 135 0
+ 195 004e 0478     		ldrb	r4, [r0]
+ 196 0050 3000     		movs	r0, r6
+ 197              	.LVL14:
+ 198 0052 FFF7FEFF 		bl	mem_calculate_byte_checksum
+ 199              	.LVL15:
+ 134:..\src\system/boot.c ****             (fw_metadata->fw_entry >= (fw_start + fw_size)) ||
+ 200              		.loc 1 134 0
+ 201 0056 8442     		cmp	r4, r0
+ARM GAS  e:\temp\ccvz51Lv.s 			page 7
+
+
+ 202 0058 0DD1     		bne	.L17
+ 136:..\src\system/boot.c ****        )
+ 137:..\src\system/boot.c ****     {
+ 138:..\src\system/boot.c ****         status = CCG_STAT_INVALID_FW;
+ 139:..\src\system/boot.c ****     }
+ 140:..\src\system/boot.c ****     else
+ 141:..\src\system/boot.c ****     {
+ 142:..\src\system/boot.c ****         status = boot_validate_configtable ((uint8_t *)(fw_start + CCG_FW_CONFTABLE_OFFSET));
+ 203              		.loc 1 142 0
+ 204 005a 8023     		movs	r3, #128
+ 205 005c 9B00     		lsls	r3, r3, #2
+ 206 005e E818     		adds	r0, r5, r3
+ 207 0060 FFF7FEFF 		bl	boot_validate_configtable
+ 208              	.LVL16:
+ 209 0064 08E0     		b	.L12
+ 210              	.LVL17:
+ 211              	.L13:
+ 138:..\src\system/boot.c ****     }
+ 212              		.loc 1 138 0
+ 213 0066 0620     		movs	r0, #6
+ 214              	.LVL18:
+ 215 0068 06E0     		b	.L12
+ 216              	.LVL19:
+ 217              	.L14:
+ 218 006a 0620     		movs	r0, #6
+ 219              	.LVL20:
+ 220 006c 04E0     		b	.L12
+ 221              	.LVL21:
+ 222              	.L15:
+ 223 006e 0620     		movs	r0, #6
+ 224              	.LVL22:
+ 225 0070 02E0     		b	.L12
+ 226              	.LVL23:
+ 227              	.L16:
+ 228 0072 0620     		movs	r0, #6
+ 229              	.LVL24:
+ 230 0074 00E0     		b	.L12
+ 231              	.LVL25:
+ 232              	.L17:
+ 233 0076 0620     		movs	r0, #6
+ 234              	.LVL26:
+ 235              	.L12:
+ 143:..\src\system/boot.c ****     }
+ 144:..\src\system/boot.c **** 
+ 145:..\src\system/boot.c ****     return status;
+ 146:..\src\system/boot.c **** }
+ 236              		.loc 1 146 0
+ 237              		@ sp needed
+ 238              	.LVL27:
+ 239 0078 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 240              	.L19:
+ 241 007a C046     		.align	2
+ 242              	.L18:
+ 243 007c FFFF0100 		.word	131071
+ 244              		.cfi_endproc
+ 245              	.LFE34:
+ 246              		.size	boot_validate_fw, .-boot_validate_fw
+ARM GAS  e:\temp\ccvz51Lv.s 			page 8
+
+
+ 247              		.section	.text.boot_handle_validate_fw_cmd,"ax",%progbits
+ 248              		.align	2
+ 249              		.global	boot_handle_validate_fw_cmd
+ 250              		.code	16
+ 251              		.thumb_func
+ 252              		.type	boot_handle_validate_fw_cmd, %function
+ 253              	boot_handle_validate_fw_cmd:
+ 254              	.LFB35:
+ 147:..\src\system/boot.c **** 
+ 148:..\src\system/boot.c **** ccg_status_t boot_handle_validate_fw_cmd(sys_fw_mode_t fw_mode)
+ 149:..\src\system/boot.c **** {
+ 255              		.loc 1 149 0
+ 256              		.cfi_startproc
+ 257              		@ args = 0, pretend = 0, frame = 0
+ 258              		@ frame_needed = 0, uses_anonymous_args = 0
+ 259              	.LVL28:
+ 260 0000 10B5     		push	{r4, lr}
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 4, -8
+ 263              		.cfi_offset 14, -4
+ 264 0002 0400     		movs	r4, r0
+ 265              	.LVL29:
+ 150:..\src\system/boot.c ****     sys_fw_metadata_t *md_p = NULL;
+ 151:..\src\system/boot.c ****     ccg_status_t code = CCG_STAT_NO_RESPONSE;
+ 152:..\src\system/boot.c **** 
+ 153:..\src\system/boot.c **** #if (CCG_BOOT != 0)
+ 154:..\src\system/boot.c ****     switch (fw_mode)
+ 155:..\src\system/boot.c ****     {
+ 156:..\src\system/boot.c ****         case SYS_FW_MODE_FWIMAGE_1:
+ 157:..\src\system/boot.c ****             md_p = gl_img1_fw_metadata;
+ 158:..\src\system/boot.c ****             break;
+ 159:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 160:..\src\system/boot.c ****         case SYS_FW_MODE_FWIMAGE_2:
+ 161:..\src\system/boot.c ****             md_p = gl_img2_fw_metadata;
+ 162:..\src\system/boot.c ****             break;
+ 163:..\src\system/boot.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+ 164:..\src\system/boot.c ****         default:
+ 165:..\src\system/boot.c ****             code = CCG_STAT_INVALID_ARGUMENT;
+ 166:..\src\system/boot.c ****             break;
+ 167:..\src\system/boot.c ****     }
+ 168:..\src\system/boot.c **** #else /* (CCG_BOOT != 0) */
+ 169:..\src\system/boot.c ****     if (fw_mode == sys_get_device_mode ())
+ 266              		.loc 1 169 0
+ 267 0004 FFF7FEFF 		bl	sys_get_device_mode
+ 268              	.LVL30:
+ 269 0008 A042     		cmp	r0, r4
+ 270 000a 0ED0     		beq	.L28
+ 170:..\src\system/boot.c ****     {
+ 171:..\src\system/boot.c ****         /* There is no need to validate the currently running image. */
+ 172:..\src\system/boot.c ****         code = CCG_STAT_SUCCESS;
+ 173:..\src\system/boot.c ****     }
+ 174:..\src\system/boot.c ****     else
+ 175:..\src\system/boot.c ****     {
+ 176:..\src\system/boot.c ****         switch (fw_mode)
+ 271              		.loc 1 176 0
+ 272 000c 012C     		cmp	r4, #1
+ 273 000e 02D0     		beq	.L22
+ARM GAS  e:\temp\ccvz51Lv.s 			page 9
+
+
+ 274 0010 022C     		cmp	r4, #2
+ 275 0012 05D0     		beq	.L23
+ 276 0014 0CE0     		b	.L32
+ 277              	.L22:
+ 177:..\src\system/boot.c ****         {
+ 178:..\src\system/boot.c ****             case SYS_FW_MODE_FWIMAGE_1:
+ 179:..\src\system/boot.c **** #if (CCG_PSEUDO_METADATA_DISABLE == 0)
+ 180:..\src\system/boot.c ****                 /*
+ 181:..\src\system/boot.c ****                  * CCG is in FW Image 2 and request is to validate FW image 1. 
+ 182:..\src\system/boot.c ****                  * There can be following cases:
+ 183:..\src\system/boot.c ****                  * 1) If Image-1 PMD signature is "CP", use Image-1 PMD for validation.
+ 184:..\src\system/boot.c ****                  * 2) Otherwise, use Image-1 MD for validation.
+ 185:..\src\system/boot.c ****                  */
+ 186:..\src\system/boot.c ****                 if(gl_img1_fw_pseudo_metadata->metadata_valid == 
+ 187:..\src\system/boot.c ****                     SYS_PSEUDO_METADATA_VALID_SIG)
+ 188:..\src\system/boot.c ****                 {
+ 189:..\src\system/boot.c ****                     md_p = gl_img1_fw_pseudo_metadata;
+ 190:..\src\system/boot.c ****                 }
+ 191:..\src\system/boot.c ****                 else
+ 192:..\src\system/boot.c **** #endif /* (CCG_PSEUDO_METADATA_DISABLE == 0) */
+ 193:..\src\system/boot.c ****                 {
+ 194:..\src\system/boot.c ****                     md_p = gl_img1_fw_metadata;
+ 278              		.loc 1 194 0
+ 279 0016 1F4B     		ldr	r3, .L33
+ 280 0018 1868     		ldr	r0, [r3]
+ 281              	.LVL31:
+ 151:..\src\system/boot.c **** 
+ 282              		.loc 1 151 0
+ 283 001a 0223     		movs	r3, #2
+ 284 001c 5B42     		rsbs	r3, r3, #0
+ 195:..\src\system/boot.c ****                 }
+ 196:..\src\system/boot.c ****                 break;
+ 285              		.loc 1 196 0
+ 286 001e 09E0     		b	.L21
+ 287              	.LVL32:
+ 288              	.L23:
+ 197:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 198:..\src\system/boot.c ****             case SYS_FW_MODE_FWIMAGE_2:
+ 199:..\src\system/boot.c **** #if (CCG_PSEUDO_METADATA_DISABLE == 0)
+ 200:..\src\system/boot.c ****                 /*
+ 201:..\src\system/boot.c ****                  * CCG is in FW Image 1 and request is to validate FW image 2. 
+ 202:..\src\system/boot.c ****                  * There can be following cases:
+ 203:..\src\system/boot.c ****                  * 1) If Image-2 PMD signature is "CP", use Image-2 PMD for validation.
+ 204:..\src\system/boot.c ****                  * 2) Otherwise, use Image-1 MD for validation.
+ 205:..\src\system/boot.c ****                  */
+ 206:..\src\system/boot.c ****                 if(gl_img2_fw_pseudo_metadata->metadata_valid == 
+ 207:..\src\system/boot.c ****                     SYS_PSEUDO_METADATA_VALID_SIG)
+ 208:..\src\system/boot.c ****                 {
+ 209:..\src\system/boot.c ****                     md_p = gl_img2_fw_pseudo_metadata;
+ 210:..\src\system/boot.c ****                 }
+ 211:..\src\system/boot.c ****                 else
+ 212:..\src\system/boot.c **** #endif /* (CCG_PSEUDO_METADATA_DISABLE == 0) */
+ 213:..\src\system/boot.c ****                 {
+ 214:..\src\system/boot.c ****                     md_p = gl_img2_fw_metadata;
+ 289              		.loc 1 214 0
+ 290 0020 1C4B     		ldr	r3, .L33
+ 291 0022 5868     		ldr	r0, [r3, #4]
+ARM GAS  e:\temp\ccvz51Lv.s 			page 10
+
+
+ 292              	.LVL33:
+ 151:..\src\system/boot.c **** 
+ 293              		.loc 1 151 0
+ 294 0024 0223     		movs	r3, #2
+ 295 0026 5B42     		rsbs	r3, r3, #0
+ 215:..\src\system/boot.c ****                 }
+ 216:..\src\system/boot.c ****                 break;
+ 296              		.loc 1 216 0
+ 297 0028 04E0     		b	.L21
+ 298              	.LVL34:
+ 299              	.L28:
+ 172:..\src\system/boot.c ****     }
+ 300              		.loc 1 172 0
+ 301 002a 0023     		movs	r3, #0
+ 150:..\src\system/boot.c ****     ccg_status_t code = CCG_STAT_NO_RESPONSE;
+ 302              		.loc 1 150 0
+ 303 002c 0020     		movs	r0, #0
+ 304 002e 01E0     		b	.L21
+ 305              	.L32:
+ 217:..\src\system/boot.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+ 218:..\src\system/boot.c ****             default:
+ 219:..\src\system/boot.c ****                 code = CCG_STAT_INVALID_ARGUMENT;
+ 306              		.loc 1 219 0
+ 307 0030 0723     		movs	r3, #7
+ 150:..\src\system/boot.c ****     ccg_status_t code = CCG_STAT_NO_RESPONSE;
+ 308              		.loc 1 150 0
+ 309 0032 0020     		movs	r0, #0
+ 310              	.LVL35:
+ 311              	.L21:
+ 220:..\src\system/boot.c ****                 break;
+ 221:..\src\system/boot.c ****         }
+ 222:..\src\system/boot.c ****     }
+ 223:..\src\system/boot.c **** #endif /* (CCG_BOOT != 0) */
+ 224:..\src\system/boot.c **** 
+ 225:..\src\system/boot.c ****     if (md_p != NULL)
+ 312              		.loc 1 225 0
+ 313 0034 0028     		cmp	r0, #0
+ 314 0036 2AD0     		beq	.L24
+ 226:..\src\system/boot.c ****     {
+ 227:..\src\system/boot.c ****         if (boot_validate_fw (md_p) == CCG_STAT_SUCCESS)
+ 315              		.loc 1 227 0
+ 316 0038 FFF7FEFF 		bl	boot_validate_fw
+ 317              	.LVL36:
+ 318 003c 0028     		cmp	r0, #0
+ 319 003e 11D1     		bne	.L25
+ 320              	.LVL37:
+ 228:..\src\system/boot.c ****         {
+ 229:..\src\system/boot.c ****             code = CCG_STAT_SUCCESS;
+ 230:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 321              		.loc 1 230 0
+ 322 0040 012C     		cmp	r4, #1
+ 323 0042 06D1     		bne	.L26
+ 231:..\src\system/boot.c ****             {
+ 232:..\src\system/boot.c ****                 gl_img_status.status.fw1_invalid = 0;
+ 324              		.loc 1 232 0
+ 325 0044 144A     		ldr	r2, .L33+4
+ 326 0046 1378     		ldrb	r3, [r2]
+ARM GAS  e:\temp\ccvz51Lv.s 			page 11
+
+
+ 327 0048 0421     		movs	r1, #4
+ 328 004a 8B43     		bics	r3, r1
+ 329 004c 1370     		strb	r3, [r2]
+ 229:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 330              		.loc 1 229 0
+ 331 004e 0023     		movs	r3, #0
+ 332 0050 1DE0     		b	.L24
+ 333              	.L26:
+ 233:..\src\system/boot.c ****             }
+ 234:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 235:..\src\system/boot.c ****             else if(fw_mode == SYS_FW_MODE_FWIMAGE_2)
+ 334              		.loc 1 235 0
+ 335 0052 022C     		cmp	r4, #2
+ 336 0054 18D1     		bne	.L30
+ 236:..\src\system/boot.c ****             {
+ 237:..\src\system/boot.c ****                 gl_img_status.status.fw2_invalid = 0;
+ 337              		.loc 1 237 0
+ 338 0056 104A     		ldr	r2, .L33+4
+ 339 0058 1378     		ldrb	r3, [r2]
+ 340 005a 0821     		movs	r1, #8
+ 341 005c 8B43     		bics	r3, r1
+ 342 005e 1370     		strb	r3, [r2]
+ 229:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 343              		.loc 1 229 0
+ 344 0060 0023     		movs	r3, #0
+ 345 0062 14E0     		b	.L24
+ 346              	.LVL38:
+ 347              	.L25:
+ 238:..\src\system/boot.c ****             }
+ 239:..\src\system/boot.c **** #endif /* !CCG_DUALAPP_DISABLE */
+ 240:..\src\system/boot.c ****         }
+ 241:..\src\system/boot.c ****         else
+ 242:..\src\system/boot.c ****         {
+ 243:..\src\system/boot.c ****             code = CCG_STAT_INVALID_FW;
+ 244:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 348              		.loc 1 244 0
+ 349 0064 012C     		cmp	r4, #1
+ 350 0066 06D1     		bne	.L27
+ 245:..\src\system/boot.c ****             {
+ 246:..\src\system/boot.c ****                 gl_img_status.status.fw1_invalid = 1;
+ 351              		.loc 1 246 0
+ 352 0068 0B4A     		ldr	r2, .L33+4
+ 353 006a 1178     		ldrb	r1, [r2]
+ 354 006c 0423     		movs	r3, #4
+ 355 006e 0B43     		orrs	r3, r1
+ 356 0070 1370     		strb	r3, [r2]
+ 243:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 357              		.loc 1 243 0
+ 358 0072 0623     		movs	r3, #6
+ 359 0074 0BE0     		b	.L24
+ 360              	.L27:
+ 247:..\src\system/boot.c ****             }
+ 248:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 249:..\src\system/boot.c ****             else if(fw_mode == SYS_FW_MODE_FWIMAGE_2)
+ 361              		.loc 1 249 0
+ 362 0076 022C     		cmp	r4, #2
+ 363 0078 08D1     		bne	.L31
+ARM GAS  e:\temp\ccvz51Lv.s 			page 12
+
+
+ 250:..\src\system/boot.c ****             {
+ 251:..\src\system/boot.c ****                 gl_img_status.status.fw2_invalid = 1;
+ 364              		.loc 1 251 0
+ 365 007a 074A     		ldr	r2, .L33+4
+ 366 007c 1178     		ldrb	r1, [r2]
+ 367 007e 0823     		movs	r3, #8
+ 368 0080 0B43     		orrs	r3, r1
+ 369 0082 1370     		strb	r3, [r2]
+ 243:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 370              		.loc 1 243 0
+ 371 0084 0623     		movs	r3, #6
+ 372 0086 02E0     		b	.L24
+ 373              	.LVL39:
+ 374              	.L30:
+ 229:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 375              		.loc 1 229 0
+ 376 0088 0023     		movs	r3, #0
+ 377 008a 00E0     		b	.L24
+ 378              	.LVL40:
+ 379              	.L31:
+ 243:..\src\system/boot.c ****             if(fw_mode == SYS_FW_MODE_FWIMAGE_1)
+ 380              		.loc 1 243 0
+ 381 008c 0623     		movs	r3, #6
+ 382              	.LVL41:
+ 383              	.L24:
+ 252:..\src\system/boot.c ****             }
+ 253:..\src\system/boot.c **** #endif /* !CCG_DUALAPP_DISABLE */
+ 254:..\src\system/boot.c ****         }
+ 255:..\src\system/boot.c ****     }
+ 256:..\src\system/boot.c ****     return code;
+ 257:..\src\system/boot.c **** }
+ 384              		.loc 1 257 0
+ 385 008e 1800     		movs	r0, r3
+ 386              		@ sp needed
+ 387 0090 10BD     		pop	{r4, pc}
+ 388              	.L34:
+ 389 0092 C046     		.align	2
+ 390              	.L33:
+ 391 0094 00000000 		.word	.LANCHOR0
+ 392 0098 00000000 		.word	gl_img_status
+ 393              		.cfi_endproc
+ 394              	.LFE35:
+ 395              		.size	boot_handle_validate_fw_cmd, .-boot_handle_validate_fw_cmd
+ 396              		.section	.text.boot_update_fw_status,"ax",%progbits
+ 397              		.align	2
+ 398              		.global	boot_update_fw_status
+ 399              		.code	16
+ 400              		.thumb_func
+ 401              		.type	boot_update_fw_status, %function
+ 402              	boot_update_fw_status:
+ 403              	.LFB36:
+ 258:..\src\system/boot.c **** 
+ 259:..\src\system/boot.c **** #if (CCG_BOOT != 0)
+ 260:..\src\system/boot.c **** #if (BOOT_WAIT_WINDOW_DISABLE == 0)
+ 261:..\src\system/boot.c **** /* Return the boot-wait setting to the user code. */
+ 262:..\src\system/boot.c **** uint16_t boot_get_wait_time(void)
+ 263:..\src\system/boot.c **** {
+ARM GAS  e:\temp\ccvz51Lv.s 			page 13
+
+
+ 264:..\src\system/boot.c ****     return (gl_boot_wait_delay);
+ 265:..\src\system/boot.c **** }
+ 266:..\src\system/boot.c **** 
+ 267:..\src\system/boot.c **** static void boot_set_wait_timeout(sys_fw_metadata_t *md_p)
+ 268:..\src\system/boot.c **** {
+ 269:..\src\system/boot.c ****     /* Check for boot-wait option. */
+ 270:..\src\system/boot.c ****     if (md_p->boot_app_id == CCG_FWMETA_APPID_WAIT_0)
+ 271:..\src\system/boot.c ****     {
+ 272:..\src\system/boot.c ****         gl_boot_wait_delay = 0;
+ 273:..\src\system/boot.c ****     }
+ 274:..\src\system/boot.c ****     else
+ 275:..\src\system/boot.c ****     {
+ 276:..\src\system/boot.c ****         if (md_p->boot_app_id != CCG_FWMETA_APPID_WAIT_DEF)
+ 277:..\src\system/boot.c ****         {
+ 278:..\src\system/boot.c ****             /* Get the boot-wait delay from metadata, applying the MIN and MAX limits. */
+ 279:..\src\system/boot.c ****             gl_boot_wait_delay = GET_MAX (CCG_BL_WAIT_MAXIMUM, GET_MIN (CCG_BL_WAIT_MINUMUM,
+ 280:..\src\system/boot.c ****                         md_p->boot_app_id));
+ 281:..\src\system/boot.c ****         }
+ 282:..\src\system/boot.c ****     }
+ 283:..\src\system/boot.c **** }
+ 284:..\src\system/boot.c **** #endif /* BOOT_WAIT_WINDOW_DISABLE */
+ 285:..\src\system/boot.c **** 
+ 286:..\src\system/boot.c **** /*This function schedules recent and valid FW. It sets boot mode reason */
+ 287:..\src\system/boot.c **** bool boot_start(void)
+ 288:..\src\system/boot.c **** {
+ 289:..\src\system/boot.c ****     sys_fw_metadata_t *md_p;
+ 290:..\src\system/boot.c ****     uint8_t img;
+ 291:..\src\system/boot.c **** 
+ 292:..\src\system/boot.c ****     bool boot_fw1 = false;
+ 293:..\src\system/boot.c ****     bool boot_fw2 = false;
+ 294:..\src\system/boot.c **** 
+ 295:..\src\system/boot.c **** #if (CCG_DUALAPP_DISABLE)
+ 296:..\src\system/boot.c ****     (void)boot_fw1;
+ 297:..\src\system/boot.c ****     (void)boot_fw2;
+ 298:..\src\system/boot.c **** #endif /* CCG_DUALAPP_DISABLE */
+ 299:..\src\system/boot.c **** 
+ 300:..\src\system/boot.c ****     md_p = NULL;
+ 301:..\src\system/boot.c ****     gl_img_status.val = 0;
+ 302:..\src\system/boot.c ****    
+ 303:..\src\system/boot.c ****     /* Check the two firmware binaries for validity. */
+ 304:..\src\system/boot.c ****     if (boot_validate_fw ((sys_fw_metadata_t *)CCG_IMG1_FW_METADATA_ADDR) != CCG_STAT_SUCCESS)
+ 305:..\src\system/boot.c ****     {
+ 306:..\src\system/boot.c ****         gl_img_status.status.fw1_invalid  = 1;
+ 307:..\src\system/boot.c ****     }
+ 308:..\src\system/boot.c **** 
+ 309:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 310:..\src\system/boot.c ****     if (boot_validate_fw ((sys_fw_metadata_t *)CCG_IMG2_FW_METADATA_ADDR) != CCG_STAT_SUCCESS)
+ 311:..\src\system/boot.c **** #endif /* CCG_DUALAPP_DISABLE */
+ 312:..\src\system/boot.c ****     {
+ 313:..\src\system/boot.c ****         gl_img_status.status.fw2_invalid = 1;
+ 314:..\src\system/boot.c ****     }
+ 315:..\src\system/boot.c ****     
+ 316:..\src\system/boot.c ****     /* Check for the boot mode request. */
+ 317:..\src\system/boot.c ****     /*
+ 318:..\src\system/boot.c ****      * NOTE: cyBtldrRunType is Bootloader component provided variable.
+ 319:..\src\system/boot.c ****      * It is used to store the jump signature. Check the lower two bytes
+ 320:..\src\system/boot.c ****      * for signature.
+ARM GAS  e:\temp\ccvz51Lv.s 			page 14
+
+
+ 321:..\src\system/boot.c ****      */
+ 322:..\src\system/boot.c ****     if ((cyBtldrRunType & 0xFFFF) == SYS_BOOT_MODE_RQT_SIG)
+ 323:..\src\system/boot.c ****     {
+ 324:..\src\system/boot.c ****         /*
+ 325:..\src\system/boot.c ****          * FW has made a request to stay in boot mode. Return
+ 326:..\src\system/boot.c ****          * from here after clearing the variable.
+ 327:..\src\system/boot.c ****          */
+ 328:..\src\system/boot.c ****         cyBtldrRunType = 0;
+ 329:..\src\system/boot.c ****         /* Set the reason for boot mode. */
+ 330:..\src\system/boot.c ****         gl_img_status.status.boot_mode_request = true;
+ 331:..\src\system/boot.c ****         return false;
+ 332:..\src\system/boot.c ****     }
+ 333:..\src\system/boot.c ****     
+ 334:..\src\system/boot.c ****     /* Check if we have been asked to boot FW1 or FW2 specifically. */
+ 335:..\src\system/boot.c ****     if ((cyBtldrRunType & 0xFFFF) == CCG_FW1_BOOT_RQT_SIG)
+ 336:..\src\system/boot.c ****         boot_fw1 = true;
+ 337:..\src\system/boot.c **** 
+ 338:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 339:..\src\system/boot.c ****     if ((cyBtldrRunType & 0xFFFF) == CCG_FW2_BOOT_RQT_SIG)
+ 340:..\src\system/boot.c ****         boot_fw2 = true;
+ 341:..\src\system/boot.c **** #endif /* CCG_DUALAPP_DISABLE */
+ 342:..\src\system/boot.c **** 
+ 343:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 344:..\src\system/boot.c ****     /*
+ 345:..\src\system/boot.c ****      * If we have been specifically asked to boot FW2, do that.
+ 346:..\src\system/boot.c ****      * Otherwise, if we have not been specifically asked to boot FW1; choose the binary with
+ 347:..\src\system/boot.c ****      * greater sequence number.
+ 348:..\src\system/boot.c ****      */
+ 349:..\src\system/boot.c ****     if (!gl_img_status.status.fw2_invalid)
+ 350:..\src\system/boot.c ****     {
+ 351:..\src\system/boot.c ****         /* 
+ 352:..\src\system/boot.c ****          * FW2 is valid.
+ 353:..\src\system/boot.c ****          * We can boot this if:
+ 354:..\src\system/boot.c ****          * 1. We have been asked to boot FW2.
+ 355:..\src\system/boot.c ****          * 2. FW1 is not valid.
+ 356:..\src\system/boot.c ****          * 3. FW2 is newer than FW1, and we have not been asked to boot FW1.
+ 357:..\src\system/boot.c ****          */
+ 358:..\src\system/boot.c ****         if ((boot_fw2) || (gl_img_status.status.fw1_invalid) ||
+ 359:..\src\system/boot.c ****                 ((!boot_fw1) && (sys_get_recent_fw_image() == SYS_FW_MODE_FWIMAGE_2)))
+ 360:..\src\system/boot.c ****         {
+ 361:..\src\system/boot.c ****             md_p = gl_img2_fw_metadata;
+ 362:..\src\system/boot.c ****             img  = Bootloader_1_MD_BTLDB_ACTIVE_1;
+ 363:..\src\system/boot.c ****         }
+ 364:..\src\system/boot.c ****         else
+ 365:..\src\system/boot.c ****         {
+ 366:..\src\system/boot.c ****             md_p = gl_img1_fw_metadata;
+ 367:..\src\system/boot.c ****             img  = Bootloader_1_MD_BTLDB_ACTIVE_0;
+ 368:..\src\system/boot.c ****         }
+ 369:..\src\system/boot.c ****     }
+ 370:..\src\system/boot.c ****     else
+ 371:..\src\system/boot.c **** #endif /* CCG_DUALAPP_DISABLE */
+ 372:..\src\system/boot.c ****     {
+ 373:..\src\system/boot.c ****         /* FW2 is invalid. */
+ 374:..\src\system/boot.c ****         /* Load FW1 if it is valid. */
+ 375:..\src\system/boot.c ****         if (!gl_img_status.status.fw1_invalid)
+ 376:..\src\system/boot.c ****         {
+ 377:..\src\system/boot.c ****             md_p = gl_img1_fw_metadata;
+ARM GAS  e:\temp\ccvz51Lv.s 			page 15
+
+
+ 378:..\src\system/boot.c ****             img  = Bootloader_1_MD_BTLDB_ACTIVE_0;
+ 379:..\src\system/boot.c ****         }
+ 380:..\src\system/boot.c ****     }
+ 381:..\src\system/boot.c ****     
+ 382:..\src\system/boot.c ****     if (md_p != NULL)
+ 383:..\src\system/boot.c ****     {
+ 384:..\src\system/boot.c **** #if (BOOT_WAIT_WINDOW_DISABLE == 0)
+ 385:..\src\system/boot.c ****         /*
+ 386:..\src\system/boot.c ****          * If we are in the middle of a jump-to-alt-fw command, do not provide
+ 387:..\src\system/boot.c ****          * the boot wait window.
+ 388:..\src\system/boot.c ****          */
+ 389:..\src\system/boot.c ****         if ((boot_fw1) || (boot_fw2))
+ 390:..\src\system/boot.c ****             gl_boot_wait_delay = 0;
+ 391:..\src\system/boot.c ****         else
+ 392:..\src\system/boot.c ****             boot_set_wait_timeout (md_p);
+ 393:..\src\system/boot.c **** #endif /* BOOT_WAIT_WINDOW_DISABLE */
+ 394:..\src\system/boot.c **** 
+ 395:..\src\system/boot.c ****         Bootloader_1_activeApp = img;
+ 396:..\src\system/boot.c ****         return true;
+ 397:..\src\system/boot.c ****     }
+ 398:..\src\system/boot.c **** 
+ 399:..\src\system/boot.c ****     /* Stay in bootlaoder. */
+ 400:..\src\system/boot.c ****     return false;
+ 401:..\src\system/boot.c **** }
+ 402:..\src\system/boot.c **** 
+ 403:..\src\system/boot.c **** void boot_jump_to_fw(void)
+ 404:..\src\system/boot.c **** {
+ 405:..\src\system/boot.c ****     /* Schedule the FW and undergo a reset. */
+ 406:..\src\system/boot.c ****     Bootloader_1_SET_RUN_TYPE (Bootloader_1_START_APP);
+ 407:..\src\system/boot.c ****     CySoftwareReset ();
+ 408:..\src\system/boot.c **** }
+ 409:..\src\system/boot.c **** #else /* !CCG_BOOT */
+ 410:..\src\system/boot.c **** 
+ 411:..\src\system/boot.c **** void boot_update_fw_status(void)
+ 412:..\src\system/boot.c **** {
+ 404              		.loc 1 412 0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408 0000 10B5     		push	{r4, lr}
+ 409              		.cfi_def_cfa_offset 8
+ 410              		.cfi_offset 4, -8
+ 411              		.cfi_offset 14, -4
+ 413:..\src\system/boot.c **** #if (!CCG_BOOT)
+ 414:..\src\system/boot.c ****     gl_img_status.val = 0;
+ 412              		.loc 1 414 0
+ 413 0002 0022     		movs	r2, #0
+ 414 0004 0B4B     		ldr	r3, .L38
+ 415 0006 1A70     		strb	r2, [r3]
+ 415:..\src\system/boot.c **** 
+ 416:..\src\system/boot.c ****     /* Check the two firmware binaries for validity. */
+ 417:..\src\system/boot.c ****     if (boot_handle_validate_fw_cmd (SYS_FW_MODE_FWIMAGE_1) != CCG_STAT_SUCCESS)
+ 416              		.loc 1 417 0
+ 417 0008 0120     		movs	r0, #1
+ 418 000a FFF7FEFF 		bl	boot_handle_validate_fw_cmd
+ 419              	.LVL42:
+ 420 000e 0028     		cmp	r0, #0
+ARM GAS  e:\temp\ccvz51Lv.s 			page 16
+
+
+ 421 0010 04D0     		beq	.L36
+ 418:..\src\system/boot.c ****     {
+ 419:..\src\system/boot.c ****         gl_img_status.status.fw1_invalid = 1;
+ 422              		.loc 1 419 0
+ 423 0012 084A     		ldr	r2, .L38
+ 424 0014 1178     		ldrb	r1, [r2]
+ 425 0016 0423     		movs	r3, #4
+ 426 0018 0B43     		orrs	r3, r1
+ 427 001a 1370     		strb	r3, [r2]
+ 428              	.L36:
+ 420:..\src\system/boot.c ****     }
+ 421:..\src\system/boot.c **** 
+ 422:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 423:..\src\system/boot.c ****     if (boot_handle_validate_fw_cmd (SYS_FW_MODE_FWIMAGE_2) != CCG_STAT_SUCCESS)
+ 429              		.loc 1 423 0
+ 430 001c 0220     		movs	r0, #2
+ 431 001e FFF7FEFF 		bl	boot_handle_validate_fw_cmd
+ 432              	.LVL43:
+ 433 0022 0028     		cmp	r0, #0
+ 434 0024 04D0     		beq	.L35
+ 424:..\src\system/boot.c **** #endif /* !CCG_DUALAPP_DISABLE */
+ 425:..\src\system/boot.c ****     {
+ 426:..\src\system/boot.c ****         gl_img_status.status.fw2_invalid = 1;
+ 435              		.loc 1 426 0
+ 436 0026 034A     		ldr	r2, .L38
+ 437 0028 1178     		ldrb	r1, [r2]
+ 438 002a 0823     		movs	r3, #8
+ 439 002c 0B43     		orrs	r3, r1
+ 440 002e 1370     		strb	r3, [r2]
+ 441              	.L35:
+ 427:..\src\system/boot.c ****     }
+ 428:..\src\system/boot.c **** 
+ 429:..\src\system/boot.c **** #if APP_PRIORITY_FEATURE_ENABLE
+ 430:..\src\system/boot.c ****     /* Update the app-priority field if the feature is enabled. */
+ 431:..\src\system/boot.c ****     gl_img_status.status.reserved1 = ((*(uint8_t *)(CCG_APP_PRIORITY_ROW_NUM << CCG_FLASH_ROW_SHIFT
+ 432:..\src\system/boot.c **** #endif /* APP_PRIORITY_FEATURE_ENABLE */
+ 433:..\src\system/boot.c **** 
+ 434:..\src\system/boot.c **** #endif /* CCG_BOOT */
+ 435:..\src\system/boot.c **** }
+ 442              		.loc 1 435 0
+ 443              		@ sp needed
+ 444 0030 10BD     		pop	{r4, pc}
+ 445              	.L39:
+ 446 0032 C046     		.align	2
+ 447              	.L38:
+ 448 0034 00000000 		.word	gl_img_status
+ 449              		.cfi_endproc
+ 450              	.LFE36:
+ 451              		.size	boot_update_fw_status, .-boot_update_fw_status
+ 452              		.section	.text.boot_get_boot_seq,"ax",%progbits
+ 453              		.align	2
+ 454              		.global	boot_get_boot_seq
+ 455              		.code	16
+ 456              		.thumb_func
+ 457              		.type	boot_get_boot_seq, %function
+ 458              	boot_get_boot_seq:
+ 459              	.LFB37:
+ARM GAS  e:\temp\ccvz51Lv.s 			page 17
+
+
+ 436:..\src\system/boot.c ****     
+ 437:..\src\system/boot.c **** #if (CCG_PSEUDO_METADATA_DISABLE == 0)
+ 438:..\src\system/boot.c **** 
+ 439:..\src\system/boot.c **** void boot_check_for_valid_fw(void)
+ 440:..\src\system/boot.c **** {
+ 441:..\src\system/boot.c ****     /* Temporary data buffer (of size one Flash row) to store contents of pseudo metadata. */
+ 442:..\src\system/boot.c ****     uint8_t temp_pseudo_metadata_buf[CCG_FLASH_ROW_SIZE] = {0};
+ 443:..\src\system/boot.c ****     sys_fw_metadata_t *p_md, *alt_p_md, *md, *alt_md;
+ 444:..\src\system/boot.c ****     uint16_t alt_p_md_row_num, alt_md_row_num, p_md_row_num;
+ 445:..\src\system/boot.c ****     /* To hold the bit position of alternate image in Image status structure. */
+ 446:..\src\system/boot.c ****     uint8_t alt_img_bit_pos;
+ 447:..\src\system/boot.c ****     bool invalidate_md = false;
+ 448:..\src\system/boot.c **** #if (SECURE_FW_UPDATE == 1)
+ 449:..\src\system/boot.c ****     /* Buffer to hold FW HASH. */
+ 450:..\src\system/boot.c ****     uint32_t fw_hash[CRYPTO_SHA_2_HASH_SIZE_WORDS] = {0};
+ 451:..\src\system/boot.c **** #endif /* SECURE_FW_UPDATE */
+ 452:..\src\system/boot.c **** 
+ 453:..\src\system/boot.c ****     /*Pointer to the metadata table's start address  in pseudo metadata row buffer. */
+ 454:..\src\system/boot.c ****     sys_fw_metadata_t *temp_fw_pmetadata = (sys_fw_metadata_t *)
+ 455:..\src\system/boot.c ****             (temp_pseudo_metadata_buf + (CCG_FLASH_ROW_SIZE - CCG_METADATA_TABLE_SIZE));
+ 456:..\src\system/boot.c **** 
+ 457:..\src\system/boot.c ****     /* Determine the pseudo and actual metadata row details based on FW mode. */
+ 458:..\src\system/boot.c ****     if (sys_get_device_mode() == SYS_FW_MODE_FWIMAGE_1)
+ 459:..\src\system/boot.c ****     {
+ 460:..\src\system/boot.c ****         p_md = gl_img1_fw_pseudo_metadata;
+ 461:..\src\system/boot.c ****         alt_p_md = gl_img2_fw_pseudo_metadata;
+ 462:..\src\system/boot.c ****         md = gl_img1_fw_metadata;
+ 463:..\src\system/boot.c ****         alt_md = gl_img2_fw_metadata;
+ 464:..\src\system/boot.c ****         p_md_row_num = CCG_IMG1_LAST_FLASH_ROW_NUM;
+ 465:..\src\system/boot.c ****         alt_p_md_row_num = CCG_IMG2_PSEUDO_METADATA_ROW_NUM;
+ 466:..\src\system/boot.c ****         alt_md_row_num = CCG_IMG2_METADATA_ROW_NUM;
+ 467:..\src\system/boot.c ****         alt_img_bit_pos = 3;
+ 468:..\src\system/boot.c ****     }
+ 469:..\src\system/boot.c ****     else
+ 470:..\src\system/boot.c ****     {
+ 471:..\src\system/boot.c ****         p_md = gl_img2_fw_pseudo_metadata;
+ 472:..\src\system/boot.c ****         alt_p_md = gl_img1_fw_pseudo_metadata;
+ 473:..\src\system/boot.c ****         md = gl_img2_fw_metadata;
+ 474:..\src\system/boot.c ****         alt_md = gl_img1_fw_metadata;
+ 475:..\src\system/boot.c ****         p_md_row_num = CCG_IMG2_PSEUDO_METADATA_ROW_NUM;
+ 476:..\src\system/boot.c ****         alt_p_md_row_num = gl_img2_fw_metadata->boot_last_row;
+ 477:..\src\system/boot.c ****         alt_md_row_num = CCG_IMG1_METADATA_ROW_NUM;
+ 478:..\src\system/boot.c ****         alt_img_bit_pos = 2;
+ 479:..\src\system/boot.c ****     }
+ 480:..\src\system/boot.c ****     
+ 481:..\src\system/boot.c ****     /* Current FW shall ensure that it's PMD row is cleared if it contains
+ 482:..\src\system/boot.c ****      * valid signature. This ensures there is no stale PMD information in the flash. */
+ 483:..\src\system/boot.c ****     if (p_md->metadata_valid == SYS_PSEUDO_METADATA_VALID_SIG)
+ 484:..\src\system/boot.c ****     {
+ 485:..\src\system/boot.c ****         flash_row_clear (p_md_row_num);
+ 486:..\src\system/boot.c ****     }
+ 487:..\src\system/boot.c ****         
+ 488:..\src\system/boot.c ****     /*
+ 489:..\src\system/boot.c ****      * Read pseudo-metadata row of other fw image. If pseudo-metadata has
+ 490:..\src\system/boot.c ****      * signature "CP", which indicates that other FW Image got updated before
+ 491:..\src\system/boot.c ****      * re-boot, and FW image is valid then copy this pseudo-metadta in to
+ 492:..\src\system/boot.c ****      * its actual metadata row after changing its signature and
+ARM GAS  e:\temp\ccvz51Lv.s 			page 18
+
+
+ 493:..\src\system/boot.c ****      * increamenting image pointer.
+ 494:..\src\system/boot.c ****      */
+ 495:..\src\system/boot.c ****     if (alt_p_md->metadata_valid == SYS_PSEUDO_METADATA_VALID_SIG)
+ 496:..\src\system/boot.c ****     {
+ 497:..\src\system/boot.c ****         if(boot_validate_fw (alt_p_md) == CCG_STAT_SUCCESS)
+ 498:..\src\system/boot.c ****         {
+ 499:..\src\system/boot.c **** #if (SECURE_FW_UPDATE == 1)
+ 500:..\src\system/boot.c ****            if(sboot_authenticate_fw(alt_p_md, alt_p_md_row_num, fw_hash) == CCG_STAT_SUCCESS)
+ 501:..\src\system/boot.c **** #endif /* SECURE_FW_UPDATE */
+ 502:..\src\system/boot.c ****            {
+ 503:..\src\system/boot.c ****                 /* Read pesudo metadata in a temp buffer. */
+ 504:..\src\system/boot.c ****                 MEM_COPY ((uint8_t *)temp_fw_pmetadata, (uint8_t *)alt_p_md,
+ 505:..\src\system/boot.c ****                     CCG_METADATA_TABLE_SIZE);
+ 506:..\src\system/boot.c ****                 temp_fw_pmetadata->metadata_valid = SYS_METADATA_VALID_SIG;
+ 507:..\src\system/boot.c ****                 temp_fw_pmetadata->boot_seq = (md->boot_seq) + 1;
+ 508:..\src\system/boot.c **** #if (SECURE_FW_UPDATE == 1)
+ 509:..\src\system/boot.c ****                 /* Copy FW HASH in first 32 bytes of pseudo metadata row. */
+ 510:..\src\system/boot.c ****                 MEM_COPY (temp_pseudo_metadata_buf, (uint8_t *)fw_hash,
+ 511:..\src\system/boot.c ****                     CRYPTO_SHA_2_HASH_SIZE_BYTES);
+ 512:..\src\system/boot.c **** #endif /* SECURE_FW_UPDATE */
+ 513:..\src\system/boot.c ****                 /* This flash write can always be blocking. */
+ 514:..\src\system/boot.c ****                 if (CYRET_SUCCESS == CySysFlashWriteRow (alt_md_row_num,
+ 515:..\src\system/boot.c ****                             temp_pseudo_metadata_buf))
+ 516:..\src\system/boot.c ****                 {
+ 517:..\src\system/boot.c ****                     /*Invalidate Pseudo-metadata of FW Image 2.*/
+ 518:..\src\system/boot.c ****                     flash_row_clear (alt_p_md_row_num);
+ 519:..\src\system/boot.c ****                     /* Undergo Software Reset. */
+ 520:..\src\system/boot.c ****                     CySoftwareReset();
+ 521:..\src\system/boot.c ****                 }
+ 522:..\src\system/boot.c ****             }
+ 523:..\src\system/boot.c **** #if (SECURE_FW_UPDATE == 1)
+ 524:..\src\system/boot.c ****             else
+ 525:..\src\system/boot.c ****             {
+ 526:..\src\system/boot.c ****                 invalidate_md = true;
+ 527:..\src\system/boot.c ****             }
+ 528:..\src\system/boot.c **** #endif /* SECURE_FW_UPDATE */
+ 529:..\src\system/boot.c ****         }
+ 530:..\src\system/boot.c ****         else
+ 531:..\src\system/boot.c ****         {
+ 532:..\src\system/boot.c ****             invalidate_md = true;
+ 533:..\src\system/boot.c ****         }
+ 534:..\src\system/boot.c ****     }
+ 535:..\src\system/boot.c ****     else
+ 536:..\src\system/boot.c ****     {
+ 537:..\src\system/boot.c ****         /* Check if other image is valid. */
+ 538:..\src\system/boot.c ****         if (boot_validate_fw (alt_md) != CCG_STAT_SUCCESS)
+ 539:..\src\system/boot.c ****         {
+ 540:..\src\system/boot.c ****             /* Mark the other image as invalid. */
+ 541:..\src\system/boot.c ****             gl_img_status.val |= (1 << alt_img_bit_pos);
+ 542:..\src\system/boot.c ****         }
+ 543:..\src\system/boot.c ****     }
+ 544:..\src\system/boot.c **** 
+ 545:..\src\system/boot.c ****     if (invalidate_md)
+ 546:..\src\system/boot.c ****     {
+ 547:..\src\system/boot.c ****         /*Invalidate Pseudo-metadata and Metadata of other FW Image.*/
+ 548:..\src\system/boot.c ****         flash_row_clear (alt_md_row_num);
+ 549:..\src\system/boot.c ****         flash_row_clear (alt_p_md_row_num);
+ARM GAS  e:\temp\ccvz51Lv.s 			page 19
+
+
+ 550:..\src\system/boot.c ****         /* Mark the other image as invalid. */
+ 551:..\src\system/boot.c ****         gl_img_status.val |= (1 << alt_img_bit_pos);
+ 552:..\src\system/boot.c ****     }
+ 553:..\src\system/boot.c **** }
+ 554:..\src\system/boot.c **** #endif /* CCG_PSEUDO_METADATA_DISABLE */
+ 555:..\src\system/boot.c **** 
+ 556:..\src\system/boot.c **** #endif /* CCG_BOOT */
+ 557:..\src\system/boot.c **** 
+ 558:..\src\system/boot.c **** uint32_t boot_get_boot_seq(uint8_t fwid)
+ 559:..\src\system/boot.c **** {
+ 460              		.loc 1 559 0
+ 461              		.cfi_startproc
+ 462              		@ args = 0, pretend = 0, frame = 0
+ 463              		@ frame_needed = 0, uses_anonymous_args = 0
+ 464              	.LVL44:
+ 465 0000 70B5     		push	{r4, r5, r6, lr}
+ 466              		.cfi_def_cfa_offset 16
+ 467              		.cfi_offset 4, -16
+ 468              		.cfi_offset 5, -12
+ 469              		.cfi_offset 6, -8
+ 470              		.cfi_offset 14, -4
+ 471 0002 0400     		movs	r4, r0
+ 560:..\src\system/boot.c ****     sys_fw_metadata_t *md_p;
+ 561:..\src\system/boot.c **** 
+ 562:..\src\system/boot.c ****     if (fwid == SYS_FW_MODE_FWIMAGE_1)
+ 472              		.loc 1 562 0
+ 473 0004 0128     		cmp	r0, #1
+ 474 0006 01D1     		bne	.L44
+ 563:..\src\system/boot.c ****         md_p = (sys_fw_metadata_t *)CCG_IMG1_FW_METADATA_ADDR;
+ 475              		.loc 1 563 0
+ 476 0008 074D     		ldr	r5, .L46
+ 477 000a 00E0     		b	.L41
+ 478              	.L44:
+ 564:..\src\system/boot.c **** #if (!CCG_DUALAPP_DISABLE)
+ 565:..\src\system/boot.c ****     else
+ 566:..\src\system/boot.c ****         md_p = (sys_fw_metadata_t *)CCG_IMG2_FW_METADATA_ADDR;
+ 479              		.loc 1 566 0
+ 480 000c 074D     		ldr	r5, .L46+4
+ 481              	.L41:
+ 482              	.LVL45:
+ 567:..\src\system/boot.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+ 568:..\src\system/boot.c **** 
+ 569:..\src\system/boot.c **** #if (CCG_BOOT != 0)
+ 570:..\src\system/boot.c ****     if (boot_validate_fw (md_p) == CCG_STAT_SUCCESS)
+ 571:..\src\system/boot.c ****     {
+ 572:..\src\system/boot.c ****         return (md_p->boot_seq);
+ 573:..\src\system/boot.c ****     }
+ 574:..\src\system/boot.c **** #else /* (CCG_BOOT != 0) */
+ 575:..\src\system/boot.c **** 
+ 576:..\src\system/boot.c ****     /* We only need to validate if the target is not the active firmware. */
+ 577:..\src\system/boot.c ****     if ((sys_get_device_mode () == fwid) || (boot_validate_fw (md_p) == CCG_STAT_SUCCESS))
+ 483              		.loc 1 577 0
+ 484 000e FFF7FEFF 		bl	sys_get_device_mode
+ 485              	.LVL46:
+ 486 0012 8442     		cmp	r4, r0
+ 487 0014 04D0     		beq	.L42
+ 488              		.loc 1 577 0 is_stmt 0 discriminator 1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 20
+
+
+ 489 0016 2800     		movs	r0, r5
+ 490 0018 FFF7FEFF 		bl	boot_validate_fw
+ 491              	.LVL47:
+ 492 001c 0028     		cmp	r0, #0
+ 493 001e 01D1     		bne	.L45
+ 494              	.L42:
+ 578:..\src\system/boot.c ****     {
+ 579:..\src\system/boot.c ****         return (md_p->boot_seq);
+ 495              		.loc 1 579 0 is_stmt 1
+ 496 0020 E869     		ldr	r0, [r5, #28]
+ 497 0022 00E0     		b	.L43
+ 498              	.L45:
+ 580:..\src\system/boot.c ****     }
+ 581:..\src\system/boot.c **** #endif /* (CCG_BOOT != 0) */
+ 582:..\src\system/boot.c ****     return 0;
+ 499              		.loc 1 582 0
+ 500 0024 0020     		movs	r0, #0
+ 501              	.L43:
+ 583:..\src\system/boot.c **** }
+ 502              		.loc 1 583 0
+ 503              		@ sp needed
+ 504              	.LVL48:
+ 505 0026 70BD     		pop	{r4, r5, r6, pc}
+ 506              	.L47:
+ 507              		.align	2
+ 508              	.L46:
+ 509 0028 C0FF0100 		.word	131008
+ 510 002c C0FE0100 		.word	130752
+ 511              		.cfi_endproc
+ 512              	.LFE37:
+ 513              		.size	boot_get_boot_seq, .-boot_get_boot_seq
+ 514              		.global	gl_img2_fw_metadata
+ 515              		.global	gl_img1_fw_metadata
+ 516              		.comm	gl_img_status,1,4
+ 517              		.data
+ 518              		.align	2
+ 519              		.set	.LANCHOR0,. + 0
+ 520              		.type	gl_img1_fw_metadata, %object
+ 521              		.size	gl_img1_fw_metadata, 4
+ 522              	gl_img1_fw_metadata:
+ 523 0000 C0FF0100 		.word	131008
+ 524              		.type	gl_img2_fw_metadata, %object
+ 525              		.size	gl_img2_fw_metadata, 4
+ 526              	gl_img2_fw_metadata:
+ 527 0004 C0FE0100 		.word	130752
+ 528              		.type	gl_boot_wait_delay, %object
+ 529              		.size	gl_boot_wait_delay, 2
+ 530              	gl_boot_wait_delay:
+ 531 0008 3200     		.short	50
+ 532              		.text
+ 533              	.Letext0:
+ 534              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 535              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 536              		.file 4 "..\\src\\system/status.h"
+ 537              		.file 5 "..\\src\\system/system.h"
+ 538              		.file 6 "..\\src\\system/boot.h"
+ 539              		.file 7 "..\\src\\system/utils.h"
+ARM GAS  e:\temp\ccvz51Lv.s 			page 21
+
+
+ 540              		.section	.debug_info,"",%progbits
+ 541              	.Ldebug_info0:
+ 542 0000 FD040000 		.4byte	0x4fd
+ 543 0004 0400     		.2byte	0x4
+ 544 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 545 000a 04       		.byte	0x4
+ 546 000b 01       		.uleb128 0x1
+ 547 000c 0B000000 		.4byte	.LASF81
+ 548 0010 0C       		.byte	0xc
+ 549 0011 0C040000 		.4byte	.LASF82
+ 550 0015 F8020000 		.4byte	.LASF83
+ 551 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 552 001d 00000000 		.4byte	0
+ 553 0021 00000000 		.4byte	.Ldebug_line0
+ 554 0025 02       		.uleb128 0x2
+ 555 0026 01       		.byte	0x1
+ 556 0027 06       		.byte	0x6
+ 557 0028 38020000 		.4byte	.LASF0
+ 558 002c 03       		.uleb128 0x3
+ 559 002d A2020000 		.4byte	.LASF3
+ 560 0031 02       		.byte	0x2
+ 561 0032 1D       		.byte	0x1d
+ 562 0033 37000000 		.4byte	0x37
+ 563 0037 02       		.uleb128 0x2
+ 564 0038 01       		.byte	0x1
+ 565 0039 08       		.byte	0x8
+ 566 003a EA020000 		.4byte	.LASF1
+ 567 003e 02       		.uleb128 0x2
+ 568 003f 02       		.byte	0x2
+ 569 0040 05       		.byte	0x5
+ 570 0041 ED000000 		.4byte	.LASF2
+ 571 0045 03       		.uleb128 0x3
+ 572 0046 1E010000 		.4byte	.LASF4
+ 573 004a 02       		.byte	0x2
+ 574 004b 2B       		.byte	0x2b
+ 575 004c 50000000 		.4byte	0x50
+ 576 0050 02       		.uleb128 0x2
+ 577 0051 02       		.byte	0x2
+ 578 0052 07       		.byte	0x7
+ 579 0053 78040000 		.4byte	.LASF5
+ 580 0057 02       		.uleb128 0x2
+ 581 0058 04       		.byte	0x4
+ 582 0059 05       		.byte	0x5
+ 583 005a 74020000 		.4byte	.LASF6
+ 584 005e 03       		.uleb128 0x3
+ 585 005f 29010000 		.4byte	.LASF7
+ 586 0063 02       		.byte	0x2
+ 587 0064 41       		.byte	0x41
+ 588 0065 69000000 		.4byte	0x69
+ 589 0069 02       		.uleb128 0x2
+ 590 006a 04       		.byte	0x4
+ 591 006b 07       		.byte	0x7
+ 592 006c EE040000 		.4byte	.LASF8
+ 593 0070 02       		.uleb128 0x2
+ 594 0071 08       		.byte	0x8
+ 595 0072 05       		.byte	0x5
+ 596 0073 58020000 		.4byte	.LASF9
+ARM GAS  e:\temp\ccvz51Lv.s 			page 22
+
+
+ 597 0077 02       		.uleb128 0x2
+ 598 0078 08       		.byte	0x8
+ 599 0079 07       		.byte	0x7
+ 600 007a D7030000 		.4byte	.LASF10
+ 601 007e 04       		.uleb128 0x4
+ 602 007f 04       		.byte	0x4
+ 603 0080 05       		.byte	0x5
+ 604 0081 696E7400 		.ascii	"int\000"
+ 605 0085 02       		.uleb128 0x2
+ 606 0086 04       		.byte	0x4
+ 607 0087 07       		.byte	0x7
+ 608 0088 FF030000 		.4byte	.LASF11
+ 609 008c 03       		.uleb128 0x3
+ 610 008d A7010000 		.4byte	.LASF12
+ 611 0091 03       		.byte	0x3
+ 612 0092 18       		.byte	0x18
+ 613 0093 2C000000 		.4byte	0x2c
+ 614 0097 03       		.uleb128 0x3
+ 615 0098 21040000 		.4byte	.LASF13
+ 616 009c 03       		.byte	0x3
+ 617 009d 24       		.byte	0x24
+ 618 009e 45000000 		.4byte	0x45
+ 619 00a2 03       		.uleb128 0x3
+ 620 00a3 14020000 		.4byte	.LASF14
+ 621 00a7 03       		.byte	0x3
+ 622 00a8 30       		.byte	0x30
+ 623 00a9 5E000000 		.4byte	0x5e
+ 624 00ad 02       		.uleb128 0x2
+ 625 00ae 04       		.byte	0x4
+ 626 00af 04       		.byte	0x4
+ 627 00b0 44020000 		.4byte	.LASF15
+ 628 00b4 02       		.uleb128 0x2
+ 629 00b5 08       		.byte	0x8
+ 630 00b6 04       		.byte	0x4
+ 631 00b7 E0050000 		.4byte	.LASF16
+ 632 00bb 02       		.uleb128 0x2
+ 633 00bc 01       		.byte	0x1
+ 634 00bd 08       		.byte	0x8
+ 635 00be D6040000 		.4byte	.LASF17
+ 636 00c2 02       		.uleb128 0x2
+ 637 00c3 08       		.byte	0x8
+ 638 00c4 04       		.byte	0x4
+ 639 00c5 80030000 		.4byte	.LASF18
+ 640 00c9 02       		.uleb128 0x2
+ 641 00ca 04       		.byte	0x4
+ 642 00cb 07       		.byte	0x7
+ 643 00cc F7000000 		.4byte	.LASF19
+ 644 00d0 05       		.uleb128 0x5
+ 645 00d1 00000000 		.4byte	.LASF84
+ 646 00d5 01       		.byte	0x1
+ 647 00d6 25000000 		.4byte	0x25
+ 648 00da 04       		.byte	0x4
+ 649 00db 48       		.byte	0x48
+ 650 00dc 47010000 		.4byte	0x147
+ 651 00e0 06       		.uleb128 0x6
+ 652 00e1 3D060000 		.4byte	.LASF20
+ 653 00e5 7E       		.sleb128 -2
+ARM GAS  e:\temp\ccvz51Lv.s 			page 23
+
+
+ 654 00e6 07       		.uleb128 0x7
+ 655 00e7 EE030000 		.4byte	.LASF21
+ 656 00eb 00       		.byte	0
+ 657 00ec 07       		.uleb128 0x7
+ 658 00ed 96050000 		.4byte	.LASF22
+ 659 00f1 01       		.byte	0x1
+ 660 00f2 07       		.uleb128 0x7
+ 661 00f3 DB040000 		.4byte	.LASF23
+ 662 00f7 02       		.byte	0x2
+ 663 00f8 07       		.uleb128 0x7
+ 664 00f9 00010000 		.4byte	.LASF24
+ 665 00fd 03       		.byte	0x3
+ 666 00fe 07       		.uleb128 0x7
+ 667 00ff 8A010000 		.4byte	.LASF25
+ 668 0103 05       		.byte	0x5
+ 669 0104 07       		.uleb128 0x7
+ 670 0105 30050000 		.4byte	.LASF26
+ 671 0109 06       		.byte	0x6
+ 672 010a 07       		.uleb128 0x7
+ 673 010b BC040000 		.4byte	.LASF27
+ 674 010f 07       		.byte	0x7
+ 675 0110 07       		.uleb128 0x7
+ 676 0111 61040000 		.4byte	.LASF28
+ 677 0115 08       		.byte	0x8
+ 678 0116 07       		.uleb128 0x7
+ 679 0117 1D020000 		.4byte	.LASF29
+ 680 011b 09       		.byte	0x9
+ 681 011c 07       		.uleb128 0x7
+ 682 011d 8B040000 		.4byte	.LASF30
+ 683 0121 0A       		.byte	0xa
+ 684 0122 07       		.uleb128 0x7
+ 685 0123 4C040000 		.4byte	.LASF31
+ 686 0127 0B       		.byte	0xb
+ 687 0128 07       		.uleb128 0x7
+ 688 0129 91020000 		.4byte	.LASF32
+ 689 012d 0C       		.byte	0xc
+ 690 012e 07       		.uleb128 0x7
+ 691 012f 00050000 		.4byte	.LASF33
+ 692 0133 0D       		.byte	0xd
+ 693 0134 07       		.uleb128 0x7
+ 694 0135 A9040000 		.4byte	.LASF34
+ 695 0139 0E       		.byte	0xe
+ 696 013a 07       		.uleb128 0x7
+ 697 013b 06020000 		.4byte	.LASF35
+ 698 013f 0F       		.byte	0xf
+ 699 0140 07       		.uleb128 0x7
+ 700 0141 2A040000 		.4byte	.LASF36
+ 701 0145 10       		.byte	0x10
+ 702 0146 00       		.byte	0
+ 703 0147 03       		.uleb128 0x3
+ 704 0148 F1010000 		.4byte	.LASF37
+ 705 014c 04       		.byte	0x4
+ 706 014d 5E       		.byte	0x5e
+ 707 014e D0000000 		.4byte	0xd0
+ 708 0152 08       		.uleb128 0x8
+ 709 0153 01       		.byte	0x1
+ 710 0154 37000000 		.4byte	0x37
+ARM GAS  e:\temp\ccvz51Lv.s 			page 24
+
+
+ 711 0158 05       		.byte	0x5
+ 712 0159 84       		.byte	0x84
+ 713 015a 77010000 		.4byte	0x177
+ 714 015e 07       		.uleb128 0x7
+ 715 015f 50050000 		.4byte	.LASF38
+ 716 0163 00       		.byte	0
+ 717 0164 07       		.uleb128 0x7
+ 718 0165 E7050000 		.4byte	.LASF39
+ 719 0169 01       		.byte	0x1
+ 720 016a 07       		.uleb128 0x7
+ 721 016b FD050000 		.4byte	.LASF40
+ 722 016f 02       		.byte	0x2
+ 723 0170 07       		.uleb128 0x7
+ 724 0171 DD010000 		.4byte	.LASF41
+ 725 0175 03       		.byte	0x3
+ 726 0176 00       		.byte	0
+ 727 0177 03       		.uleb128 0x3
+ 728 0178 66020000 		.4byte	.LASF42
+ 729 017c 05       		.byte	0x5
+ 730 017d 89       		.byte	0x89
+ 731 017e 52010000 		.4byte	0x152
+ 732 0182 09       		.uleb128 0x9
+ 733 0183 A8030000 		.4byte	.LASF85
+ 734 0187 01       		.byte	0x1
+ 735 0188 06       		.byte	0x6
+ 736 0189 7D       		.byte	0x7d
+ 737 018a DA010000 		.4byte	0x1da
+ 738 018e 0A       		.uleb128 0xa
+ 739 018f AF010000 		.4byte	.LASF43
+ 740 0193 06       		.byte	0x6
+ 741 0194 7F       		.byte	0x7f
+ 742 0195 8C000000 		.4byte	0x8c
+ 743 0199 01       		.byte	0x1
+ 744 019a 01       		.byte	0x1
+ 745 019b 07       		.byte	0x7
+ 746 019c 00       		.byte	0
+ 747 019d 0A       		.uleb128 0xa
+ 748 019e 26060000 		.4byte	.LASF44
+ 749 01a2 06       		.byte	0x6
+ 750 01a3 80       		.byte	0x80
+ 751 01a4 8C000000 		.4byte	0x8c
+ 752 01a8 01       		.byte	0x1
+ 753 01a9 01       		.byte	0x1
+ 754 01aa 06       		.byte	0x6
+ 755 01ab 00       		.byte	0
+ 756 01ac 0A       		.uleb128 0xa
+ 757 01ad 34010000 		.4byte	.LASF45
+ 758 01b1 06       		.byte	0x6
+ 759 01b2 81       		.byte	0x81
+ 760 01b3 8C000000 		.4byte	0x8c
+ 761 01b7 01       		.byte	0x1
+ 762 01b8 01       		.byte	0x1
+ 763 01b9 05       		.byte	0x5
+ 764 01ba 00       		.byte	0
+ 765 01bb 0A       		.uleb128 0xa
+ 766 01bc 66010000 		.4byte	.LASF46
+ 767 01c0 06       		.byte	0x6
+ARM GAS  e:\temp\ccvz51Lv.s 			page 25
+
+
+ 768 01c1 82       		.byte	0x82
+ 769 01c2 8C000000 		.4byte	0x8c
+ 770 01c6 01       		.byte	0x1
+ 771 01c7 01       		.byte	0x1
+ 772 01c8 04       		.byte	0x4
+ 773 01c9 00       		.byte	0
+ 774 01ca 0A       		.uleb128 0xa
+ 775 01cb 7D020000 		.4byte	.LASF47
+ 776 01cf 06       		.byte	0x6
+ 777 01d0 83       		.byte	0x83
+ 778 01d1 8C000000 		.4byte	0x8c
+ 779 01d5 01       		.byte	0x1
+ 780 01d6 04       		.byte	0x4
+ 781 01d7 00       		.byte	0
+ 782 01d8 00       		.byte	0
+ 783 01d9 00       		.byte	0
+ 784 01da 0B       		.uleb128 0xb
+ 785 01db 01       		.byte	0x1
+ 786 01dc 06       		.byte	0x6
+ 787 01dd 79       		.byte	0x79
+ 788 01de F9010000 		.4byte	0x1f9
+ 789 01e2 0C       		.uleb128 0xc
+ 790 01e3 76616C00 		.ascii	"val\000"
+ 791 01e7 06       		.byte	0x6
+ 792 01e8 7B       		.byte	0x7b
+ 793 01e9 8C000000 		.4byte	0x8c
+ 794 01ed 0D       		.uleb128 0xd
+ 795 01ee A2040000 		.4byte	.LASF48
+ 796 01f2 06       		.byte	0x6
+ 797 01f3 84       		.byte	0x84
+ 798 01f4 82010000 		.4byte	0x182
+ 799 01f8 00       		.byte	0
+ 800 01f9 03       		.uleb128 0x3
+ 801 01fa 70030000 		.4byte	.LASF49
+ 802 01fe 06       		.byte	0x6
+ 803 01ff 86       		.byte	0x86
+ 804 0200 DA010000 		.4byte	0x1da
+ 805 0204 0E       		.uleb128 0xe
+ 806 0205 20       		.byte	0x20
+ 807 0206 06       		.byte	0x6
+ 808 0207 91       		.byte	0x91
+ 809 0208 A9020000 		.4byte	0x2a9
+ 810 020c 0F       		.uleb128 0xf
+ 811 020d 3B040000 		.4byte	.LASF50
+ 812 0211 06       		.byte	0x6
+ 813 0212 93       		.byte	0x93
+ 814 0213 8C000000 		.4byte	0x8c
+ 815 0217 00       		.byte	0
+ 816 0218 0F       		.uleb128 0xf
+ 817 0219 C1000000 		.4byte	.LASF51
+ 818 021d 06       		.byte	0x6
+ 819 021e 94       		.byte	0x94
+ 820 021f A2000000 		.4byte	0xa2
+ 821 0223 01       		.byte	0x1
+ 822 0224 0F       		.uleb128 0xf
+ 823 0225 4A020000 		.4byte	.LASF52
+ 824 0229 06       		.byte	0x6
+ARM GAS  e:\temp\ccvz51Lv.s 			page 26
+
+
+ 825 022a 95       		.byte	0x95
+ 826 022b 97000000 		.4byte	0x97
+ 827 022f 05       		.byte	0x5
+ 828 0230 0F       		.uleb128 0xf
+ 829 0231 7D020000 		.4byte	.LASF47
+ 830 0235 06       		.byte	0x6
+ 831 0236 96       		.byte	0x96
+ 832 0237 A9020000 		.4byte	0x2a9
+ 833 023b 07       		.byte	0x7
+ 834 023c 0F       		.uleb128 0xf
+ 835 023d 52060000 		.4byte	.LASF53
+ 836 0241 06       		.byte	0x6
+ 837 0242 97       		.byte	0x97
+ 838 0243 A2000000 		.4byte	0xa2
+ 839 0247 09       		.byte	0x9
+ 840 0248 0F       		.uleb128 0xf
+ 841 0249 87020000 		.4byte	.LASF54
+ 842 024d 06       		.byte	0x6
+ 843 024e 98       		.byte	0x98
+ 844 024f B9020000 		.4byte	0x2b9
+ 845 0253 0D       		.byte	0xd
+ 846 0254 0F       		.uleb128 0xf
+ 847 0255 86050000 		.4byte	.LASF55
+ 848 0259 06       		.byte	0x6
+ 849 025a 99       		.byte	0x99
+ 850 025b 8C000000 		.4byte	0x8c
+ 851 025f 10       		.byte	0x10
+ 852 0260 0F       		.uleb128 0xf
+ 853 0261 AC020000 		.4byte	.LASF56
+ 854 0265 06       		.byte	0x6
+ 855 0266 9A       		.byte	0x9a
+ 856 0267 8C000000 		.4byte	0x8c
+ 857 026b 11       		.byte	0x11
+ 858 026c 0F       		.uleb128 0xf
+ 859 026d CA000000 		.4byte	.LASF57
+ 860 0271 06       		.byte	0x6
+ 861 0272 9B       		.byte	0x9b
+ 862 0273 97000000 		.4byte	0x97
+ 863 0277 12       		.byte	0x12
+ 864 0278 0F       		.uleb128 0xf
+ 865 0279 44050000 		.4byte	.LASF58
+ 866 027d 06       		.byte	0x6
+ 867 027e 9C       		.byte	0x9c
+ 868 027f 97000000 		.4byte	0x97
+ 869 0283 14       		.byte	0x14
+ 870 0284 0F       		.uleb128 0xf
+ 871 0285 72010000 		.4byte	.LASF59
+ 872 0289 06       		.byte	0x6
+ 873 028a 9D       		.byte	0x9d
+ 874 028b 97000000 		.4byte	0x97
+ 875 028f 16       		.byte	0x16
+ 876 0290 0F       		.uleb128 0xf
+ 877 0291 B9050000 		.4byte	.LASF60
+ 878 0295 06       		.byte	0x6
+ 879 0296 9E       		.byte	0x9e
+ 880 0297 A2000000 		.4byte	0xa2
+ 881 029b 18       		.byte	0x18
+ARM GAS  e:\temp\ccvz51Lv.s 			page 27
+
+
+ 882 029c 0F       		.uleb128 0xf
+ 883 029d 81010000 		.4byte	.LASF61
+ 884 02a1 06       		.byte	0x6
+ 885 02a2 9F       		.byte	0x9f
+ 886 02a3 A2000000 		.4byte	0xa2
+ 887 02a7 1C       		.byte	0x1c
+ 888 02a8 00       		.byte	0
+ 889 02a9 10       		.uleb128 0x10
+ 890 02aa 8C000000 		.4byte	0x8c
+ 891 02ae B9020000 		.4byte	0x2b9
+ 892 02b2 11       		.uleb128 0x11
+ 893 02b3 C9000000 		.4byte	0xc9
+ 894 02b7 01       		.byte	0x1
+ 895 02b8 00       		.byte	0
+ 896 02b9 10       		.uleb128 0x10
+ 897 02ba 8C000000 		.4byte	0x8c
+ 898 02be C9020000 		.4byte	0x2c9
+ 899 02c2 11       		.uleb128 0x11
+ 900 02c3 C9000000 		.4byte	0xc9
+ 901 02c7 02       		.byte	0x2
+ 902 02c8 00       		.byte	0
+ 903 02c9 03       		.uleb128 0x3
+ 904 02ca DB000000 		.4byte	.LASF62
+ 905 02ce 06       		.byte	0x6
+ 906 02cf A2       		.byte	0xa2
+ 907 02d0 04020000 		.4byte	0x204
+ 908 02d4 12       		.uleb128 0x12
+ 909 02d5 40010000 		.4byte	.LASF86
+ 910 02d9 01       		.byte	0x1
+ 911 02da 56       		.byte	0x56
+ 912 02db F9010000 		.4byte	0x1f9
+ 913 02df 00000000 		.4byte	.LFB32
+ 914 02e3 0C000000 		.4byte	.LFE32-.LFB32
+ 915 02e7 01       		.uleb128 0x1
+ 916 02e8 9C       		.byte	0x9c
+ 917 02e9 13       		.uleb128 0x13
+ 918 02ea 6C050000 		.4byte	.LASF63
+ 919 02ee 01       		.byte	0x1
+ 920 02ef 5D       		.byte	0x5d
+ 921 02f0 47010000 		.4byte	0x147
+ 922 02f4 00000000 		.4byte	.LFB33
+ 923 02f8 44000000 		.4byte	.LFE33-.LFB33
+ 924 02fc 01       		.uleb128 0x1
+ 925 02fd 9C       		.byte	0x9c
+ 926 02fe 34030000 		.4byte	0x334
+ 927 0302 14       		.uleb128 0x14
+ 928 0303 FE010000 		.4byte	.LASF65
+ 929 0307 01       		.byte	0x1
+ 930 0308 5D       		.byte	0x5d
+ 931 0309 34030000 		.4byte	0x334
+ 932 030d 00000000 		.4byte	.LLST0
+ 933 0311 15       		.uleb128 0x15
+ 934 0312 B4050000 		.4byte	.LASF67
+ 935 0316 01       		.byte	0x1
+ 936 0317 5F       		.byte	0x5f
+ 937 0318 97000000 		.4byte	0x97
+ 938 031c 60000000 		.4byte	.LLST1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 28
+
+
+ 939 0320 16       		.uleb128 0x16
+ 940 0321 28000000 		.4byte	.LVL4
+ 941 0325 EA040000 		.4byte	0x4ea
+ 942 0329 17       		.uleb128 0x17
+ 943 032a 01       		.uleb128 0x1
+ 944 032b 50       		.byte	0x50
+ 945 032c 05       		.uleb128 0x5
+ 946 032d F3       		.byte	0xf3
+ 947 032e 01       		.uleb128 0x1
+ 948 032f 50       		.byte	0x50
+ 949 0330 23       		.byte	0x23
+ 950 0331 0A       		.uleb128 0xa
+ 951 0332 00       		.byte	0
+ 952 0333 00       		.byte	0
+ 953 0334 18       		.uleb128 0x18
+ 954 0335 04       		.byte	0x4
+ 955 0336 8C000000 		.4byte	0x8c
+ 956 033a 13       		.uleb128 0x13
+ 957 033b 55010000 		.4byte	.LASF64
+ 958 033f 01       		.byte	0x1
+ 959 0340 70       		.byte	0x70
+ 960 0341 47010000 		.4byte	0x147
+ 961 0345 00000000 		.4byte	.LFB34
+ 962 0349 80000000 		.4byte	.LFE34-.LFB34
+ 963 034d 01       		.uleb128 0x1
+ 964 034e 9C       		.byte	0x9c
+ 965 034f B5030000 		.4byte	0x3b5
+ 966 0353 14       		.uleb128 0x14
+ 967 0354 CB030000 		.4byte	.LASF66
+ 968 0358 01       		.byte	0x1
+ 969 0359 70       		.byte	0x70
+ 970 035a B5030000 		.4byte	0x3b5
+ 971 035e 8B000000 		.4byte	.LLST2
+ 972 0362 15       		.uleb128 0x15
+ 973 0363 A2040000 		.4byte	.LASF48
+ 974 0367 01       		.byte	0x1
+ 975 0368 72       		.byte	0x72
+ 976 0369 47010000 		.4byte	0x147
+ 977 036d 10010000 		.4byte	.LLST3
+ 978 0371 15       		.uleb128 0x15
+ 979 0372 27050000 		.4byte	.LASF68
+ 980 0376 01       		.byte	0x1
+ 981 0377 74       		.byte	0x74
+ 982 0378 A2000000 		.4byte	0xa2
+ 983 037c 46010000 		.4byte	.LLST4
+ 984 0380 15       		.uleb128 0x15
+ 985 0381 52060000 		.4byte	.LASF53
+ 986 0385 01       		.byte	0x1
+ 987 0386 76       		.byte	0x76
+ 988 0387 A2000000 		.4byte	0xa2
+ 989 038b 65010000 		.4byte	.LLST5
+ 990 038f 19       		.uleb128 0x19
+ 991 0390 56000000 		.4byte	.LVL15
+ 992 0394 EA040000 		.4byte	0x4ea
+ 993 0398 A3030000 		.4byte	0x3a3
+ 994 039c 17       		.uleb128 0x17
+ 995 039d 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 29
+
+
+ 996 039e 50       		.byte	0x50
+ 997 039f 02       		.uleb128 0x2
+ 998 03a0 76       		.byte	0x76
+ 999 03a1 00       		.sleb128 0
+ 1000 03a2 00       		.byte	0
+ 1001 03a3 16       		.uleb128 0x16
+ 1002 03a4 64000000 		.4byte	.LVL16
+ 1003 03a8 E9020000 		.4byte	0x2e9
+ 1004 03ac 17       		.uleb128 0x17
+ 1005 03ad 01       		.uleb128 0x1
+ 1006 03ae 50       		.byte	0x50
+ 1007 03af 03       		.uleb128 0x3
+ 1008 03b0 75       		.byte	0x75
+ 1009 03b1 8004     		.sleb128 512
+ 1010 03b3 00       		.byte	0
+ 1011 03b4 00       		.byte	0
+ 1012 03b5 18       		.uleb128 0x18
+ 1013 03b6 04       		.byte	0x4
+ 1014 03b7 C9020000 		.4byte	0x2c9
+ 1015 03bb 13       		.uleb128 0x13
+ 1016 03bc C1010000 		.4byte	.LASF69
+ 1017 03c0 01       		.byte	0x1
+ 1018 03c1 94       		.byte	0x94
+ 1019 03c2 47010000 		.4byte	0x147
+ 1020 03c6 00000000 		.4byte	.LFB35
+ 1021 03ca 9C000000 		.4byte	.LFE35-.LFB35
+ 1022 03ce 01       		.uleb128 0x1
+ 1023 03cf 9C       		.byte	0x9c
+ 1024 03d0 14040000 		.4byte	0x414
+ 1025 03d4 14       		.uleb128 0x14
+ 1026 03d5 C4050000 		.4byte	.LASF70
+ 1027 03d9 01       		.byte	0x1
+ 1028 03da 94       		.byte	0x94
+ 1029 03db 77010000 		.4byte	0x177
+ 1030 03df 8F010000 		.4byte	.LLST6
+ 1031 03e3 15       		.uleb128 0x15
+ 1032 03e4 19010000 		.4byte	.LASF71
+ 1033 03e8 01       		.byte	0x1
+ 1034 03e9 96       		.byte	0x96
+ 1035 03ea B5030000 		.4byte	0x3b5
+ 1036 03ee B0010000 		.4byte	.LLST7
+ 1037 03f2 15       		.uleb128 0x15
+ 1038 03f3 47040000 		.4byte	.LASF72
+ 1039 03f7 01       		.byte	0x1
+ 1040 03f8 97       		.byte	0x97
+ 1041 03f9 47010000 		.4byte	0x147
+ 1042 03fd FD010000 		.4byte	.LLST8
+ 1043 0401 1A       		.uleb128 0x1a
+ 1044 0402 08000000 		.4byte	.LVL30
+ 1045 0406 F5040000 		.4byte	0x4f5
+ 1046 040a 1A       		.uleb128 0x1a
+ 1047 040b 3C000000 		.4byte	.LVL36
+ 1048 040f 3A030000 		.4byte	0x33a
+ 1049 0413 00       		.byte	0
+ 1050 0414 1B       		.uleb128 0x1b
+ 1051 0415 C0020000 		.4byte	.LASF87
+ 1052 0419 01       		.byte	0x1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 30
+
+
+ 1053 041a 9B01     		.2byte	0x19b
+ 1054 041c 00000000 		.4byte	.LFB36
+ 1055 0420 38000000 		.4byte	.LFE36-.LFB36
+ 1056 0424 01       		.uleb128 0x1
+ 1057 0425 9C       		.byte	0x9c
+ 1058 0426 4D040000 		.4byte	0x44d
+ 1059 042a 19       		.uleb128 0x19
+ 1060 042b 0E000000 		.4byte	.LVL42
+ 1061 042f BB030000 		.4byte	0x3bb
+ 1062 0433 3D040000 		.4byte	0x43d
+ 1063 0437 17       		.uleb128 0x17
+ 1064 0438 01       		.uleb128 0x1
+ 1065 0439 50       		.byte	0x50
+ 1066 043a 01       		.uleb128 0x1
+ 1067 043b 31       		.byte	0x31
+ 1068 043c 00       		.byte	0
+ 1069 043d 16       		.uleb128 0x16
+ 1070 043e 22000000 		.4byte	.LVL43
+ 1071 0442 BB030000 		.4byte	0x3bb
+ 1072 0446 17       		.uleb128 0x17
+ 1073 0447 01       		.uleb128 0x1
+ 1074 0448 50       		.byte	0x50
+ 1075 0449 01       		.uleb128 0x1
+ 1076 044a 32       		.byte	0x32
+ 1077 044b 00       		.byte	0
+ 1078 044c 00       		.byte	0
+ 1079 044d 1C       		.uleb128 0x1c
+ 1080 044e B9030000 		.4byte	.LASF73
+ 1081 0452 01       		.byte	0x1
+ 1082 0453 2E02     		.2byte	0x22e
+ 1083 0455 A2000000 		.4byte	0xa2
+ 1084 0459 00000000 		.4byte	.LFB37
+ 1085 045d 30000000 		.4byte	.LFE37-.LFB37
+ 1086 0461 01       		.uleb128 0x1
+ 1087 0462 9C       		.byte	0x9c
+ 1088 0463 A1040000 		.4byte	0x4a1
+ 1089 0467 1D       		.uleb128 0x1d
+ 1090 0468 67050000 		.4byte	.LASF74
+ 1091 046c 01       		.byte	0x1
+ 1092 046d 2E02     		.2byte	0x22e
+ 1093 046f 8C000000 		.4byte	0x8c
+ 1094 0473 58020000 		.4byte	.LLST9
+ 1095 0477 1E       		.uleb128 0x1e
+ 1096 0478 19010000 		.4byte	.LASF71
+ 1097 047c 01       		.byte	0x1
+ 1098 047d 3002     		.2byte	0x230
+ 1099 047f B5030000 		.4byte	0x3b5
+ 1100 0483 79020000 		.4byte	.LLST10
+ 1101 0487 1A       		.uleb128 0x1a
+ 1102 0488 12000000 		.4byte	.LVL46
+ 1103 048c F5040000 		.4byte	0x4f5
+ 1104 0490 16       		.uleb128 0x16
+ 1105 0491 1C000000 		.4byte	.LVL47
+ 1106 0495 3A030000 		.4byte	0x33a
+ 1107 0499 17       		.uleb128 0x17
+ 1108 049a 01       		.uleb128 0x1
+ 1109 049b 50       		.byte	0x50
+ARM GAS  e:\temp\ccvz51Lv.s 			page 31
+
+
+ 1110 049c 02       		.uleb128 0x2
+ 1111 049d 75       		.byte	0x75
+ 1112 049e 00       		.sleb128 0
+ 1113 049f 00       		.byte	0
+ 1114 04a0 00       		.byte	0
+ 1115 04a1 1F       		.uleb128 0x1f
+ 1116 04a2 13060000 		.4byte	.LASF75
+ 1117 04a6 01       		.byte	0x1
+ 1118 04a7 4A       		.byte	0x4a
+ 1119 04a8 B2040000 		.4byte	0x4b2
+ 1120 04ac 05       		.uleb128 0x5
+ 1121 04ad 03       		.byte	0x3
+ 1122 04ae 08000000 		.4byte	gl_boot_wait_delay
+ 1123 04b2 20       		.uleb128 0x20
+ 1124 04b3 97000000 		.4byte	0x97
+ 1125 04b7 21       		.uleb128 0x21
+ 1126 04b8 D6020000 		.4byte	.LASF76
+ 1127 04bc 01       		.byte	0x1
+ 1128 04bd 4D       		.byte	0x4d
+ 1129 04be B5030000 		.4byte	0x3b5
+ 1130 04c2 05       		.uleb128 0x5
+ 1131 04c3 03       		.byte	0x3
+ 1132 04c4 00000000 		.4byte	gl_img1_fw_metadata
+ 1133 04c8 21       		.uleb128 0x21
+ 1134 04c9 13050000 		.4byte	.LASF77
+ 1135 04cd 01       		.byte	0x1
+ 1136 04ce 52       		.byte	0x52
+ 1137 04cf B5030000 		.4byte	0x3b5
+ 1138 04d3 05       		.uleb128 0x5
+ 1139 04d4 03       		.byte	0x3
+ 1140 04d5 00000000 		.4byte	gl_img2_fw_metadata
+ 1141 04d9 21       		.uleb128 0x21
+ 1142 04da 2F060000 		.4byte	.LASF78
+ 1143 04de 01       		.byte	0x1
+ 1144 04df 37       		.byte	0x37
+ 1145 04e0 F9010000 		.4byte	0x1f9
+ 1146 04e4 05       		.uleb128 0x5
+ 1147 04e5 03       		.byte	0x3
+ 1148 04e6 00000000 		.4byte	gl_img_status
+ 1149 04ea 22       		.uleb128 0x22
+ 1150 04eb 8C030000 		.4byte	.LASF79
+ 1151 04ef 8C030000 		.4byte	.LASF79
+ 1152 04f3 07       		.byte	0x7
+ 1153 04f4 B3       		.byte	0xb3
+ 1154 04f5 22       		.uleb128 0x22
+ 1155 04f6 CC050000 		.4byte	.LASF80
+ 1156 04fa CC050000 		.4byte	.LASF80
+ 1157 04fe 05       		.byte	0x5
+ 1158 04ff B3       		.byte	0xb3
+ 1159 0500 00       		.byte	0
+ 1160              		.section	.debug_abbrev,"",%progbits
+ 1161              	.Ldebug_abbrev0:
+ 1162 0000 01       		.uleb128 0x1
+ 1163 0001 11       		.uleb128 0x11
+ 1164 0002 01       		.byte	0x1
+ 1165 0003 25       		.uleb128 0x25
+ 1166 0004 0E       		.uleb128 0xe
+ARM GAS  e:\temp\ccvz51Lv.s 			page 32
+
+
+ 1167 0005 13       		.uleb128 0x13
+ 1168 0006 0B       		.uleb128 0xb
+ 1169 0007 03       		.uleb128 0x3
+ 1170 0008 0E       		.uleb128 0xe
+ 1171 0009 1B       		.uleb128 0x1b
+ 1172 000a 0E       		.uleb128 0xe
+ 1173 000b 55       		.uleb128 0x55
+ 1174 000c 17       		.uleb128 0x17
+ 1175 000d 11       		.uleb128 0x11
+ 1176 000e 01       		.uleb128 0x1
+ 1177 000f 10       		.uleb128 0x10
+ 1178 0010 17       		.uleb128 0x17
+ 1179 0011 00       		.byte	0
+ 1180 0012 00       		.byte	0
+ 1181 0013 02       		.uleb128 0x2
+ 1182 0014 24       		.uleb128 0x24
+ 1183 0015 00       		.byte	0
+ 1184 0016 0B       		.uleb128 0xb
+ 1185 0017 0B       		.uleb128 0xb
+ 1186 0018 3E       		.uleb128 0x3e
+ 1187 0019 0B       		.uleb128 0xb
+ 1188 001a 03       		.uleb128 0x3
+ 1189 001b 0E       		.uleb128 0xe
+ 1190 001c 00       		.byte	0
+ 1191 001d 00       		.byte	0
+ 1192 001e 03       		.uleb128 0x3
+ 1193 001f 16       		.uleb128 0x16
+ 1194 0020 00       		.byte	0
+ 1195 0021 03       		.uleb128 0x3
+ 1196 0022 0E       		.uleb128 0xe
+ 1197 0023 3A       		.uleb128 0x3a
+ 1198 0024 0B       		.uleb128 0xb
+ 1199 0025 3B       		.uleb128 0x3b
+ 1200 0026 0B       		.uleb128 0xb
+ 1201 0027 49       		.uleb128 0x49
+ 1202 0028 13       		.uleb128 0x13
+ 1203 0029 00       		.byte	0
+ 1204 002a 00       		.byte	0
+ 1205 002b 04       		.uleb128 0x4
+ 1206 002c 24       		.uleb128 0x24
+ 1207 002d 00       		.byte	0
+ 1208 002e 0B       		.uleb128 0xb
+ 1209 002f 0B       		.uleb128 0xb
+ 1210 0030 3E       		.uleb128 0x3e
+ 1211 0031 0B       		.uleb128 0xb
+ 1212 0032 03       		.uleb128 0x3
+ 1213 0033 08       		.uleb128 0x8
+ 1214 0034 00       		.byte	0
+ 1215 0035 00       		.byte	0
+ 1216 0036 05       		.uleb128 0x5
+ 1217 0037 04       		.uleb128 0x4
+ 1218 0038 01       		.byte	0x1
+ 1219 0039 03       		.uleb128 0x3
+ 1220 003a 0E       		.uleb128 0xe
+ 1221 003b 0B       		.uleb128 0xb
+ 1222 003c 0B       		.uleb128 0xb
+ 1223 003d 49       		.uleb128 0x49
+ARM GAS  e:\temp\ccvz51Lv.s 			page 33
+
+
+ 1224 003e 13       		.uleb128 0x13
+ 1225 003f 3A       		.uleb128 0x3a
+ 1226 0040 0B       		.uleb128 0xb
+ 1227 0041 3B       		.uleb128 0x3b
+ 1228 0042 0B       		.uleb128 0xb
+ 1229 0043 01       		.uleb128 0x1
+ 1230 0044 13       		.uleb128 0x13
+ 1231 0045 00       		.byte	0
+ 1232 0046 00       		.byte	0
+ 1233 0047 06       		.uleb128 0x6
+ 1234 0048 28       		.uleb128 0x28
+ 1235 0049 00       		.byte	0
+ 1236 004a 03       		.uleb128 0x3
+ 1237 004b 0E       		.uleb128 0xe
+ 1238 004c 1C       		.uleb128 0x1c
+ 1239 004d 0D       		.uleb128 0xd
+ 1240 004e 00       		.byte	0
+ 1241 004f 00       		.byte	0
+ 1242 0050 07       		.uleb128 0x7
+ 1243 0051 28       		.uleb128 0x28
+ 1244 0052 00       		.byte	0
+ 1245 0053 03       		.uleb128 0x3
+ 1246 0054 0E       		.uleb128 0xe
+ 1247 0055 1C       		.uleb128 0x1c
+ 1248 0056 0B       		.uleb128 0xb
+ 1249 0057 00       		.byte	0
+ 1250 0058 00       		.byte	0
+ 1251 0059 08       		.uleb128 0x8
+ 1252 005a 04       		.uleb128 0x4
+ 1253 005b 01       		.byte	0x1
+ 1254 005c 0B       		.uleb128 0xb
+ 1255 005d 0B       		.uleb128 0xb
+ 1256 005e 49       		.uleb128 0x49
+ 1257 005f 13       		.uleb128 0x13
+ 1258 0060 3A       		.uleb128 0x3a
+ 1259 0061 0B       		.uleb128 0xb
+ 1260 0062 3B       		.uleb128 0x3b
+ 1261 0063 0B       		.uleb128 0xb
+ 1262 0064 01       		.uleb128 0x1
+ 1263 0065 13       		.uleb128 0x13
+ 1264 0066 00       		.byte	0
+ 1265 0067 00       		.byte	0
+ 1266 0068 09       		.uleb128 0x9
+ 1267 0069 13       		.uleb128 0x13
+ 1268 006a 01       		.byte	0x1
+ 1269 006b 03       		.uleb128 0x3
+ 1270 006c 0E       		.uleb128 0xe
+ 1271 006d 0B       		.uleb128 0xb
+ 1272 006e 0B       		.uleb128 0xb
+ 1273 006f 3A       		.uleb128 0x3a
+ 1274 0070 0B       		.uleb128 0xb
+ 1275 0071 3B       		.uleb128 0x3b
+ 1276 0072 0B       		.uleb128 0xb
+ 1277 0073 01       		.uleb128 0x1
+ 1278 0074 13       		.uleb128 0x13
+ 1279 0075 00       		.byte	0
+ 1280 0076 00       		.byte	0
+ARM GAS  e:\temp\ccvz51Lv.s 			page 34
+
+
+ 1281 0077 0A       		.uleb128 0xa
+ 1282 0078 0D       		.uleb128 0xd
+ 1283 0079 00       		.byte	0
+ 1284 007a 03       		.uleb128 0x3
+ 1285 007b 0E       		.uleb128 0xe
+ 1286 007c 3A       		.uleb128 0x3a
+ 1287 007d 0B       		.uleb128 0xb
+ 1288 007e 3B       		.uleb128 0x3b
+ 1289 007f 0B       		.uleb128 0xb
+ 1290 0080 49       		.uleb128 0x49
+ 1291 0081 13       		.uleb128 0x13
+ 1292 0082 0B       		.uleb128 0xb
+ 1293 0083 0B       		.uleb128 0xb
+ 1294 0084 0D       		.uleb128 0xd
+ 1295 0085 0B       		.uleb128 0xb
+ 1296 0086 0C       		.uleb128 0xc
+ 1297 0087 0B       		.uleb128 0xb
+ 1298 0088 38       		.uleb128 0x38
+ 1299 0089 0B       		.uleb128 0xb
+ 1300 008a 00       		.byte	0
+ 1301 008b 00       		.byte	0
+ 1302 008c 0B       		.uleb128 0xb
+ 1303 008d 17       		.uleb128 0x17
+ 1304 008e 01       		.byte	0x1
+ 1305 008f 0B       		.uleb128 0xb
+ 1306 0090 0B       		.uleb128 0xb
+ 1307 0091 3A       		.uleb128 0x3a
+ 1308 0092 0B       		.uleb128 0xb
+ 1309 0093 3B       		.uleb128 0x3b
+ 1310 0094 0B       		.uleb128 0xb
+ 1311 0095 01       		.uleb128 0x1
+ 1312 0096 13       		.uleb128 0x13
+ 1313 0097 00       		.byte	0
+ 1314 0098 00       		.byte	0
+ 1315 0099 0C       		.uleb128 0xc
+ 1316 009a 0D       		.uleb128 0xd
+ 1317 009b 00       		.byte	0
+ 1318 009c 03       		.uleb128 0x3
+ 1319 009d 08       		.uleb128 0x8
+ 1320 009e 3A       		.uleb128 0x3a
+ 1321 009f 0B       		.uleb128 0xb
+ 1322 00a0 3B       		.uleb128 0x3b
+ 1323 00a1 0B       		.uleb128 0xb
+ 1324 00a2 49       		.uleb128 0x49
+ 1325 00a3 13       		.uleb128 0x13
+ 1326 00a4 00       		.byte	0
+ 1327 00a5 00       		.byte	0
+ 1328 00a6 0D       		.uleb128 0xd
+ 1329 00a7 0D       		.uleb128 0xd
+ 1330 00a8 00       		.byte	0
+ 1331 00a9 03       		.uleb128 0x3
+ 1332 00aa 0E       		.uleb128 0xe
+ 1333 00ab 3A       		.uleb128 0x3a
+ 1334 00ac 0B       		.uleb128 0xb
+ 1335 00ad 3B       		.uleb128 0x3b
+ 1336 00ae 0B       		.uleb128 0xb
+ 1337 00af 49       		.uleb128 0x49
+ARM GAS  e:\temp\ccvz51Lv.s 			page 35
+
+
+ 1338 00b0 13       		.uleb128 0x13
+ 1339 00b1 00       		.byte	0
+ 1340 00b2 00       		.byte	0
+ 1341 00b3 0E       		.uleb128 0xe
+ 1342 00b4 13       		.uleb128 0x13
+ 1343 00b5 01       		.byte	0x1
+ 1344 00b6 0B       		.uleb128 0xb
+ 1345 00b7 0B       		.uleb128 0xb
+ 1346 00b8 3A       		.uleb128 0x3a
+ 1347 00b9 0B       		.uleb128 0xb
+ 1348 00ba 3B       		.uleb128 0x3b
+ 1349 00bb 0B       		.uleb128 0xb
+ 1350 00bc 01       		.uleb128 0x1
+ 1351 00bd 13       		.uleb128 0x13
+ 1352 00be 00       		.byte	0
+ 1353 00bf 00       		.byte	0
+ 1354 00c0 0F       		.uleb128 0xf
+ 1355 00c1 0D       		.uleb128 0xd
+ 1356 00c2 00       		.byte	0
+ 1357 00c3 03       		.uleb128 0x3
+ 1358 00c4 0E       		.uleb128 0xe
+ 1359 00c5 3A       		.uleb128 0x3a
+ 1360 00c6 0B       		.uleb128 0xb
+ 1361 00c7 3B       		.uleb128 0x3b
+ 1362 00c8 0B       		.uleb128 0xb
+ 1363 00c9 49       		.uleb128 0x49
+ 1364 00ca 13       		.uleb128 0x13
+ 1365 00cb 38       		.uleb128 0x38
+ 1366 00cc 0B       		.uleb128 0xb
+ 1367 00cd 00       		.byte	0
+ 1368 00ce 00       		.byte	0
+ 1369 00cf 10       		.uleb128 0x10
+ 1370 00d0 01       		.uleb128 0x1
+ 1371 00d1 01       		.byte	0x1
+ 1372 00d2 49       		.uleb128 0x49
+ 1373 00d3 13       		.uleb128 0x13
+ 1374 00d4 01       		.uleb128 0x1
+ 1375 00d5 13       		.uleb128 0x13
+ 1376 00d6 00       		.byte	0
+ 1377 00d7 00       		.byte	0
+ 1378 00d8 11       		.uleb128 0x11
+ 1379 00d9 21       		.uleb128 0x21
+ 1380 00da 00       		.byte	0
+ 1381 00db 49       		.uleb128 0x49
+ 1382 00dc 13       		.uleb128 0x13
+ 1383 00dd 2F       		.uleb128 0x2f
+ 1384 00de 0B       		.uleb128 0xb
+ 1385 00df 00       		.byte	0
+ 1386 00e0 00       		.byte	0
+ 1387 00e1 12       		.uleb128 0x12
+ 1388 00e2 2E       		.uleb128 0x2e
+ 1389 00e3 00       		.byte	0
+ 1390 00e4 3F       		.uleb128 0x3f
+ 1391 00e5 19       		.uleb128 0x19
+ 1392 00e6 03       		.uleb128 0x3
+ 1393 00e7 0E       		.uleb128 0xe
+ 1394 00e8 3A       		.uleb128 0x3a
+ARM GAS  e:\temp\ccvz51Lv.s 			page 36
+
+
+ 1395 00e9 0B       		.uleb128 0xb
+ 1396 00ea 3B       		.uleb128 0x3b
+ 1397 00eb 0B       		.uleb128 0xb
+ 1398 00ec 27       		.uleb128 0x27
+ 1399 00ed 19       		.uleb128 0x19
+ 1400 00ee 49       		.uleb128 0x49
+ 1401 00ef 13       		.uleb128 0x13
+ 1402 00f0 11       		.uleb128 0x11
+ 1403 00f1 01       		.uleb128 0x1
+ 1404 00f2 12       		.uleb128 0x12
+ 1405 00f3 06       		.uleb128 0x6
+ 1406 00f4 40       		.uleb128 0x40
+ 1407 00f5 18       		.uleb128 0x18
+ 1408 00f6 9742     		.uleb128 0x2117
+ 1409 00f8 19       		.uleb128 0x19
+ 1410 00f9 00       		.byte	0
+ 1411 00fa 00       		.byte	0
+ 1412 00fb 13       		.uleb128 0x13
+ 1413 00fc 2E       		.uleb128 0x2e
+ 1414 00fd 01       		.byte	0x1
+ 1415 00fe 3F       		.uleb128 0x3f
+ 1416 00ff 19       		.uleb128 0x19
+ 1417 0100 03       		.uleb128 0x3
+ 1418 0101 0E       		.uleb128 0xe
+ 1419 0102 3A       		.uleb128 0x3a
+ 1420 0103 0B       		.uleb128 0xb
+ 1421 0104 3B       		.uleb128 0x3b
+ 1422 0105 0B       		.uleb128 0xb
+ 1423 0106 27       		.uleb128 0x27
+ 1424 0107 19       		.uleb128 0x19
+ 1425 0108 49       		.uleb128 0x49
+ 1426 0109 13       		.uleb128 0x13
+ 1427 010a 11       		.uleb128 0x11
+ 1428 010b 01       		.uleb128 0x1
+ 1429 010c 12       		.uleb128 0x12
+ 1430 010d 06       		.uleb128 0x6
+ 1431 010e 40       		.uleb128 0x40
+ 1432 010f 18       		.uleb128 0x18
+ 1433 0110 9742     		.uleb128 0x2117
+ 1434 0112 19       		.uleb128 0x19
+ 1435 0113 01       		.uleb128 0x1
+ 1436 0114 13       		.uleb128 0x13
+ 1437 0115 00       		.byte	0
+ 1438 0116 00       		.byte	0
+ 1439 0117 14       		.uleb128 0x14
+ 1440 0118 05       		.uleb128 0x5
+ 1441 0119 00       		.byte	0
+ 1442 011a 03       		.uleb128 0x3
+ 1443 011b 0E       		.uleb128 0xe
+ 1444 011c 3A       		.uleb128 0x3a
+ 1445 011d 0B       		.uleb128 0xb
+ 1446 011e 3B       		.uleb128 0x3b
+ 1447 011f 0B       		.uleb128 0xb
+ 1448 0120 49       		.uleb128 0x49
+ 1449 0121 13       		.uleb128 0x13
+ 1450 0122 02       		.uleb128 0x2
+ 1451 0123 17       		.uleb128 0x17
+ARM GAS  e:\temp\ccvz51Lv.s 			page 37
+
+
+ 1452 0124 00       		.byte	0
+ 1453 0125 00       		.byte	0
+ 1454 0126 15       		.uleb128 0x15
+ 1455 0127 34       		.uleb128 0x34
+ 1456 0128 00       		.byte	0
+ 1457 0129 03       		.uleb128 0x3
+ 1458 012a 0E       		.uleb128 0xe
+ 1459 012b 3A       		.uleb128 0x3a
+ 1460 012c 0B       		.uleb128 0xb
+ 1461 012d 3B       		.uleb128 0x3b
+ 1462 012e 0B       		.uleb128 0xb
+ 1463 012f 49       		.uleb128 0x49
+ 1464 0130 13       		.uleb128 0x13
+ 1465 0131 02       		.uleb128 0x2
+ 1466 0132 17       		.uleb128 0x17
+ 1467 0133 00       		.byte	0
+ 1468 0134 00       		.byte	0
+ 1469 0135 16       		.uleb128 0x16
+ 1470 0136 898201   		.uleb128 0x4109
+ 1471 0139 01       		.byte	0x1
+ 1472 013a 11       		.uleb128 0x11
+ 1473 013b 01       		.uleb128 0x1
+ 1474 013c 31       		.uleb128 0x31
+ 1475 013d 13       		.uleb128 0x13
+ 1476 013e 00       		.byte	0
+ 1477 013f 00       		.byte	0
+ 1478 0140 17       		.uleb128 0x17
+ 1479 0141 8A8201   		.uleb128 0x410a
+ 1480 0144 00       		.byte	0
+ 1481 0145 02       		.uleb128 0x2
+ 1482 0146 18       		.uleb128 0x18
+ 1483 0147 9142     		.uleb128 0x2111
+ 1484 0149 18       		.uleb128 0x18
+ 1485 014a 00       		.byte	0
+ 1486 014b 00       		.byte	0
+ 1487 014c 18       		.uleb128 0x18
+ 1488 014d 0F       		.uleb128 0xf
+ 1489 014e 00       		.byte	0
+ 1490 014f 0B       		.uleb128 0xb
+ 1491 0150 0B       		.uleb128 0xb
+ 1492 0151 49       		.uleb128 0x49
+ 1493 0152 13       		.uleb128 0x13
+ 1494 0153 00       		.byte	0
+ 1495 0154 00       		.byte	0
+ 1496 0155 19       		.uleb128 0x19
+ 1497 0156 898201   		.uleb128 0x4109
+ 1498 0159 01       		.byte	0x1
+ 1499 015a 11       		.uleb128 0x11
+ 1500 015b 01       		.uleb128 0x1
+ 1501 015c 31       		.uleb128 0x31
+ 1502 015d 13       		.uleb128 0x13
+ 1503 015e 01       		.uleb128 0x1
+ 1504 015f 13       		.uleb128 0x13
+ 1505 0160 00       		.byte	0
+ 1506 0161 00       		.byte	0
+ 1507 0162 1A       		.uleb128 0x1a
+ 1508 0163 898201   		.uleb128 0x4109
+ARM GAS  e:\temp\ccvz51Lv.s 			page 38
+
+
+ 1509 0166 00       		.byte	0
+ 1510 0167 11       		.uleb128 0x11
+ 1511 0168 01       		.uleb128 0x1
+ 1512 0169 31       		.uleb128 0x31
+ 1513 016a 13       		.uleb128 0x13
+ 1514 016b 00       		.byte	0
+ 1515 016c 00       		.byte	0
+ 1516 016d 1B       		.uleb128 0x1b
+ 1517 016e 2E       		.uleb128 0x2e
+ 1518 016f 01       		.byte	0x1
+ 1519 0170 3F       		.uleb128 0x3f
+ 1520 0171 19       		.uleb128 0x19
+ 1521 0172 03       		.uleb128 0x3
+ 1522 0173 0E       		.uleb128 0xe
+ 1523 0174 3A       		.uleb128 0x3a
+ 1524 0175 0B       		.uleb128 0xb
+ 1525 0176 3B       		.uleb128 0x3b
+ 1526 0177 05       		.uleb128 0x5
+ 1527 0178 27       		.uleb128 0x27
+ 1528 0179 19       		.uleb128 0x19
+ 1529 017a 11       		.uleb128 0x11
+ 1530 017b 01       		.uleb128 0x1
+ 1531 017c 12       		.uleb128 0x12
+ 1532 017d 06       		.uleb128 0x6
+ 1533 017e 40       		.uleb128 0x40
+ 1534 017f 18       		.uleb128 0x18
+ 1535 0180 9742     		.uleb128 0x2117
+ 1536 0182 19       		.uleb128 0x19
+ 1537 0183 01       		.uleb128 0x1
+ 1538 0184 13       		.uleb128 0x13
+ 1539 0185 00       		.byte	0
+ 1540 0186 00       		.byte	0
+ 1541 0187 1C       		.uleb128 0x1c
+ 1542 0188 2E       		.uleb128 0x2e
+ 1543 0189 01       		.byte	0x1
+ 1544 018a 3F       		.uleb128 0x3f
+ 1545 018b 19       		.uleb128 0x19
+ 1546 018c 03       		.uleb128 0x3
+ 1547 018d 0E       		.uleb128 0xe
+ 1548 018e 3A       		.uleb128 0x3a
+ 1549 018f 0B       		.uleb128 0xb
+ 1550 0190 3B       		.uleb128 0x3b
+ 1551 0191 05       		.uleb128 0x5
+ 1552 0192 27       		.uleb128 0x27
+ 1553 0193 19       		.uleb128 0x19
+ 1554 0194 49       		.uleb128 0x49
+ 1555 0195 13       		.uleb128 0x13
+ 1556 0196 11       		.uleb128 0x11
+ 1557 0197 01       		.uleb128 0x1
+ 1558 0198 12       		.uleb128 0x12
+ 1559 0199 06       		.uleb128 0x6
+ 1560 019a 40       		.uleb128 0x40
+ 1561 019b 18       		.uleb128 0x18
+ 1562 019c 9742     		.uleb128 0x2117
+ 1563 019e 19       		.uleb128 0x19
+ 1564 019f 01       		.uleb128 0x1
+ 1565 01a0 13       		.uleb128 0x13
+ARM GAS  e:\temp\ccvz51Lv.s 			page 39
+
+
+ 1566 01a1 00       		.byte	0
+ 1567 01a2 00       		.byte	0
+ 1568 01a3 1D       		.uleb128 0x1d
+ 1569 01a4 05       		.uleb128 0x5
+ 1570 01a5 00       		.byte	0
+ 1571 01a6 03       		.uleb128 0x3
+ 1572 01a7 0E       		.uleb128 0xe
+ 1573 01a8 3A       		.uleb128 0x3a
+ 1574 01a9 0B       		.uleb128 0xb
+ 1575 01aa 3B       		.uleb128 0x3b
+ 1576 01ab 05       		.uleb128 0x5
+ 1577 01ac 49       		.uleb128 0x49
+ 1578 01ad 13       		.uleb128 0x13
+ 1579 01ae 02       		.uleb128 0x2
+ 1580 01af 17       		.uleb128 0x17
+ 1581 01b0 00       		.byte	0
+ 1582 01b1 00       		.byte	0
+ 1583 01b2 1E       		.uleb128 0x1e
+ 1584 01b3 34       		.uleb128 0x34
+ 1585 01b4 00       		.byte	0
+ 1586 01b5 03       		.uleb128 0x3
+ 1587 01b6 0E       		.uleb128 0xe
+ 1588 01b7 3A       		.uleb128 0x3a
+ 1589 01b8 0B       		.uleb128 0xb
+ 1590 01b9 3B       		.uleb128 0x3b
+ 1591 01ba 05       		.uleb128 0x5
+ 1592 01bb 49       		.uleb128 0x49
+ 1593 01bc 13       		.uleb128 0x13
+ 1594 01bd 02       		.uleb128 0x2
+ 1595 01be 17       		.uleb128 0x17
+ 1596 01bf 00       		.byte	0
+ 1597 01c0 00       		.byte	0
+ 1598 01c1 1F       		.uleb128 0x1f
+ 1599 01c2 34       		.uleb128 0x34
+ 1600 01c3 00       		.byte	0
+ 1601 01c4 03       		.uleb128 0x3
+ 1602 01c5 0E       		.uleb128 0xe
+ 1603 01c6 3A       		.uleb128 0x3a
+ 1604 01c7 0B       		.uleb128 0xb
+ 1605 01c8 3B       		.uleb128 0x3b
+ 1606 01c9 0B       		.uleb128 0xb
+ 1607 01ca 49       		.uleb128 0x49
+ 1608 01cb 13       		.uleb128 0x13
+ 1609 01cc 02       		.uleb128 0x2
+ 1610 01cd 18       		.uleb128 0x18
+ 1611 01ce 00       		.byte	0
+ 1612 01cf 00       		.byte	0
+ 1613 01d0 20       		.uleb128 0x20
+ 1614 01d1 35       		.uleb128 0x35
+ 1615 01d2 00       		.byte	0
+ 1616 01d3 49       		.uleb128 0x49
+ 1617 01d4 13       		.uleb128 0x13
+ 1618 01d5 00       		.byte	0
+ 1619 01d6 00       		.byte	0
+ 1620 01d7 21       		.uleb128 0x21
+ 1621 01d8 34       		.uleb128 0x34
+ 1622 01d9 00       		.byte	0
+ARM GAS  e:\temp\ccvz51Lv.s 			page 40
+
+
+ 1623 01da 03       		.uleb128 0x3
+ 1624 01db 0E       		.uleb128 0xe
+ 1625 01dc 3A       		.uleb128 0x3a
+ 1626 01dd 0B       		.uleb128 0xb
+ 1627 01de 3B       		.uleb128 0x3b
+ 1628 01df 0B       		.uleb128 0xb
+ 1629 01e0 49       		.uleb128 0x49
+ 1630 01e1 13       		.uleb128 0x13
+ 1631 01e2 3F       		.uleb128 0x3f
+ 1632 01e3 19       		.uleb128 0x19
+ 1633 01e4 02       		.uleb128 0x2
+ 1634 01e5 18       		.uleb128 0x18
+ 1635 01e6 00       		.byte	0
+ 1636 01e7 00       		.byte	0
+ 1637 01e8 22       		.uleb128 0x22
+ 1638 01e9 2E       		.uleb128 0x2e
+ 1639 01ea 00       		.byte	0
+ 1640 01eb 3F       		.uleb128 0x3f
+ 1641 01ec 19       		.uleb128 0x19
+ 1642 01ed 3C       		.uleb128 0x3c
+ 1643 01ee 19       		.uleb128 0x19
+ 1644 01ef 6E       		.uleb128 0x6e
+ 1645 01f0 0E       		.uleb128 0xe
+ 1646 01f1 03       		.uleb128 0x3
+ 1647 01f2 0E       		.uleb128 0xe
+ 1648 01f3 3A       		.uleb128 0x3a
+ 1649 01f4 0B       		.uleb128 0xb
+ 1650 01f5 3B       		.uleb128 0x3b
+ 1651 01f6 0B       		.uleb128 0xb
+ 1652 01f7 00       		.byte	0
+ 1653 01f8 00       		.byte	0
+ 1654 01f9 00       		.byte	0
+ 1655              		.section	.debug_loc,"",%progbits
+ 1656              	.Ldebug_loc0:
+ 1657              	.LLST0:
+ 1658 0000 00000000 		.4byte	.LVL0
+ 1659 0004 24000000 		.4byte	.LVL3
+ 1660 0008 0100     		.2byte	0x1
+ 1661 000a 50       		.byte	0x50
+ 1662 000b 24000000 		.4byte	.LVL3
+ 1663 000f 27000000 		.4byte	.LVL4-1
+ 1664 0013 0300     		.2byte	0x3
+ 1665 0015 70       		.byte	0x70
+ 1666 0016 76       		.sleb128 -10
+ 1667 0017 9F       		.byte	0x9f
+ 1668 0018 27000000 		.4byte	.LVL4-1
+ 1669 001c 30000000 		.4byte	.LVL5
+ 1670 0020 0400     		.2byte	0x4
+ 1671 0022 F3       		.byte	0xf3
+ 1672 0023 01       		.uleb128 0x1
+ 1673 0024 50       		.byte	0x50
+ 1674 0025 9F       		.byte	0x9f
+ 1675 0026 30000000 		.4byte	.LVL5
+ 1676 002a 32000000 		.4byte	.LVL6
+ 1677 002e 0100     		.2byte	0x1
+ 1678 0030 50       		.byte	0x50
+ 1679 0031 32000000 		.4byte	.LVL6
+ARM GAS  e:\temp\ccvz51Lv.s 			page 41
+
+
+ 1680 0035 34000000 		.4byte	.LVL7
+ 1681 0039 0400     		.2byte	0x4
+ 1682 003b F3       		.byte	0xf3
+ 1683 003c 01       		.uleb128 0x1
+ 1684 003d 50       		.byte	0x50
+ 1685 003e 9F       		.byte	0x9f
+ 1686 003f 34000000 		.4byte	.LVL7
+ 1687 0043 36000000 		.4byte	.LVL8
+ 1688 0047 0100     		.2byte	0x1
+ 1689 0049 50       		.byte	0x50
+ 1690 004a 36000000 		.4byte	.LVL8
+ 1691 004e 44000000 		.4byte	.LFE33
+ 1692 0052 0400     		.2byte	0x4
+ 1693 0054 F3       		.byte	0xf3
+ 1694 0055 01       		.uleb128 0x1
+ 1695 0056 50       		.byte	0x50
+ 1696 0057 9F       		.byte	0x9f
+ 1697 0058 00000000 		.4byte	0
+ 1698 005c 00000000 		.4byte	0
+ 1699              	.LLST1:
+ 1700 0060 0A000000 		.4byte	.LVL1
+ 1701 0064 22000000 		.4byte	.LVL2
+ 1702 0068 0100     		.2byte	0x1
+ 1703 006a 51       		.byte	0x51
+ 1704 006b 22000000 		.4byte	.LVL2
+ 1705 006f 27000000 		.4byte	.LVL4-1
+ 1706 0073 0300     		.2byte	0x3
+ 1707 0075 71       		.byte	0x71
+ 1708 0076 0A       		.sleb128 10
+ 1709 0077 9F       		.byte	0x9f
+ 1710 0078 30000000 		.4byte	.LVL5
+ 1711 007c 38000000 		.4byte	.LVL9
+ 1712 0080 0100     		.2byte	0x1
+ 1713 0082 51       		.byte	0x51
+ 1714 0083 00000000 		.4byte	0
+ 1715 0087 00000000 		.4byte	0
+ 1716              	.LLST2:
+ 1717 008b 00000000 		.4byte	.LVL10
+ 1718 008f 52000000 		.4byte	.LVL14
+ 1719 0093 0100     		.2byte	0x1
+ 1720 0095 50       		.byte	0x50
+ 1721 0096 52000000 		.4byte	.LVL14
+ 1722 009a 66000000 		.4byte	.LVL17
+ 1723 009e 0400     		.2byte	0x4
+ 1724 00a0 F3       		.byte	0xf3
+ 1725 00a1 01       		.uleb128 0x1
+ 1726 00a2 50       		.byte	0x50
+ 1727 00a3 9F       		.byte	0x9f
+ 1728 00a4 66000000 		.4byte	.LVL17
+ 1729 00a8 68000000 		.4byte	.LVL18
+ 1730 00ac 0100     		.2byte	0x1
+ 1731 00ae 50       		.byte	0x50
+ 1732 00af 68000000 		.4byte	.LVL18
+ 1733 00b3 6A000000 		.4byte	.LVL19
+ 1734 00b7 0400     		.2byte	0x4
+ 1735 00b9 F3       		.byte	0xf3
+ 1736 00ba 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 42
+
+
+ 1737 00bb 50       		.byte	0x50
+ 1738 00bc 9F       		.byte	0x9f
+ 1739 00bd 6A000000 		.4byte	.LVL19
+ 1740 00c1 6C000000 		.4byte	.LVL20
+ 1741 00c5 0100     		.2byte	0x1
+ 1742 00c7 50       		.byte	0x50
+ 1743 00c8 6C000000 		.4byte	.LVL20
+ 1744 00cc 6E000000 		.4byte	.LVL21
+ 1745 00d0 0400     		.2byte	0x4
+ 1746 00d2 F3       		.byte	0xf3
+ 1747 00d3 01       		.uleb128 0x1
+ 1748 00d4 50       		.byte	0x50
+ 1749 00d5 9F       		.byte	0x9f
+ 1750 00d6 6E000000 		.4byte	.LVL21
+ 1751 00da 70000000 		.4byte	.LVL22
+ 1752 00de 0100     		.2byte	0x1
+ 1753 00e0 50       		.byte	0x50
+ 1754 00e1 70000000 		.4byte	.LVL22
+ 1755 00e5 72000000 		.4byte	.LVL23
+ 1756 00e9 0400     		.2byte	0x4
+ 1757 00eb F3       		.byte	0xf3
+ 1758 00ec 01       		.uleb128 0x1
+ 1759 00ed 50       		.byte	0x50
+ 1760 00ee 9F       		.byte	0x9f
+ 1761 00ef 72000000 		.4byte	.LVL23
+ 1762 00f3 74000000 		.4byte	.LVL24
+ 1763 00f7 0100     		.2byte	0x1
+ 1764 00f9 50       		.byte	0x50
+ 1765 00fa 74000000 		.4byte	.LVL24
+ 1766 00fe 80000000 		.4byte	.LFE34
+ 1767 0102 0400     		.2byte	0x4
+ 1768 0104 F3       		.byte	0xf3
+ 1769 0105 01       		.uleb128 0x1
+ 1770 0106 50       		.byte	0x50
+ 1771 0107 9F       		.byte	0x9f
+ 1772 0108 00000000 		.4byte	0
+ 1773 010c 00000000 		.4byte	0
+ 1774              	.LLST3:
+ 1775 0110 02000000 		.4byte	.LVL11
+ 1776 0114 64000000 		.4byte	.LVL16
+ 1777 0118 0200     		.2byte	0x2
+ 1778 011a 30       		.byte	0x30
+ 1779 011b 9F       		.byte	0x9f
+ 1780 011c 64000000 		.4byte	.LVL16
+ 1781 0120 66000000 		.4byte	.LVL17
+ 1782 0124 0100     		.2byte	0x1
+ 1783 0126 50       		.byte	0x50
+ 1784 0127 66000000 		.4byte	.LVL17
+ 1785 012b 78000000 		.4byte	.LVL26
+ 1786 012f 0200     		.2byte	0x2
+ 1787 0131 30       		.byte	0x30
+ 1788 0132 9F       		.byte	0x9f
+ 1789 0133 78000000 		.4byte	.LVL26
+ 1790 0137 80000000 		.4byte	.LFE34
+ 1791 013b 0100     		.2byte	0x1
+ 1792 013d 50       		.byte	0x50
+ 1793 013e 00000000 		.4byte	0
+ARM GAS  e:\temp\ccvz51Lv.s 			page 43
+
+
+ 1794 0142 00000000 		.4byte	0
+ 1795              	.LLST4:
+ 1796 0146 02000000 		.4byte	.LVL11
+ 1797 014a 10000000 		.4byte	.LVL12
+ 1798 014e 0200     		.2byte	0x2
+ 1799 0150 30       		.byte	0x30
+ 1800 0151 9F       		.byte	0x9f
+ 1801 0152 10000000 		.4byte	.LVL12
+ 1802 0156 78000000 		.4byte	.LVL27
+ 1803 015a 0100     		.2byte	0x1
+ 1804 015c 56       		.byte	0x56
+ 1805 015d 00000000 		.4byte	0
+ 1806 0161 00000000 		.4byte	0
+ 1807              	.LLST5:
+ 1808 0165 02000000 		.4byte	.LVL11
+ 1809 0169 28000000 		.4byte	.LVL13
+ 1810 016d 0200     		.2byte	0x2
+ 1811 016f 30       		.byte	0x30
+ 1812 0170 9F       		.byte	0x9f
+ 1813 0171 28000000 		.4byte	.LVL13
+ 1814 0175 55000000 		.4byte	.LVL15-1
+ 1815 0179 0100     		.2byte	0x1
+ 1816 017b 51       		.byte	0x51
+ 1817 017c 66000000 		.4byte	.LVL17
+ 1818 0180 76000000 		.4byte	.LVL25
+ 1819 0184 0100     		.2byte	0x1
+ 1820 0186 51       		.byte	0x51
+ 1821 0187 00000000 		.4byte	0
+ 1822 018b 00000000 		.4byte	0
+ 1823              	.LLST6:
+ 1824 018f 00000000 		.4byte	.LVL28
+ 1825 0193 07000000 		.4byte	.LVL30-1
+ 1826 0197 0100     		.2byte	0x1
+ 1827 0199 50       		.byte	0x50
+ 1828 019a 07000000 		.4byte	.LVL30-1
+ 1829 019e 9C000000 		.4byte	.LFE35
+ 1830 01a2 0400     		.2byte	0x4
+ 1831 01a4 F3       		.byte	0xf3
+ 1832 01a5 01       		.uleb128 0x1
+ 1833 01a6 50       		.byte	0x50
+ 1834 01a7 9F       		.byte	0x9f
+ 1835 01a8 00000000 		.4byte	0
+ 1836 01ac 00000000 		.4byte	0
+ 1837              	.LLST7:
+ 1838 01b0 04000000 		.4byte	.LVL29
+ 1839 01b4 1A000000 		.4byte	.LVL31
+ 1840 01b8 0200     		.2byte	0x2
+ 1841 01ba 30       		.byte	0x30
+ 1842 01bb 9F       		.byte	0x9f
+ 1843 01bc 1A000000 		.4byte	.LVL31
+ 1844 01c0 20000000 		.4byte	.LVL32
+ 1845 01c4 0100     		.2byte	0x1
+ 1846 01c6 50       		.byte	0x50
+ 1847 01c7 20000000 		.4byte	.LVL32
+ 1848 01cb 24000000 		.4byte	.LVL33
+ 1849 01cf 0200     		.2byte	0x2
+ 1850 01d1 30       		.byte	0x30
+ARM GAS  e:\temp\ccvz51Lv.s 			page 44
+
+
+ 1851 01d2 9F       		.byte	0x9f
+ 1852 01d3 24000000 		.4byte	.LVL33
+ 1853 01d7 2A000000 		.4byte	.LVL34
+ 1854 01db 0100     		.2byte	0x1
+ 1855 01dd 50       		.byte	0x50
+ 1856 01de 2A000000 		.4byte	.LVL34
+ 1857 01e2 34000000 		.4byte	.LVL35
+ 1858 01e6 0200     		.2byte	0x2
+ 1859 01e8 30       		.byte	0x30
+ 1860 01e9 9F       		.byte	0x9f
+ 1861 01ea 34000000 		.4byte	.LVL35
+ 1862 01ee 3B000000 		.4byte	.LVL36-1
+ 1863 01f2 0100     		.2byte	0x1
+ 1864 01f4 50       		.byte	0x50
+ 1865 01f5 00000000 		.4byte	0
+ 1866 01f9 00000000 		.4byte	0
+ 1867              	.LLST8:
+ 1868 01fd 04000000 		.4byte	.LVL29
+ 1869 0201 34000000 		.4byte	.LVL35
+ 1870 0205 0300     		.2byte	0x3
+ 1871 0207 09       		.byte	0x9
+ 1872 0208 FE       		.byte	0xfe
+ 1873 0209 9F       		.byte	0x9f
+ 1874 020a 34000000 		.4byte	.LVL35
+ 1875 020e 3B000000 		.4byte	.LVL36-1
+ 1876 0212 0100     		.2byte	0x1
+ 1877 0214 53       		.byte	0x53
+ 1878 0215 40000000 		.4byte	.LVL37
+ 1879 0219 64000000 		.4byte	.LVL38
+ 1880 021d 0200     		.2byte	0x2
+ 1881 021f 30       		.byte	0x30
+ 1882 0220 9F       		.byte	0x9f
+ 1883 0221 64000000 		.4byte	.LVL38
+ 1884 0225 88000000 		.4byte	.LVL39
+ 1885 0229 0200     		.2byte	0x2
+ 1886 022b 36       		.byte	0x36
+ 1887 022c 9F       		.byte	0x9f
+ 1888 022d 88000000 		.4byte	.LVL39
+ 1889 0231 8C000000 		.4byte	.LVL40
+ 1890 0235 0200     		.2byte	0x2
+ 1891 0237 30       		.byte	0x30
+ 1892 0238 9F       		.byte	0x9f
+ 1893 0239 8C000000 		.4byte	.LVL40
+ 1894 023d 8E000000 		.4byte	.LVL41
+ 1895 0241 0200     		.2byte	0x2
+ 1896 0243 36       		.byte	0x36
+ 1897 0244 9F       		.byte	0x9f
+ 1898 0245 8E000000 		.4byte	.LVL41
+ 1899 0249 9C000000 		.4byte	.LFE35
+ 1900 024d 0100     		.2byte	0x1
+ 1901 024f 53       		.byte	0x53
+ 1902 0250 00000000 		.4byte	0
+ 1903 0254 00000000 		.4byte	0
+ 1904              	.LLST9:
+ 1905 0258 00000000 		.4byte	.LVL44
+ 1906 025c 11000000 		.4byte	.LVL46-1
+ 1907 0260 0100     		.2byte	0x1
+ARM GAS  e:\temp\ccvz51Lv.s 			page 45
+
+
+ 1908 0262 50       		.byte	0x50
+ 1909 0263 11000000 		.4byte	.LVL46-1
+ 1910 0267 30000000 		.4byte	.LFE37
+ 1911 026b 0400     		.2byte	0x4
+ 1912 026d F3       		.byte	0xf3
+ 1913 026e 01       		.uleb128 0x1
+ 1914 026f 50       		.byte	0x50
+ 1915 0270 9F       		.byte	0x9f
+ 1916 0271 00000000 		.4byte	0
+ 1917 0275 00000000 		.4byte	0
+ 1918              	.LLST10:
+ 1919 0279 0E000000 		.4byte	.LVL45
+ 1920 027d 26000000 		.4byte	.LVL48
+ 1921 0281 0100     		.2byte	0x1
+ 1922 0283 55       		.byte	0x55
+ 1923 0284 00000000 		.4byte	0
+ 1924 0288 00000000 		.4byte	0
+ 1925              		.section	.debug_aranges,"",%progbits
+ 1926 0000 44000000 		.4byte	0x44
+ 1927 0004 0200     		.2byte	0x2
+ 1928 0006 00000000 		.4byte	.Ldebug_info0
+ 1929 000a 04       		.byte	0x4
+ 1930 000b 00       		.byte	0
+ 1931 000c 0000     		.2byte	0
+ 1932 000e 0000     		.2byte	0
+ 1933 0010 00000000 		.4byte	.LFB32
+ 1934 0014 0C000000 		.4byte	.LFE32-.LFB32
+ 1935 0018 00000000 		.4byte	.LFB33
+ 1936 001c 44000000 		.4byte	.LFE33-.LFB33
+ 1937 0020 00000000 		.4byte	.LFB34
+ 1938 0024 80000000 		.4byte	.LFE34-.LFB34
+ 1939 0028 00000000 		.4byte	.LFB35
+ 1940 002c 9C000000 		.4byte	.LFE35-.LFB35
+ 1941 0030 00000000 		.4byte	.LFB36
+ 1942 0034 38000000 		.4byte	.LFE36-.LFB36
+ 1943 0038 00000000 		.4byte	.LFB37
+ 1944 003c 30000000 		.4byte	.LFE37-.LFB37
+ 1945 0040 00000000 		.4byte	0
+ 1946 0044 00000000 		.4byte	0
+ 1947              		.section	.debug_ranges,"",%progbits
+ 1948              	.Ldebug_ranges0:
+ 1949 0000 00000000 		.4byte	.LFB32
+ 1950 0004 0C000000 		.4byte	.LFE32
+ 1951 0008 00000000 		.4byte	.LFB33
+ 1952 000c 44000000 		.4byte	.LFE33
+ 1953 0010 00000000 		.4byte	.LFB34
+ 1954 0014 80000000 		.4byte	.LFE34
+ 1955 0018 00000000 		.4byte	.LFB35
+ 1956 001c 9C000000 		.4byte	.LFE35
+ 1957 0020 00000000 		.4byte	.LFB36
+ 1958 0024 38000000 		.4byte	.LFE36
+ 1959 0028 00000000 		.4byte	.LFB37
+ 1960 002c 30000000 		.4byte	.LFE37
+ 1961 0030 00000000 		.4byte	0
+ 1962 0034 00000000 		.4byte	0
+ 1963              		.section	.debug_line,"",%progbits
+ 1964              	.Ldebug_line0:
+ARM GAS  e:\temp\ccvz51Lv.s 			page 46
+
+
+ 1965 0000 16020000 		.section	.debug_str,"MS",%progbits,1
+ 1965      02002D01 
+ 1965      00000201 
+ 1965      FB0E0D00 
+ 1965      01010101 
+ 1966              	.LASF84:
+ 1967 0000 6363675F 		.ascii	"ccg_status\000"
+ 1967      73746174 
+ 1967      757300
+ 1968              	.LASF81:
+ 1969 000b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1969      43313120 
+ 1969      352E342E 
+ 1969      31203230 
+ 1969      31363036 
+ 1970 003e 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1970      20726576 
+ 1970      6973696F 
+ 1970      6E203233 
+ 1970      37373135 
+ 1971 0071 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 1971      66756E63 
+ 1971      74696F6E 
+ 1971      2D736563 
+ 1971      74696F6E 
+ 1972 00a4 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 1972      6F6E7320 
+ 1972      2D666E6F 
+ 1972      2D737472 
+ 1972      6963742D 
+ 1973              	.LASF51:
+ 1974 00c1 66775F65 		.ascii	"fw_entry\000"
+ 1974      6E747279 
+ 1974      00
+ 1975              	.LASF57:
+ 1976 00ca 626F6F74 		.ascii	"boot_app_version\000"
+ 1976      5F617070 
+ 1976      5F766572 
+ 1976      73696F6E 
+ 1976      00
+ 1977              	.LASF62:
+ 1978 00db 7379735F 		.ascii	"sys_fw_metadata_t\000"
+ 1978      66775F6D 
+ 1978      65746164 
+ 1978      6174615F 
+ 1978      7400
+ 1979              	.LASF2:
+ 1980 00ed 73686F72 		.ascii	"short int\000"
+ 1980      7420696E 
+ 1980      7400
+ 1981              	.LASF19:
+ 1982 00f7 73697A65 		.ascii	"sizetype\000"
+ 1982      74797065 
+ 1982      00
+ 1983              	.LASF24:
+ 1984 0100 4343475F 		.ascii	"CCG_STAT_INVALID_COMMAND\000"
+ 1984      53544154 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 47
+
+
+ 1984      5F494E56 
+ 1984      414C4944 
+ 1984      5F434F4D 
+ 1985              	.LASF71:
+ 1986 0119 6D645F70 		.ascii	"md_p\000"
+ 1986      00
+ 1987              	.LASF4:
+ 1988 011e 5F5F7569 		.ascii	"__uint16_t\000"
+ 1988      6E743136 
+ 1988      5F7400
+ 1989              	.LASF7:
+ 1990 0129 5F5F7569 		.ascii	"__uint32_t\000"
+ 1990      6E743332 
+ 1990      5F7400
+ 1991              	.LASF45:
+ 1992 0134 6677315F 		.ascii	"fw1_invalid\000"
+ 1992      696E7661 
+ 1992      6C696400 
+ 1993              	.LASF86:
+ 1994 0140 6765745F 		.ascii	"get_boot_mode_reason\000"
+ 1994      626F6F74 
+ 1994      5F6D6F64 
+ 1994      655F7265 
+ 1994      61736F6E 
+ 1995              	.LASF64:
+ 1996 0155 626F6F74 		.ascii	"boot_validate_fw\000"
+ 1996      5F76616C 
+ 1996      69646174 
+ 1996      655F6677 
+ 1996      00
+ 1997              	.LASF46:
+ 1998 0166 6677325F 		.ascii	"fw2_invalid\000"
+ 1998      696E7661 
+ 1998      6C696400 
+ 1999              	.LASF59:
+ 2000 0172 6D657461 		.ascii	"metadata_valid\000"
+ 2000      64617461 
+ 2000      5F76616C 
+ 2000      696400
+ 2001              	.LASF61:
+ 2002 0181 626F6F74 		.ascii	"boot_seq\000"
+ 2002      5F736571 
+ 2002      00
+ 2003              	.LASF25:
+ 2004 018a 4343475F 		.ascii	"CCG_STAT_FLASH_UPDATE_FAILED\000"
+ 2004      53544154 
+ 2004      5F464C41 
+ 2004      53485F55 
+ 2004      50444154 
+ 2005              	.LASF12:
+ 2006 01a7 75696E74 		.ascii	"uint8_t\000"
+ 2006      385F7400 
+ 2007              	.LASF43:
+ 2008 01af 626F6F74 		.ascii	"boot_mode_request\000"
+ 2008      5F6D6F64 
+ 2008      655F7265 
+ 2008      71756573 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 48
+
+
+ 2008      7400
+ 2009              	.LASF69:
+ 2010 01c1 626F6F74 		.ascii	"boot_handle_validate_fw_cmd\000"
+ 2010      5F68616E 
+ 2010      646C655F 
+ 2010      76616C69 
+ 2010      64617465 
+ 2011              	.LASF41:
+ 2012 01dd 5359535F 		.ascii	"SYS_FW_MODE_INVALID\000"
+ 2012      46575F4D 
+ 2012      4F44455F 
+ 2012      494E5641 
+ 2012      4C494400 
+ 2013              	.LASF37:
+ 2014 01f1 6363675F 		.ascii	"ccg_status_t\000"
+ 2014      73746174 
+ 2014      75735F74 
+ 2014      00
+ 2015              	.LASF65:
+ 2016 01fe 7461626C 		.ascii	"table_p\000"
+ 2016      655F7000 
+ 2017              	.LASF35:
+ 2018 0206 4343475F 		.ascii	"CCG_STAT_BUSY\000"
+ 2018      53544154 
+ 2018      5F425553 
+ 2018      5900
+ 2019              	.LASF14:
+ 2020 0214 75696E74 		.ascii	"uint32_t\000"
+ 2020      33325F74 
+ 2020      00
+ 2021              	.LASF29:
+ 2022 021d 4343475F 		.ascii	"CCG_STAT_INVALID_SIGNATURE\000"
+ 2022      53544154 
+ 2022      5F494E56 
+ 2022      414C4944 
+ 2022      5F534947 
+ 2023              	.LASF0:
+ 2024 0238 7369676E 		.ascii	"signed char\000"
+ 2024      65642063 
+ 2024      68617200 
+ 2025              	.LASF15:
+ 2026 0244 666C6F61 		.ascii	"float\000"
+ 2026      7400
+ 2027              	.LASF52:
+ 2028 024a 626F6F74 		.ascii	"boot_last_row\000"
+ 2028      5F6C6173 
+ 2028      745F726F 
+ 2028      7700
+ 2029              	.LASF9:
+ 2030 0258 6C6F6E67 		.ascii	"long long int\000"
+ 2030      206C6F6E 
+ 2030      6720696E 
+ 2030      7400
+ 2031              	.LASF42:
+ 2032 0266 7379735F 		.ascii	"sys_fw_mode_t\000"
+ 2032      66775F6D 
+ 2032      6F64655F 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 49
+
+
+ 2032      7400
+ 2033              	.LASF6:
+ 2034 0274 6C6F6E67 		.ascii	"long int\000"
+ 2034      20696E74 
+ 2034      00
+ 2035              	.LASF47:
+ 2036 027d 72657365 		.ascii	"reserved1\000"
+ 2036      72766564 
+ 2036      3100
+ 2037              	.LASF54:
+ 2038 0287 72657365 		.ascii	"reserved2\000"
+ 2038      72766564 
+ 2038      3200
+ 2039              	.LASF32:
+ 2040 0291 4343475F 		.ascii	"CCG_STAT_FAILURE\000"
+ 2040      53544154 
+ 2040      5F464149 
+ 2040      4C555245 
+ 2040      00
+ 2041              	.LASF3:
+ 2042 02a2 5F5F7569 		.ascii	"__uint8_t\000"
+ 2042      6E74385F 
+ 2042      7400
+ 2043              	.LASF56:
+ 2044 02ac 626F6F74 		.ascii	"boot_app_ver_status\000"
+ 2044      5F617070 
+ 2044      5F766572 
+ 2044      5F737461 
+ 2044      74757300 
+ 2045              	.LASF87:
+ 2046 02c0 626F6F74 		.ascii	"boot_update_fw_status\000"
+ 2046      5F757064 
+ 2046      6174655F 
+ 2046      66775F73 
+ 2046      74617475 
+ 2047              	.LASF76:
+ 2048 02d6 676C5F69 		.ascii	"gl_img1_fw_metadata\000"
+ 2048      6D67315F 
+ 2048      66775F6D 
+ 2048      65746164 
+ 2048      61746100 
+ 2049              	.LASF1:
+ 2050 02ea 756E7369 		.ascii	"unsigned char\000"
+ 2050      676E6564 
+ 2050      20636861 
+ 2050      7200
+ 2051              	.LASF83:
+ 2052 02f8 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 2052      73657273 
+ 2052      5C41646D 
+ 2052      696E5C44 
+ 2052      65736B74 
+ 2053 0325 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 2053      355C4359 
+ 2053      50443532 
+ 2053      32352D39 
+ 2053      36425A58 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 50
+
+
+ 2054 0356 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 2054      6F6B2E63 
+ 2054      7964736E 
+ 2054      5C6E6F62 
+ 2054      6F6F742E 
+ 2055              	.LASF49:
+ 2056 0370 66775F69 		.ascii	"fw_img_status_t\000"
+ 2056      6D675F73 
+ 2056      74617475 
+ 2056      735F7400 
+ 2057              	.LASF18:
+ 2058 0380 6C6F6E67 		.ascii	"long double\000"
+ 2058      20646F75 
+ 2058      626C6500 
+ 2059              	.LASF79:
+ 2060 038c 6D656D5F 		.ascii	"mem_calculate_byte_checksum\000"
+ 2060      63616C63 
+ 2060      756C6174 
+ 2060      655F6279 
+ 2060      74655F63 
+ 2061              	.LASF85:
+ 2062 03a8 66775F6D 		.ascii	"fw_mode_reason_t\000"
+ 2062      6F64655F 
+ 2062      72656173 
+ 2062      6F6E5F74 
+ 2062      00
+ 2063              	.LASF73:
+ 2064 03b9 626F6F74 		.ascii	"boot_get_boot_seq\000"
+ 2064      5F676574 
+ 2064      5F626F6F 
+ 2064      745F7365 
+ 2064      7100
+ 2065              	.LASF66:
+ 2066 03cb 66775F6D 		.ascii	"fw_metadata\000"
+ 2066      65746164 
+ 2066      61746100 
+ 2067              	.LASF10:
+ 2068 03d7 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2068      206C6F6E 
+ 2068      6720756E 
+ 2068      7369676E 
+ 2068      65642069 
+ 2069              	.LASF21:
+ 2070 03ee 4343475F 		.ascii	"CCG_STAT_SUCCESS\000"
+ 2070      53544154 
+ 2070      5F535543 
+ 2070      43455353 
+ 2070      00
+ 2071              	.LASF11:
+ 2072 03ff 756E7369 		.ascii	"unsigned int\000"
+ 2072      676E6564 
+ 2072      20696E74 
+ 2072      00
+ 2073              	.LASF82:
+ 2074 040c 2E2E5C73 		.ascii	"..\\src\\system\\boot.c\000"
+ 2074      72635C73 
+ 2074      79737465 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 51
+
+
+ 2074      6D5C626F 
+ 2074      6F742E63 
+ 2075              	.LASF13:
+ 2076 0421 75696E74 		.ascii	"uint16_t\000"
+ 2076      31365F74 
+ 2076      00
+ 2077              	.LASF36:
+ 2078 042a 4343475F 		.ascii	"CCG_STAT_TIMEOUT\000"
+ 2078      53544154 
+ 2078      5F54494D 
+ 2078      454F5554 
+ 2078      00
+ 2079              	.LASF50:
+ 2080 043b 66775F63 		.ascii	"fw_checksum\000"
+ 2080      6865636B 
+ 2080      73756D00 
+ 2081              	.LASF72:
+ 2082 0447 636F6465 		.ascii	"code\000"
+ 2082      00
+ 2083              	.LASF31:
+ 2084 044c 4343475F 		.ascii	"CCG_STAT_CMD_FAILURE\000"
+ 2084      53544154 
+ 2084      5F434D44 
+ 2084      5F464149 
+ 2084      4C555245 
+ 2085              	.LASF28:
+ 2086 0461 4343475F 		.ascii	"CCG_STAT_NOT_SUPPORTED\000"
+ 2086      53544154 
+ 2086      5F4E4F54 
+ 2086      5F535550 
+ 2086      504F5254 
+ 2087              	.LASF5:
+ 2088 0478 73686F72 		.ascii	"short unsigned int\000"
+ 2088      7420756E 
+ 2088      7369676E 
+ 2088      65642069 
+ 2088      6E7400
+ 2089              	.LASF30:
+ 2090 048b 4343475F 		.ascii	"CCG_STAT_TRANS_FAILURE\000"
+ 2090      53544154 
+ 2090      5F545241 
+ 2090      4E535F46 
+ 2090      41494C55 
+ 2091              	.LASF48:
+ 2092 04a2 73746174 		.ascii	"status\000"
+ 2092      757300
+ 2093              	.LASF34:
+ 2094 04a9 4343475F 		.ascii	"CCG_STAT_NOT_READY\000"
+ 2094      53544154 
+ 2094      5F4E4F54 
+ 2094      5F524541 
+ 2094      445900
+ 2095              	.LASF27:
+ 2096 04bc 4343475F 		.ascii	"CCG_STAT_INVALID_ARGUMENT\000"
+ 2096      53544154 
+ 2096      5F494E56 
+ 2096      414C4944 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 52
+
+
+ 2096      5F415247 
+ 2097              	.LASF17:
+ 2098 04d6 63686172 		.ascii	"char\000"
+ 2098      00
+ 2099              	.LASF23:
+ 2100 04db 4343475F 		.ascii	"CCG_STAT_BAD_PARAM\000"
+ 2100      53544154 
+ 2100      5F424144 
+ 2100      5F504152 
+ 2100      414D00
+ 2101              	.LASF8:
+ 2102 04ee 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2102      20756E73 
+ 2102      69676E65 
+ 2102      6420696E 
+ 2102      7400
+ 2103              	.LASF33:
+ 2104 0500 4343475F 		.ascii	"CCG_STAT_READ_DATA\000"
+ 2104      53544154 
+ 2104      5F524541 
+ 2104      445F4441 
+ 2104      544100
+ 2105              	.LASF77:
+ 2106 0513 676C5F69 		.ascii	"gl_img2_fw_metadata\000"
+ 2106      6D67325F 
+ 2106      66775F6D 
+ 2106      65746164 
+ 2106      61746100 
+ 2107              	.LASF68:
+ 2108 0527 66775F73 		.ascii	"fw_start\000"
+ 2108      74617274 
+ 2108      00
+ 2109              	.LASF26:
+ 2110 0530 4343475F 		.ascii	"CCG_STAT_INVALID_FW\000"
+ 2110      53544154 
+ 2110      5F494E56 
+ 2110      414C4944 
+ 2110      5F465700 
+ 2111              	.LASF58:
+ 2112 0544 626F6F74 		.ascii	"boot_app_id\000"
+ 2112      5F617070 
+ 2112      5F696400 
+ 2113              	.LASF38:
+ 2114 0550 5359535F 		.ascii	"SYS_FW_MODE_BOOTLOADER\000"
+ 2114      46575F4D 
+ 2114      4F44455F 
+ 2114      424F4F54 
+ 2114      4C4F4144 
+ 2115              	.LASF74:
+ 2116 0567 66776964 		.ascii	"fwid\000"
+ 2116      00
+ 2117              	.LASF63:
+ 2118 056c 626F6F74 		.ascii	"boot_validate_configtable\000"
+ 2118      5F76616C 
+ 2118      69646174 
+ 2118      655F636F 
+ 2118      6E666967 
+ARM GAS  e:\temp\ccvz51Lv.s 			page 53
+
+
+ 2119              	.LASF55:
+ 2120 0586 61637469 		.ascii	"active_boot_app\000"
+ 2120      76655F62 
+ 2120      6F6F745F 
+ 2120      61707000 
+ 2121              	.LASF22:
+ 2122 0596 4343475F 		.ascii	"CCG_STAT_FLASH_DATA_AVAILABLE\000"
+ 2122      53544154 
+ 2122      5F464C41 
+ 2122      53485F44 
+ 2122      4154415F 
+ 2123              	.LASF67:
+ 2124 05b4 73697A65 		.ascii	"size\000"
+ 2124      00
+ 2125              	.LASF60:
+ 2126 05b9 66775F76 		.ascii	"fw_version\000"
+ 2126      65727369 
+ 2126      6F6E00
+ 2127              	.LASF70:
+ 2128 05c4 66775F6D 		.ascii	"fw_mode\000"
+ 2128      6F646500 
+ 2129              	.LASF80:
+ 2130 05cc 7379735F 		.ascii	"sys_get_device_mode\000"
+ 2130      6765745F 
+ 2130      64657669 
+ 2130      63655F6D 
+ 2130      6F646500 
+ 2131              	.LASF16:
+ 2132 05e0 646F7562 		.ascii	"double\000"
+ 2132      6C6500
+ 2133              	.LASF39:
+ 2134 05e7 5359535F 		.ascii	"SYS_FW_MODE_FWIMAGE_1\000"
+ 2134      46575F4D 
+ 2134      4F44455F 
+ 2134      4657494D 
+ 2134      4147455F 
+ 2135              	.LASF40:
+ 2136 05fd 5359535F 		.ascii	"SYS_FW_MODE_FWIMAGE_2\000"
+ 2136      46575F4D 
+ 2136      4F44455F 
+ 2136      4657494D 
+ 2136      4147455F 
+ 2137              	.LASF75:
+ 2138 0613 676C5F62 		.ascii	"gl_boot_wait_delay\000"
+ 2138      6F6F745F 
+ 2138      77616974 
+ 2138      5F64656C 
+ 2138      617900
+ 2139              	.LASF44:
+ 2140 0626 72657365 		.ascii	"reserved\000"
+ 2140      72766564 
+ 2140      00
+ 2141              	.LASF78:
+ 2142 062f 676C5F69 		.ascii	"gl_img_status\000"
+ 2142      6D675F73 
+ 2142      74617475 
+ 2142      7300
+ARM GAS  e:\temp\ccvz51Lv.s 			page 54
+
+
+ 2143              	.LASF20:
+ 2144 063d 4343475F 		.ascii	"CCG_STAT_NO_RESPONSE\000"
+ 2144      53544154 
+ 2144      5F4E4F5F 
+ 2144      52455350 
+ 2144      4F4E5345 
+ 2145              	.LASF53:
+ 2146 0652 66775F73 		.ascii	"fw_size\000"
+ 2146      697A6500 
+ 2147              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

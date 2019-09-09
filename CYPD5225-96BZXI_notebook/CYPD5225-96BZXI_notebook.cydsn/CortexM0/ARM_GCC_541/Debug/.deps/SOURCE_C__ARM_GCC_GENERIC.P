@@ -1,0 +1,202 @@
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/CortexM0/ARM_GCC_541/Debug/main.o : C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/Bootloadable_1.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyFlash.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyLib.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P1.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P1_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P2.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P2_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/EC_INT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/EC_INT_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/FW_LED.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/FW_LED_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_BOOT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_I2C.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_I2C_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_PINS.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_SCBCLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_SCB_IRQ.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_scl.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_scl_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_sda.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_sda_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_CFG.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_CFG_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_BOOT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_I2C.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_I2C_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_PINS.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_SCBCLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_SCB_IRQ.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_scl.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_scl_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_sda.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_sda_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P1.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P1_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P2.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P2_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_FILT1_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_RX_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_SAR_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_SWAP_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_TX_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORTX_REFGEN_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_armcc.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_compiler.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_gcc.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/core_cm0.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyPm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cydisabledsheets.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyfitter.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cypins.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cytypes.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/project.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/alt_mode/alt_mode_hw.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/app.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/pdo.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/psink.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/psource.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/swap.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/vdm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/hpiss/hpi.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_common/dpm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_common/pd.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_hal/hal_ccgx.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_hal/pdss_hal.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/scb/i2c.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/boot.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3pa2_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3pa_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg4_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg4pd_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg5_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccgx_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccgx_version.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/flash.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/gpio.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/status.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/system.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/timer.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/utils.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/NCP81239_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/app_version.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/flash_config.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/instrumentation.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/main.c C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/solution.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/stack_params.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/config.h 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/Bootloadable_1.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyFlash.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyLFClk.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyLib.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P1.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P1_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P2.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P2_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/EC_INT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/EC_INT_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/FW_LED.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/FW_LED_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_BOOT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_I2C.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_I2C_PVT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_PINS.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_PVT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_SCBCLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_SCB_IRQ.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_scl.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_scl_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_sda.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_sda_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_CFG.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_CFG_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_BOOT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_I2C.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_I2C_PVT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_PINS.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_PVT.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_SCBCLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_SCB_IRQ.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_scl.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_scl_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_sda.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_sda_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P1.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P1_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P2.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P2_aliases.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_FILT1_CLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_RX_CLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_SAR_CLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_SWAP_CLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_TX_CLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORTX_REFGEN_CLK.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_armcc.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_compiler.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_gcc.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/core_cm0.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyPm.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cydevice_trm.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cydisabledsheets.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyfitter.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cypins.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cytypes.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/project.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/alt_mode/alt_mode_hw.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/app.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/pdo.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/psink.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/psource.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/swap.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/vdm.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/hpiss/hpi.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_common/dpm.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_common/pd.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_hal/hal_ccgx.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_hal/pdss_hal.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/scb/i2c.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/boot.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3pa2_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3pa_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg4_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg4pd_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg5_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccgx_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccgx_version.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/flash.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/gpio.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/status.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/system.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/timer.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/utils.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/NCP81239_regs.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/app_version.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/flash_config.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/instrumentation.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/main.c : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/solution.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/stack_params.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/config.h : 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/CortexM0/ARM_GCC_541/Debug/solution.o : C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/Bootloadable_1.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyFlash.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyLFClk.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/CyLib.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P1.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P1_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P2.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/DP_HPD_P2_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/EC_INT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/EC_INT_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/FW_LED.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/FW_LED_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_BOOT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_I2C.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_I2C_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_PINS.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_SCBCLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_SCB_IRQ.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_scl.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_scl_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_sda.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/HPI_IF_sda_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_CFG.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_CFG_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_BOOT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_I2C.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_I2C_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_PINS.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_PVT.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_SCBCLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_SCB_IRQ.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_scl.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_scl_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_sda.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/I2C_MSTR_sda_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P1.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P1_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P2.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/NCP81239_EN_P2_aliases.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_FILT1_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_RX_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_SAR_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_SWAP_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORT0_TX_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/PDSS_PORTX_REFGEN_CLK.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_armcc.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_compiler.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cmsis_gcc.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/core_cm0.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/core_cm0_psoc4.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyPm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cy_em_eeprom.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cydevice_trm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cydisabledsheets.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyfitter.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cyfitter_cfg.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cypins.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/cytypes.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/Generated_Source/PSoC4/project.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/alt_mode/alt_mode_hw.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/app.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/app/psource.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_common/dpm.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_common/pd.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/pd_hal/pdss_hal.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3pa2_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg3pa_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg4_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg4pd_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccg5_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/ccgx_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/status.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/timer.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/src/system/utils.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/NCP81239_regs.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/solution.c C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/solution.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/stack_params.h C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/config.h 
+
+C:/Users/Admin/Desktop/_FIRMWARE/DBARLite/CYPD5225/CYPD5225-96BZXI_notebook/CYPD5225-96BZXI_notebook.cydsn/common/solution.c : 
+

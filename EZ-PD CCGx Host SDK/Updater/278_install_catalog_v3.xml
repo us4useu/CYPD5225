@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="catalogschema.xsd">
+  <CatalogVersion CurrentVersion="21.108.278.8" Format="0" MinimumVersion="21.108.278.8"/>
+<PrerequisiteInfo>
+    <Prerequisite PrerequisiteID="0" DisplayName= "PSoC Programmer 3.27.1" MinimumVersion="21.106.0.104" MininmumReleaseID="3.27.1.3121" CyInstallerPrerequisite="true" Mandatory="true"/>
+    <Prerequisite PrerequisiteID="276" DisplayName= "Peripheral Driver Library 3.0.1" MinimumVersion="21.107.276.5" MininmumReleaseID="3.0.1.1508" CyInstallerPrerequisite="true" Mandatory="true"/>
+</PrerequisiteInfo>
+    <VenderInfo Name="Cypress">
+      <Description><![CDATA[
+The complete PSoC Creator package. <br>
+ 
+   o  PSoC Creator Core<br>
+   o  Keil PK51 compiler package for PSoC 3 (8051)<br>
+   o  Debugger Package for PSoC 3 (8051)<br>
+   o  ARM GNU Compiler for PSoC 4/5/6 (ARM Cortex M0/3/4)<br>
+   o  Cypress Component Libraries (parameterized components for analog, <br>
+      digital, communications, system and other functions)<br>
+   o  PSoC Creator Release Notes<br>
+   o  PSoC Creator Documentation<br>
+   o  Cypress Components Example Projects<br>
+   o  PSoC Creator Content Development Kit<br>
+]]></Description>
+    </VenderInfo>
+  <ProductInfo Name="PSoC Creator">{B7A3FFE6-1968-4295-8639-C58DDEFDD074}</ProductInfo>
+    <Licenses>
+      <License Name="KEIL" URL="keil_pk51_license.htm"/>
+      <License Name="EULA" URL="eula.htm"/>
+    </Licenses>
+  <Releases>
+    <Release Name="PSoC Creator 4.2" date="2018-02-16T11:58:42" ID="641" URL=""/>
+  </Releases>
+  <Package Name="PSoC Creator Core" Typical="true" PackageID="0" Mandatory="true">
+    <Description><![CDATA[
+The core package is the IDE and back-end tools for creating PSoC designs. This is a required component. <P>
+
+The IDE comprises the Workspace Explorer, device selector and editors for schematic design and source code. The back-end tools handle the placement and routing of components into the PSoC device as well as the management of clocks, pins, interrupts and so on.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="PSoC Creator Core (641)" Number="4.2.0.641" URL="psoccreator_installer.641.msi" Size="63771468">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:42 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="Cypress specific Keil PK51 Professional Developer's Kit" Typical="true" PackageID="1" Mandatory="false">
+    <Description><![CDATA[
+PK51 is the Professional Developers Kit from Keil, an ARM. Company. <P>
+
+It includes a special edition of the 8051 C compiler built specifically to support PSoC 3.<P>
+ 
+The compiler is identical to the standard product except optimizations have been restricted to level 5. <P>
+
+This allows you to evaluate the compiler fully and build designs with no restrictions on code or data size. <P>
+      
+The fully-optimizing compiler can purchased from <a href="http://www.keil.com/product/ordering.asp" target="_blank">http://www.keil.com/product/ordering.asp</a>
+ 
+The compiler installs with a 30 day evaluation period. During this time you can obtain a free development license from the PSoC Creator Help menu (Choose Register &gt; Keil). This license is free of charge and can be renewed annually.
+]]></Description>
+    <LicenseRequirement Name="KEIL" />
+    <Version Name="Cypress specific Keil PK51 Professional Developer's Kit (641)" Number="4.2.0.641" URL="keil_pk51_installer.641.msi" Size="57529926">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:34 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="GNU CS" Typical="true" PackageID="2" Mandatory="false">
+    <Description><![CDATA[
+The ARM GNU Compiler is a free compiler toolchain for ARM (PSoC 4/5/6)<P>
+ARM GNU Compiler contains ARM's versions of the 
+ GNU C and C++ Compilers (GCC and G++) and other command-line tools, 
+ For more information about ARM GNU Compiler, visit:<P>
+<a target="_blank" href="https://launchpad.net/gcc-arm-embedded"> https://launchpad.net/gcc-arm-embedded</a>
+]]></Description>
+    <Version Name="GNU CS (641)" Number="4.2.0.641" URL="gnu_cs_arm_installer.641.msi" Size="81114567">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:29 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="GNU CS 8051 Debugger" Typical="true" PackageID="3" Mandatory="true">
+    <Description><![CDATA[
+This package provides high-end debug support for PSoC 3 (8051) devices. It allows you to download and debug applications with the MiniProg3 and provides access to:<P>
+ 
+   o  JTAG and serial wire debugging<br>
+   o  Hardware instruction and data breakpoints<br>
+   o  C and assembler-level debugging<br>
+   o  Watch, local and function call stack windows<br>
+   o  Register and memory windows<br>
+ 
+ This package is not necessary for PSoC 4/5/6-based designs.
+]]></Description>
+    <Version Name="GNU CS 8051 Debugger (641)" Number="4.2.0.641" URL="gnu_cs_c8051_1.0_installer.641.msi" Size="5505024">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:29 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="Cypress Component Catalog" Typical="true" PackageID="4" Mandatory="true">
+    <Description><![CDATA[
+The component libraries are a collection of Cypress-provided content that you use to make designs. This extensive library of components includes:<P>
+
+ o Analog (ADC, DAC, Amplifiers, ....)<br>
+ o CapSense (Buttons, Sliders, ....)<br>
+ o Communications (CAN, I2C, SPI, UART, ....)<br>
+ o Digital (Timer, Counter, PWM, ...)<br>
+ o Logic (LUT, MUX, gates, ...)<br>
+ o Display (Segment and Character LCD)<br>
+ o System (Ports/Pins, DMA, Interrupts, Clock,...)
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="Cypress Component Catalog (641)" Number="4.2.0.641" URL="psoccreator_component_library_installer.641.msi" Size="213805746">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:35 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="PSoC Creator Release Docs" Typical="true" PackageID="5" Mandatory="false">
+    <Description><![CDATA[
+This package contains the release notes and KP&amp;S for PSoC Creator.<P> 
+
+The release notes lists the major features provided in this specific<br>
+release. It also includes system requirements and installation<br>
+instructions.<P> 
+
+The KP&amp;S is a list of known problems and solutions, categorized by<br>
+releases.<P> 
+
+For the latest release notes and KP&amp;S information, go to the Cypress<br>
+Knowledge Base online at <a href="http://www.cypress.com" target="_blank">http://www.cypress.com</a>
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="PSoC Creator Release Docs (641)" Number="4.2.0.641" URL="release_notes_installer.641.msi" Size="958464">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:29 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="PSoC Creator Component Development Kit" Typical="true" PackageID="6" Mandatory="false">
+    <Description><![CDATA[
+This package contains the Datapath Configuration Tool, Component Author Guide, Customizer API Reference Guide, Tuner API Reference Guide and Warp Verilog Reference Guide for PSoC Creator.<P>
+
+The Datapath Configuration Tool is an executable run separately from PSoC Creator used to edit the datapath instances in a Verilog description of the hardware portion of a PSoC component.<P>
+
+Component Author Guide documents the process used to create a component. This includes the usage of the Datapath Configuration Tool.
+
+Customizer API Reference Guide provides reference information for PSoC Creator customizer API code. This code is primarily used to customize components and GUIs.<P>
+
+Tuner API Reference Guide provides API reference information for PSoC Creator Tuner code. This code is primarily used to tune components.<P>
+
+Warp Verilog Reference guide discusses the fundamental elements of Verilog HDL implemented in Warp Warp is the tool used by PSoC Creator to synthesize Verilog components.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <DependentOn>
+      <DepPackage Name="PSoC Creator Core" />
+    </DependentOn>
+    <Version Name="PSoC Creator Component Development Kit (641)" Number="4.2.0.641" URL="component_dev_kit_installer.641.msi" Size="10285056">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:34 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="Annotation Components Catalog" Typical="true" PackageID="7" Mandatory="false">
+    <Description><![CDATA[
+This is a collection of annotation-type components that you can use to show off-chip connections in your schematics.
+    It is used extensively in Application Notes and Example Projects from Cypress.<P>
+
+    The Annotation Components Library provides a way for the designer to mix external and internal components on the same
+    schematic. This provides a way to improve documentation and better understand the internal schematic and entire design.
+    The components in this library will cover the most common components that are most likely placed on the periphery of a
+    PSoC device.<P>
+
+    These components will consist of resistors, capacitors, transistors, inductors, switches, etc. The library is not 
+    intended to supply every possible part, but should support a wide range of designs.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="Annotation Components Catalog (641)" Number="4.2.0.641" URL="annotation_components_installer.641.msi" Size="24682496">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:32 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="Cypress Component Library Updates" Typical="true" PackageID="8" Mandatory="true">
+    <Description><![CDATA[
+This package contains updates to the Component Catalog.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="Cypress Component Library Updates (641)" Number="4.2.0.641" URL="psoccreator_component_library_updates_installer.641.msi" Size="40960">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:32 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="Reference Component Catalog" Typical="true" PackageID="9" Mandatory="false">
+    <Description><![CDATA[
+This package contains example implementations of components for a 
+ variety of uses. This is an optional package.<br><br>
+ 
+ This is a collection of components developed by our Application team. 
+ The content ranges from handy point solutions that solve problems in 
+ all kinds of designs up to sophisticated hierarchical solutions for 
+ specific applications. All components include a full, working example 
+ project.<br><br>
+
+ Feel free to try these components in your designs, and take them to 
+ production if they are a good fit for you, but do be aware that they 
+ have not been validated to the same quality standards as our regular 
+ content.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="Reference Component Catalog (641)" Number="4.2.0.641" URL="reference_components_installer.641.msi" Size="32768">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:29 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="PSoC Creator Documentation" Typical="true" PackageID="10" Mandatory="false">
+    <Description><![CDATA[
+This package contains the documentation for PSoC Creator.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="PSoC Creator Documentation (641)" Number="4.2.0.641" URL="psoccreator_documentation_installer.641.msi" Size="16560128">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:32 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="Cypress Components Example Projects" Typical="true" PackageID="11" Mandatory="false">
+    <Description><![CDATA[
+This package contains the PSoC Creator components example projects.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <Version Name="Cypress Components Example Projects (641)" Number="4.2.0.641" URL="component_example_projects_installer.641.msi" Size="5611520">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:32 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="PSoC Creator Data Files" Typical="true" PackageID="12" Mandatory="true">
+    <Description><![CDATA[
+This package contains the datafiles for psoc devices.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <DependentOn>
+      <DepPackage Name="PSoC Creator Core" />
+    </DependentOn>
+    <Version Name="PSoC Creator Data Files (641)" Number="4.2.0.641" URL="psoccreator_datafiles_installer.641.msi" Size="22676816">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:31 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+  <Package Name="PSoC Creator Template Projects" Typical="true" PackageID="13" Mandatory="true">
+    <Description><![CDATA[
+This package contains the template projects for psoc devices.
+]]></Description>
+    <LicenseRequirement Name="EULA" />
+    <DependentOn>
+      <DepPackage Name="" />
+    </DependentOn>
+    <Version Name="PSoC Creator Template Projects (641)" Number="4.2.0.641" URL="template_projects_installer.641.msi" Size="12148736">
+      <ChangeLog><![CDATA[
+	    Version 4.2 Build 641 <P>Built on Fri Feb 16 11:58:35 2018
+	    ]]></ChangeLog>
+      <release>641</release>
+    </Version>
+  </Package>
+</Catalog>

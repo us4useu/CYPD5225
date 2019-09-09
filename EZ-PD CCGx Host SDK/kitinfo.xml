@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="us-ascii"?>
+ 
+<Kit 
+  KitName="EZ-PD CCGx Host SDK"
+  KitVersion="3.2.1"
+  Product="PSoC Creator"
+  ProductVersion="4.2.0.641"
+  Documentation="kit_documentation.html"
+/>

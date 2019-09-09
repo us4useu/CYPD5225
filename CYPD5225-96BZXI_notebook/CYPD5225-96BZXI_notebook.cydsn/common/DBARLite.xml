@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config_table xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://cypress.com/xsd/ezpdconfiguration">
+  <device_info
+    family="CCG5"
+    part_number="CYPD5225-96BZXI"
+    device_type="NOTEBOOK" />
+  <table_info
+    type="0"
+    sub_type="0"
+    major_version="2"
+    minor_version="0"
+    patch_version="1" />
+  <dev_param
+    flashing_vid="0x0000"
+    flashing_mode="0"
+    manufacturer_info="[0xB4, 0x04, 0xE0, 0xF6, 0x43, 0x79, 0x70, 0x72, 0x65, 0x73, 0x73]" />
+  <port
+    index="0">
+    <vdm_info
+      discover_id_response="[[0xFF00A041, 0xAE0004B4, 0x00000000, 0xF6E00000, 0x0000000A]]"
+      discover_svid_response="[[0xFF00A042, 0x80870000]]"
+      discover_mode_response="[[0x8087A043, 0x00000001]]"
+      source_cap_extended="[0xB4, 0x04, 0xE0, 0xF6, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x3C]" />
+    <emca_info
+      ra_timeout="0" />
+    <port_info
+      port_role="2"
+      dflt_port_role="1"
+      cur_level="2"
+      is_src_bat="0"
+      is_snk_bat="0"
+      sink_usb_suspend="0"
+      sink_usb_comm="1"
+      rp_rd_toggle="1"
+      default_src_pdo_mask="0x01"
+      default_sink_pdo_mask="0x01"
+      rp_supported="0x07"
+      usbpd_supported="1"
+      try_src_en="1"
+      cable_disc_en="1"
+      dead_bat_en="1"
+      err_recov_en="1"
+      port_disable="0"
+      frs_enable="1"
+      vconn_retain="0"
+      dr_swap_response="0"
+      pr_swap_response="0"
+      vconn_swap_response="0"
+      src_pdo="[0x2701912C]"
+      sink_pdo="[0x2601905A]"
+      sink_min_max_current="[0x005A]" />
+    <dp_info
+      dp_mode_supported="0x3C"
+      dp_mux_control="0"
+      dp_mode_trigger="0"
+      dp_oper="0"
+      dp_pref_mode="0" />
+    <power_protection>
+      <vbus_ovp
+        enable="1"
+        threshold="20"
+        debounce="10"
+        retry_cnt="2" />
+      <vbus_ocp
+        enable="1"
+        threshold="20"
+        debounce="10"
+        retry_cnt="2"
+        threshold2="50"
+        debounce2="1"
+        sense_res="10"
+        cs_res="0" />
+      <vconn_ocp
+        enable="1"
+        threshold="30"
+        debounce="1" />
+    </power_protection>
+    <chg_cfg
+      src_sel="0x00"
+      snk_sel="0x00"
+      apple_src_id="0"
+      qc_src_type="0"
+      afc_src_caps="[]" />
+  </port>
+  <port
+    index="1">
+    <vdm_info
+      discover_id_response="[[0xFF00A041, 0xAE0004B4, 0x00000000, 0xF6E00000, 0x0000000A]]"
+      discover_svid_response="[[0xFF00A042, 0x80870000]]"
+      discover_mode_response="[[0x8087A043, 0x00000001]]"
+      source_cap_extended="[0xB4, 0x04, 0xE0, 0xF6, 0x00, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x3C]" />
+    <emca_info
+      ra_timeout="0" />
+    <port_info
+      port_role="2"
+      dflt_port_role="1"
+      cur_level="2"
+      is_src_bat="0"
+      is_snk_bat="0"
+      sink_usb_suspend="0"
+      sink_usb_comm="1"
+      rp_rd_toggle="1"
+      default_src_pdo_mask="0x0F"
+      default_sink_pdo_mask="0x03"
+      rp_supported="0x07"
+      usbpd_supported="1"
+      try_src_en="1"
+      cable_disc_en="1"
+      dead_bat_en="1"
+      err_recov_en="1"
+      port_disable="0"
+      frs_enable="1"
+      vconn_retain="0"
+      dr_swap_response="0"
+      pr_swap_response="0"
+      vconn_swap_response="0"
+      src_pdo="[0x2701912C, 0x0002D12C, 0x0004B12C, 0x0006412C]"
+      sink_pdo="[0x2601905A, 0x9A42305A]"
+      sink_min_max_current="[0x005A, 0x005A]" />
+    <dp_info
+      dp_mode_supported="0x3C"
+      dp_mux_control="0"
+      dp_mode_trigger="0"
+      dp_oper="0"
+      dp_pref_mode="0" />
+    <power_protection>
+      <vbus_ovp
+        enable="1"
+        threshold="20"
+        debounce="10"
+        retry_cnt="2" />
+      <vbus_ocp
+        enable="1"
+        threshold="20"
+        debounce="10"
+        retry_cnt="2"
+        threshold2="50"
+        debounce2="1"
+        sense_res="10"
+        cs_res="0" />
+      <vconn_ocp
+        enable="1"
+        threshold="30"
+        debounce="1" />
+    </power_protection>
+    <chg_cfg
+      src_sel="0x00"
+      snk_sel="0x00"
+      apple_src_id="0"
+      qc_src_type="0"
+      afc_src_caps="[]" />
+  </port>
+  <user_parameter
+    parameter_1="0x00000000"
+    parameter_2="0x00000000"
+    parameter_3="0x00000000"
+    parameter_4="0x00000000"
+    parameter_5="0x00000000"
+    parameter_6="0x00000000"
+    parameter_7="0x00000000"
+    parameter_8="0x00000000" />
+</config_table>

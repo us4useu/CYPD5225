@@ -1,0 +1,1280 @@
+ARM GAS  e:\temp\ccErnRhI.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"FW_LED_PM.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.section	.gnu.lto_.profile.62413f88,"",%progbits
+  19 0000 789C6361 		.ascii	"x\234ca`d`a`\000\222\034l\000\000\200\000\031"
+  19      60646061 
+  19      6000921C 
+  19      6C000080 
+  19      0019
+  20              		.text
+  21              		.section	.gnu.lto_.icf.62413f88,"",%progbits
+  22 0000 789C6361 		.ascii	"x\234ca`d\000\001a\006\004`f8\333\272\177)\033\343\322"
+  22      60640001 
+  22      61060460 
+  22      6638DBBA 
+  22      7F291BE3 
+  23 0015 A70B6C98 		.ascii	"\247\013l\230\346-9\372\223\225\001\000Rt\010F"
+  23      E62D39FA 
+  23      93950100 
+  23      52740846 
+  24              		.text
+  25              		.section	.gnu.lto_.jmpfuncs.62413f88,"",%progbits
+  26 0000 789C6361 		.ascii	"x\234ca`d\000\001\016\006\004`\202b\000\001^\000\022"
+  26      60640001 
+  26      0E060460 
+  26      82620001 
+  26      5E0012
+  27              		.text
+  28              		.section	.gnu.lto_.inline.62413f88,"",%progbits
+  29 0000 789C6361 		.ascii	"x\234ca`d\000\001\015\006\004`b``ead`bY \317\300\266"
+  29      60640001 
+  29      0D060460 
+  29      62606065 
+  29      61646062 
+  30 0019 409E0922 		.ascii	"@\236\011\"\206!\304\000\000G\374\003^"
+  30      8621C400 
+  30      0047FC03 
+  30      5E
+  31              		.text
+  32              		.section	.gnu.lto_.pureconst.62413f88,"",%progbits
+  33 0000 789C6361 		.ascii	"x\234ca`d`e```b\220b\222\002\000\000\357\000C"
+  33      60646065 
+  33      60606062 
+ARM GAS  e:\temp\ccErnRhI.s 			page 2
+
+
+  33      90629202 
+  33      0000EF00 
+  34              		.text
+  35              		.section	.gnu.lto_FW_LED_Sleep.62413f88,"",%progbits
+  36 0000 789C4D50 		.ascii	"x\234MP=K\202Q\024\276\317\275\257\037\025A{BA4\270"
+  36      3D4B8251 
+  36      14BECFBD 
+  36      AF1F1541 
+  36      7B424134 
+  37 0015 E4D23FE8 		.ascii	"\344\322?\350s(\220\034Z\014\011{\327\004\251\331\353"
+  37      7328901C 
+  37      5A0C097B 
+  37      D704A9D9 
+  37      EB
+  38 0026 C74BDA20 		.ascii	"\307K\332 .\326\024N\241}\230EK\322\"\322\320\020\006"
+  38      2ED6144E 
+  38      A17D9845 
+  38      4BD222D2 
+  38      D01006
+  39 0039 41534B35 		.ascii	"ASK58X\203A.\205\3329\257K\007.\347\336\347<\367y\316"
+  39      38588341 
+  39      2E85DA39 
+  39      AF4B072E 
+  39      E7DEE73C 
+  40 0050 398680E0 		.ascii	"9\206\200\340X\2464My\234\016\224\200\3145\204\210\273"
+  40      58A6344D 
+  40      799C0E94 
+  40      80CC3584 
+  40      88BB
+  41 0062 25C017ED 		.ascii	"%\300\027\355\206\210I\304\320\221]\211\372^\263*\275"
+  41      868849C4 
+  41      D0915D89 
+  41      FA5EB32A 
+  41      BD
+  42 0073 454DF16A 		.ascii	"EM\361j\035*]\252\301RB\364\245\255$P\204W\020\355\375"
+  42      1D2A5DAA 
+  42      C15242F4 
+  42      A5AD2450 
+  42      845710ED 
+  43 0088 AA971F75 		.ascii	"\252\227\037u\246\23069(\242\004'\333U\326j\272\337"
+  43      A6983639 
+  43      28A20427 
+  43      DB55D66A 
+  43      BADF
+  44 009a 4FEADAAD 		.ascii	"O\352\332\255\243\243\014),Eh\233\030\354\365%%g\325"
+  44      A3A30C29 
+  44      2C45689B 
+  44      18ECF525 
+  44      2567D5
+  45 00ad 44FD67BF 		.ascii	"D\375g\277\227\037\342OI\305\276\007V\375\321\365--"
+  45      971FE24F 
+  45      49C5BE07 
+  45      56FDD1F5 
+  45      2D2D
+  46 00bf 25C1FAD7 		.ascii	"%\301\372\327\331\247\336\310\340\231N\344\264A\320"
+  46      D9A7DEC8 
+  46      E0994EE4 
+ARM GAS  e:\temp\ccErnRhI.s 			page 3
+
+
+  46      B441D0
+  47 00ce C771E3DE 		.ascii	"\307q\343\336U\300Q<E\035)\234\302\203\023x\310\370"
+  47      55C0513C 
+  47      451D299C 
+  47      C2831378 
+  47      C8F8
+  48 00e0 0C058826 		.ascii	"\014\005\210&\022\007o\023\254\367_\314\260\305\252"
+  48      12076F13 
+  48      ACF75FCC 
+  48      B0C5AA
+  49 00ef D5CF1757 		.ascii	"\325\317\027W\254\253\323Z\217\021\226\241y\030n=<\337"
+  49      ACABD35A 
+  49      8F1196A1 
+  49      79186E3D 
+  49      3CDF
+  50 0101 0DB3A0B6 		.ascii	"\015\263\240\266q\007\312\264\204s\226\244b\366\346"
+  50      7107CAB4 
+  50      847396A4 
+  50      62F6E6
+  51 0110 32E3F695 		.ascii	"2\343\366\225y@\275a)'.\310\245go\001\025\370\250i\321"
+  51      7940BD61 
+  51      29272EC8 
+  51      A5676F01 
+  51      15F8A869 
+  52 0125 42A2F6EB 		.ascii	"B\242\366\353`K{5m\352\234f#\312\324\222\271mF7w\314"
+  52      604B7B35 
+  52      6DEA9C66 
+  52      23CAD492 
+  52      B96D4637 
+  53 013b AD5020B2 		.ascii	"\255P \262\033\015\233A\177 27\033\\\\\017\255,\314"
+  53      1B0D9B41 
+  53      7F203237 
+  53      1B5C5C0F 
+  53      AD2CCC
+  54 014e 87FCAB33 		.ascii	"\207\374\2533a\361\007d\214\177w"
+  54      61F10764 
+  54      8C7F77
+  55              		.text
+  56              		.section	.gnu.lto_FW_LED_backup.62413f88,"",%progbits
+  57 0000 789C6361 		.ascii	"x\234ca`d\000\001k \206\260\030\030\37621\256\177\263"
+  57      60640001 
+  57      6B2086B0 
+  57      1818FE32 
+  57      31AE7FB3 
+  58 0014 F327EF17 		.ascii	"\363'\357\027\246Vf\240 \220{\341\356\212\343\374\026"
+  58      A65666A0 
+  58      20907BE1 
+  58      EE8AE3FC 
+  58      16
+  59 0025 DB1A3A16 		.ascii	"\333\032:\0264\030\26423\376cb`\\\316(\363\217\211\021"
+  59      3418B432 
+  59      33FE6362 
+  59      605CCE28 
+  59      F38F8911 
+  60 0039 42318128 		.ascii	"B1\201(\006\306\025\214\026\014\000\345\232\024I"
+  60      06C6158C 
+  60      160C00E5 
+ARM GAS  e:\temp\ccErnRhI.s 			page 4
+
+
+  60      9A1449
+  61              		.text
+  62              		.section	.gnu.lto_FW_LED_Wakeup.62413f88,"",%progbits
+  63 0000 789C6361 		.ascii	"x\234ca`d\000\001w \245\012\244\245\201\230\221\231"
+  63      60640001 
+  63      7720A50A 
+  63      A4A58198 
+  63      9199
+  64 0012 819169C2 		.ascii	"\201\221i\3029\006\206F\016&FF\020\243\201\203\221\241"
+  64      39068646 
+  64      0E264646 
+  64      10A38183 
+  64      91A1
+  65 0024 9E89B19E 		.ascii	"\236\211\261\236\361+\323_&\306C\355\317v2i.o\000\202"
+  65      F12BD35F 
+  65      26C643ED 
+  65      CF763269 
+  65      2E6F0082 
+  66 0038 07475F19 		.ascii	"\007G_\0314\2548\300\330\312\314\300\360\237\011l\022"
+  66      34AC38C0 
+  66      D8CACCC0 
+  66      F09F096C 
+  66      12
+  67 0049 03E37246 		.ascii	"\003\343rFM\006\240\262G\033\377M\345ek\001)S\200H2"
+  67      4D06A0B2 
+  67      471BFF4D 
+  67      E5656B01 
+  67      29538048 
+  68 005e AE606403 		.ascii	"\256`d\003Y\267>\350@\303\377\377\315\015\007\256\263"
+  68      59B73EE8 
+  68      40C3FFFF 
+  68      CD0D07AE 
+  68      B3
+  69 006f 1D9CC4CE 		.ascii	"\035\234\304\316\302\304\320\312\014\024\376\000T\002"
+  69      C2C4D0CA 
+  69      0C14FE00 
+  69      5402
+  70 007d B2EC2313 		.ascii	"\262\354#\023\023\210f~\306\330\264\353\343\265\205"
+  70      1388667E 
+  70      C6D8B4EB 
+  70      E3B585
+  71 008c 9C205DCD 		.ascii	"\234 ]\315\314 \213\247\265\036:\317\376\205\251\225"
+  71      CC208BA7 
+  71      B51E3ACF 
+  71      FE85A995 
+  72 009c 99891164 		.ascii	"\231\211\021d\301\316\235on\263\327\377m\350hh\020\000"
+  72      C1CE9D6F 
+  72      6EB3D7FF 
+  72      6DE86868 
+  72      1000
+  73 00ae 8A7502DD 		.ascii	"\212u\002\335\000\022~u\346\352\021\256\371\214s\033"
+  73      00127E75 
+  73      E6EA11AE 
+  73      F98C731B 
+  74 00be 1BC0E2CC 		.ascii	"\033\300\342\314\214\253\200\016_\311(\003\226\354\333"
+  74      8CAB800E 
+  74      5FC92803 
+ARM GAS  e:\temp\ccErnRhI.s 			page 5
+
+
+  74      96ECDB
+  75 00cd B1A19343 		.ascii	"\261\241\223C_\267\225\231\205q5\343|\306\177`73\256"
+  75      5FB79599 
+  75      857135E3 
+  75      7CC67F60 
+  75      3733AE
+  76 00e0 61D46778 		.ascii	"a\324gx\306xh\332CQ\220e\3106\261\202m\332\334w\351"
+  76      C67868DA 
+  76      43519065 
+  76      C836B182 
+  76      6DDADC77 
+  77 00f5 1F3784DB 		.ascii	"\0377\204\333\3214\241\201\005(\364z\351\271\023\354"
+  77      D134A181 
+  77      0528F47A 
+  77      E9B913EC 
+  78 0105 205B5A80 		.ascii	" [Z\200\366\030\003}\300\306\270\216Q\206q-\310\036"
+  78      F618037D 
+  78      C0C6B88E 
+  78      5186712D 
+  78      C81E
+  79 0117 C6F540A3 		.ascii	"\306\365@\243\201Nfx\305\330t`\262;\310Lp\310|\000\272"
+  79      814E6678 
+  79      C5D87460 
+  79      B23BC84C 
+  79      70C87C00 
+  80 012c 1BE833A0 		.ascii	"\033\3503\240\235\312\356\251y\251E\211%\251)\361\301"
+  80      9DCAEEA9 
+  80      79A94589 
+  80      25A929F1 
+  80      C1
+  81 013d F9A545C9 		.ascii	"\371\245E\311\2511\001\301\371\316&1n\341\361>\256."
+  81      A93101C1 
+  81      F9CE2631 
+  81      6EE1F13E 
+  81      AE2E
+  82 014f F101BE7A 		.ascii	"\361\001\276z\311\014\000V\342~\347"
+  82      C90C0056 
+  82      E27EE7
+  83              		.text
+  84              		.section	.gnu.lto_.symbol_nodes.62413f88,"",%progbits
+  85 0000 789C6361 		.ascii	"x\234ca`d\320a\000\002&\306z\006\206\011\347\030\030"
+  85      6064D061 
+  85      000226C6 
+  85      7A068609 
+  85      E71818
+  86 0013 80D4AE06 		.ascii	"\200\324\256\006E\006\006V\006\206\006!\006\006f&\246"
+  86      45060656 
+  86      06860621 
+  86      06066626 
+  86      A6
+  87 0024 7A461409 		.ascii	"zF\024\011\006\000\276o\010B"
+  87      0600BE6F 
+  87      0842
+  88              		.text
+  89              		.section	.gnu.lto_.refs.62413f88,"",%progbits
+  90 0000 789C6361 		.ascii	"x\234ca`d\340f`\000\222\214\214L\214L@\222\001\000\001"
+  90      6064E066 
+ARM GAS  e:\temp\ccErnRhI.s 			page 6
+
+
+  90      6000928C 
+  90      8C4C8C4C 
+  90      40920100 
+  91 0015 54001B   		.ascii	"T\000\033"
+  92              		.text
+  93              		.section	.gnu.lto_.decls.62413f88,"",%progbits
+  94 0000 789C8D54 		.ascii	"x\234\215TYLSA\024\235\373^\013\345Y\304\2101~\230X"
+  94      594C5341 
+  94      149DFB5E 
+  94      0BE559C4 
+  94      88317E98 
+  95 0015 B54ABF30 		.ascii	"\265J\2770\240\237~\250\270\020\267\020\013\352\207"
+  95      A09F7EA8 
+  95      B810B710 
+  95      0BEA87
+  96 0024 91407D51 		.ascii	"\221@}Q\243\221\012\364\303\277\021M\334\015\210\" "
+  96      A3910AF4 
+  96      C3BF114D 
+  96      DC0D8822 
+  96      20
+  97 0035 248D268A 		.ascii	"$\215&\212\"\213\012\250\200P\227\202\026\214B\320\004"
+  97      228B0AA8 
+  97      80509782 
+  97      168C42D0 
+  97      04
+  98 0046 89821AB7 		.ascii	"\211\202\032\267\350\207\032\242\242\321zgi_5`\234\364"
+  98      E8871AA2 
+  98      A2D17A67 
+  98      695F3560 
+  98      9CF4
+  99 0058 CECCBD73 		.ascii	"\316\314\275s\317\271\313\314\253\211\000ac\243\231"
+  99      CFB9CBCC 
+  99      AB890061 
+  99      63A399
+ 100 0067 90C7B80E 		.ascii	"\220\307\270\016\243\004q\230p]K\214\241\240\324\240"
+ 100      A3047198 
+ 100      705D4B8C 
+ 100      A1A0D4A0 
+ 101 0077 D4A13044 		.ascii	"\324\2410D\007\371s\260\263h\211I@\351B\011\240t\243"
+ 101      07F973B0 
+ 101      B3688949 
+ 101      40E94209 
+ 101      A074A3
+ 102 008a F8519A25 		.ascii	"\370Q\232%\356\246\\k\306\340\351\220\261\022$N\225"
+ 102      EEA65C6B 
+ 102      C6E0E990 
+ 102      B112244E 
+ 102      95
+ 103 009b 181F4A1B 		.ascii	"\030\037J\033\031}\324\375\025;2f(\217\310\330c\325"
+ 103      197DD4FD 
+ 103      153B3266 
+ 103      288FC8D8 
+ 103      63D5
+ 104 00ad F0538160 		.ascii	"\360S\201`emU\314\000\364\203\002\2621\004@\314\300"
+ 104      656D55CC 
+ 104      00F48302 
+ 104      B2310440 
+ARM GAS  e:\temp\ccErnRhI.s 			page 7
+
+
+ 104      CCC0
+ 105 00bf 8508E12A 		.ascii	"\205\010\341*n\024>\223\260)\274\0206\023\341\317m\006"
+ 105      6E143E93 
+ 105      B029BC10 
+ 105      3613E1CF 
+ 105      6D06
+ 106 00d1 19FF85D6 		.ascii	"\031\377\205\326`hp\022\203\035$\010\302\031\010\224"
+ 106      60687012 
+ 106      831D2408 
+ 106      C2190894 
+ 107 00e1 3857A41B 		.ascii	"8W\244\033\021\344\212\001\210\340\023\351F\344\004"
+ 107      11E48A01 
+ 107      88E013E9 
+ 107      46E404
+ 108 00f0 7FD604A1 		.ascii	"\177\326\004\241\242\277\364\365\025ZT\344\304\375\340"
+ 108      A2BFF4F5 
+ 108      155A54E4 
+ 108      C4FDE0
+ 109 00ff 48D5D2C4 		.ascii	"H\325\322\304\213\024G!\245\3124\2433\376\340W_\334"
+ 109      8B144721 
+ 109      A5CA34A3 
+ 109      33FEE057 
+ 109      5FDC
+ 110 0111 B0021335 		.ascii	"\260\002\0235PP\355\375\330]9\016\325I\032L@\365}[Y"
+ 110      5050EDFD 
+ 110      D85D390E 
+ 110      D5491A4C 
+ 110      40F57D5B 
+ 111 0126 30764A09 		.ascii	"0vJ\011\303\321=\324\246\300\332\311P\015S\341\002L"
+ 111      C3D13DD4 
+ 111      A6C0DAC9 
+ 111      500D53E1 
+ 111      024C
+ 112 0138 C5401761 		.ascii	"\305@\027a\012\316\331&\301t\341\227\367\245i\206\227"
+ 112      0ACED926 
+ 112      C174E197 
+ 112      F7A56986 
+ 112      97
+ 113 0149 7AEBE9D0 		.ascii	"z\353\351\320\247\217\311e\324W\200(\205yA\025\250p"
+ 113      A78FC965 
+ 113      D4578028 
+ 113      85794115 
+ 113      A870
+ 114 015b 1E125976 		.ascii	"\036\022Yv\270e\3139\030\300\264k`\006\"\033\036\364"
+ 114      B865CB39 
+ 114      18C0B46B 
+ 114      6006221B 
+ 114      1EF4
+ 115 016d BE56D5F9 		.ascii	"\276V\325\371<\321\312#\247\236F\013\026__\207\225>"
+ 115      3CD1CA23 
+ 115      A79E460B 
+ 115      165F5F87 
+ 115      953E
+ 116 017f 448E059C 		.ascii	"D\216\005\234\243\326\340\250\215\344\250\343\034\245"
+ 116      A3D6E0A8 
+ 116      8DE4A8E3 
+ 116      1CA5
+ARM GAS  e:\temp\ccErnRhI.s 			page 8
+
+
+ 117 018d 45359DAA 		.ascii	"E5\235\252\272\234s\374x{\274\037DMVT\013Z\372\213\342"
+ 117      BA9C73FC 
+ 117      787BBC1F 
+ 117      444D5654 
+ 117      0B5AFA8B 
+ 118 01a2 444D43EC 		.ascii	"DMC\354\270\274e8`\026\307\026T{\366\326W\250B5\241"
+ 118      B8BC6538 
+ 118      6016C716 
+ 118      547BF6D6 
+ 118      57A84235 
+ 119 01b7 FAE97EF9 		.ascii	"\372\351~\371\313\361\302\333\206\352@O\323sU]\317y"
+ 119      CBF1C2DB 
+ 119      86EA404F 
+ 119      D373555D 
+ 119      CF79
+ 120 01c9 9FDE3D5F 		.ascii	"\237\336=_\315<\0234`W\021\207\246\272\017\327Gb\205"
+ 120      CD3C1334 
+ 120      60571187 
+ 120      A6BA0FD7 
+ 120      476285
+ 121 01dc 89790406 		.ascii	"\211y\004\006_}\216Q\263\330^\351-\3730\030\005\232"
+ 121      5F7D8E51 
+ 121      B3D85EE9 
+ 121      2DFB3018 
+ 121      059A
+ 122 01ee 633FA505 		.ascii	"c?\245\005\264p\017\235\230J\240\021{\327\200\275\203"
+ 122      B4700F9D 
+ 122      984AA011 
+ 122      7BD780BD 
+ 122      83
+ 123 01ff 1670300C 		.ascii	"\026p0\014\253\007\256\241\361*\032\317\262.\017]\332"
+ 123      AB07AEA1 
+ 123      F12A1ACF 
+ 123      B22E0F5D 
+ 123      DA
+ 124 0210 B7F9E43E 		.ascii	"\267\371\344>\326\267f\320\340\272Qs\202&\332|\372{"
+ 124      D6B766D0 
+ 124      E0BA5173 
+ 124      8226DA7C 
+ 124      FA7B
+ 125 0222 C91B4D3D 		.ascii	"\311\033M=\010<\2367\360\256'F=\306\025\363\333\342"
+ 125      083C9E37 
+ 125      F0AE2746 
+ 125      3DC615F3 
+ 125      DBE2
+ 126 0234 9F0516B0 		.ascii	"\237\005\026\260\307\333\355\216\323,\346\320\327\300"
+ 126      C7DBED8E 
+ 126      D32CE6D0 
+ 126      D7C0
+ 127 0242 EC8ACB94 		.ascii	"\354\212\313\224\036\210\342\\7\220\253\035\342\215"
+ 127      1E88E25C 
+ 127      3790AB1D 
+ 127      E28D
+ 128 0250 1CAEF04B 		.ascii	"\034\256\360KL\302\211\024\311\227A\301D\3402:\\\342"
+ 128      4CC28914 
+ 128      C99741C1 
+ 128      44E0323A 
+ARM GAS  e:\temp\ccErnRhI.s 			page 9
+
+
+ 128      5CE2
+ 129 0262 67CC1DC3 		.ascii	"g\314\035\303\303-\314\366&\330\301\207\322\006v\376"
+ 129      C32DCCF6 
+ 129      26D8C187 
+ 129      D20676FE 
+ 130 0272 7678085F 		.ascii	"vx\010_\251\036\242o\372\233~\016chd<\322\267$\354\333"
+ 130      A91EA26F 
+ 130      FA9B7E0E 
+ 130      6368643C 
+ 130      D2B724EC 
+ 131 0287 3AAA2FCF 		.ascii	":\252/\317\2047\301W\254Sja.D\226/_\353\001\332\360"
+ 131      8437C157 
+ 131      AC536A61 
+ 131      2E44962F 
+ 131      5FEB01DA 
+ 132 029c 224A6DE5 		.ascii	"\"Jm\345\365*\335\215\376\366\030p\304\013He,\366\314"
+ 132      F52ADD8D 
+ 132      FEF61870 
+ 132      C40B4865 
+ 132      2CF6CC
+ 133 02af 8FA4B78D 		.ascii	"\217\244\267\215\2361\2021\212\203;X\323\277\352\303"
+ 133      9E318231 
+ 133      8A833B58 
+ 133      D3BFEAC3 
+ 134 02bf 685DD54F 		.ascii	"h]\325O:\307\317:C\251\027_t\375\316bJSy\204z\021!\242"
+ 134      3AC7CF3A 
+ 134      43A9175F 
+ 134      74FDCE62 
+ 134      4A537984 
+ 135 02d7 51CC928E 		.ascii	"Q\314\222\216\177\032\0350\213e\371\374\304\023\263"
+ 135      7F1A1D30 
+ 135      8B65F9FC 
+ 135      C413B3
+ 136 02e6 B69F7D32 		.ascii	"\266\237}2\377s\357\210h~F+\314j\217\250\353\321\241"
+ 136      FF73EF88 
+ 136      687E462B 
+ 136      CC6A8FA8 
+ 136      EBD1A1
+ 137 02f9 ABA52A38 		.ascii	"\253\245*8\264\320{H/?\266\233\332 \200\215\273k\324"
+ 137      B4D07B48 
+ 137      2F3FB69B 
+ 137      DA20808D 
+ 137      BB6BD4
+ 138 030c D609EC41 		.ascii	"\326\011\354A\214\032\344\336\350A\276|\273w\330j=\030"
+ 138      8C1AE4DE 
+ 138      E841BE7C 
+ 138      BB77D86A 
+ 138      3D18
+ 139 031e 7E8E9C31 		.ascii	"~\216\2341\004\"\320\005V\376\037\322\305?\232\243#"
+ 139      0422D005 
+ 139      56FE1FD2 
+ 139      C53F9AA3 
+ 139      23
+ 140 032f BDA991BE 		.ascii	"\275\251\221\276\376\210\353\"\320-}\331j]\272.s\345"
+ 140      FE88EB22 
+ 140      D02D7DD9 
+ 140      6A5DBA2E 
+ARM GAS  e:\temp\ccErnRhI.s 			page 10
+
+
+ 140      73E5
+ 141 0341 92C599CE 		.ascii	"\222\305\231\316\355\272\356\266,[\235aKIJ\"3\227\351"
+ 141      EDBAEEB6 
+ 141      2C5B9D61 
+ 141      4B494A22 
+ 141      3397E9
+ 142 0354 3BF4DCAC 		.ascii	";\364\334\254|}S\2463\307\223\353\3227\2449sR\346m\220"
+ 142      7C7D53A6 
+ 142      33C793EB 
+ 142      D237A439 
+ 142      7352E66D 
+ 143 0369 CE69AB12 		.ascii	"\316i\253\022]$V*\353\262\266\351\036wH\313\316rm\363"
+ 143      5D24562A 
+ 143      EBB2B6E9 
+ 143      1E7748CB 
+ 143      CE726DF3 
+ 144 037d B82D795B 		.ascii	"\270-y[s\234\371\210\217\362l\335\221?7y\372\030|\256"
+ 144      739CF988 
+ 144      8FF26CDD 
+ 144      913F3779 
+ 144      FA187CAE 
+ 145 0391 5DF9BBDC 		.ascii	"]\371\273\334z^\342\026\022\355vq\200\305\223\227\315"
+ 145      7A5EE216 
+ 145      12ED7671 
+ 145      80C59397 
+ 145      CD
+ 146 03a2 37B67FA6 		.ascii	"7\266\177\246\200\210I2\342\242\205)+2\3222\235\351"
+ 146      80884932 
+ 146      E2A28529 
+ 146      2B32D232 
+ 146      9DE9
+ 147 03b4 6B3252D2 		.ascii	"k2R\322\315\271\372\346\271\311\277\001X\373\312\357"
+ 147      CDB9FAE6 
+ 147      B9C9BF01 
+ 147      58FBCAEF 
+ 148              		.text
+ 149              		.section	.gnu.lto_.symtab.62413f88,"",%progbits
+ 150 0000 46575F4C 		.ascii	"FW_LED_Sleep\000"
+ 150      45445F53 
+ 150      6C656570 
+ 150      00
+ 151 000d 00       		.ascii	"\000"
+ 152 000e 00       		.ascii	"\000"
+ 153 000f 00       		.ascii	"\000"
+ 154 0010 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 154      00000000 
+ 155 0018 AD000000 		.ascii	"\255\000\000\000"
+ 156 001c 46575F4C 		.ascii	"FW_LED_Wakeup\000"
+ 156      45445F57 
+ 156      616B6575 
+ 156      7000
+ 157 002a 00       		.ascii	"\000"
+ 158 002b 00       		.ascii	"\000"
+ 159 002c 00       		.ascii	"\000"
+ 160 002d 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 160      00000000 
+ 161 0035 AF000000 		.ascii	"\257\000\000\000"
+ARM GAS  e:\temp\ccErnRhI.s 			page 11
+
+
+ 162              		.text
+ 163              		.section	.gnu.lto_.opts,"",%progbits
+ 164 0000 272D666D 		.ascii	"'-fmath-errno' '-fsigned-zeros' '-ftrapping-math' '"
+ 164      6174682D 
+ 164      6572726E 
+ 164      6F272027 
+ 164      2D667369 
+ 165 0033 2D666E6F 		.ascii	"-fno-trapv' '-fno-openmp' '-fno-openacc' '-mcpu=cor"
+ 165      2D747261 
+ 165      70762720 
+ 165      272D666E 
+ 165      6F2D6F70 
+ 166 0066 7465782D 		.ascii	"tex-m0' '-mthumb' '-g' '-Os' '-Werror' '-ffunction-"
+ 166      6D302720 
+ 166      272D6D74 
+ 166      68756D62 
+ 166      2720272D 
+ 167 0099 73656374 		.ascii	"sections' '-ffat-lto-objects' '-finline-functions' "
+ 167      696F6E73 
+ 167      2720272D 
+ 167      66666174 
+ 167      2D6C746F 
+ 168 00cc 272D666C 		.ascii	"'-flto' '-fno-strict-aliasing'\000"
+ 168      746F2720 
+ 168      272D666E 
+ 168      6F2D7374 
+ 168      72696374 
+ 169              		.text
+ 170              		.cfi_sections	.debug_frame
+ 171              		.section	.text.FW_LED_Sleep,"ax",%progbits
+ 172              		.align	1
+ 173              		.global	FW_LED_Sleep
+ 174              		.code	16
+ 175              		.thumb_func
+ 176              		.type	FW_LED_Sleep, %function
+ 177              	FW_LED_Sleep:
+ 178              	.LFB0:
+ 179              		.file 1 "Generated_Source\\PSoC4\\FW_LED_PM.c"
+   1:Generated_Source\PSoC4/FW_LED_PM.c **** /*******************************************************************************
+   2:Generated_Source\PSoC4/FW_LED_PM.c **** * File Name: FW_LED.c  
+   3:Generated_Source\PSoC4/FW_LED_PM.c **** * Version 2.20
+   4:Generated_Source\PSoC4/FW_LED_PM.c **** *
+   5:Generated_Source\PSoC4/FW_LED_PM.c **** * Description:
+   6:Generated_Source\PSoC4/FW_LED_PM.c **** *  This file contains APIs to set up the Pins component for low power modes.
+   7:Generated_Source\PSoC4/FW_LED_PM.c **** *
+   8:Generated_Source\PSoC4/FW_LED_PM.c **** * Note:
+   9:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  10:Generated_Source\PSoC4/FW_LED_PM.c **** ********************************************************************************
+  11:Generated_Source\PSoC4/FW_LED_PM.c **** * Copyright 2015, Cypress Semiconductor Corporation.  All rights reserved.
+  12:Generated_Source\PSoC4/FW_LED_PM.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  13:Generated_Source\PSoC4/FW_LED_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  14:Generated_Source\PSoC4/FW_LED_PM.c **** * the software package with which this file was provided.
+  15:Generated_Source\PSoC4/FW_LED_PM.c **** *******************************************************************************/
+  16:Generated_Source\PSoC4/FW_LED_PM.c **** 
+  17:Generated_Source\PSoC4/FW_LED_PM.c **** #include "cytypes.h"
+  18:Generated_Source\PSoC4/FW_LED_PM.c **** #include "FW_LED.h"
+  19:Generated_Source\PSoC4/FW_LED_PM.c **** 
+ARM GAS  e:\temp\ccErnRhI.s 			page 12
+
+
+  20:Generated_Source\PSoC4/FW_LED_PM.c **** static FW_LED_BACKUP_STRUCT  FW_LED_backup = {0u, 0u, 0u};
+  21:Generated_Source\PSoC4/FW_LED_PM.c **** 
+  22:Generated_Source\PSoC4/FW_LED_PM.c **** 
+  23:Generated_Source\PSoC4/FW_LED_PM.c **** /*******************************************************************************
+  24:Generated_Source\PSoC4/FW_LED_PM.c **** * Function Name: FW_LED_Sleep
+  25:Generated_Source\PSoC4/FW_LED_PM.c **** ****************************************************************************//**
+  26:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  27:Generated_Source\PSoC4/FW_LED_PM.c **** * \brief Stores the pin configuration and prepares the pin for entering chip 
+  28:Generated_Source\PSoC4/FW_LED_PM.c **** *  deep-sleep/hibernate modes. This function applies only to SIO and USBIO pins.
+  29:Generated_Source\PSoC4/FW_LED_PM.c **** *  It should not be called for GPIO or GPIO_OVT pins.
+  30:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  31:Generated_Source\PSoC4/FW_LED_PM.c **** * <b>Note</b> This function is available in PSoC 4 only.
+  32:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  33:Generated_Source\PSoC4/FW_LED_PM.c **** * \return 
+  34:Generated_Source\PSoC4/FW_LED_PM.c **** *  None 
+  35:Generated_Source\PSoC4/FW_LED_PM.c **** *  
+  36:Generated_Source\PSoC4/FW_LED_PM.c **** * \sideeffect
+  37:Generated_Source\PSoC4/FW_LED_PM.c **** *  For SIO pins, this function configures the pin input threshold to CMOS and
+  38:Generated_Source\PSoC4/FW_LED_PM.c **** *  drive level to Vddio. This is needed for SIO pins when in device 
+  39:Generated_Source\PSoC4/FW_LED_PM.c **** *  deep-sleep/hibernate modes.
+  40:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  41:Generated_Source\PSoC4/FW_LED_PM.c **** * \funcusage
+  42:Generated_Source\PSoC4/FW_LED_PM.c **** *  \snippet FW_LED_SUT.c usage_FW_LED_Sleep_Wakeup
+  43:Generated_Source\PSoC4/FW_LED_PM.c **** *******************************************************************************/
+  44:Generated_Source\PSoC4/FW_LED_PM.c **** void FW_LED_Sleep(void)
+  45:Generated_Source\PSoC4/FW_LED_PM.c **** {
+ 180              		.loc 1 45 0
+ 181              		.cfi_startproc
+ 182              		@ args = 0, pretend = 0, frame = 0
+ 183              		@ frame_needed = 0, uses_anonymous_args = 0
+ 184              		@ link register save eliminated.
+  46:Generated_Source\PSoC4/FW_LED_PM.c ****     #if defined(FW_LED__PC)
+  47:Generated_Source\PSoC4/FW_LED_PM.c ****         FW_LED_backup.pcState = FW_LED_PC;
+ 185              		.loc 1 47 0
+ 186 0000 024B     		ldr	r3, .L2
+  48:Generated_Source\PSoC4/FW_LED_PM.c ****     #else
+  49:Generated_Source\PSoC4/FW_LED_PM.c ****         #if (CY_PSOC4_4200L)
+  50:Generated_Source\PSoC4/FW_LED_PM.c ****             /* Save the regulator state and put the PHY into suspend mode */
+  51:Generated_Source\PSoC4/FW_LED_PM.c ****             FW_LED_backup.usbState = FW_LED_CR1_REG;
+  52:Generated_Source\PSoC4/FW_LED_PM.c ****             FW_LED_USB_POWER_REG |= FW_LED_USBIO_ENTER_SLEEP;
+  53:Generated_Source\PSoC4/FW_LED_PM.c ****             FW_LED_CR1_REG &= FW_LED_USBIO_CR1_OFF;
+  54:Generated_Source\PSoC4/FW_LED_PM.c ****         #endif
+  55:Generated_Source\PSoC4/FW_LED_PM.c ****     #endif
+  56:Generated_Source\PSoC4/FW_LED_PM.c ****     #if defined(CYIPBLOCK_m0s8ioss_VERSION) && defined(FW_LED__SIO)
+  57:Generated_Source\PSoC4/FW_LED_PM.c ****         FW_LED_backup.sioState = FW_LED_SIO_REG;
+  58:Generated_Source\PSoC4/FW_LED_PM.c ****         /* SIO requires unregulated output buffer and single ended input buffer */
+  59:Generated_Source\PSoC4/FW_LED_PM.c ****         FW_LED_SIO_REG &= (uint32)(~FW_LED_SIO_LPM_MASK);
+  60:Generated_Source\PSoC4/FW_LED_PM.c ****     #endif  
+  61:Generated_Source\PSoC4/FW_LED_PM.c **** }
+ 187              		.loc 1 61 0
+ 188              		@ sp needed
+  47:Generated_Source\PSoC4/FW_LED_PM.c ****     #else
+ 189              		.loc 1 47 0
+ 190 0002 1A68     		ldr	r2, [r3]
+ 191 0004 024B     		ldr	r3, .L2+4
+ 192 0006 1A60     		str	r2, [r3]
+ 193              		.loc 1 61 0
+ARM GAS  e:\temp\ccErnRhI.s 			page 13
+
+
+ 194 0008 7047     		bx	lr
+ 195              	.L3:
+ 196 000a C046     		.align	2
+ 197              	.L2:
+ 198 000c 08010440 		.word	1074004232
+ 199 0010 00000000 		.word	.LANCHOR0
+ 200              		.cfi_endproc
+ 201              	.LFE0:
+ 202              		.size	FW_LED_Sleep, .-FW_LED_Sleep
+ 203              		.section	.text.FW_LED_Wakeup,"ax",%progbits
+ 204              		.align	1
+ 205              		.global	FW_LED_Wakeup
+ 206              		.code	16
+ 207              		.thumb_func
+ 208              		.type	FW_LED_Wakeup, %function
+ 209              	FW_LED_Wakeup:
+ 210              	.LFB1:
+  62:Generated_Source\PSoC4/FW_LED_PM.c **** 
+  63:Generated_Source\PSoC4/FW_LED_PM.c **** 
+  64:Generated_Source\PSoC4/FW_LED_PM.c **** /*******************************************************************************
+  65:Generated_Source\PSoC4/FW_LED_PM.c **** * Function Name: FW_LED_Wakeup
+  66:Generated_Source\PSoC4/FW_LED_PM.c **** ****************************************************************************//**
+  67:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  68:Generated_Source\PSoC4/FW_LED_PM.c **** * \brief Restores the pin configuration that was saved during Pin_Sleep(). This 
+  69:Generated_Source\PSoC4/FW_LED_PM.c **** * function applies only to SIO and USBIO pins. It should not be called for
+  70:Generated_Source\PSoC4/FW_LED_PM.c **** * GPIO or GPIO_OVT pins.
+  71:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  72:Generated_Source\PSoC4/FW_LED_PM.c **** * For USBIO pins, the wakeup is only triggered for falling edge interrupts.
+  73:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  74:Generated_Source\PSoC4/FW_LED_PM.c **** * <b>Note</b> This function is available in PSoC 4 only.
+  75:Generated_Source\PSoC4/FW_LED_PM.c **** *
+  76:Generated_Source\PSoC4/FW_LED_PM.c **** * \return 
+  77:Generated_Source\PSoC4/FW_LED_PM.c **** *  None
+  78:Generated_Source\PSoC4/FW_LED_PM.c **** *  
+  79:Generated_Source\PSoC4/FW_LED_PM.c **** * \funcusage
+  80:Generated_Source\PSoC4/FW_LED_PM.c **** *  Refer to FW_LED_Sleep() for an example usage.
+  81:Generated_Source\PSoC4/FW_LED_PM.c **** *******************************************************************************/
+  82:Generated_Source\PSoC4/FW_LED_PM.c **** void FW_LED_Wakeup(void)
+  83:Generated_Source\PSoC4/FW_LED_PM.c **** {
+ 211              		.loc 1 83 0
+ 212              		.cfi_startproc
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215              		@ link register save eliminated.
+  84:Generated_Source\PSoC4/FW_LED_PM.c ****     #if defined(FW_LED__PC)
+  85:Generated_Source\PSoC4/FW_LED_PM.c ****         FW_LED_PC = FW_LED_backup.pcState;
+ 216              		.loc 1 85 0
+ 217 0000 024B     		ldr	r3, .L5
+  86:Generated_Source\PSoC4/FW_LED_PM.c ****     #else
+  87:Generated_Source\PSoC4/FW_LED_PM.c ****         #if (CY_PSOC4_4200L)
+  88:Generated_Source\PSoC4/FW_LED_PM.c ****             /* Restore the regulator state and come out of suspend mode */
+  89:Generated_Source\PSoC4/FW_LED_PM.c ****             FW_LED_USB_POWER_REG &= FW_LED_USBIO_EXIT_SLEEP_PH1;
+  90:Generated_Source\PSoC4/FW_LED_PM.c ****             FW_LED_CR1_REG = FW_LED_backup.usbState;
+  91:Generated_Source\PSoC4/FW_LED_PM.c ****             FW_LED_USB_POWER_REG &= FW_LED_USBIO_EXIT_SLEEP_PH2;
+  92:Generated_Source\PSoC4/FW_LED_PM.c ****         #endif
+  93:Generated_Source\PSoC4/FW_LED_PM.c ****     #endif
+  94:Generated_Source\PSoC4/FW_LED_PM.c ****     #if defined(CYIPBLOCK_m0s8ioss_VERSION) && defined(FW_LED__SIO)
+ARM GAS  e:\temp\ccErnRhI.s 			page 14
+
+
+  95:Generated_Source\PSoC4/FW_LED_PM.c ****         FW_LED_SIO_REG = FW_LED_backup.sioState;
+  96:Generated_Source\PSoC4/FW_LED_PM.c ****     #endif
+  97:Generated_Source\PSoC4/FW_LED_PM.c **** }
+ 218              		.loc 1 97 0
+ 219              		@ sp needed
+  85:Generated_Source\PSoC4/FW_LED_PM.c ****     #else
+ 220              		.loc 1 85 0
+ 221 0002 1A68     		ldr	r2, [r3]
+ 222 0004 024B     		ldr	r3, .L5+4
+ 223 0006 1A60     		str	r2, [r3]
+ 224              		.loc 1 97 0
+ 225 0008 7047     		bx	lr
+ 226              	.L6:
+ 227 000a C046     		.align	2
+ 228              	.L5:
+ 229 000c 00000000 		.word	.LANCHOR0
+ 230 0010 08010440 		.word	1074004232
+ 231              		.cfi_endproc
+ 232              	.LFE1:
+ 233              		.size	FW_LED_Wakeup, .-FW_LED_Wakeup
+ 234              		.bss
+ 235              		.align	2
+ 236              		.set	.LANCHOR0,. + 0
+ 237              		.type	FW_LED_backup, %object
+ 238              		.size	FW_LED_backup, 12
+ 239              	FW_LED_backup:
+ 240 0000 00000000 		.space	12
+ 240      00000000 
+ 240      00000000 
+ 241              		.text
+ 242              	.Letext0:
+ 243              		.file 2 "Generated_Source\\PSoC4\\cytypes.h"
+ 244              		.file 3 "Generated_Source\\PSoC4\\FW_LED.h"
+ 245              		.section	.debug_info,"",%progbits
+ 246              	.Ldebug_info0:
+ 247 0000 05010000 		.4byte	0x105
+ 248 0004 0400     		.2byte	0x4
+ 249 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 250 000a 04       		.byte	0x4
+ 251 000b 01       		.uleb128 0x1
+ 252 000c C4000000 		.4byte	.LASF20
+ 253 0010 0C       		.byte	0xc
+ 254 0011 B7010000 		.4byte	.LASF21
+ 255 0015 DA010000 		.4byte	.LASF22
+ 256 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 257 001d 00000000 		.4byte	0
+ 258 0021 00000000 		.4byte	.Ldebug_line0
+ 259 0025 02       		.uleb128 0x2
+ 260 0026 01       		.byte	0x1
+ 261 0027 06       		.byte	0x6
+ 262 0028 22000000 		.4byte	.LASF0
+ 263 002c 02       		.uleb128 0x2
+ 264 002d 01       		.byte	0x1
+ 265 002e 08       		.byte	0x8
+ 266 002f 2E000000 		.4byte	.LASF1
+ 267 0033 02       		.uleb128 0x2
+ 268 0034 02       		.byte	0x2
+ARM GAS  e:\temp\ccErnRhI.s 			page 15
+
+
+ 269 0035 05       		.byte	0x5
+ 270 0036 9C010000 		.4byte	.LASF2
+ 271 003a 02       		.uleb128 0x2
+ 272 003b 02       		.byte	0x2
+ 273 003c 07       		.byte	0x7
+ 274 003d 5C000000 		.4byte	.LASF3
+ 275 0041 02       		.uleb128 0x2
+ 276 0042 04       		.byte	0x4
+ 277 0043 05       		.byte	0x5
+ 278 0044 AE010000 		.4byte	.LASF4
+ 279 0048 02       		.uleb128 0x2
+ 280 0049 04       		.byte	0x4
+ 281 004a 07       		.byte	0x7
+ 282 004b 4A000000 		.4byte	.LASF5
+ 283 004f 02       		.uleb128 0x2
+ 284 0050 08       		.byte	0x8
+ 285 0051 05       		.byte	0x5
+ 286 0052 89010000 		.4byte	.LASF6
+ 287 0056 02       		.uleb128 0x2
+ 288 0057 08       		.byte	0x8
+ 289 0058 07       		.byte	0x7
+ 290 0059 AD000000 		.4byte	.LASF7
+ 291 005d 03       		.uleb128 0x3
+ 292 005e 04       		.byte	0x4
+ 293 005f 05       		.byte	0x5
+ 294 0060 696E7400 		.ascii	"int\000"
+ 295 0064 02       		.uleb128 0x2
+ 296 0065 04       		.byte	0x4
+ 297 0066 07       		.byte	0x7
+ 298 0067 A0000000 		.4byte	.LASF8
+ 299 006b 04       		.uleb128 0x4
+ 300 006c 8B000000 		.4byte	.LASF12
+ 301 0070 02       		.byte	0x2
+ 302 0071 E601     		.2byte	0x1e6
+ 303 0073 48000000 		.4byte	0x48
+ 304 0077 02       		.uleb128 0x2
+ 305 0078 04       		.byte	0x4
+ 306 0079 04       		.byte	0x4
+ 307 007a 1C000000 		.4byte	.LASF9
+ 308 007e 02       		.uleb128 0x2
+ 309 007f 08       		.byte	0x8
+ 310 0080 04       		.byte	0x4
+ 311 0081 84000000 		.4byte	.LASF10
+ 312 0085 02       		.uleb128 0x2
+ 313 0086 01       		.byte	0x1
+ 314 0087 08       		.byte	0x8
+ 315 0088 97010000 		.4byte	.LASF11
+ 316 008c 04       		.uleb128 0x4
+ 317 008d 00000000 		.4byte	.LASF13
+ 318 0091 02       		.byte	0x2
+ 319 0092 9002     		.2byte	0x290
+ 320 0094 98000000 		.4byte	0x98
+ 321 0098 05       		.uleb128 0x5
+ 322 0099 6B000000 		.4byte	0x6b
+ 323 009d 06       		.uleb128 0x6
+ 324 009e 0C       		.byte	0xc
+ 325 009f 03       		.byte	0x3
+ARM GAS  e:\temp\ccErnRhI.s 			page 16
+
+
+ 326 00a0 21       		.byte	0x21
+ 327 00a1 CA000000 		.4byte	0xca
+ 328 00a5 07       		.uleb128 0x7
+ 329 00a6 A6010000 		.4byte	.LASF14
+ 330 00aa 03       		.byte	0x3
+ 331 00ab 23       		.byte	0x23
+ 332 00ac 6B000000 		.4byte	0x6b
+ 333 00b0 00       		.byte	0
+ 334 00b1 07       		.uleb128 0x7
+ 335 00b2 80010000 		.4byte	.LASF15
+ 336 00b6 03       		.byte	0x3
+ 337 00b7 24       		.byte	0x24
+ 338 00b8 6B000000 		.4byte	0x6b
+ 339 00bc 04       		.byte	0x4
+ 340 00bd 07       		.uleb128 0x7
+ 341 00be 13000000 		.4byte	.LASF16
+ 342 00c2 03       		.byte	0x3
+ 343 00c3 25       		.byte	0x25
+ 344 00c4 6B000000 		.4byte	0x6b
+ 345 00c8 08       		.byte	0x8
+ 346 00c9 00       		.byte	0
+ 347 00ca 08       		.uleb128 0x8
+ 348 00cb 6F000000 		.4byte	.LASF17
+ 349 00cf 03       		.byte	0x3
+ 350 00d0 26       		.byte	0x26
+ 351 00d1 9D000000 		.4byte	0x9d
+ 352 00d5 09       		.uleb128 0x9
+ 353 00d6 06000000 		.4byte	.LASF18
+ 354 00da 01       		.byte	0x1
+ 355 00db 2C       		.byte	0x2c
+ 356 00dc 00000000 		.4byte	.LFB0
+ 357 00e0 14000000 		.4byte	.LFE0-.LFB0
+ 358 00e4 01       		.uleb128 0x1
+ 359 00e5 9C       		.byte	0x9c
+ 360 00e6 09       		.uleb128 0x9
+ 361 00e7 92000000 		.4byte	.LASF19
+ 362 00eb 01       		.byte	0x1
+ 363 00ec 52       		.byte	0x52
+ 364 00ed 00000000 		.4byte	.LFB1
+ 365 00f1 14000000 		.4byte	.LFE1-.LFB1
+ 366 00f5 01       		.uleb128 0x1
+ 367 00f6 9C       		.byte	0x9c
+ 368 00f7 0A       		.uleb128 0xa
+ 369 00f8 3C000000 		.4byte	.LASF23
+ 370 00fc 01       		.byte	0x1
+ 371 00fd 14       		.byte	0x14
+ 372 00fe CA000000 		.4byte	0xca
+ 373 0102 05       		.uleb128 0x5
+ 374 0103 03       		.byte	0x3
+ 375 0104 00000000 		.4byte	FW_LED_backup
+ 376 0108 00       		.byte	0
+ 377              		.section	.debug_abbrev,"",%progbits
+ 378              	.Ldebug_abbrev0:
+ 379 0000 01       		.uleb128 0x1
+ 380 0001 11       		.uleb128 0x11
+ 381 0002 01       		.byte	0x1
+ 382 0003 25       		.uleb128 0x25
+ARM GAS  e:\temp\ccErnRhI.s 			page 17
+
+
+ 383 0004 0E       		.uleb128 0xe
+ 384 0005 13       		.uleb128 0x13
+ 385 0006 0B       		.uleb128 0xb
+ 386 0007 03       		.uleb128 0x3
+ 387 0008 0E       		.uleb128 0xe
+ 388 0009 1B       		.uleb128 0x1b
+ 389 000a 0E       		.uleb128 0xe
+ 390 000b 55       		.uleb128 0x55
+ 391 000c 17       		.uleb128 0x17
+ 392 000d 11       		.uleb128 0x11
+ 393 000e 01       		.uleb128 0x1
+ 394 000f 10       		.uleb128 0x10
+ 395 0010 17       		.uleb128 0x17
+ 396 0011 00       		.byte	0
+ 397 0012 00       		.byte	0
+ 398 0013 02       		.uleb128 0x2
+ 399 0014 24       		.uleb128 0x24
+ 400 0015 00       		.byte	0
+ 401 0016 0B       		.uleb128 0xb
+ 402 0017 0B       		.uleb128 0xb
+ 403 0018 3E       		.uleb128 0x3e
+ 404 0019 0B       		.uleb128 0xb
+ 405 001a 03       		.uleb128 0x3
+ 406 001b 0E       		.uleb128 0xe
+ 407 001c 00       		.byte	0
+ 408 001d 00       		.byte	0
+ 409 001e 03       		.uleb128 0x3
+ 410 001f 24       		.uleb128 0x24
+ 411 0020 00       		.byte	0
+ 412 0021 0B       		.uleb128 0xb
+ 413 0022 0B       		.uleb128 0xb
+ 414 0023 3E       		.uleb128 0x3e
+ 415 0024 0B       		.uleb128 0xb
+ 416 0025 03       		.uleb128 0x3
+ 417 0026 08       		.uleb128 0x8
+ 418 0027 00       		.byte	0
+ 419 0028 00       		.byte	0
+ 420 0029 04       		.uleb128 0x4
+ 421 002a 16       		.uleb128 0x16
+ 422 002b 00       		.byte	0
+ 423 002c 03       		.uleb128 0x3
+ 424 002d 0E       		.uleb128 0xe
+ 425 002e 3A       		.uleb128 0x3a
+ 426 002f 0B       		.uleb128 0xb
+ 427 0030 3B       		.uleb128 0x3b
+ 428 0031 05       		.uleb128 0x5
+ 429 0032 49       		.uleb128 0x49
+ 430 0033 13       		.uleb128 0x13
+ 431 0034 00       		.byte	0
+ 432 0035 00       		.byte	0
+ 433 0036 05       		.uleb128 0x5
+ 434 0037 35       		.uleb128 0x35
+ 435 0038 00       		.byte	0
+ 436 0039 49       		.uleb128 0x49
+ 437 003a 13       		.uleb128 0x13
+ 438 003b 00       		.byte	0
+ 439 003c 00       		.byte	0
+ARM GAS  e:\temp\ccErnRhI.s 			page 18
+
+
+ 440 003d 06       		.uleb128 0x6
+ 441 003e 13       		.uleb128 0x13
+ 442 003f 01       		.byte	0x1
+ 443 0040 0B       		.uleb128 0xb
+ 444 0041 0B       		.uleb128 0xb
+ 445 0042 3A       		.uleb128 0x3a
+ 446 0043 0B       		.uleb128 0xb
+ 447 0044 3B       		.uleb128 0x3b
+ 448 0045 0B       		.uleb128 0xb
+ 449 0046 01       		.uleb128 0x1
+ 450 0047 13       		.uleb128 0x13
+ 451 0048 00       		.byte	0
+ 452 0049 00       		.byte	0
+ 453 004a 07       		.uleb128 0x7
+ 454 004b 0D       		.uleb128 0xd
+ 455 004c 00       		.byte	0
+ 456 004d 03       		.uleb128 0x3
+ 457 004e 0E       		.uleb128 0xe
+ 458 004f 3A       		.uleb128 0x3a
+ 459 0050 0B       		.uleb128 0xb
+ 460 0051 3B       		.uleb128 0x3b
+ 461 0052 0B       		.uleb128 0xb
+ 462 0053 49       		.uleb128 0x49
+ 463 0054 13       		.uleb128 0x13
+ 464 0055 38       		.uleb128 0x38
+ 465 0056 0B       		.uleb128 0xb
+ 466 0057 00       		.byte	0
+ 467 0058 00       		.byte	0
+ 468 0059 08       		.uleb128 0x8
+ 469 005a 16       		.uleb128 0x16
+ 470 005b 00       		.byte	0
+ 471 005c 03       		.uleb128 0x3
+ 472 005d 0E       		.uleb128 0xe
+ 473 005e 3A       		.uleb128 0x3a
+ 474 005f 0B       		.uleb128 0xb
+ 475 0060 3B       		.uleb128 0x3b
+ 476 0061 0B       		.uleb128 0xb
+ 477 0062 49       		.uleb128 0x49
+ 478 0063 13       		.uleb128 0x13
+ 479 0064 00       		.byte	0
+ 480 0065 00       		.byte	0
+ 481 0066 09       		.uleb128 0x9
+ 482 0067 2E       		.uleb128 0x2e
+ 483 0068 00       		.byte	0
+ 484 0069 3F       		.uleb128 0x3f
+ 485 006a 19       		.uleb128 0x19
+ 486 006b 03       		.uleb128 0x3
+ 487 006c 0E       		.uleb128 0xe
+ 488 006d 3A       		.uleb128 0x3a
+ 489 006e 0B       		.uleb128 0xb
+ 490 006f 3B       		.uleb128 0x3b
+ 491 0070 0B       		.uleb128 0xb
+ 492 0071 27       		.uleb128 0x27
+ 493 0072 19       		.uleb128 0x19
+ 494 0073 11       		.uleb128 0x11
+ 495 0074 01       		.uleb128 0x1
+ 496 0075 12       		.uleb128 0x12
+ARM GAS  e:\temp\ccErnRhI.s 			page 19
+
+
+ 497 0076 06       		.uleb128 0x6
+ 498 0077 40       		.uleb128 0x40
+ 499 0078 18       		.uleb128 0x18
+ 500 0079 9742     		.uleb128 0x2117
+ 501 007b 19       		.uleb128 0x19
+ 502 007c 00       		.byte	0
+ 503 007d 00       		.byte	0
+ 504 007e 0A       		.uleb128 0xa
+ 505 007f 34       		.uleb128 0x34
+ 506 0080 00       		.byte	0
+ 507 0081 03       		.uleb128 0x3
+ 508 0082 0E       		.uleb128 0xe
+ 509 0083 3A       		.uleb128 0x3a
+ 510 0084 0B       		.uleb128 0xb
+ 511 0085 3B       		.uleb128 0x3b
+ 512 0086 0B       		.uleb128 0xb
+ 513 0087 49       		.uleb128 0x49
+ 514 0088 13       		.uleb128 0x13
+ 515 0089 02       		.uleb128 0x2
+ 516 008a 18       		.uleb128 0x18
+ 517 008b 00       		.byte	0
+ 518 008c 00       		.byte	0
+ 519 008d 00       		.byte	0
+ 520              		.section	.debug_aranges,"",%progbits
+ 521 0000 24000000 		.4byte	0x24
+ 522 0004 0200     		.2byte	0x2
+ 523 0006 00000000 		.4byte	.Ldebug_info0
+ 524 000a 04       		.byte	0x4
+ 525 000b 00       		.byte	0
+ 526 000c 0000     		.2byte	0
+ 527 000e 0000     		.2byte	0
+ 528 0010 00000000 		.4byte	.LFB0
+ 529 0014 14000000 		.4byte	.LFE0-.LFB0
+ 530 0018 00000000 		.4byte	.LFB1
+ 531 001c 14000000 		.4byte	.LFE1-.LFB1
+ 532 0020 00000000 		.4byte	0
+ 533 0024 00000000 		.4byte	0
+ 534              		.section	.debug_ranges,"",%progbits
+ 535              	.Ldebug_ranges0:
+ 536 0000 00000000 		.4byte	.LFB0
+ 537 0004 14000000 		.4byte	.LFE0
+ 538 0008 00000000 		.4byte	.LFB1
+ 539 000c 14000000 		.4byte	.LFE1
+ 540 0010 00000000 		.4byte	0
+ 541 0014 00000000 		.4byte	0
+ 542              		.section	.debug_line,"",%progbits
+ 543              	.Ldebug_line0:
+ 544 0000 8B000000 		.section	.debug_str,"MS",%progbits,1
+ 544      02005200 
+ 544      00000201 
+ 544      FB0E0D00 
+ 544      01010101 
+ 545              	.LASF13:
+ 546 0000 72656733 		.ascii	"reg32\000"
+ 546      3200
+ 547              	.LASF18:
+ 548 0006 46575F4C 		.ascii	"FW_LED_Sleep\000"
+ARM GAS  e:\temp\ccErnRhI.s 			page 20
+
+
+ 548      45445F53 
+ 548      6C656570 
+ 548      00
+ 549              	.LASF16:
+ 550 0013 75736253 		.ascii	"usbState\000"
+ 550      74617465 
+ 550      00
+ 551              	.LASF9:
+ 552 001c 666C6F61 		.ascii	"float\000"
+ 552      7400
+ 553              	.LASF0:
+ 554 0022 7369676E 		.ascii	"signed char\000"
+ 554      65642063 
+ 554      68617200 
+ 555              	.LASF1:
+ 556 002e 756E7369 		.ascii	"unsigned char\000"
+ 556      676E6564 
+ 556      20636861 
+ 556      7200
+ 557              	.LASF23:
+ 558 003c 46575F4C 		.ascii	"FW_LED_backup\000"
+ 558      45445F62 
+ 558      61636B75 
+ 558      7000
+ 559              	.LASF5:
+ 560 004a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 560      20756E73 
+ 560      69676E65 
+ 560      6420696E 
+ 560      7400
+ 561              	.LASF3:
+ 562 005c 73686F72 		.ascii	"short unsigned int\000"
+ 562      7420756E 
+ 562      7369676E 
+ 562      65642069 
+ 562      6E7400
+ 563              	.LASF17:
+ 564 006f 46575F4C 		.ascii	"FW_LED_BACKUP_STRUCT\000"
+ 564      45445F42 
+ 564      41434B55 
+ 564      505F5354 
+ 564      52554354 
+ 565              	.LASF10:
+ 566 0084 646F7562 		.ascii	"double\000"
+ 566      6C6500
+ 567              	.LASF12:
+ 568 008b 75696E74 		.ascii	"uint32\000"
+ 568      333200
+ 569              	.LASF19:
+ 570 0092 46575F4C 		.ascii	"FW_LED_Wakeup\000"
+ 570      45445F57 
+ 570      616B6575 
+ 570      7000
+ 571              	.LASF8:
+ 572 00a0 756E7369 		.ascii	"unsigned int\000"
+ 572      676E6564 
+ 572      20696E74 
+ARM GAS  e:\temp\ccErnRhI.s 			page 21
+
+
+ 572      00
+ 573              	.LASF7:
+ 574 00ad 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 574      206C6F6E 
+ 574      6720756E 
+ 574      7369676E 
+ 574      65642069 
+ 575              	.LASF20:
+ 576 00c4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 576      43313120 
+ 576      352E342E 
+ 576      31203230 
+ 576      31363036 
+ 577 00f7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 577      20726576 
+ 577      6973696F 
+ 577      6E203233 
+ 577      37373135 
+ 578 012a 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects -finline-fu"
+ 578      66756E63 
+ 578      74696F6E 
+ 578      2D736563 
+ 578      74696F6E 
+ 579 015d 6E637469 		.ascii	"nctions -flto -fno-strict-aliasing\000"
+ 579      6F6E7320 
+ 579      2D666C74 
+ 579      6F202D66 
+ 579      6E6F2D73 
+ 580              	.LASF15:
+ 581 0180 73696F53 		.ascii	"sioState\000"
+ 581      74617465 
+ 581      00
+ 582              	.LASF6:
+ 583 0189 6C6F6E67 		.ascii	"long long int\000"
+ 583      206C6F6E 
+ 583      6720696E 
+ 583      7400
+ 584              	.LASF11:
+ 585 0197 63686172 		.ascii	"char\000"
+ 585      00
+ 586              	.LASF2:
+ 587 019c 73686F72 		.ascii	"short int\000"
+ 587      7420696E 
+ 587      7400
+ 588              	.LASF14:
+ 589 01a6 70635374 		.ascii	"pcState\000"
+ 589      61746500 
+ 590              	.LASF4:
+ 591 01ae 6C6F6E67 		.ascii	"long int\000"
+ 591      20696E74 
+ 591      00
+ 592              	.LASF21:
+ 593 01b7 47656E65 		.ascii	"Generated_Source\\PSoC4\\FW_LED_PM.c\000"
+ 593      72617465 
+ 593      645F536F 
+ 593      75726365 
+ 593      5C50536F 
+ARM GAS  e:\temp\ccErnRhI.s 			page 22
+
+
+ 594              	.LASF22:
+ 595 01da 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 595      73657273 
+ 595      5C41646D 
+ 595      696E5C44 
+ 595      65736B74 
+ 596 0207 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 596      355C4359 
+ 596      50443532 
+ 596      32352D39 
+ 596      36425A58 
+ 597 0238 7465626F 		.ascii	"tebook.cydsn\000"
+ 597      6F6B2E63 
+ 597      7964736E 
+ 597      00
+ 598              		.comm	__gnu_lto_v1,1,1
+ 599              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,2812 @@
+ARM GAS  e:\temp\cczRWvrZ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"system.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.sys_set_device_mode,"ax",%progbits
+  20              		.align	2
+  21              		.global	sys_set_device_mode
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	sys_set_device_mode, %function
+  25              	sys_set_device_mode:
+  26              	.LFB32:
+  27              		.file 1 "..\\src\\system\\system.c"
+   1:..\src\system/system.c **** /**
+   2:..\src\system/system.c ****  * @file system.c
+   3:..\src\system/system.c ****  *
+   4:..\src\system/system.c ****  * @brief @{Support functions for boot-loader and flash updates.@}
+   5:..\src\system/system.c ****  */
+   6:..\src\system/system.c **** 
+   7:..\src\system/system.c **** /*
+   8:..\src\system/system.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+   9:..\src\system/system.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  10:..\src\system/system.c ****  *
+  11:..\src\system/system.c ****  * This software, including source code, documentation and related materials
+  12:..\src\system/system.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  13:..\src\system/system.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  14:..\src\system/system.c ****  * protection (United States and foreign), United States copyright laws and
+  15:..\src\system/system.c ****  * international treaty provisions. Therefore, you may use this Software only
+  16:..\src\system/system.c ****  * as provided in the license agreement accompanying the software package from
+  17:..\src\system/system.c ****  * which you obtained this Software (“EULA”).
+  18:..\src\system/system.c ****  *
+  19:..\src\system/system.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  20:..\src\system/system.c ****  * non-transferable license to copy, modify, and compile the Software source
+  21:..\src\system/system.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  22:..\src\system/system.c ****  * products. Any reproduction, modification, translation, compilation, or
+  23:..\src\system/system.c ****  * representation of this Software except as specified above is prohibited
+  24:..\src\system/system.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  25:..\src\system/system.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  26:..\src\system/system.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  27:..\src\system/system.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  28:..\src\system/system.c ****  * right to make changes to the Software without notice. Cypress does not
+  29:..\src\system/system.c ****  * assume any liability arising out of the application or use of the Software
+  30:..\src\system/system.c ****  * or any product or circuit described in the Software. Cypress does not
+ARM GAS  e:\temp\cczRWvrZ.s 			page 2
+
+
+  31:..\src\system/system.c ****  * authorize its products for use in any products where a malfunction or
+  32:..\src\system/system.c ****  * failure of the Cypress product may reasonably be expected to result in
+  33:..\src\system/system.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  34:..\src\system/system.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  35:..\src\system/system.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  36:..\src\system/system.c ****  * indemnify Cypress against all liability.
+  37:..\src\system/system.c ****  */
+  38:..\src\system/system.c **** 
+  39:..\src\system/system.c **** #include "stdbool.h"
+  40:..\src\system/system.c **** #include "stdint.h"
+  41:..\src\system/system.c **** #include "config.h"
+  42:..\src\system/system.c **** #include "flash_config.h"
+  43:..\src\system/system.c **** #include "status.h"
+  44:..\src\system/system.c **** #include "boot.h"
+  45:..\src\system/system.c **** #include "ccgx_regs.h"
+  46:..\src\system/system.c **** #include "system.h"
+  47:..\src\system/system.c **** 
+  48:..\src\system/system.c **** /* Variable representing the current firmware mode. */
+  49:..\src\system/system.c **** sys_fw_mode_t gl_active_fw = SYS_FW_MODE_INVALID;
+  50:..\src\system/system.c **** 
+  51:..\src\system/system.c **** /* Invalid FW Version. */
+  52:..\src\system/system.c **** uint8 gl_invalid_version[8] = {0};
+  53:..\src\system/system.c **** 
+  54:..\src\system/system.c **** void sys_set_device_mode(sys_fw_mode_t fw_mode)
+  55:..\src\system/system.c **** {
+  28              		.loc 1 55 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  56:..\src\system/system.c ****     gl_active_fw = fw_mode;
+  34              		.loc 1 56 0
+  35 0000 014B     		ldr	r3, .L2
+  36 0002 1870     		strb	r0, [r3]
+  57:..\src\system/system.c **** }    
+  37              		.loc 1 57 0
+  38              		@ sp needed
+  39 0004 7047     		bx	lr
+  40              	.L3:
+  41 0006 C046     		.align	2
+  42              	.L2:
+  43 0008 00000000 		.word	.LANCHOR0
+  44              		.cfi_endproc
+  45              	.LFE32:
+  46              		.size	sys_set_device_mode, .-sys_set_device_mode
+  47              		.section	.text.sys_get_device_mode,"ax",%progbits
+  48              		.align	2
+  49              		.global	sys_get_device_mode
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	sys_get_device_mode, %function
+  53              	sys_get_device_mode:
+  54              	.LFB33:
+  58:..\src\system/system.c **** 
+  59:..\src\system/system.c **** sys_fw_mode_t sys_get_device_mode(void)
+  60:..\src\system/system.c **** {
+ARM GAS  e:\temp\cczRWvrZ.s 			page 3
+
+
+  55              		.loc 1 60 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  61:..\src\system/system.c **** #if (CCG_BOOT == 1)
+  62:..\src\system/system.c ****     return SYS_FW_MODE_BOOTLOADER;
+  63:..\src\system/system.c **** #else /* Firmware */
+  64:..\src\system/system.c ****     return gl_active_fw;
+  60              		.loc 1 64 0
+  61 0000 014B     		ldr	r3, .L5
+  62 0002 1878     		ldrb	r0, [r3]
+  65:..\src\system/system.c **** #endif /* CCG_BOOT */
+  66:..\src\system/system.c **** }
+  63              		.loc 1 66 0
+  64              		@ sp needed
+  65 0004 7047     		bx	lr
+  66              	.L6:
+  67 0006 C046     		.align	2
+  68              	.L5:
+  69 0008 00000000 		.word	.LANCHOR0
+  70              		.cfi_endproc
+  71              	.LFE33:
+  72              		.size	sys_get_device_mode, .-sys_get_device_mode
+  73              		.section	.text.sys_get_boot_version,"ax",%progbits
+  74              		.align	2
+  75              		.global	sys_get_boot_version
+  76              		.code	16
+  77              		.thumb_func
+  78              		.type	sys_get_boot_version, %function
+  79              	sys_get_boot_version:
+  80              	.LFB34:
+  67:..\src\system/system.c **** 
+  68:..\src\system/system.c **** #if !CCG_FIRMWARE_APP_ONLY
+  69:..\src\system/system.c **** static uint8_t* sys_get_fw_version(sys_fw_metadata_t *fw_metadata)
+  70:..\src\system/system.c **** {
+  71:..\src\system/system.c ****     /*
+  72:..\src\system/system.c ****      * FW stores its version at an offset of CY_PD_FW_VERSION_OFFSET
+  73:..\src\system/system.c ****      * from its start address. Read the version from that location.
+  74:..\src\system/system.c ****      * The start address of FW is determined from the boot_last_row
+  75:..\src\system/system.c ****      * field of the FW metadata.
+  76:..\src\system/system.c ****      */
+  77:..\src\system/system.c ****     uint32 addr = ((fw_metadata->boot_last_row << CCG_FLASH_ROW_SHIFT_NUM)
+  78:..\src\system/system.c ****             + CCG_FLASH_ROW_SIZE + SYS_FW_VERSION_OFFSET);
+  79:..\src\system/system.c ****     return (uint8 *)addr;
+  80:..\src\system/system.c **** }
+  81:..\src\system/system.c **** #endif /* CCG_FIRMWARE_APP_ONLY */
+  82:..\src\system/system.c **** 
+  83:..\src\system/system.c **** uint8_t* sys_get_boot_version(void)
+  84:..\src\system/system.c **** {
+  81              		.loc 1 84 0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		@ link register save eliminated.
+  85:..\src\system/system.c ****     return (uint8_t *)SYS_BOOT_VERSION_ADDRESS;
+  86:..\src\system/system.c **** }
+ARM GAS  e:\temp\cczRWvrZ.s 			page 4
+
+
+  86              		.loc 1 86 0
+  87 0000 E020     		movs	r0, #224
+  88              		@ sp needed
+  89 0002 7047     		bx	lr
+  90              		.cfi_endproc
+  91              	.LFE34:
+  92              		.size	sys_get_boot_version, .-sys_get_boot_version
+  93              		.section	.text.sys_get_img1_fw_version,"ax",%progbits
+  94              		.align	2
+  95              		.global	sys_get_img1_fw_version
+  96              		.code	16
+  97              		.thumb_func
+  98              		.type	sys_get_img1_fw_version, %function
+  99              	sys_get_img1_fw_version:
+ 100              	.LFB35:
+  87:..\src\system/system.c **** 
+  88:..\src\system/system.c **** uint8_t* sys_get_img1_fw_version(void)
+  89:..\src\system/system.c **** {
+ 101              		.loc 1 89 0
+ 102              		.cfi_startproc
+ 103              		@ args = 0, pretend = 0, frame = 0
+ 104              		@ frame_needed = 0, uses_anonymous_args = 0
+ 105              		@ link register save eliminated.
+  90:..\src\system/system.c **** #if !CCG_FIRMWARE_APP_ONLY
+  91:..\src\system/system.c ****     /* Check if Image 1 is valid. */
+  92:..\src\system/system.c ****     if (get_boot_mode_reason().status.fw1_invalid == 0)
+  93:..\src\system/system.c ****     {
+  94:..\src\system/system.c ****         return sys_get_fw_version (gl_img1_fw_metadata);        
+  95:..\src\system/system.c ****     }
+  96:..\src\system/system.c ****     else
+  97:..\src\system/system.c ****     {
+  98:..\src\system/system.c ****         return gl_invalid_version;
+  99:..\src\system/system.c ****     }
+ 100:..\src\system/system.c **** #else
+ 101:..\src\system/system.c ****     return gl_invalid_version;
+ 102:..\src\system/system.c **** #endif /* CCG_FIRMWARE_APP_ONLY */
+ 103:..\src\system/system.c **** }
+ 106              		.loc 1 103 0
+ 107 0000 0048     		ldr	r0, .L9
+ 108              		@ sp needed
+ 109 0002 7047     		bx	lr
+ 110              	.L10:
+ 111              		.align	2
+ 112              	.L9:
+ 113 0004 00000000 		.word	.LANCHOR1
+ 114              		.cfi_endproc
+ 115              	.LFE35:
+ 116              		.size	sys_get_img1_fw_version, .-sys_get_img1_fw_version
+ 117              		.section	.text.sys_get_img2_fw_version,"ax",%progbits
+ 118              		.align	2
+ 119              		.global	sys_get_img2_fw_version
+ 120              		.code	16
+ 121              		.thumb_func
+ 122              		.type	sys_get_img2_fw_version, %function
+ 123              	sys_get_img2_fw_version:
+ 124              	.LFB36:
+ 104:..\src\system/system.c **** 
+ARM GAS  e:\temp\cczRWvrZ.s 			page 5
+
+
+ 105:..\src\system/system.c **** #if (!CCG_DUALAPP_DISABLE)    
+ 106:..\src\system/system.c **** uint8_t* sys_get_img2_fw_version(void)
+ 107:..\src\system/system.c **** {
+ 125              		.loc 1 107 0
+ 126              		.cfi_startproc
+ 127              		@ args = 0, pretend = 0, frame = 0
+ 128              		@ frame_needed = 0, uses_anonymous_args = 0
+ 129              		@ link register save eliminated.
+ 108:..\src\system/system.c **** #if !CCG_FIRMWARE_APP_ONLY
+ 109:..\src\system/system.c ****     /* Check if Image 2 is valid. */
+ 110:..\src\system/system.c ****     if (get_boot_mode_reason().status.fw2_invalid == 0)
+ 111:..\src\system/system.c ****     {
+ 112:..\src\system/system.c ****         return sys_get_fw_version (gl_img2_fw_metadata);
+ 113:..\src\system/system.c ****     }
+ 114:..\src\system/system.c ****     else
+ 115:..\src\system/system.c ****     {
+ 116:..\src\system/system.c ****         return gl_invalid_version;
+ 117:..\src\system/system.c ****     }
+ 118:..\src\system/system.c **** #else
+ 119:..\src\system/system.c ****     return gl_invalid_version;
+ 120:..\src\system/system.c **** #endif /* CCG_FIRMWARE_APP_ONLY */
+ 121:..\src\system/system.c **** }
+ 130              		.loc 1 121 0
+ 131 0000 0048     		ldr	r0, .L12
+ 132              		@ sp needed
+ 133 0002 7047     		bx	lr
+ 134              	.L13:
+ 135              		.align	2
+ 136              	.L12:
+ 137 0004 00000000 		.word	.LANCHOR1
+ 138              		.cfi_endproc
+ 139              	.LFE36:
+ 140              		.size	sys_get_img2_fw_version, .-sys_get_img2_fw_version
+ 141              		.section	.text.sys_get_fw_img1_start_addr,"ax",%progbits
+ 142              		.align	2
+ 143              		.global	sys_get_fw_img1_start_addr
+ 144              		.code	16
+ 145              		.thumb_func
+ 146              		.type	sys_get_fw_img1_start_addr, %function
+ 147              	sys_get_fw_img1_start_addr:
+ 148              	.LFB37:
+ 122:..\src\system/system.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+ 123:..\src\system/system.c **** 
+ 124:..\src\system/system.c **** uint32_t sys_get_fw_img1_start_addr(void)
+ 125:..\src\system/system.c **** {
+ 149              		.loc 1 125 0
+ 150              		.cfi_startproc
+ 151              		@ args = 0, pretend = 0, frame = 0
+ 152              		@ frame_needed = 0, uses_anonymous_args = 0
+ 153              		@ link register save eliminated.
+ 126:..\src\system/system.c **** #if !CCG_FIRMWARE_APP_ONLY
+ 127:..\src\system/system.c ****     /* Check if Image 1 is valid. */
+ 128:..\src\system/system.c ****     if (get_boot_mode_reason().status.fw1_invalid != 1)
+ 129:..\src\system/system.c ****     {        
+ 130:..\src\system/system.c ****         return ((gl_img1_fw_metadata->boot_last_row << CCG_FLASH_ROW_SHIFT_NUM)
+ 131:..\src\system/system.c ****                 + CCG_FLASH_ROW_SIZE);
+ 132:..\src\system/system.c ****     }
+ARM GAS  e:\temp\cczRWvrZ.s 			page 6
+
+
+ 133:..\src\system/system.c ****     else
+ 134:..\src\system/system.c ****     {
+ 135:..\src\system/system.c ****         /* Image 1 is inavlid. Can't use MD Row info. Use Boot last row info
+ 136:..\src\system/system.c ****          * from flash configuration and response. */
+ 137:..\src\system/system.c ****         return ((CCG_BOOT_LOADER_LAST_ROW << CCG_FLASH_ROW_SHIFT_NUM)
+ 138:..\src\system/system.c ****                 + CCG_FLASH_ROW_SIZE);
+ 139:..\src\system/system.c ****     }
+ 140:..\src\system/system.c **** #else
+ 141:..\src\system/system.c ****     return SYS_INVALID_FW_START_ADDR;
+ 142:..\src\system/system.c **** #endif /* CCG_FIRMWARE_APP_ONLY */
+ 143:..\src\system/system.c **** }
+ 154              		.loc 1 143 0
+ 155 0000 0020     		movs	r0, #0
+ 156              		@ sp needed
+ 157 0002 7047     		bx	lr
+ 158              		.cfi_endproc
+ 159              	.LFE37:
+ 160              		.size	sys_get_fw_img1_start_addr, .-sys_get_fw_img1_start_addr
+ 161              		.section	.text.sys_get_fw_img2_start_addr,"ax",%progbits
+ 162              		.align	2
+ 163              		.global	sys_get_fw_img2_start_addr
+ 164              		.code	16
+ 165              		.thumb_func
+ 166              		.type	sys_get_fw_img2_start_addr, %function
+ 167              	sys_get_fw_img2_start_addr:
+ 168              	.LFB38:
+ 144:..\src\system/system.c **** 
+ 145:..\src\system/system.c **** #if (!CCG_DUALAPP_DISABLE) 
+ 146:..\src\system/system.c **** uint32_t sys_get_fw_img2_start_addr(void)
+ 147:..\src\system/system.c **** {
+ 169              		.loc 1 147 0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		@ link register save eliminated.
+ 148:..\src\system/system.c **** #if !CCG_FIRMWARE_APP_ONLY
+ 149:..\src\system/system.c ****     /* Check if Image 2 is valid. */
+ 150:..\src\system/system.c ****     if (get_boot_mode_reason().status.fw2_invalid != 1)
+ 151:..\src\system/system.c ****     {
+ 152:..\src\system/system.c ****         return ((gl_img2_fw_metadata->boot_last_row << CCG_FLASH_ROW_SHIFT_NUM)
+ 153:..\src\system/system.c ****                 + CCG_FLASH_ROW_SIZE);
+ 154:..\src\system/system.c ****     }
+ 155:..\src\system/system.c ****     else
+ 156:..\src\system/system.c ****     {
+ 157:..\src\system/system.c ****         /* Image 2 is inavlid. Can't use MD Row info. Use last row FW1 info info
+ 158:..\src\system/system.c ****          * from flash configuration and response. */
+ 159:..\src\system/system.c ****         return ((CCG_IMG1_LAST_FLASH_ROW_NUM << CCG_FLASH_ROW_SHIFT_NUM)
+ 160:..\src\system/system.c ****                 + CCG_FLASH_ROW_SIZE);
+ 161:..\src\system/system.c ****     }
+ 162:..\src\system/system.c **** #else
+ 163:..\src\system/system.c ****     return SYS_INVALID_FW_START_ADDR;
+ 164:..\src\system/system.c **** #endif /* CCG_FIRMWARE_APP_ONLY */
+ 165:..\src\system/system.c **** }
+ 174              		.loc 1 165 0
+ 175 0000 0020     		movs	r0, #0
+ 176              		@ sp needed
+ 177 0002 7047     		bx	lr
+ARM GAS  e:\temp\cczRWvrZ.s 			page 7
+
+
+ 178              		.cfi_endproc
+ 179              	.LFE38:
+ 180              		.size	sys_get_fw_img2_start_addr, .-sys_get_fw_img2_start_addr
+ 181              		.section	.text.sys_get_recent_fw_image,"ax",%progbits
+ 182              		.align	2
+ 183              		.global	sys_get_recent_fw_image
+ 184              		.code	16
+ 185              		.thumb_func
+ 186              		.type	sys_get_recent_fw_image, %function
+ 187              	sys_get_recent_fw_image:
+ 188              	.LFB39:
+ 166:..\src\system/system.c **** 
+ 167:..\src\system/system.c **** uint8_t sys_get_recent_fw_image(void)
+ 168:..\src\system/system.c **** {
+ 189              		.loc 1 168 0
+ 190              		.cfi_startproc
+ 191              		@ args = 0, pretend = 0, frame = 0
+ 192              		@ frame_needed = 0, uses_anonymous_args = 0
+ 193 0000 30B5     		push	{r4, r5, lr}
+ 194              		.cfi_def_cfa_offset 12
+ 195              		.cfi_offset 4, -12
+ 196              		.cfi_offset 5, -8
+ 197              		.cfi_offset 14, -4
+ 169:..\src\system/system.c **** #if (APP_PRIORITY_FEATURE_ENABLE == 1)
+ 170:..\src\system/system.c ****     /* Read APP Priority field to determine which image gets the priority. */
+ 171:..\src\system/system.c ****     uint8_t app_priority;
+ 172:..\src\system/system.c ****     app_priority = *((uint8_t *)(CCG_APP_PRIORITY_ROW_NUM <<
+ 173:..\src\system/system.c ****             CCG_FLASH_ROW_SHIFT_NUM));
+ 174:..\src\system/system.c ****     if (app_priority == 0x00)
+ 175:..\src\system/system.c ****     {
+ 176:..\src\system/system.c ****         if(gl_img2_fw_metadata->boot_seq >= gl_img1_fw_metadata->boot_seq)
+ 177:..\src\system/system.c ****             return SYS_FW_MODE_FWIMAGE_2;
+ 178:..\src\system/system.c ****         else
+ 179:..\src\system/system.c ****             return SYS_FW_MODE_FWIMAGE_1;
+ 180:..\src\system/system.c ****     }
+ 181:..\src\system/system.c ****     else if (app_priority == 0x01)
+ 182:..\src\system/system.c ****     {
+ 183:..\src\system/system.c ****         return SYS_FW_MODE_FWIMAGE_1;
+ 184:..\src\system/system.c ****     }
+ 185:..\src\system/system.c ****     else
+ 186:..\src\system/system.c ****     {
+ 187:..\src\system/system.c ****         return SYS_FW_MODE_FWIMAGE_2;
+ 188:..\src\system/system.c ****     }  
+ 189:..\src\system/system.c **** #else /* !APP_PRIORITY_FEATURE_ENABLE */
+ 190:..\src\system/system.c **** 
+ 191:..\src\system/system.c ****     /* Prioritize FW2 over FW1 for CCG4, for compatibility with ES10 boot-loader. */
+ 192:..\src\system/system.c ****     if(gl_img2_fw_metadata->boot_seq >= gl_img1_fw_metadata->boot_seq)
+ 198              		.loc 1 192 0
+ 199 0002 104B     		ldr	r3, .L19
+ 200 0004 1868     		ldr	r0, [r3]
+ 201 0006 017F     		ldrb	r1, [r0, #28]
+ 202 0008 437F     		ldrb	r3, [r0, #29]
+ 203 000a 1B02     		lsls	r3, r3, #8
+ 204 000c 0B43     		orrs	r3, r1
+ 205 000e 1A00     		movs	r2, r3
+ 206 0010 847F     		ldrb	r4, [r0, #30]
+ 207 0012 2404     		lsls	r4, r4, #16
+ARM GAS  e:\temp\cczRWvrZ.s 			page 8
+
+
+ 208 0014 2300     		movs	r3, r4
+ 209 0016 1343     		orrs	r3, r2
+ 210 0018 C47F     		ldrb	r4, [r0, #31]
+ 211 001a 2406     		lsls	r4, r4, #24
+ 212 001c 1C43     		orrs	r4, r3
+ 213 001e 0A4B     		ldr	r3, .L19+4
+ 214 0020 1D68     		ldr	r5, [r3]
+ 215 0022 287F     		ldrb	r0, [r5, #28]
+ 216 0024 6A7F     		ldrb	r2, [r5, #29]
+ 217 0026 1202     		lsls	r2, r2, #8
+ 218 0028 0243     		orrs	r2, r0
+ 219 002a AB7F     		ldrb	r3, [r5, #30]
+ 220 002c 1B04     		lsls	r3, r3, #16
+ 221 002e 1343     		orrs	r3, r2
+ 222 0030 1A00     		movs	r2, r3
+ 223 0032 EB7F     		ldrb	r3, [r5, #31]
+ 224 0034 1B06     		lsls	r3, r3, #24
+ 225 0036 1343     		orrs	r3, r2
+ 226 0038 9C42     		cmp	r4, r3
+ 227 003a 01D3     		bcc	.L18
+ 193:..\src\system/system.c ****         return SYS_FW_MODE_FWIMAGE_2;
+ 228              		.loc 1 193 0
+ 229 003c 0220     		movs	r0, #2
+ 230 003e 00E0     		b	.L17
+ 231              	.L18:
+ 194:..\src\system/system.c ****     else
+ 195:..\src\system/system.c ****         return SYS_FW_MODE_FWIMAGE_1;
+ 232              		.loc 1 195 0
+ 233 0040 0120     		movs	r0, #1
+ 234              	.L17:
+ 196:..\src\system/system.c **** 
+ 197:..\src\system/system.c **** #endif /* APP_PRIORITY_FEATURE_ENABLE */   
+ 198:..\src\system/system.c **** }
+ 235              		.loc 1 198 0
+ 236              		@ sp needed
+ 237 0042 30BD     		pop	{r4, r5, pc}
+ 238              	.L20:
+ 239              		.align	2
+ 240              	.L19:
+ 241 0044 00000000 		.word	gl_img2_fw_metadata
+ 242 0048 00000000 		.word	gl_img1_fw_metadata
+ 243              		.cfi_endproc
+ 244              	.LFE39:
+ 245              		.size	sys_get_recent_fw_image, .-sys_get_recent_fw_image
+ 246              		.section	.text.sys_get_silicon_id,"ax",%progbits
+ 247              		.align	2
+ 248              		.global	sys_get_silicon_id
+ 249              		.code	16
+ 250              		.thumb_func
+ 251              		.type	sys_get_silicon_id, %function
+ 252              	sys_get_silicon_id:
+ 253              	.LFB40:
+ 199:..\src\system/system.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+ 200:..\src\system/system.c **** 
+ 201:..\src\system/system.c **** void sys_get_silicon_id(uint32_t *silicon_id)
+ 202:..\src\system/system.c **** {
+ 254              		.loc 1 202 0
+ARM GAS  e:\temp\cczRWvrZ.s 			page 9
+
+
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258              		@ link register save eliminated.
+ 259              	.LVL1:
+ 203:..\src\system/system.c ****     /* Read Silicon ID. */
+ 204:..\src\system/system.c ****     *silicon_id = SFLASH->silicon_id;
+ 260              		.loc 1 204 0
+ 261 0000 9123     		movs	r3, #145
+ 262 0002 9B00     		lsls	r3, r3, #2
+ 263 0004 014A     		ldr	r2, .L22
+ 264 0006 D358     		ldr	r3, [r2, r3]
+ 265 0008 0360     		str	r3, [r0]
+ 205:..\src\system/system.c **** }
+ 266              		.loc 1 205 0
+ 267              		@ sp needed
+ 268 000a 7047     		bx	lr
+ 269              	.L23:
+ 270              		.align	2
+ 271              	.L22:
+ 272 000c 00F0FF0F 		.word	268431360
+ 273              		.cfi_endproc
+ 274              	.LFE40:
+ 275              		.size	sys_get_silicon_id, .-sys_get_silicon_id
+ 276              		.section	.text.get_silicon_revision,"ax",%progbits
+ 277              		.align	2
+ 278              		.global	get_silicon_revision
+ 279              		.code	16
+ 280              		.thumb_func
+ 281              		.type	get_silicon_revision, %function
+ 282              	get_silicon_revision:
+ 283              	.LFB41:
+ 206:..\src\system/system.c **** 
+ 207:..\src\system/system.c **** uint8_t get_silicon_revision(void)
+ 208:..\src\system/system.c **** {
+ 284              		.loc 1 208 0
+ 285              		.cfi_startproc
+ 286              		@ args = 0, pretend = 0, frame = 0
+ 287              		@ frame_needed = 0, uses_anonymous_args = 0
+ 288              		@ link register save eliminated.
+ 209:..\src\system/system.c **** 
+ 210:..\src\system/system.c ****     uint8_t srev;
+ 211:..\src\system/system.c ****     /* Silicon revision is stored in core-sight tables.
+ 212:..\src\system/system.c ****      * Major revision = ROMTABLE_PID2(7:4)
+ 213:..\src\system/system.c ****      * Minor revision = ROMTABLE_PID3(7:4) */
+ 214:..\src\system/system.c ****     srev = CY_GET_REG32 (CYREG_ROMTABLE_PID2) & 0xF0;
+ 289              		.loc 1 214 0
+ 290 0000 054B     		ldr	r3, .L25
+ 291 0002 1A68     		ldr	r2, [r3]
+ 292 0004 0F20     		movs	r0, #15
+ 293 0006 8243     		bics	r2, r0
+ 294 0008 D2B2     		uxtb	r2, r2
+ 295              	.LVL2:
+ 215:..\src\system/system.c ****     srev |= ((CY_GET_REG32 (CYREG_ROMTABLE_PID3)) & 0xF0) >> 4;
+ 296              		.loc 1 215 0
+ 297 000a 044B     		ldr	r3, .L25+4
+ 298 000c 1B68     		ldr	r3, [r3]
+ARM GAS  e:\temp\cczRWvrZ.s 			page 10
+
+
+ 299 000e 1B09     		lsrs	r3, r3, #4
+ 300 0010 1840     		ands	r0, r3
+ 301 0012 1043     		orrs	r0, r2
+ 302              	.LVL3:
+ 216:..\src\system/system.c ****     return srev;
+ 217:..\src\system/system.c **** }
+ 303              		.loc 1 217 0
+ 304              		@ sp needed
+ 305 0014 7047     		bx	lr
+ 306              	.L26:
+ 307 0016 C046     		.align	2
+ 308              	.L25:
+ 309 0018 E80F00F0 		.word	-268431384
+ 310 001c EC0F00F0 		.word	-268431380
+ 311              		.cfi_endproc
+ 312              	.LFE41:
+ 313              		.size	get_silicon_revision, .-get_silicon_revision
+ 314              		.section	.text.sys_get_custom_info_addr,"ax",%progbits
+ 315              		.align	2
+ 316              		.global	sys_get_custom_info_addr
+ 317              		.code	16
+ 318              		.thumb_func
+ 319              		.type	sys_get_custom_info_addr, %function
+ 320              	sys_get_custom_info_addr:
+ 321              	.LFB42:
+ 218:..\src\system/system.c **** 
+ 219:..\src\system/system.c **** uint32_t sys_get_custom_info_addr(void)
+ 220:..\src\system/system.c **** {
+ 322              		.loc 1 220 0
+ 323              		.cfi_startproc
+ 324              		@ args = 0, pretend = 0, frame = 0
+ 325              		@ frame_needed = 0, uses_anonymous_args = 0
+ 326 0000 10B5     		push	{r4, lr}
+ 327              		.cfi_def_cfa_offset 8
+ 328              		.cfi_offset 4, -8
+ 329              		.cfi_offset 14, -4
+ 221:..\src\system/system.c ****     uint32_t addr;
+ 222:..\src\system/system.c **** 
+ 223:..\src\system/system.c ****     /* Get FW start address based on FW image. */
+ 224:..\src\system/system.c **** #if (CCG_DUALAPP_DISABLE)
+ 225:..\src\system/system.c ****     addr = sys_get_fw_img1_start_addr();
+ 226:..\src\system/system.c **** #else /* (!CCG_DUALAPP_DISABLE) */
+ 227:..\src\system/system.c ****     if (sys_get_device_mode() == SYS_FW_MODE_FWIMAGE_1)
+ 330              		.loc 1 227 0
+ 331 0002 FFF7FEFF 		bl	sys_get_device_mode
+ 332              	.LVL4:
+ 333 0006 0128     		cmp	r0, #1
+ 334 0008 02D1     		bne	.L28
+ 228:..\src\system/system.c ****     {
+ 229:..\src\system/system.c ****         addr = sys_get_fw_img1_start_addr ();
+ 335              		.loc 1 229 0
+ 336 000a FFF7FEFF 		bl	sys_get_fw_img1_start_addr
+ 337              	.LVL5:
+ 338 000e 01E0     		b	.L29
+ 339              	.LVL6:
+ 340              	.L28:
+ 230:..\src\system/system.c ****     }
+ARM GAS  e:\temp\cczRWvrZ.s 			page 11
+
+
+ 231:..\src\system/system.c ****     else
+ 232:..\src\system/system.c ****     {
+ 233:..\src\system/system.c ****         addr = sys_get_fw_img2_start_addr ();
+ 341              		.loc 1 233 0
+ 342 0010 FFF7FEFF 		bl	sys_get_fw_img2_start_addr
+ 343              	.LVL7:
+ 344              	.L29:
+ 234:..\src\system/system.c ****     }
+ 235:..\src\system/system.c **** #endif /* (!CCG_DUALAPP_DISABLE) */
+ 236:..\src\system/system.c **** 
+ 237:..\src\system/system.c ****     return (addr + SYS_FW_CUSTOM_INFO_OFFSET);
+ 345              		.loc 1 237 0
+ 346 0014 C030     		adds	r0, r0, #192
+ 347              	.LVL8:
+ 238:..\src\system/system.c **** }
+ 348              		.loc 1 238 0
+ 349              		@ sp needed
+ 350 0016 10BD     		pop	{r4, pc}
+ 351              		.cfi_endproc
+ 352              	.LFE42:
+ 353              		.size	sys_get_custom_info_addr, .-sys_get_custom_info_addr
+ 354              		.section	.text.sys_get_bcdDevice_version,"ax",%progbits
+ 355              		.align	2
+ 356              		.global	sys_get_bcdDevice_version
+ 357              		.code	16
+ 358              		.thumb_func
+ 359              		.type	sys_get_bcdDevice_version, %function
+ 360              	sys_get_bcdDevice_version:
+ 361              	.LFB43:
+ 239:..\src\system/system.c **** 
+ 240:..\src\system/system.c **** uint16_t sys_get_bcdDevice_version(uint32_t ver_addr)
+ 241:..\src\system/system.c **** {
+ 362              		.loc 1 241 0
+ 363              		.cfi_startproc
+ 364              		@ args = 0, pretend = 0, frame = 0
+ 365              		@ frame_needed = 0, uses_anonymous_args = 0
+ 366              		@ link register save eliminated.
+ 367              	.LVL9:
+ 368 0000 0300     		movs	r3, r0
+ 242:..\src\system/system.c ****     /*     
+ 243:..\src\system/system.c ****      * bcdDevice version is defined and derived from FW version as follows:
+ 244:..\src\system/system.c ****      * Bit 0:3   = FW_MINOR_VERSION
+ 245:..\src\system/system.c ****      * Bit 4:6   = FW_MAJOR_VERSION (lower 3 bits)
+ 246:..\src\system/system.c ****      * Bit 7:13  = APP_EXT_CIR_NUM (lower 7 bits)
+ 247:..\src\system/system.c ****      * Bit 14:15 = APP_MAJOR_VERSION (lower 2 bits)
+ 248:..\src\system/system.c ****      * FW version is stored at a fixed offset in FLASH in this format:
+ 249:..\src\system/system.c ****      * 4 Byte BASE_VERSION, 4 Byte APP_VERSION
+ 250:..\src\system/system.c ****      */
+ 251:..\src\system/system.c ****     
+ 252:..\src\system/system.c ****     uint8_t base_major_minor = *((uint8_t *)(ver_addr + 3));
+ 369              		.loc 1 252 0
+ 370 0002 C278     		ldrb	r2, [r0, #3]
+ 371              	.LVL10:
+ 253:..\src\system/system.c ****     uint8_t app_cir_num = *((uint8_t *)(ver_addr + 6));
+ 372              		.loc 1 253 0
+ 373 0004 8079     		ldrb	r0, [r0, #6]
+ 374              	.LVL11:
+ARM GAS  e:\temp\cczRWvrZ.s 			page 12
+
+
+ 254:..\src\system/system.c ****     uint8_t app_major_minor = *((uint8_t *)(ver_addr + 7));
+ 375              		.loc 1 254 0
+ 376 0006 DB79     		ldrb	r3, [r3, #7]
+ 377              	.LVL12:
+ 255:..\src\system/system.c ****     
+ 256:..\src\system/system.c ****     return ((base_major_minor & 0x7F) | ((app_cir_num & 0x7F) << 7)
+ 378              		.loc 1 256 0
+ 379 0008 C001     		lsls	r0, r0, #7
+ 380              	.LVL13:
+ 381 000a 7F21     		movs	r1, #127
+ 382 000c 1140     		ands	r1, r2
+ 383 000e FE22     		movs	r2, #254
+ 384              	.LVL14:
+ 385 0010 9201     		lsls	r2, r2, #6
+ 386 0012 1040     		ands	r0, r2
+ 387 0014 0843     		orrs	r0, r1
+ 388 0016 1B09     		lsrs	r3, r3, #4
+ 389              	.LVL15:
+ 390 0018 9B03     		lsls	r3, r3, #14
+ 391 001a 1843     		orrs	r0, r3
+ 392 001c 80B2     		uxth	r0, r0
+ 257:..\src\system/system.c ****         | ((app_major_minor & 0x30) << 10));
+ 258:..\src\system/system.c **** }
+ 393              		.loc 1 258 0
+ 394              		@ sp needed
+ 395 001e 7047     		bx	lr
+ 396              		.cfi_endproc
+ 397              	.LFE43:
+ 398              		.size	sys_get_bcdDevice_version, .-sys_get_bcdDevice_version
+ 399              		.global	gl_invalid_version
+ 400              		.global	gl_active_fw
+ 401              		.data
+ 402              		.set	.LANCHOR0,. + 0
+ 403              		.type	gl_active_fw, %object
+ 404              		.size	gl_active_fw, 1
+ 405              	gl_active_fw:
+ 406 0000 03       		.byte	3
+ 407              		.bss
+ 408              		.align	2
+ 409              		.set	.LANCHOR1,. + 0
+ 410              		.type	gl_invalid_version, %object
+ 411              		.size	gl_invalid_version, 8
+ 412              	gl_invalid_version:
+ 413 0000 00000000 		.space	8
+ 413      00000000 
+ 414              		.text
+ 415              	.Letext0:
+ 416              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 417              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 418              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 419              		.file 5 "..\\src\\system\\system.h"
+ 420              		.file 6 "..\\src\\system\\boot.h"
+ 421              		.file 7 "..\\src\\system\\ccg5_regs.h"
+ 422              		.section	.debug_info,"",%progbits
+ 423              	.Ldebug_info0:
+ 424 0000 A8070000 		.4byte	0x7a8
+ 425 0004 0400     		.2byte	0x4
+ARM GAS  e:\temp\cczRWvrZ.s 			page 13
+
+
+ 426 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 427 000a 04       		.byte	0x4
+ 428 000b 01       		.uleb128 0x1
+ 429 000c 00000000 		.4byte	.LASF113
+ 430 0010 0C       		.byte	0xc
+ 431 0011 F5050000 		.4byte	.LASF114
+ 432 0015 81030000 		.4byte	.LASF115
+ 433 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 434 001d 00000000 		.4byte	0
+ 435 0021 00000000 		.4byte	.Ldebug_line0
+ 436 0025 02       		.uleb128 0x2
+ 437 0026 01       		.byte	0x1
+ 438 0027 06       		.byte	0x6
+ 439 0028 41020000 		.4byte	.LASF0
+ 440 002c 03       		.uleb128 0x3
+ 441 002d 34030000 		.4byte	.LASF3
+ 442 0031 02       		.byte	0x2
+ 443 0032 1D       		.byte	0x1d
+ 444 0033 37000000 		.4byte	0x37
+ 445 0037 02       		.uleb128 0x2
+ 446 0038 01       		.byte	0x1
+ 447 0039 08       		.byte	0x8
+ 448 003a 14040000 		.4byte	.LASF1
+ 449 003e 02       		.uleb128 0x2
+ 450 003f 02       		.byte	0x2
+ 451 0040 05       		.byte	0x5
+ 452 0041 17010000 		.4byte	.LASF2
+ 453 0045 03       		.uleb128 0x3
+ 454 0046 86010000 		.4byte	.LASF4
+ 455 004a 02       		.byte	0x2
+ 456 004b 2B       		.byte	0x2b
+ 457 004c 50000000 		.4byte	0x50
+ 458 0050 02       		.uleb128 0x2
+ 459 0051 02       		.byte	0x2
+ 460 0052 07       		.byte	0x7
+ 461 0053 F8040000 		.4byte	.LASF5
+ 462 0057 02       		.uleb128 0x2
+ 463 0058 04       		.byte	0x4
+ 464 0059 05       		.byte	0x5
+ 465 005a F9020000 		.4byte	.LASF6
+ 466 005e 03       		.uleb128 0x3
+ 467 005f 0C060000 		.4byte	.LASF7
+ 468 0063 02       		.byte	0x2
+ 469 0064 41       		.byte	0x41
+ 470 0065 69000000 		.4byte	0x69
+ 471 0069 02       		.uleb128 0x2
+ 472 006a 04       		.byte	0x4
+ 473 006b 07       		.byte	0x7
+ 474 006c CC050000 		.4byte	.LASF8
+ 475 0070 02       		.uleb128 0x2
+ 476 0071 08       		.byte	0x8
+ 477 0072 05       		.byte	0x5
+ 478 0073 91020000 		.4byte	.LASF9
+ 479 0077 02       		.uleb128 0x2
+ 480 0078 08       		.byte	0x8
+ 481 0079 07       		.byte	0x7
+ 482 007a 9F020000 		.4byte	.LASF10
+ARM GAS  e:\temp\cczRWvrZ.s 			page 14
+
+
+ 483 007e 04       		.uleb128 0x4
+ 484 007f 04       		.byte	0x4
+ 485 0080 05       		.byte	0x5
+ 486 0081 696E7400 		.ascii	"int\000"
+ 487 0085 02       		.uleb128 0x2
+ 488 0086 04       		.byte	0x4
+ 489 0087 07       		.byte	0x7
+ 490 0088 E6060000 		.4byte	.LASF11
+ 491 008c 03       		.uleb128 0x3
+ 492 008d F3010000 		.4byte	.LASF12
+ 493 0091 03       		.byte	0x3
+ 494 0092 18       		.byte	0x18
+ 495 0093 2C000000 		.4byte	0x2c
+ 496 0097 03       		.uleb128 0x3
+ 497 0098 2E050000 		.4byte	.LASF13
+ 498 009c 03       		.byte	0x3
+ 499 009d 24       		.byte	0x24
+ 500 009e 45000000 		.4byte	0x45
+ 501 00a2 03       		.uleb128 0x3
+ 502 00a3 80040000 		.4byte	.LASF14
+ 503 00a7 03       		.byte	0x3
+ 504 00a8 30       		.byte	0x30
+ 505 00a9 5E000000 		.4byte	0x5e
+ 506 00ad 05       		.uleb128 0x5
+ 507 00ae 59050000 		.4byte	.LASF15
+ 508 00b2 04       		.byte	0x4
+ 509 00b3 E401     		.2byte	0x1e4
+ 510 00b5 37000000 		.4byte	0x37
+ 511 00b9 05       		.uleb128 0x5
+ 512 00ba C5050000 		.4byte	.LASF16
+ 513 00be 04       		.byte	0x4
+ 514 00bf E601     		.2byte	0x1e6
+ 515 00c1 69000000 		.4byte	0x69
+ 516 00c5 02       		.uleb128 0x2
+ 517 00c6 04       		.byte	0x4
+ 518 00c7 04       		.byte	0x4
+ 519 00c8 70020000 		.4byte	.LASF17
+ 520 00cc 02       		.uleb128 0x2
+ 521 00cd 08       		.byte	0x8
+ 522 00ce 04       		.byte	0x4
+ 523 00cf DE050000 		.4byte	.LASF18
+ 524 00d3 02       		.uleb128 0x2
+ 525 00d4 01       		.byte	0x1
+ 526 00d5 08       		.byte	0x8
+ 527 00d6 29050000 		.4byte	.LASF19
+ 528 00da 05       		.uleb128 0x5
+ 529 00db DE040000 		.4byte	.LASF20
+ 530 00df 04       		.byte	0x4
+ 531 00e0 9002     		.2byte	0x290
+ 532 00e2 E6000000 		.4byte	0xe6
+ 533 00e6 06       		.uleb128 0x6
+ 534 00e7 B9000000 		.4byte	0xb9
+ 535 00eb 02       		.uleb128 0x2
+ 536 00ec 08       		.byte	0x8
+ 537 00ed 04       		.byte	0x4
+ 538 00ee F9030000 		.4byte	.LASF21
+ 539 00f2 02       		.uleb128 0x2
+ARM GAS  e:\temp\cczRWvrZ.s 			page 15
+
+
+ 540 00f3 04       		.byte	0x4
+ 541 00f4 07       		.byte	0x7
+ 542 00f5 29010000 		.4byte	.LASF22
+ 543 00f9 06       		.uleb128 0x6
+ 544 00fa A2000000 		.4byte	0xa2
+ 545 00fe 07       		.uleb128 0x7
+ 546 00ff 01       		.byte	0x1
+ 547 0100 37000000 		.4byte	0x37
+ 548 0104 05       		.byte	0x5
+ 549 0105 84       		.byte	0x84
+ 550 0106 23010000 		.4byte	0x123
+ 551 010a 08       		.uleb128 0x8
+ 552 010b C4020000 		.4byte	.LASF23
+ 553 010f 00       		.byte	0
+ 554 0110 08       		.uleb128 0x8
+ 555 0111 A2060000 		.4byte	.LASF24
+ 556 0115 01       		.byte	0x1
+ 557 0116 08       		.uleb128 0x8
+ 558 0117 B8060000 		.4byte	.LASF25
+ 559 011b 02       		.byte	0x2
+ 560 011c 08       		.uleb128 0x8
+ 561 011d FB010000 		.4byte	.LASF26
+ 562 0121 03       		.byte	0x3
+ 563 0122 00       		.byte	0
+ 564 0123 03       		.uleb128 0x3
+ 565 0124 32010000 		.4byte	.LASF27
+ 566 0128 05       		.byte	0x5
+ 567 0129 89       		.byte	0x89
+ 568 012a FE000000 		.4byte	0xfe
+ 569 012e 09       		.uleb128 0x9
+ 570 012f 20       		.byte	0x20
+ 571 0130 06       		.byte	0x6
+ 572 0131 91       		.byte	0x91
+ 573 0132 D3010000 		.4byte	0x1d3
+ 574 0136 0A       		.uleb128 0xa
+ 575 0137 85020000 		.4byte	.LASF28
+ 576 013b 06       		.byte	0x6
+ 577 013c 93       		.byte	0x93
+ 578 013d 8C000000 		.4byte	0x8c
+ 579 0141 00       		.byte	0
+ 580 0142 0A       		.uleb128 0xa
+ 581 0143 D0000000 		.4byte	.LASF29
+ 582 0147 06       		.byte	0x6
+ 583 0148 94       		.byte	0x94
+ 584 0149 A2000000 		.4byte	0xa2
+ 585 014d 01       		.byte	0x1
+ 586 014e 0A       		.uleb128 0xa
+ 587 014f 37050000 		.4byte	.LASF30
+ 588 0153 06       		.byte	0x6
+ 589 0154 95       		.byte	0x95
+ 590 0155 97000000 		.4byte	0x97
+ 591 0159 05       		.byte	0x5
+ 592 015a 0A       		.uleb128 0xa
+ 593 015b 02030000 		.4byte	.LASF31
+ 594 015f 06       		.byte	0x6
+ 595 0160 96       		.byte	0x96
+ 596 0161 D3010000 		.4byte	0x1d3
+ARM GAS  e:\temp\cczRWvrZ.s 			page 16
+
+
+ 597 0165 07       		.byte	0x7
+ 598 0166 0A       		.uleb128 0xa
+ 599 0167 21010000 		.4byte	.LASF32
+ 600 016b 06       		.byte	0x6
+ 601 016c 97       		.byte	0x97
+ 602 016d A2000000 		.4byte	0xa2
+ 603 0171 09       		.byte	0x9
+ 604 0172 0A       		.uleb128 0xa
+ 605 0173 1F050000 		.4byte	.LASF33
+ 606 0177 06       		.byte	0x6
+ 607 0178 98       		.byte	0x98
+ 608 0179 E3010000 		.4byte	0x1e3
+ 609 017d 0D       		.byte	0xd
+ 610 017e 0A       		.uleb128 0xa
+ 611 017f E5050000 		.4byte	.LASF34
+ 612 0183 06       		.byte	0x6
+ 613 0184 99       		.byte	0x99
+ 614 0185 8C000000 		.4byte	0x8c
+ 615 0189 10       		.byte	0x10
+ 616 018a 0A       		.uleb128 0xa
+ 617 018b BF040000 		.4byte	.LASF35
+ 618 018f 06       		.byte	0x6
+ 619 0190 9A       		.byte	0x9a
+ 620 0191 8C000000 		.4byte	0x8c
+ 621 0195 11       		.byte	0x11
+ 622 0196 0A       		.uleb128 0xa
+ 623 0197 D9000000 		.4byte	.LASF36
+ 624 019b 06       		.byte	0x6
+ 625 019c 9B       		.byte	0x9b
+ 626 019d 97000000 		.4byte	0x97
+ 627 01a1 12       		.byte	0x12
+ 628 01a2 0A       		.uleb128 0xa
+ 629 01a3 AF050000 		.4byte	.LASF37
+ 630 01a7 06       		.byte	0x6
+ 631 01a8 9C       		.byte	0x9c
+ 632 01a9 97000000 		.4byte	0x97
+ 633 01ad 14       		.byte	0x14
+ 634 01ae 0A       		.uleb128 0xa
+ 635 01af 99010000 		.4byte	.LASF38
+ 636 01b3 06       		.byte	0x6
+ 637 01b4 9D       		.byte	0x9d
+ 638 01b5 97000000 		.4byte	0x97
+ 639 01b9 16       		.byte	0x16
+ 640 01ba 0A       		.uleb128 0xa
+ 641 01bb 51010000 		.4byte	.LASF39
+ 642 01bf 06       		.byte	0x6
+ 643 01c0 9E       		.byte	0x9e
+ 644 01c1 A2000000 		.4byte	0xa2
+ 645 01c5 18       		.byte	0x18
+ 646 01c6 0A       		.uleb128 0xa
+ 647 01c7 D1010000 		.4byte	.LASF40
+ 648 01cb 06       		.byte	0x6
+ 649 01cc 9F       		.byte	0x9f
+ 650 01cd A2000000 		.4byte	0xa2
+ 651 01d1 1C       		.byte	0x1c
+ 652 01d2 00       		.byte	0
+ 653 01d3 0B       		.uleb128 0xb
+ARM GAS  e:\temp\cczRWvrZ.s 			page 17
+
+
+ 654 01d4 8C000000 		.4byte	0x8c
+ 655 01d8 E3010000 		.4byte	0x1e3
+ 656 01dc 0C       		.uleb128 0xc
+ 657 01dd F2000000 		.4byte	0xf2
+ 658 01e1 01       		.byte	0x1
+ 659 01e2 00       		.byte	0
+ 660 01e3 0B       		.uleb128 0xb
+ 661 01e4 8C000000 		.4byte	0x8c
+ 662 01e8 F3010000 		.4byte	0x1f3
+ 663 01ec 0C       		.uleb128 0xc
+ 664 01ed F2000000 		.4byte	0xf2
+ 665 01f1 02       		.byte	0x2
+ 666 01f2 00       		.byte	0
+ 667 01f3 03       		.uleb128 0x3
+ 668 01f4 EA000000 		.4byte	.LASF41
+ 669 01f8 06       		.byte	0x6
+ 670 01f9 A2       		.byte	0xa2
+ 671 01fa 2E010000 		.4byte	0x12e
+ 672 01fe 0D       		.uleb128 0xd
+ 673 01ff 0004     		.2byte	0x400
+ 674 0201 07       		.byte	0x7
+ 675 0202 36       		.byte	0x36
+ 676 0203 8A040000 		.4byte	0x48a
+ 677 0207 0A       		.uleb128 0xa
+ 678 0208 0B040000 		.4byte	.LASF42
+ 679 020c 07       		.byte	0x7
+ 680 020d 37       		.byte	0x37
+ 681 020e 9F040000 		.4byte	0x49f
+ 682 0212 00       		.byte	0
+ 683 0213 0A       		.uleb128 0xa
+ 684 0214 52070000 		.4byte	.LASF43
+ 685 0218 07       		.byte	0x7
+ 686 0219 38       		.byte	0x38
+ 687 021a B4040000 		.4byte	0x4b4
+ 688 021e 40       		.byte	0x40
+ 689 021f 0A       		.uleb128 0xa
+ 690 0220 1D060000 		.4byte	.LASF44
+ 691 0224 07       		.byte	0x7
+ 692 0225 39       		.byte	0x39
+ 693 0226 9A040000 		.4byte	0x49a
+ 694 022a FF       		.byte	0xff
+ 695 022b 0E       		.uleb128 0xe
+ 696 022c 2C020000 		.4byte	.LASF45
+ 697 0230 07       		.byte	0x7
+ 698 0231 3A       		.byte	0x3a
+ 699 0232 C9040000 		.4byte	0x4c9
+ 700 0236 0001     		.2byte	0x100
+ 701 0238 0E       		.uleb128 0xe
+ 702 0239 62070000 		.4byte	.LASF46
+ 703 023d 07       		.byte	0x7
+ 704 023e 3B       		.byte	0x3b
+ 705 023f DE040000 		.4byte	0x4de
+ 706 0243 8001     		.2byte	0x180
+ 707 0245 0E       		.uleb128 0xe
+ 708 0246 5F050000 		.4byte	.LASF47
+ 709 024a 07       		.byte	0x7
+ 710 024b 3C       		.byte	0x3c
+ARM GAS  e:\temp\cczRWvrZ.s 			page 18
+
+
+ 711 024c F3040000 		.4byte	0x4f3
+ 712 0250 0002     		.2byte	0x200
+ 713 0252 0E       		.uleb128 0xe
+ 714 0253 2E070000 		.4byte	.LASF48
+ 715 0257 07       		.byte	0x7
+ 716 0258 3D       		.byte	0x3d
+ 717 0259 F9000000 		.4byte	0xf9
+ 718 025d 4002     		.2byte	0x240
+ 719 025f 0E       		.uleb128 0xe
+ 720 0260 75040000 		.4byte	.LASF49
+ 721 0264 07       		.byte	0x7
+ 722 0265 3E       		.byte	0x3e
+ 723 0266 F9000000 		.4byte	0xf9
+ 724 026a 4402     		.2byte	0x244
+ 725 026c 0E       		.uleb128 0xe
+ 726 026d 61020000 		.4byte	.LASF50
+ 727 0271 07       		.byte	0x7
+ 728 0272 3F       		.byte	0x3f
+ 729 0273 F8040000 		.4byte	0x4f8
+ 730 0277 4802     		.2byte	0x248
+ 731 0279 0E       		.uleb128 0xe
+ 732 027a E4040000 		.4byte	.LASF51
+ 733 027e 07       		.byte	0x7
+ 734 027f 40       		.byte	0x40
+ 735 0280 F8040000 		.4byte	0x4f8
+ 736 0284 4A02     		.2byte	0x24a
+ 737 0286 0E       		.uleb128 0xe
+ 738 0287 40010000 		.4byte	.LASF52
+ 739 028b 07       		.byte	0x7
+ 740 028c 41       		.byte	0x41
+ 741 028d F8040000 		.4byte	0x4f8
+ 742 0291 4C02     		.2byte	0x24c
+ 743 0293 0E       		.uleb128 0xe
+ 744 0294 A8010000 		.4byte	.LASF53
+ 745 0298 07       		.byte	0x7
+ 746 0299 42       		.byte	0x42
+ 747 029a F8040000 		.4byte	0x4f8
+ 748 029e 4E02     		.2byte	0x24e
+ 749 02a0 0E       		.uleb128 0xe
+ 750 02a1 B6020000 		.4byte	.LASF54
+ 751 02a5 07       		.byte	0x7
+ 752 02a6 43       		.byte	0x43
+ 753 02a7 F8040000 		.4byte	0x4f8
+ 754 02ab 5002     		.2byte	0x250
+ 755 02ad 0E       		.uleb128 0xe
+ 756 02ae DB020000 		.4byte	.LASF55
+ 757 02b2 07       		.byte	0x7
+ 758 02b3 44       		.byte	0x44
+ 759 02b4 F8040000 		.4byte	0x4f8
+ 760 02b8 5202     		.2byte	0x252
+ 761 02ba 0E       		.uleb128 0xe
+ 762 02bb 16030000 		.4byte	.LASF56
+ 763 02bf 07       		.byte	0x7
+ 764 02c0 45       		.byte	0x45
+ 765 02c1 9A040000 		.4byte	0x49a
+ 766 02c5 5402     		.2byte	0x254
+ 767 02c7 0E       		.uleb128 0xe
+ARM GAS  e:\temp\cczRWvrZ.s 			page 19
+
+
+ 768 02c8 5C010000 		.4byte	.LASF57
+ 769 02cc 07       		.byte	0x7
+ 770 02cd 46       		.byte	0x46
+ 771 02ce 0D050000 		.4byte	0x50d
+ 772 02d2 5502     		.2byte	0x255
+ 773 02d4 0E       		.uleb128 0xe
+ 774 02d5 0B070000 		.4byte	.LASF58
+ 775 02d9 07       		.byte	0x7
+ 776 02da 47       		.byte	0x47
+ 777 02db F9000000 		.4byte	0xf9
+ 778 02df 5802     		.2byte	0x258
+ 779 02e1 0E       		.uleb128 0xe
+ 780 02e2 46040000 		.4byte	.LASF59
+ 781 02e6 07       		.byte	0x7
+ 782 02e7 48       		.byte	0x48
+ 783 02e8 F9000000 		.4byte	0xf9
+ 784 02ec 5C02     		.2byte	0x25c
+ 785 02ee 0E       		.uleb128 0xe
+ 786 02ef 63010000 		.4byte	.LASF60
+ 787 02f3 07       		.byte	0x7
+ 788 02f4 49       		.byte	0x49
+ 789 02f5 22050000 		.4byte	0x522
+ 790 02f9 6002     		.2byte	0x260
+ 791 02fb 0E       		.uleb128 0xe
+ 792 02fc EB020000 		.4byte	.LASF61
+ 793 0300 07       		.byte	0x7
+ 794 0301 4A       		.byte	0x4a
+ 795 0302 9A040000 		.4byte	0x49a
+ 796 0306 6902     		.2byte	0x269
+ 797 0308 0E       		.uleb128 0xe
+ 798 0309 BC010000 		.4byte	.LASF62
+ 799 030d 07       		.byte	0x7
+ 800 030e 4B       		.byte	0x4b
+ 801 030f 9A040000 		.4byte	0x49a
+ 802 0313 6A02     		.2byte	0x26a
+ 803 0315 0E       		.uleb128 0xe
+ 804 0316 70060000 		.4byte	.LASF63
+ 805 031a 07       		.byte	0x7
+ 806 031b 4C       		.byte	0x4c
+ 807 031c 9A040000 		.4byte	0x49a
+ 808 0320 6B02     		.2byte	0x26b
+ 809 0322 0E       		.uleb128 0xe
+ 810 0323 60040000 		.4byte	.LASF64
+ 811 0327 07       		.byte	0x7
+ 812 0328 4D       		.byte	0x4d
+ 813 0329 9A040000 		.4byte	0x49a
+ 814 032d 6C02     		.2byte	0x26c
+ 815 032f 0E       		.uleb128 0xe
+ 816 0330 DA010000 		.4byte	.LASF65
+ 817 0334 07       		.byte	0x7
+ 818 0335 4E       		.byte	0x4e
+ 819 0336 9A040000 		.4byte	0x49a
+ 820 033a 6D02     		.2byte	0x26d
+ 821 033c 0E       		.uleb128 0xe
+ 822 033d 89040000 		.4byte	.LASF66
+ 823 0341 07       		.byte	0x7
+ 824 0342 4F       		.byte	0x4f
+ARM GAS  e:\temp\cczRWvrZ.s 			page 20
+
+
+ 825 0343 9A040000 		.4byte	0x49a
+ 826 0347 6E02     		.2byte	0x26e
+ 827 0349 0E       		.uleb128 0xe
+ 828 034a 6C050000 		.4byte	.LASF67
+ 829 034e 07       		.byte	0x7
+ 830 034f 50       		.byte	0x50
+ 831 0350 9A040000 		.4byte	0x49a
+ 832 0354 6F02     		.2byte	0x26f
+ 833 0356 0E       		.uleb128 0xe
+ 834 0357 52020000 		.4byte	.LASF68
+ 835 035b 07       		.byte	0x7
+ 836 035c 51       		.byte	0x51
+ 837 035d 37050000 		.4byte	0x537
+ 838 0361 7002     		.2byte	0x270
+ 839 0363 0E       		.uleb128 0xe
+ 840 0364 91010000 		.4byte	.LASF69
+ 841 0368 07       		.byte	0x7
+ 842 0369 52       		.byte	0x52
+ 843 036a 3C050000 		.4byte	0x53c
+ 844 036e 7802     		.2byte	0x278
+ 845 0370 0E       		.uleb128 0xe
+ 846 0371 4B030000 		.4byte	.LASF70
+ 847 0375 07       		.byte	0x7
+ 848 0376 53       		.byte	0x53
+ 849 0377 9A040000 		.4byte	0x49a
+ 850 037b 7B02     		.2byte	0x27b
+ 851 037d 0E       		.uleb128 0xe
+ 852 037e 05040000 		.4byte	.LASF71
+ 853 0382 07       		.byte	0x7
+ 854 0383 54       		.byte	0x54
+ 855 0384 9A040000 		.4byte	0x49a
+ 856 0388 7C02     		.2byte	0x27c
+ 857 038a 0E       		.uleb128 0xe
+ 858 038b 17060000 		.4byte	.LASF72
+ 859 038f 07       		.byte	0x7
+ 860 0390 55       		.byte	0x55
+ 861 0391 9A040000 		.4byte	0x49a
+ 862 0395 7D02     		.2byte	0x27d
+ 863 0397 0E       		.uleb128 0xe
+ 864 0398 59070000 		.4byte	.LASF73
+ 865 039c 07       		.byte	0x7
+ 866 039d 56       		.byte	0x56
+ 867 039e 9A040000 		.4byte	0x49a
+ 868 03a2 7E02     		.2byte	0x27e
+ 869 03a4 0E       		.uleb128 0xe
+ 870 03a5 BB050000 		.4byte	.LASF74
+ 871 03a9 07       		.byte	0x7
+ 872 03aa 57       		.byte	0x57
+ 873 03ab 9A040000 		.4byte	0x49a
+ 874 03af 7F02     		.2byte	0x27f
+ 875 03b1 0E       		.uleb128 0xe
+ 876 03b2 6A010000 		.4byte	.LASF75
+ 877 03b6 07       		.byte	0x7
+ 878 03b7 58       		.byte	0x58
+ 879 03b8 41050000 		.4byte	0x541
+ 880 03bc 8002     		.2byte	0x280
+ 881 03be 0E       		.uleb128 0xe
+ARM GAS  e:\temp\cczRWvrZ.s 			page 21
+
+
+ 882 03bf D3040000 		.4byte	.LASF76
+ 883 03c3 07       		.byte	0x7
+ 884 03c4 59       		.byte	0x59
+ 885 03c5 56050000 		.4byte	0x556
+ 886 03c9 0003     		.2byte	0x300
+ 887 03cb 0F       		.uleb128 0xf
+ 888 03cc 707000   		.ascii	"pp\000"
+ 889 03cf 07       		.byte	0x7
+ 890 03d0 5A       		.byte	0x5a
+ 891 03d1 F9000000 		.4byte	0xf9
+ 892 03d5 2003     		.2byte	0x320
+ 893 03d7 0F       		.uleb128 0xf
+ 894 03d8 6500     		.ascii	"e\000"
+ 895 03da 07       		.byte	0x7
+ 896 03db 5B       		.byte	0x5b
+ 897 03dc F9000000 		.4byte	0xf9
+ 898 03e0 2403     		.2byte	0x324
+ 899 03e2 0F       		.uleb128 0xf
+ 900 03e3 7000     		.ascii	"p\000"
+ 901 03e5 07       		.byte	0x7
+ 902 03e6 5C       		.byte	0x5c
+ 903 03e7 F9000000 		.4byte	0xf9
+ 904 03eb 2803     		.2byte	0x328
+ 905 03ed 0E       		.uleb128 0xe
+ 906 03ee 0C030000 		.4byte	.LASF77
+ 907 03f2 07       		.byte	0x7
+ 908 03f3 5D       		.byte	0x5d
+ 909 03f4 F9000000 		.4byte	0xf9
+ 910 03f8 2C03     		.2byte	0x32c
+ 911 03fa 0E       		.uleb128 0xe
+ 912 03fb 89060000 		.4byte	.LASF78
+ 913 03ff 07       		.byte	0x7
+ 914 0400 5E       		.byte	0x5e
+ 915 0401 F9000000 		.4byte	0xf9
+ 916 0405 3003     		.2byte	0x330
+ 917 0407 0E       		.uleb128 0xe
+ 918 0408 4D020000 		.4byte	.LASF79
+ 919 040c 07       		.byte	0x7
+ 920 040d 5F       		.byte	0x5f
+ 921 040e F9000000 		.4byte	0xf9
+ 922 0412 3403     		.2byte	0x334
+ 923 0414 0E       		.uleb128 0xe
+ 924 0415 0F020000 		.4byte	.LASF80
+ 925 0419 07       		.byte	0x7
+ 926 041a 60       		.byte	0x60
+ 927 041b F9000000 		.4byte	0xf9
+ 928 041f 3803     		.2byte	0x338
+ 929 0421 0E       		.uleb128 0xe
+ 930 0422 71010000 		.4byte	.LASF81
+ 931 0426 07       		.byte	0x7
+ 932 0427 61       		.byte	0x61
+ 933 0428 6B050000 		.4byte	0x56b
+ 934 042c 3C03     		.2byte	0x33c
+ 935 042e 0E       		.uleb128 0xe
+ 936 042f 8E060000 		.4byte	.LASF82
+ 937 0433 07       		.byte	0x7
+ 938 0434 62       		.byte	0x62
+ARM GAS  e:\temp\cczRWvrZ.s 			page 22
+
+
+ 939 0435 9A040000 		.4byte	0x49a
+ 940 0439 3E03     		.2byte	0x33e
+ 941 043b 0E       		.uleb128 0xe
+ 942 043c 32060000 		.4byte	.LASF83
+ 943 0440 07       		.byte	0x7
+ 944 0441 63       		.byte	0x63
+ 945 0442 9A040000 		.4byte	0x49a
+ 946 0446 3F03     		.2byte	0x33f
+ 947 0448 0E       		.uleb128 0xe
+ 948 0449 78010000 		.4byte	.LASF84
+ 949 044d 07       		.byte	0x7
+ 950 044e 64       		.byte	0x64
+ 951 044f 80050000 		.4byte	0x580
+ 952 0453 4003     		.2byte	0x340
+ 953 0455 0E       		.uleb128 0xe
+ 954 0456 52040000 		.4byte	.LASF85
+ 955 045a 07       		.byte	0x7
+ 956 045b 65       		.byte	0x65
+ 957 045c 95050000 		.4byte	0x595
+ 958 0460 4C03     		.2byte	0x34c
+ 959 0462 0E       		.uleb128 0xe
+ 960 0463 F3060000 		.4byte	.LASF86
+ 961 0467 07       		.byte	0x7
+ 962 0468 66       		.byte	0x66
+ 963 0469 9A050000 		.4byte	0x59a
+ 964 046d 6503     		.2byte	0x365
+ 965 046f 0E       		.uleb128 0xe
+ 966 0470 7F010000 		.4byte	.LASF87
+ 967 0474 07       		.byte	0x7
+ 968 0475 67       		.byte	0x67
+ 969 0476 9F050000 		.4byte	0x59f
+ 970 047a 7E03     		.2byte	0x37e
+ 971 047c 0E       		.uleb128 0xe
+ 972 047d 46060000 		.4byte	.LASF88
+ 973 0481 07       		.byte	0x7
+ 974 0482 68       		.byte	0x68
+ 975 0483 F8040000 		.4byte	0x4f8
+ 976 0487 FE03     		.2byte	0x3fe
+ 977 0489 00       		.byte	0
+ 978 048a 0B       		.uleb128 0xb
+ 979 048b 9A040000 		.4byte	0x49a
+ 980 048f 9A040000 		.4byte	0x49a
+ 981 0493 0C       		.uleb128 0xc
+ 982 0494 F2000000 		.4byte	0xf2
+ 983 0498 3F       		.byte	0x3f
+ 984 0499 00       		.byte	0
+ 985 049a 06       		.uleb128 0x6
+ 986 049b 8C000000 		.4byte	0x8c
+ 987 049f 06       		.uleb128 0x6
+ 988 04a0 8A040000 		.4byte	0x48a
+ 989 04a4 0B       		.uleb128 0xb
+ 990 04a5 9A040000 		.4byte	0x49a
+ 991 04a9 B4040000 		.4byte	0x4b4
+ 992 04ad 0C       		.uleb128 0xc
+ 993 04ae F2000000 		.4byte	0xf2
+ 994 04b2 BE       		.byte	0xbe
+ 995 04b3 00       		.byte	0
+ARM GAS  e:\temp\cczRWvrZ.s 			page 23
+
+
+ 996 04b4 06       		.uleb128 0x6
+ 997 04b5 A4040000 		.4byte	0x4a4
+ 998 04b9 0B       		.uleb128 0xb
+ 999 04ba 9A040000 		.4byte	0x49a
+ 1000 04be C9040000 		.4byte	0x4c9
+ 1001 04c2 0C       		.uleb128 0xc
+ 1002 04c3 F2000000 		.4byte	0xf2
+ 1003 04c7 7F       		.byte	0x7f
+ 1004 04c8 00       		.byte	0
+ 1005 04c9 06       		.uleb128 0x6
+ 1006 04ca B9040000 		.4byte	0x4b9
+ 1007 04ce 0B       		.uleb128 0xb
+ 1008 04cf F9000000 		.4byte	0xf9
+ 1009 04d3 DE040000 		.4byte	0x4de
+ 1010 04d7 0C       		.uleb128 0xc
+ 1011 04d8 F2000000 		.4byte	0xf2
+ 1012 04dc 1F       		.byte	0x1f
+ 1013 04dd 00       		.byte	0
+ 1014 04de 06       		.uleb128 0x6
+ 1015 04df CE040000 		.4byte	0x4ce
+ 1016 04e3 0B       		.uleb128 0xb
+ 1017 04e4 F9000000 		.4byte	0xf9
+ 1018 04e8 F3040000 		.4byte	0x4f3
+ 1019 04ec 0C       		.uleb128 0xc
+ 1020 04ed F2000000 		.4byte	0xf2
+ 1021 04f1 0F       		.byte	0xf
+ 1022 04f2 00       		.byte	0
+ 1023 04f3 06       		.uleb128 0x6
+ 1024 04f4 E3040000 		.4byte	0x4e3
+ 1025 04f8 06       		.uleb128 0x6
+ 1026 04f9 97000000 		.4byte	0x97
+ 1027 04fd 0B       		.uleb128 0xb
+ 1028 04fe 9A040000 		.4byte	0x49a
+ 1029 0502 0D050000 		.4byte	0x50d
+ 1030 0506 0C       		.uleb128 0xc
+ 1031 0507 F2000000 		.4byte	0xf2
+ 1032 050b 02       		.byte	0x2
+ 1033 050c 00       		.byte	0
+ 1034 050d 06       		.uleb128 0x6
+ 1035 050e FD040000 		.4byte	0x4fd
+ 1036 0512 0B       		.uleb128 0xb
+ 1037 0513 9A040000 		.4byte	0x49a
+ 1038 0517 22050000 		.4byte	0x522
+ 1039 051b 0C       		.uleb128 0xc
+ 1040 051c F2000000 		.4byte	0xf2
+ 1041 0520 08       		.byte	0x8
+ 1042 0521 00       		.byte	0
+ 1043 0522 06       		.uleb128 0x6
+ 1044 0523 12050000 		.4byte	0x512
+ 1045 0527 0B       		.uleb128 0xb
+ 1046 0528 9A040000 		.4byte	0x49a
+ 1047 052c 37050000 		.4byte	0x537
+ 1048 0530 0C       		.uleb128 0xc
+ 1049 0531 F2000000 		.4byte	0xf2
+ 1050 0535 07       		.byte	0x7
+ 1051 0536 00       		.byte	0
+ 1052 0537 06       		.uleb128 0x6
+ARM GAS  e:\temp\cczRWvrZ.s 			page 24
+
+
+ 1053 0538 27050000 		.4byte	0x527
+ 1054 053c 06       		.uleb128 0x6
+ 1055 053d FD040000 		.4byte	0x4fd
+ 1056 0541 06       		.uleb128 0x6
+ 1057 0542 CE040000 		.4byte	0x4ce
+ 1058 0546 0B       		.uleb128 0xb
+ 1059 0547 9A040000 		.4byte	0x49a
+ 1060 054b 56050000 		.4byte	0x556
+ 1061 054f 0C       		.uleb128 0xc
+ 1062 0550 F2000000 		.4byte	0xf2
+ 1063 0554 1F       		.byte	0x1f
+ 1064 0555 00       		.byte	0
+ 1065 0556 06       		.uleb128 0x6
+ 1066 0557 46050000 		.4byte	0x546
+ 1067 055b 0B       		.uleb128 0xb
+ 1068 055c 9A040000 		.4byte	0x49a
+ 1069 0560 6B050000 		.4byte	0x56b
+ 1070 0564 0C       		.uleb128 0xc
+ 1071 0565 F2000000 		.4byte	0xf2
+ 1072 0569 01       		.byte	0x1
+ 1073 056a 00       		.byte	0
+ 1074 056b 06       		.uleb128 0x6
+ 1075 056c 5B050000 		.4byte	0x55b
+ 1076 0570 0B       		.uleb128 0xb
+ 1077 0571 F9000000 		.4byte	0xf9
+ 1078 0575 80050000 		.4byte	0x580
+ 1079 0579 0C       		.uleb128 0xc
+ 1080 057a F2000000 		.4byte	0xf2
+ 1081 057e 02       		.byte	0x2
+ 1082 057f 00       		.byte	0
+ 1083 0580 06       		.uleb128 0x6
+ 1084 0581 70050000 		.4byte	0x570
+ 1085 0585 0B       		.uleb128 0xb
+ 1086 0586 9A040000 		.4byte	0x49a
+ 1087 058a 95050000 		.4byte	0x595
+ 1088 058e 0C       		.uleb128 0xc
+ 1089 058f F2000000 		.4byte	0xf2
+ 1090 0593 18       		.byte	0x18
+ 1091 0594 00       		.byte	0
+ 1092 0595 06       		.uleb128 0x6
+ 1093 0596 85050000 		.4byte	0x585
+ 1094 059a 06       		.uleb128 0x6
+ 1095 059b 85050000 		.4byte	0x585
+ 1096 059f 06       		.uleb128 0x6
+ 1097 05a0 B9040000 		.4byte	0x4b9
+ 1098 05a4 03       		.uleb128 0x3
+ 1099 05a5 76020000 		.4byte	.LASF89
+ 1100 05a9 07       		.byte	0x7
+ 1101 05aa 69       		.byte	0x69
+ 1102 05ab AF050000 		.4byte	0x5af
+ 1103 05af 10       		.uleb128 0x10
+ 1104 05b0 04       		.byte	0x4
+ 1105 05b1 FE010000 		.4byte	0x1fe
+ 1106 05b5 11       		.uleb128 0x11
+ 1107 05b6 8B050000 		.4byte	.LASF97
+ 1108 05ba 01       		.byte	0x1
+ 1109 05bb 36       		.byte	0x36
+ARM GAS  e:\temp\cczRWvrZ.s 			page 25
+
+
+ 1110 05bc 00000000 		.4byte	.LFB32
+ 1111 05c0 0C000000 		.4byte	.LFE32-.LFB32
+ 1112 05c4 01       		.uleb128 0x1
+ 1113 05c5 9C       		.byte	0x9c
+ 1114 05c6 D8050000 		.4byte	0x5d8
+ 1115 05ca 12       		.uleb128 0x12
+ 1116 05cb 4F060000 		.4byte	.LASF99
+ 1117 05cf 01       		.byte	0x1
+ 1118 05d0 36       		.byte	0x36
+ 1119 05d1 23010000 		.4byte	0x123
+ 1120 05d5 01       		.uleb128 0x1
+ 1121 05d6 50       		.byte	0x50
+ 1122 05d7 00       		.byte	0
+ 1123 05d8 13       		.uleb128 0x13
+ 1124 05d9 0B050000 		.4byte	.LASF90
+ 1125 05dd 01       		.byte	0x1
+ 1126 05de 3B       		.byte	0x3b
+ 1127 05df 23010000 		.4byte	0x123
+ 1128 05e3 00000000 		.4byte	.LFB33
+ 1129 05e7 0C000000 		.4byte	.LFE33-.LFB33
+ 1130 05eb 01       		.uleb128 0x1
+ 1131 05ec 9C       		.byte	0x9c
+ 1132 05ed 13       		.uleb128 0x13
+ 1133 05ee 3D070000 		.4byte	.LASF91
+ 1134 05f2 01       		.byte	0x1
+ 1135 05f3 53       		.byte	0x53
+ 1136 05f4 02060000 		.4byte	0x602
+ 1137 05f8 00000000 		.4byte	.LFB34
+ 1138 05fc 04000000 		.4byte	.LFE34-.LFB34
+ 1139 0600 01       		.uleb128 0x1
+ 1140 0601 9C       		.byte	0x9c
+ 1141 0602 10       		.uleb128 0x10
+ 1142 0603 04       		.byte	0x4
+ 1143 0604 8C000000 		.4byte	0x8c
+ 1144 0608 13       		.uleb128 0x13
+ 1145 0609 CE060000 		.4byte	.LASF92
+ 1146 060d 01       		.byte	0x1
+ 1147 060e 58       		.byte	0x58
+ 1148 060f 02060000 		.4byte	0x602
+ 1149 0613 00000000 		.4byte	.LFB35
+ 1150 0617 08000000 		.4byte	.LFE35-.LFB35
+ 1151 061b 01       		.uleb128 0x1
+ 1152 061c 9C       		.byte	0x9c
+ 1153 061d 13       		.uleb128 0x13
+ 1154 061e 16070000 		.4byte	.LASF93
+ 1155 0622 01       		.byte	0x1
+ 1156 0623 6A       		.byte	0x6a
+ 1157 0624 02060000 		.4byte	0x602
+ 1158 0628 00000000 		.4byte	.LFB36
+ 1159 062c 08000000 		.4byte	.LFE36-.LFB36
+ 1160 0630 01       		.uleb128 0x1
+ 1161 0631 9C       		.byte	0x9c
+ 1162 0632 13       		.uleb128 0x13
+ 1163 0633 A4040000 		.4byte	.LASF94
+ 1164 0637 01       		.byte	0x1
+ 1165 0638 7C       		.byte	0x7c
+ 1166 0639 A2000000 		.4byte	0xa2
+ARM GAS  e:\temp\cczRWvrZ.s 			page 26
+
+
+ 1167 063d 00000000 		.4byte	.LFB37
+ 1168 0641 04000000 		.4byte	.LFE37-.LFB37
+ 1169 0645 01       		.uleb128 0x1
+ 1170 0646 9C       		.byte	0x9c
+ 1171 0647 13       		.uleb128 0x13
+ 1172 0648 FC000000 		.4byte	.LASF95
+ 1173 064c 01       		.byte	0x1
+ 1174 064d 92       		.byte	0x92
+ 1175 064e A2000000 		.4byte	0xa2
+ 1176 0652 00000000 		.4byte	.LFB38
+ 1177 0656 04000000 		.4byte	.LFE38-.LFB38
+ 1178 065a 01       		.uleb128 0x1
+ 1179 065b 9C       		.byte	0x9c
+ 1180 065c 13       		.uleb128 0x13
+ 1181 065d 69030000 		.4byte	.LASF96
+ 1182 0661 01       		.byte	0x1
+ 1183 0662 A7       		.byte	0xa7
+ 1184 0663 8C000000 		.4byte	0x8c
+ 1185 0667 00000000 		.4byte	.LFB39
+ 1186 066b 4C000000 		.4byte	.LFE39-.LFB39
+ 1187 066f 01       		.uleb128 0x1
+ 1188 0670 9C       		.byte	0x9c
+ 1189 0671 11       		.uleb128 0x11
+ 1190 0672 21030000 		.4byte	.LASF98
+ 1191 0676 01       		.byte	0x1
+ 1192 0677 C9       		.byte	0xc9
+ 1193 0678 00000000 		.4byte	.LFB40
+ 1194 067c 10000000 		.4byte	.LFE40-.LFB40
+ 1195 0680 01       		.uleb128 0x1
+ 1196 0681 9C       		.byte	0x9c
+ 1197 0682 94060000 		.4byte	0x694
+ 1198 0686 12       		.uleb128 0x12
+ 1199 0687 75040000 		.4byte	.LASF49
+ 1200 068b 01       		.byte	0x1
+ 1201 068c C9       		.byte	0xc9
+ 1202 068d 94060000 		.4byte	0x694
+ 1203 0691 01       		.uleb128 0x1
+ 1204 0692 50       		.byte	0x50
+ 1205 0693 00       		.byte	0
+ 1206 0694 10       		.uleb128 0x10
+ 1207 0695 04       		.byte	0x4
+ 1208 0696 A2000000 		.4byte	0xa2
+ 1209 069a 14       		.uleb128 0x14
+ 1210 069b 17020000 		.4byte	.LASF100
+ 1211 069f 01       		.byte	0x1
+ 1212 06a0 CF       		.byte	0xcf
+ 1213 06a1 8C000000 		.4byte	0x8c
+ 1214 06a5 00000000 		.4byte	.LFB41
+ 1215 06a9 20000000 		.4byte	.LFE41-.LFB41
+ 1216 06ad 01       		.uleb128 0x1
+ 1217 06ae 9C       		.byte	0x9c
+ 1218 06af C3060000 		.4byte	0x6c3
+ 1219 06b3 15       		.uleb128 0x15
+ 1220 06b4 2D060000 		.4byte	.LASF102
+ 1221 06b8 01       		.byte	0x1
+ 1222 06b9 D2       		.byte	0xd2
+ 1223 06ba 8C000000 		.4byte	0x8c
+ARM GAS  e:\temp\cczRWvrZ.s 			page 27
+
+
+ 1224 06be 00000000 		.4byte	.LLST0
+ 1225 06c2 00       		.byte	0
+ 1226 06c3 14       		.uleb128 0x14
+ 1227 06c4 57060000 		.4byte	.LASF101
+ 1228 06c8 01       		.byte	0x1
+ 1229 06c9 DB       		.byte	0xdb
+ 1230 06ca A2000000 		.4byte	0xa2
+ 1231 06ce 00000000 		.4byte	.LFB42
+ 1232 06d2 18000000 		.4byte	.LFE42-.LFB42
+ 1233 06d6 01       		.uleb128 0x1
+ 1234 06d7 9C       		.byte	0x9c
+ 1235 06d8 07070000 		.4byte	0x707
+ 1236 06dc 15       		.uleb128 0x15
+ 1237 06dd 11030000 		.4byte	.LASF103
+ 1238 06e1 01       		.byte	0x1
+ 1239 06e2 DD       		.byte	0xdd
+ 1240 06e3 A2000000 		.4byte	0xa2
+ 1241 06e7 1E000000 		.4byte	.LLST1
+ 1242 06eb 16       		.uleb128 0x16
+ 1243 06ec 06000000 		.4byte	.LVL4
+ 1244 06f0 D8050000 		.4byte	0x5d8
+ 1245 06f4 16       		.uleb128 0x16
+ 1246 06f5 0E000000 		.4byte	.LVL5
+ 1247 06f9 32060000 		.4byte	0x632
+ 1248 06fd 16       		.uleb128 0x16
+ 1249 06fe 14000000 		.4byte	.LVL7
+ 1250 0702 47060000 		.4byte	0x647
+ 1251 0706 00       		.byte	0
+ 1252 0707 14       		.uleb128 0x14
+ 1253 0708 B6000000 		.4byte	.LASF104
+ 1254 070c 01       		.byte	0x1
+ 1255 070d F0       		.byte	0xf0
+ 1256 070e 97000000 		.4byte	0x97
+ 1257 0712 00000000 		.4byte	.LFB43
+ 1258 0716 20000000 		.4byte	.LFE43-.LFB43
+ 1259 071a 01       		.uleb128 0x1
+ 1260 071b 9C       		.byte	0x9c
+ 1261 071c 5D070000 		.4byte	0x75d
+ 1262 0720 17       		.uleb128 0x17
+ 1263 0721 38020000 		.4byte	.LASF105
+ 1264 0725 01       		.byte	0x1
+ 1265 0726 F0       		.byte	0xf0
+ 1266 0727 A2000000 		.4byte	0xa2
+ 1267 072b 4A000000 		.4byte	.LLST2
+ 1268 072f 15       		.uleb128 0x15
+ 1269 0730 22040000 		.4byte	.LASF106
+ 1270 0734 01       		.byte	0x1
+ 1271 0735 FC       		.byte	0xfc
+ 1272 0736 8C000000 		.4byte	0x8c
+ 1273 073a 76000000 		.4byte	.LLST3
+ 1274 073e 15       		.uleb128 0x15
+ 1275 073f FF060000 		.4byte	.LASF107
+ 1276 0743 01       		.byte	0x1
+ 1277 0744 FD       		.byte	0xfd
+ 1278 0745 8C000000 		.4byte	0x8c
+ 1279 0749 98000000 		.4byte	.LLST4
+ 1280 074d 15       		.uleb128 0x15
+ARM GAS  e:\temp\cczRWvrZ.s 			page 28
+
+
+ 1281 074e 9F050000 		.4byte	.LASF108
+ 1282 0752 01       		.byte	0x1
+ 1283 0753 FE       		.byte	0xfe
+ 1284 0754 8C000000 		.4byte	0x8c
+ 1285 0758 BA000000 		.4byte	.LLST5
+ 1286 075c 00       		.byte	0
+ 1287 075d 18       		.uleb128 0x18
+ 1288 075e 3E030000 		.4byte	.LASF109
+ 1289 0762 01       		.byte	0x1
+ 1290 0763 31       		.byte	0x31
+ 1291 0764 23010000 		.4byte	0x123
+ 1292 0768 05       		.uleb128 0x5
+ 1293 0769 03       		.byte	0x3
+ 1294 076a 00000000 		.4byte	gl_active_fw
+ 1295 076e 0B       		.uleb128 0xb
+ 1296 076f AD000000 		.4byte	0xad
+ 1297 0773 7E070000 		.4byte	0x77e
+ 1298 0777 0C       		.uleb128 0xc
+ 1299 0778 F2000000 		.4byte	0xf2
+ 1300 077c 07       		.byte	0x7
+ 1301 077d 00       		.byte	0
+ 1302 077e 18       		.uleb128 0x18
+ 1303 077f 33040000 		.4byte	.LASF110
+ 1304 0783 01       		.byte	0x1
+ 1305 0784 34       		.byte	0x34
+ 1306 0785 6E070000 		.4byte	0x76e
+ 1307 0789 05       		.uleb128 0x5
+ 1308 078a 03       		.byte	0x3
+ 1309 078b 00000000 		.4byte	gl_invalid_version
+ 1310 078f 19       		.uleb128 0x19
+ 1311 0790 55030000 		.4byte	.LASF111
+ 1312 0794 06       		.byte	0x6
+ 1313 0795 AB       		.byte	0xab
+ 1314 0796 9A070000 		.4byte	0x79a
+ 1315 079a 10       		.uleb128 0x10
+ 1316 079b 04       		.byte	0x4
+ 1317 079c F3010000 		.4byte	0x1f3
+ 1318 07a0 19       		.uleb128 0x19
+ 1319 07a1 45050000 		.4byte	.LASF112
+ 1320 07a5 06       		.byte	0x6
+ 1321 07a6 B1       		.byte	0xb1
+ 1322 07a7 9A070000 		.4byte	0x79a
+ 1323 07ab 00       		.byte	0
+ 1324              		.section	.debug_abbrev,"",%progbits
+ 1325              	.Ldebug_abbrev0:
+ 1326 0000 01       		.uleb128 0x1
+ 1327 0001 11       		.uleb128 0x11
+ 1328 0002 01       		.byte	0x1
+ 1329 0003 25       		.uleb128 0x25
+ 1330 0004 0E       		.uleb128 0xe
+ 1331 0005 13       		.uleb128 0x13
+ 1332 0006 0B       		.uleb128 0xb
+ 1333 0007 03       		.uleb128 0x3
+ 1334 0008 0E       		.uleb128 0xe
+ 1335 0009 1B       		.uleb128 0x1b
+ 1336 000a 0E       		.uleb128 0xe
+ 1337 000b 55       		.uleb128 0x55
+ARM GAS  e:\temp\cczRWvrZ.s 			page 29
+
+
+ 1338 000c 17       		.uleb128 0x17
+ 1339 000d 11       		.uleb128 0x11
+ 1340 000e 01       		.uleb128 0x1
+ 1341 000f 10       		.uleb128 0x10
+ 1342 0010 17       		.uleb128 0x17
+ 1343 0011 00       		.byte	0
+ 1344 0012 00       		.byte	0
+ 1345 0013 02       		.uleb128 0x2
+ 1346 0014 24       		.uleb128 0x24
+ 1347 0015 00       		.byte	0
+ 1348 0016 0B       		.uleb128 0xb
+ 1349 0017 0B       		.uleb128 0xb
+ 1350 0018 3E       		.uleb128 0x3e
+ 1351 0019 0B       		.uleb128 0xb
+ 1352 001a 03       		.uleb128 0x3
+ 1353 001b 0E       		.uleb128 0xe
+ 1354 001c 00       		.byte	0
+ 1355 001d 00       		.byte	0
+ 1356 001e 03       		.uleb128 0x3
+ 1357 001f 16       		.uleb128 0x16
+ 1358 0020 00       		.byte	0
+ 1359 0021 03       		.uleb128 0x3
+ 1360 0022 0E       		.uleb128 0xe
+ 1361 0023 3A       		.uleb128 0x3a
+ 1362 0024 0B       		.uleb128 0xb
+ 1363 0025 3B       		.uleb128 0x3b
+ 1364 0026 0B       		.uleb128 0xb
+ 1365 0027 49       		.uleb128 0x49
+ 1366 0028 13       		.uleb128 0x13
+ 1367 0029 00       		.byte	0
+ 1368 002a 00       		.byte	0
+ 1369 002b 04       		.uleb128 0x4
+ 1370 002c 24       		.uleb128 0x24
+ 1371 002d 00       		.byte	0
+ 1372 002e 0B       		.uleb128 0xb
+ 1373 002f 0B       		.uleb128 0xb
+ 1374 0030 3E       		.uleb128 0x3e
+ 1375 0031 0B       		.uleb128 0xb
+ 1376 0032 03       		.uleb128 0x3
+ 1377 0033 08       		.uleb128 0x8
+ 1378 0034 00       		.byte	0
+ 1379 0035 00       		.byte	0
+ 1380 0036 05       		.uleb128 0x5
+ 1381 0037 16       		.uleb128 0x16
+ 1382 0038 00       		.byte	0
+ 1383 0039 03       		.uleb128 0x3
+ 1384 003a 0E       		.uleb128 0xe
+ 1385 003b 3A       		.uleb128 0x3a
+ 1386 003c 0B       		.uleb128 0xb
+ 1387 003d 3B       		.uleb128 0x3b
+ 1388 003e 05       		.uleb128 0x5
+ 1389 003f 49       		.uleb128 0x49
+ 1390 0040 13       		.uleb128 0x13
+ 1391 0041 00       		.byte	0
+ 1392 0042 00       		.byte	0
+ 1393 0043 06       		.uleb128 0x6
+ 1394 0044 35       		.uleb128 0x35
+ARM GAS  e:\temp\cczRWvrZ.s 			page 30
+
+
+ 1395 0045 00       		.byte	0
+ 1396 0046 49       		.uleb128 0x49
+ 1397 0047 13       		.uleb128 0x13
+ 1398 0048 00       		.byte	0
+ 1399 0049 00       		.byte	0
+ 1400 004a 07       		.uleb128 0x7
+ 1401 004b 04       		.uleb128 0x4
+ 1402 004c 01       		.byte	0x1
+ 1403 004d 0B       		.uleb128 0xb
+ 1404 004e 0B       		.uleb128 0xb
+ 1405 004f 49       		.uleb128 0x49
+ 1406 0050 13       		.uleb128 0x13
+ 1407 0051 3A       		.uleb128 0x3a
+ 1408 0052 0B       		.uleb128 0xb
+ 1409 0053 3B       		.uleb128 0x3b
+ 1410 0054 0B       		.uleb128 0xb
+ 1411 0055 01       		.uleb128 0x1
+ 1412 0056 13       		.uleb128 0x13
+ 1413 0057 00       		.byte	0
+ 1414 0058 00       		.byte	0
+ 1415 0059 08       		.uleb128 0x8
+ 1416 005a 28       		.uleb128 0x28
+ 1417 005b 00       		.byte	0
+ 1418 005c 03       		.uleb128 0x3
+ 1419 005d 0E       		.uleb128 0xe
+ 1420 005e 1C       		.uleb128 0x1c
+ 1421 005f 0B       		.uleb128 0xb
+ 1422 0060 00       		.byte	0
+ 1423 0061 00       		.byte	0
+ 1424 0062 09       		.uleb128 0x9
+ 1425 0063 13       		.uleb128 0x13
+ 1426 0064 01       		.byte	0x1
+ 1427 0065 0B       		.uleb128 0xb
+ 1428 0066 0B       		.uleb128 0xb
+ 1429 0067 3A       		.uleb128 0x3a
+ 1430 0068 0B       		.uleb128 0xb
+ 1431 0069 3B       		.uleb128 0x3b
+ 1432 006a 0B       		.uleb128 0xb
+ 1433 006b 01       		.uleb128 0x1
+ 1434 006c 13       		.uleb128 0x13
+ 1435 006d 00       		.byte	0
+ 1436 006e 00       		.byte	0
+ 1437 006f 0A       		.uleb128 0xa
+ 1438 0070 0D       		.uleb128 0xd
+ 1439 0071 00       		.byte	0
+ 1440 0072 03       		.uleb128 0x3
+ 1441 0073 0E       		.uleb128 0xe
+ 1442 0074 3A       		.uleb128 0x3a
+ 1443 0075 0B       		.uleb128 0xb
+ 1444 0076 3B       		.uleb128 0x3b
+ 1445 0077 0B       		.uleb128 0xb
+ 1446 0078 49       		.uleb128 0x49
+ 1447 0079 13       		.uleb128 0x13
+ 1448 007a 38       		.uleb128 0x38
+ 1449 007b 0B       		.uleb128 0xb
+ 1450 007c 00       		.byte	0
+ 1451 007d 00       		.byte	0
+ARM GAS  e:\temp\cczRWvrZ.s 			page 31
+
+
+ 1452 007e 0B       		.uleb128 0xb
+ 1453 007f 01       		.uleb128 0x1
+ 1454 0080 01       		.byte	0x1
+ 1455 0081 49       		.uleb128 0x49
+ 1456 0082 13       		.uleb128 0x13
+ 1457 0083 01       		.uleb128 0x1
+ 1458 0084 13       		.uleb128 0x13
+ 1459 0085 00       		.byte	0
+ 1460 0086 00       		.byte	0
+ 1461 0087 0C       		.uleb128 0xc
+ 1462 0088 21       		.uleb128 0x21
+ 1463 0089 00       		.byte	0
+ 1464 008a 49       		.uleb128 0x49
+ 1465 008b 13       		.uleb128 0x13
+ 1466 008c 2F       		.uleb128 0x2f
+ 1467 008d 0B       		.uleb128 0xb
+ 1468 008e 00       		.byte	0
+ 1469 008f 00       		.byte	0
+ 1470 0090 0D       		.uleb128 0xd
+ 1471 0091 13       		.uleb128 0x13
+ 1472 0092 01       		.byte	0x1
+ 1473 0093 0B       		.uleb128 0xb
+ 1474 0094 05       		.uleb128 0x5
+ 1475 0095 3A       		.uleb128 0x3a
+ 1476 0096 0B       		.uleb128 0xb
+ 1477 0097 3B       		.uleb128 0x3b
+ 1478 0098 0B       		.uleb128 0xb
+ 1479 0099 01       		.uleb128 0x1
+ 1480 009a 13       		.uleb128 0x13
+ 1481 009b 00       		.byte	0
+ 1482 009c 00       		.byte	0
+ 1483 009d 0E       		.uleb128 0xe
+ 1484 009e 0D       		.uleb128 0xd
+ 1485 009f 00       		.byte	0
+ 1486 00a0 03       		.uleb128 0x3
+ 1487 00a1 0E       		.uleb128 0xe
+ 1488 00a2 3A       		.uleb128 0x3a
+ 1489 00a3 0B       		.uleb128 0xb
+ 1490 00a4 3B       		.uleb128 0x3b
+ 1491 00a5 0B       		.uleb128 0xb
+ 1492 00a6 49       		.uleb128 0x49
+ 1493 00a7 13       		.uleb128 0x13
+ 1494 00a8 38       		.uleb128 0x38
+ 1495 00a9 05       		.uleb128 0x5
+ 1496 00aa 00       		.byte	0
+ 1497 00ab 00       		.byte	0
+ 1498 00ac 0F       		.uleb128 0xf
+ 1499 00ad 0D       		.uleb128 0xd
+ 1500 00ae 00       		.byte	0
+ 1501 00af 03       		.uleb128 0x3
+ 1502 00b0 08       		.uleb128 0x8
+ 1503 00b1 3A       		.uleb128 0x3a
+ 1504 00b2 0B       		.uleb128 0xb
+ 1505 00b3 3B       		.uleb128 0x3b
+ 1506 00b4 0B       		.uleb128 0xb
+ 1507 00b5 49       		.uleb128 0x49
+ 1508 00b6 13       		.uleb128 0x13
+ARM GAS  e:\temp\cczRWvrZ.s 			page 32
+
+
+ 1509 00b7 38       		.uleb128 0x38
+ 1510 00b8 05       		.uleb128 0x5
+ 1511 00b9 00       		.byte	0
+ 1512 00ba 00       		.byte	0
+ 1513 00bb 10       		.uleb128 0x10
+ 1514 00bc 0F       		.uleb128 0xf
+ 1515 00bd 00       		.byte	0
+ 1516 00be 0B       		.uleb128 0xb
+ 1517 00bf 0B       		.uleb128 0xb
+ 1518 00c0 49       		.uleb128 0x49
+ 1519 00c1 13       		.uleb128 0x13
+ 1520 00c2 00       		.byte	0
+ 1521 00c3 00       		.byte	0
+ 1522 00c4 11       		.uleb128 0x11
+ 1523 00c5 2E       		.uleb128 0x2e
+ 1524 00c6 01       		.byte	0x1
+ 1525 00c7 3F       		.uleb128 0x3f
+ 1526 00c8 19       		.uleb128 0x19
+ 1527 00c9 03       		.uleb128 0x3
+ 1528 00ca 0E       		.uleb128 0xe
+ 1529 00cb 3A       		.uleb128 0x3a
+ 1530 00cc 0B       		.uleb128 0xb
+ 1531 00cd 3B       		.uleb128 0x3b
+ 1532 00ce 0B       		.uleb128 0xb
+ 1533 00cf 27       		.uleb128 0x27
+ 1534 00d0 19       		.uleb128 0x19
+ 1535 00d1 11       		.uleb128 0x11
+ 1536 00d2 01       		.uleb128 0x1
+ 1537 00d3 12       		.uleb128 0x12
+ 1538 00d4 06       		.uleb128 0x6
+ 1539 00d5 40       		.uleb128 0x40
+ 1540 00d6 18       		.uleb128 0x18
+ 1541 00d7 9742     		.uleb128 0x2117
+ 1542 00d9 19       		.uleb128 0x19
+ 1543 00da 01       		.uleb128 0x1
+ 1544 00db 13       		.uleb128 0x13
+ 1545 00dc 00       		.byte	0
+ 1546 00dd 00       		.byte	0
+ 1547 00de 12       		.uleb128 0x12
+ 1548 00df 05       		.uleb128 0x5
+ 1549 00e0 00       		.byte	0
+ 1550 00e1 03       		.uleb128 0x3
+ 1551 00e2 0E       		.uleb128 0xe
+ 1552 00e3 3A       		.uleb128 0x3a
+ 1553 00e4 0B       		.uleb128 0xb
+ 1554 00e5 3B       		.uleb128 0x3b
+ 1555 00e6 0B       		.uleb128 0xb
+ 1556 00e7 49       		.uleb128 0x49
+ 1557 00e8 13       		.uleb128 0x13
+ 1558 00e9 02       		.uleb128 0x2
+ 1559 00ea 18       		.uleb128 0x18
+ 1560 00eb 00       		.byte	0
+ 1561 00ec 00       		.byte	0
+ 1562 00ed 13       		.uleb128 0x13
+ 1563 00ee 2E       		.uleb128 0x2e
+ 1564 00ef 00       		.byte	0
+ 1565 00f0 3F       		.uleb128 0x3f
+ARM GAS  e:\temp\cczRWvrZ.s 			page 33
+
+
+ 1566 00f1 19       		.uleb128 0x19
+ 1567 00f2 03       		.uleb128 0x3
+ 1568 00f3 0E       		.uleb128 0xe
+ 1569 00f4 3A       		.uleb128 0x3a
+ 1570 00f5 0B       		.uleb128 0xb
+ 1571 00f6 3B       		.uleb128 0x3b
+ 1572 00f7 0B       		.uleb128 0xb
+ 1573 00f8 27       		.uleb128 0x27
+ 1574 00f9 19       		.uleb128 0x19
+ 1575 00fa 49       		.uleb128 0x49
+ 1576 00fb 13       		.uleb128 0x13
+ 1577 00fc 11       		.uleb128 0x11
+ 1578 00fd 01       		.uleb128 0x1
+ 1579 00fe 12       		.uleb128 0x12
+ 1580 00ff 06       		.uleb128 0x6
+ 1581 0100 40       		.uleb128 0x40
+ 1582 0101 18       		.uleb128 0x18
+ 1583 0102 9742     		.uleb128 0x2117
+ 1584 0104 19       		.uleb128 0x19
+ 1585 0105 00       		.byte	0
+ 1586 0106 00       		.byte	0
+ 1587 0107 14       		.uleb128 0x14
+ 1588 0108 2E       		.uleb128 0x2e
+ 1589 0109 01       		.byte	0x1
+ 1590 010a 3F       		.uleb128 0x3f
+ 1591 010b 19       		.uleb128 0x19
+ 1592 010c 03       		.uleb128 0x3
+ 1593 010d 0E       		.uleb128 0xe
+ 1594 010e 3A       		.uleb128 0x3a
+ 1595 010f 0B       		.uleb128 0xb
+ 1596 0110 3B       		.uleb128 0x3b
+ 1597 0111 0B       		.uleb128 0xb
+ 1598 0112 27       		.uleb128 0x27
+ 1599 0113 19       		.uleb128 0x19
+ 1600 0114 49       		.uleb128 0x49
+ 1601 0115 13       		.uleb128 0x13
+ 1602 0116 11       		.uleb128 0x11
+ 1603 0117 01       		.uleb128 0x1
+ 1604 0118 12       		.uleb128 0x12
+ 1605 0119 06       		.uleb128 0x6
+ 1606 011a 40       		.uleb128 0x40
+ 1607 011b 18       		.uleb128 0x18
+ 1608 011c 9742     		.uleb128 0x2117
+ 1609 011e 19       		.uleb128 0x19
+ 1610 011f 01       		.uleb128 0x1
+ 1611 0120 13       		.uleb128 0x13
+ 1612 0121 00       		.byte	0
+ 1613 0122 00       		.byte	0
+ 1614 0123 15       		.uleb128 0x15
+ 1615 0124 34       		.uleb128 0x34
+ 1616 0125 00       		.byte	0
+ 1617 0126 03       		.uleb128 0x3
+ 1618 0127 0E       		.uleb128 0xe
+ 1619 0128 3A       		.uleb128 0x3a
+ 1620 0129 0B       		.uleb128 0xb
+ 1621 012a 3B       		.uleb128 0x3b
+ 1622 012b 0B       		.uleb128 0xb
+ARM GAS  e:\temp\cczRWvrZ.s 			page 34
+
+
+ 1623 012c 49       		.uleb128 0x49
+ 1624 012d 13       		.uleb128 0x13
+ 1625 012e 02       		.uleb128 0x2
+ 1626 012f 17       		.uleb128 0x17
+ 1627 0130 00       		.byte	0
+ 1628 0131 00       		.byte	0
+ 1629 0132 16       		.uleb128 0x16
+ 1630 0133 898201   		.uleb128 0x4109
+ 1631 0136 00       		.byte	0
+ 1632 0137 11       		.uleb128 0x11
+ 1633 0138 01       		.uleb128 0x1
+ 1634 0139 31       		.uleb128 0x31
+ 1635 013a 13       		.uleb128 0x13
+ 1636 013b 00       		.byte	0
+ 1637 013c 00       		.byte	0
+ 1638 013d 17       		.uleb128 0x17
+ 1639 013e 05       		.uleb128 0x5
+ 1640 013f 00       		.byte	0
+ 1641 0140 03       		.uleb128 0x3
+ 1642 0141 0E       		.uleb128 0xe
+ 1643 0142 3A       		.uleb128 0x3a
+ 1644 0143 0B       		.uleb128 0xb
+ 1645 0144 3B       		.uleb128 0x3b
+ 1646 0145 0B       		.uleb128 0xb
+ 1647 0146 49       		.uleb128 0x49
+ 1648 0147 13       		.uleb128 0x13
+ 1649 0148 02       		.uleb128 0x2
+ 1650 0149 17       		.uleb128 0x17
+ 1651 014a 00       		.byte	0
+ 1652 014b 00       		.byte	0
+ 1653 014c 18       		.uleb128 0x18
+ 1654 014d 34       		.uleb128 0x34
+ 1655 014e 00       		.byte	0
+ 1656 014f 03       		.uleb128 0x3
+ 1657 0150 0E       		.uleb128 0xe
+ 1658 0151 3A       		.uleb128 0x3a
+ 1659 0152 0B       		.uleb128 0xb
+ 1660 0153 3B       		.uleb128 0x3b
+ 1661 0154 0B       		.uleb128 0xb
+ 1662 0155 49       		.uleb128 0x49
+ 1663 0156 13       		.uleb128 0x13
+ 1664 0157 3F       		.uleb128 0x3f
+ 1665 0158 19       		.uleb128 0x19
+ 1666 0159 02       		.uleb128 0x2
+ 1667 015a 18       		.uleb128 0x18
+ 1668 015b 00       		.byte	0
+ 1669 015c 00       		.byte	0
+ 1670 015d 19       		.uleb128 0x19
+ 1671 015e 34       		.uleb128 0x34
+ 1672 015f 00       		.byte	0
+ 1673 0160 03       		.uleb128 0x3
+ 1674 0161 0E       		.uleb128 0xe
+ 1675 0162 3A       		.uleb128 0x3a
+ 1676 0163 0B       		.uleb128 0xb
+ 1677 0164 3B       		.uleb128 0x3b
+ 1678 0165 0B       		.uleb128 0xb
+ 1679 0166 49       		.uleb128 0x49
+ARM GAS  e:\temp\cczRWvrZ.s 			page 35
+
+
+ 1680 0167 13       		.uleb128 0x13
+ 1681 0168 3F       		.uleb128 0x3f
+ 1682 0169 19       		.uleb128 0x19
+ 1683 016a 3C       		.uleb128 0x3c
+ 1684 016b 19       		.uleb128 0x19
+ 1685 016c 00       		.byte	0
+ 1686 016d 00       		.byte	0
+ 1687 016e 00       		.byte	0
+ 1688              		.section	.debug_loc,"",%progbits
+ 1689              	.Ldebug_loc0:
+ 1690              	.LLST0:
+ 1691 0000 0A000000 		.4byte	.LVL2
+ 1692 0004 14000000 		.4byte	.LVL3
+ 1693 0008 0100     		.2byte	0x1
+ 1694 000a 52       		.byte	0x52
+ 1695 000b 14000000 		.4byte	.LVL3
+ 1696 000f 20000000 		.4byte	.LFE41
+ 1697 0013 0100     		.2byte	0x1
+ 1698 0015 50       		.byte	0x50
+ 1699 0016 00000000 		.4byte	0
+ 1700 001a 00000000 		.4byte	0
+ 1701              	.LLST1:
+ 1702 001e 0E000000 		.4byte	.LVL5
+ 1703 0022 10000000 		.4byte	.LVL6
+ 1704 0026 0100     		.2byte	0x1
+ 1705 0028 50       		.byte	0x50
+ 1706 0029 14000000 		.4byte	.LVL7
+ 1707 002d 16000000 		.4byte	.LVL8
+ 1708 0031 0100     		.2byte	0x1
+ 1709 0033 50       		.byte	0x50
+ 1710 0034 16000000 		.4byte	.LVL8
+ 1711 0038 18000000 		.4byte	.LFE42
+ 1712 003c 0400     		.2byte	0x4
+ 1713 003e 70       		.byte	0x70
+ 1714 003f C07E     		.sleb128 -192
+ 1715 0041 9F       		.byte	0x9f
+ 1716 0042 00000000 		.4byte	0
+ 1717 0046 00000000 		.4byte	0
+ 1718              	.LLST2:
+ 1719 004a 00000000 		.4byte	.LVL9
+ 1720 004e 06000000 		.4byte	.LVL11
+ 1721 0052 0100     		.2byte	0x1
+ 1722 0054 50       		.byte	0x50
+ 1723 0055 06000000 		.4byte	.LVL11
+ 1724 0059 08000000 		.4byte	.LVL12
+ 1725 005d 0100     		.2byte	0x1
+ 1726 005f 53       		.byte	0x53
+ 1727 0060 08000000 		.4byte	.LVL12
+ 1728 0064 20000000 		.4byte	.LFE43
+ 1729 0068 0400     		.2byte	0x4
+ 1730 006a F3       		.byte	0xf3
+ 1731 006b 01       		.uleb128 0x1
+ 1732 006c 50       		.byte	0x50
+ 1733 006d 9F       		.byte	0x9f
+ 1734 006e 00000000 		.4byte	0
+ 1735 0072 00000000 		.4byte	0
+ 1736              	.LLST3:
+ARM GAS  e:\temp\cczRWvrZ.s 			page 36
+
+
+ 1737 0076 04000000 		.4byte	.LVL10
+ 1738 007a 10000000 		.4byte	.LVL14
+ 1739 007e 0100     		.2byte	0x1
+ 1740 0080 52       		.byte	0x52
+ 1741 0081 10000000 		.4byte	.LVL14
+ 1742 0085 20000000 		.4byte	.LFE43
+ 1743 0089 0500     		.2byte	0x5
+ 1744 008b F3       		.byte	0xf3
+ 1745 008c 01       		.uleb128 0x1
+ 1746 008d 50       		.byte	0x50
+ 1747 008e 23       		.byte	0x23
+ 1748 008f 03       		.uleb128 0x3
+ 1749 0090 00000000 		.4byte	0
+ 1750 0094 00000000 		.4byte	0
+ 1751              	.LLST4:
+ 1752 0098 06000000 		.4byte	.LVL11
+ 1753 009c 0A000000 		.4byte	.LVL13
+ 1754 00a0 0100     		.2byte	0x1
+ 1755 00a2 50       		.byte	0x50
+ 1756 00a3 0A000000 		.4byte	.LVL13
+ 1757 00a7 20000000 		.4byte	.LFE43
+ 1758 00ab 0500     		.2byte	0x5
+ 1759 00ad F3       		.byte	0xf3
+ 1760 00ae 01       		.uleb128 0x1
+ 1761 00af 50       		.byte	0x50
+ 1762 00b0 23       		.byte	0x23
+ 1763 00b1 06       		.uleb128 0x6
+ 1764 00b2 00000000 		.4byte	0
+ 1765 00b6 00000000 		.4byte	0
+ 1766              	.LLST5:
+ 1767 00ba 08000000 		.4byte	.LVL12
+ 1768 00be 18000000 		.4byte	.LVL15
+ 1769 00c2 0100     		.2byte	0x1
+ 1770 00c4 53       		.byte	0x53
+ 1771 00c5 18000000 		.4byte	.LVL15
+ 1772 00c9 20000000 		.4byte	.LFE43
+ 1773 00cd 0500     		.2byte	0x5
+ 1774 00cf F3       		.byte	0xf3
+ 1775 00d0 01       		.uleb128 0x1
+ 1776 00d1 50       		.byte	0x50
+ 1777 00d2 23       		.byte	0x23
+ 1778 00d3 07       		.uleb128 0x7
+ 1779 00d4 00000000 		.4byte	0
+ 1780 00d8 00000000 		.4byte	0
+ 1781              		.section	.debug_aranges,"",%progbits
+ 1782 0000 74000000 		.4byte	0x74
+ 1783 0004 0200     		.2byte	0x2
+ 1784 0006 00000000 		.4byte	.Ldebug_info0
+ 1785 000a 04       		.byte	0x4
+ 1786 000b 00       		.byte	0
+ 1787 000c 0000     		.2byte	0
+ 1788 000e 0000     		.2byte	0
+ 1789 0010 00000000 		.4byte	.LFB32
+ 1790 0014 0C000000 		.4byte	.LFE32-.LFB32
+ 1791 0018 00000000 		.4byte	.LFB33
+ 1792 001c 0C000000 		.4byte	.LFE33-.LFB33
+ 1793 0020 00000000 		.4byte	.LFB34
+ARM GAS  e:\temp\cczRWvrZ.s 			page 37
+
+
+ 1794 0024 04000000 		.4byte	.LFE34-.LFB34
+ 1795 0028 00000000 		.4byte	.LFB35
+ 1796 002c 08000000 		.4byte	.LFE35-.LFB35
+ 1797 0030 00000000 		.4byte	.LFB36
+ 1798 0034 08000000 		.4byte	.LFE36-.LFB36
+ 1799 0038 00000000 		.4byte	.LFB37
+ 1800 003c 04000000 		.4byte	.LFE37-.LFB37
+ 1801 0040 00000000 		.4byte	.LFB38
+ 1802 0044 04000000 		.4byte	.LFE38-.LFB38
+ 1803 0048 00000000 		.4byte	.LFB39
+ 1804 004c 4C000000 		.4byte	.LFE39-.LFB39
+ 1805 0050 00000000 		.4byte	.LFB40
+ 1806 0054 10000000 		.4byte	.LFE40-.LFB40
+ 1807 0058 00000000 		.4byte	.LFB41
+ 1808 005c 20000000 		.4byte	.LFE41-.LFB41
+ 1809 0060 00000000 		.4byte	.LFB42
+ 1810 0064 18000000 		.4byte	.LFE42-.LFB42
+ 1811 0068 00000000 		.4byte	.LFB43
+ 1812 006c 20000000 		.4byte	.LFE43-.LFB43
+ 1813 0070 00000000 		.4byte	0
+ 1814 0074 00000000 		.4byte	0
+ 1815              		.section	.debug_ranges,"",%progbits
+ 1816              	.Ldebug_ranges0:
+ 1817 0000 00000000 		.4byte	.LFB32
+ 1818 0004 0C000000 		.4byte	.LFE32
+ 1819 0008 00000000 		.4byte	.LFB33
+ 1820 000c 0C000000 		.4byte	.LFE33
+ 1821 0010 00000000 		.4byte	.LFB34
+ 1822 0014 04000000 		.4byte	.LFE34
+ 1823 0018 00000000 		.4byte	.LFB35
+ 1824 001c 08000000 		.4byte	.LFE35
+ 1825 0020 00000000 		.4byte	.LFB36
+ 1826 0024 08000000 		.4byte	.LFE36
+ 1827 0028 00000000 		.4byte	.LFB37
+ 1828 002c 04000000 		.4byte	.LFE37
+ 1829 0030 00000000 		.4byte	.LFB38
+ 1830 0034 04000000 		.4byte	.LFE38
+ 1831 0038 00000000 		.4byte	.LFB39
+ 1832 003c 4C000000 		.4byte	.LFE39
+ 1833 0040 00000000 		.4byte	.LFB40
+ 1834 0044 10000000 		.4byte	.LFE40
+ 1835 0048 00000000 		.4byte	.LFB41
+ 1836 004c 20000000 		.4byte	.LFE41
+ 1837 0050 00000000 		.4byte	.LFB42
+ 1838 0054 18000000 		.4byte	.LFE42
+ 1839 0058 00000000 		.4byte	.LFB43
+ 1840 005c 20000000 		.4byte	.LFE43
+ 1841 0060 00000000 		.4byte	0
+ 1842 0064 00000000 		.4byte	0
+ 1843              		.section	.debug_line,"",%progbits
+ 1844              	.Ldebug_line0:
+ 1845 0000 38020000 		.section	.debug_str,"MS",%progbits,1
+ 1845      02004B01 
+ 1845      00000201 
+ 1845      FB0E0D00 
+ 1845      01010101 
+ 1846              	.LASF113:
+ARM GAS  e:\temp\cczRWvrZ.s 			page 38
+
+
+ 1847 0000 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1847      43313120 
+ 1847      352E342E 
+ 1847      31203230 
+ 1847      31363036 
+ 1848 0033 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1848      20726576 
+ 1848      6973696F 
+ 1848      6E203233 
+ 1848      37373135 
+ 1849 0066 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 1849      66756E63 
+ 1849      74696F6E 
+ 1849      2D736563 
+ 1849      74696F6E 
+ 1850 0099 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 1850      6F6E7320 
+ 1850      2D666E6F 
+ 1850      2D737472 
+ 1850      6963742D 
+ 1851              	.LASF104:
+ 1852 00b6 7379735F 		.ascii	"sys_get_bcdDevice_version\000"
+ 1852      6765745F 
+ 1852      62636444 
+ 1852      65766963 
+ 1852      655F7665 
+ 1853              	.LASF29:
+ 1854 00d0 66775F65 		.ascii	"fw_entry\000"
+ 1854      6E747279 
+ 1854      00
+ 1855              	.LASF36:
+ 1856 00d9 626F6F74 		.ascii	"boot_app_version\000"
+ 1856      5F617070 
+ 1856      5F766572 
+ 1856      73696F6E 
+ 1856      00
+ 1857              	.LASF41:
+ 1858 00ea 7379735F 		.ascii	"sys_fw_metadata_t\000"
+ 1858      66775F6D 
+ 1858      65746164 
+ 1858      6174615F 
+ 1858      7400
+ 1859              	.LASF95:
+ 1860 00fc 7379735F 		.ascii	"sys_get_fw_img2_start_addr\000"
+ 1860      6765745F 
+ 1860      66775F69 
+ 1860      6D67325F 
+ 1860      73746172 
+ 1861              	.LASF2:
+ 1862 0117 73686F72 		.ascii	"short int\000"
+ 1862      7420696E 
+ 1862      7400
+ 1863              	.LASF32:
+ 1864 0121 66775F73 		.ascii	"fw_size\000"
+ 1864      697A6500 
+ 1865              	.LASF22:
+ 1866 0129 73697A65 		.ascii	"sizetype\000"
+ARM GAS  e:\temp\cczRWvrZ.s 			page 39
+
+
+ 1866      74797065 
+ 1866      00
+ 1867              	.LASF27:
+ 1868 0132 7379735F 		.ascii	"sys_fw_mode_t\000"
+ 1868      66775F6D 
+ 1868      6F64655F 
+ 1868      7400
+ 1869              	.LASF52:
+ 1870 0140 63707573 		.ascii	"cpuss_priv_flash\000"
+ 1870      735F7072 
+ 1870      69765F66 
+ 1870      6C617368 
+ 1870      00
+ 1871              	.LASF39:
+ 1872 0151 66775F76 		.ascii	"fw_version\000"
+ 1872      65727369 
+ 1872      6F6E00
+ 1873              	.LASF57:
+ 1874 015c 72737276 		.ascii	"rsrvd2\000"
+ 1874      643200
+ 1875              	.LASF60:
+ 1876 0163 72737276 		.ascii	"rsrvd3\000"
+ 1876      643300
+ 1877              	.LASF75:
+ 1878 016a 72737276 		.ascii	"rsrvd4\000"
+ 1878      643400
+ 1879              	.LASF81:
+ 1880 0171 72737276 		.ascii	"rsrvd5\000"
+ 1880      643500
+ 1881              	.LASF84:
+ 1882 0178 72737276 		.ascii	"rsrvd6\000"
+ 1882      643600
+ 1883              	.LASF87:
+ 1884 017f 72737276 		.ascii	"rsrvd7\000"
+ 1884      643700
+ 1885              	.LASF4:
+ 1886 0186 5F5F7569 		.ascii	"__uint16_t\000"
+ 1886      6E743136 
+ 1886      5F7400
+ 1887              	.LASF69:
+ 1888 0191 6469655F 		.ascii	"die_lot\000"
+ 1888      6C6F7400 
+ 1889              	.LASF38:
+ 1890 0199 6D657461 		.ascii	"metadata_valid\000"
+ 1890      64617461 
+ 1890      5F76616C 
+ 1890      696400
+ 1891              	.LASF53:
+ 1892 01a8 63707573 		.ascii	"cpuss_priv_rom_srom\000"
+ 1892      735F7072 
+ 1892      69765F72 
+ 1892      6F6D5F73 
+ 1892      726F6D00 
+ 1893              	.LASF62:
+ 1894 01bc 696E6974 		.ascii	"initial_pwr_bg_trim1\000"
+ 1894      69616C5F 
+ 1894      7077725F 
+ARM GAS  e:\temp\cczRWvrZ.s 			page 40
+
+
+ 1894      62675F74 
+ 1894      72696D31 
+ 1895              	.LASF40:
+ 1896 01d1 626F6F74 		.ascii	"boot_seq\000"
+ 1896      5F736571 
+ 1896      00
+ 1897              	.LASF65:
+ 1898 01da 696E6974 		.ascii	"initial_pwr_bg_trim2_inv\000"
+ 1898      69616C5F 
+ 1898      7077725F 
+ 1898      62675F74 
+ 1898      72696D32 
+ 1899              	.LASF12:
+ 1900 01f3 75696E74 		.ascii	"uint8_t\000"
+ 1900      385F7400 
+ 1901              	.LASF26:
+ 1902 01fb 5359535F 		.ascii	"SYS_FW_MODE_INVALID\000"
+ 1902      46575F4D 
+ 1902      4F44455F 
+ 1902      494E5641 
+ 1902      4C494400 
+ 1903              	.LASF80:
+ 1904 020f 65735F70 		.ascii	"es_p_eo\000"
+ 1904      5F656F00 
+ 1905              	.LASF100:
+ 1906 0217 6765745F 		.ascii	"get_silicon_revision\000"
+ 1906      73696C69 
+ 1906      636F6E5F 
+ 1906      72657669 
+ 1906      73696F6E 
+ 1907              	.LASF45:
+ 1908 022c 61765F70 		.ascii	"av_pairs_8b\000"
+ 1908      61697273 
+ 1908      5F386200 
+ 1909              	.LASF105:
+ 1910 0238 7665725F 		.ascii	"ver_addr\000"
+ 1910      61646472 
+ 1910      00
+ 1911              	.LASF0:
+ 1912 0241 7369676E 		.ascii	"signed char\000"
+ 1912      65642063 
+ 1912      68617200 
+ 1913              	.LASF79:
+ 1914 024d 65735F65 		.ascii	"es_e\000"
+ 1914      00
+ 1915              	.LASF68:
+ 1916 0252 70726F74 		.ascii	"prot_virginkey\000"
+ 1916      5F766972 
+ 1916      67696E6B 
+ 1916      657900
+ 1917              	.LASF50:
+ 1918 0261 63707573 		.ascii	"cpuss_priv_ram\000"
+ 1918      735F7072 
+ 1918      69765F72 
+ 1918      616D00
+ 1919              	.LASF17:
+ 1920 0270 666C6F61 		.ascii	"float\000"
+ARM GAS  e:\temp\cczRWvrZ.s 			page 41
+
+
+ 1920      7400
+ 1921              	.LASF89:
+ 1922 0276 5053464C 		.ascii	"PSFLASH_REGS_T\000"
+ 1922      4153485F 
+ 1922      52454753 
+ 1922      5F5400
+ 1923              	.LASF28:
+ 1924 0285 66775F63 		.ascii	"fw_checksum\000"
+ 1924      6865636B 
+ 1924      73756D00 
+ 1925              	.LASF9:
+ 1926 0291 6C6F6E67 		.ascii	"long long int\000"
+ 1926      206C6F6E 
+ 1926      6720696E 
+ 1926      7400
+ 1927              	.LASF10:
+ 1928 029f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1928      206C6F6E 
+ 1928      6720756E 
+ 1928      7369676E 
+ 1928      65642069 
+ 1929              	.LASF54:
+ 1930 02b6 6869625F 		.ascii	"hib_key_delay\000"
+ 1930      6B65795F 
+ 1930      64656C61 
+ 1930      7900
+ 1931              	.LASF23:
+ 1932 02c4 5359535F 		.ascii	"SYS_FW_MODE_BOOTLOADER\000"
+ 1932      46575F4D 
+ 1932      4F44455F 
+ 1932      424F4F54 
+ 1932      4C4F4144 
+ 1933              	.LASF55:
+ 1934 02db 6470736C 		.ascii	"dpslp_key_delay\000"
+ 1934      705F6B65 
+ 1934      795F6465 
+ 1934      6C617900 
+ 1935              	.LASF61:
+ 1936 02eb 736B6970 		.ascii	"skip_checksum\000"
+ 1936      5F636865 
+ 1936      636B7375 
+ 1936      6D00
+ 1937              	.LASF6:
+ 1938 02f9 6C6F6E67 		.ascii	"long int\000"
+ 1938      20696E74 
+ 1938      00
+ 1939              	.LASF31:
+ 1940 0302 72657365 		.ascii	"reserved1\000"
+ 1940      72766564 
+ 1940      3100
+ 1941              	.LASF77:
+ 1942 030c 65615F65 		.ascii	"ea_e\000"
+ 1942      00
+ 1943              	.LASF103:
+ 1944 0311 61646472 		.ascii	"addr\000"
+ 1944      00
+ 1945              	.LASF56:
+ARM GAS  e:\temp\cczRWvrZ.s 			page 42
+
+
+ 1946 0316 7377645F 		.ascii	"swd_config\000"
+ 1946      636F6E66 
+ 1946      696700
+ 1947              	.LASF98:
+ 1948 0321 7379735F 		.ascii	"sys_get_silicon_id\000"
+ 1948      6765745F 
+ 1948      73696C69 
+ 1948      636F6E5F 
+ 1948      696400
+ 1949              	.LASF3:
+ 1950 0334 5F5F7569 		.ascii	"__uint8_t\000"
+ 1950      6E74385F 
+ 1950      7400
+ 1951              	.LASF109:
+ 1952 033e 676C5F61 		.ascii	"gl_active_fw\000"
+ 1952      63746976 
+ 1952      655F6677 
+ 1952      00
+ 1953              	.LASF70:
+ 1954 034b 6469655F 		.ascii	"die_wafer\000"
+ 1954      77616665 
+ 1954      7200
+ 1955              	.LASF111:
+ 1956 0355 676C5F69 		.ascii	"gl_img1_fw_metadata\000"
+ 1956      6D67315F 
+ 1956      66775F6D 
+ 1956      65746164 
+ 1956      61746100 
+ 1957              	.LASF96:
+ 1958 0369 7379735F 		.ascii	"sys_get_recent_fw_image\000"
+ 1958      6765745F 
+ 1958      72656365 
+ 1958      6E745F66 
+ 1958      775F696D 
+ 1959              	.LASF115:
+ 1960 0381 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 1960      73657273 
+ 1960      5C41646D 
+ 1960      696E5C44 
+ 1960      65736B74 
+ 1961 03ae 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 1961      355C4359 
+ 1961      50443532 
+ 1961      32352D39 
+ 1961      36425A58 
+ 1962 03df 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 1962      6F6B2E63 
+ 1962      7964736E 
+ 1962      5C6E6F62 
+ 1962      6F6F742E 
+ 1963              	.LASF21:
+ 1964 03f9 6C6F6E67 		.ascii	"long double\000"
+ 1964      20646F75 
+ 1964      626C6500 
+ 1965              	.LASF71:
+ 1966 0405 6469655F 		.ascii	"die_x\000"
+ 1966      7800
+ARM GAS  e:\temp\cczRWvrZ.s 			page 43
+
+
+ 1967              	.LASF42:
+ 1968 040b 70726F74 		.ascii	"prot_row\000"
+ 1968      5F726F77 
+ 1968      00
+ 1969              	.LASF1:
+ 1970 0414 756E7369 		.ascii	"unsigned char\000"
+ 1970      676E6564 
+ 1970      20636861 
+ 1970      7200
+ 1971              	.LASF106:
+ 1972 0422 62617365 		.ascii	"base_major_minor\000"
+ 1972      5F6D616A 
+ 1972      6F725F6D 
+ 1972      696E6F72 
+ 1972      00
+ 1973              	.LASF110:
+ 1974 0433 676C5F69 		.ascii	"gl_invalid_version\000"
+ 1974      6E76616C 
+ 1974      69645F76 
+ 1974      65727369 
+ 1974      6F6E00
+ 1975              	.LASF59:
+ 1976 0446 666C6173 		.ascii	"flash_start\000"
+ 1976      685F7374 
+ 1976      61727400 
+ 1977              	.LASF85:
+ 1978 0452 696D6F5F 		.ascii	"imo_tctrim_lt\000"
+ 1978      74637472 
+ 1978      696D5F6C 
+ 1978      7400
+ 1979              	.LASF64:
+ 1980 0460 696E6974 		.ascii	"initial_pwr_bg_trim2\000"
+ 1980      69616C5F 
+ 1980      7077725F 
+ 1980      62675F74 
+ 1980      72696D32 
+ 1981              	.LASF49:
+ 1982 0475 73696C69 		.ascii	"silicon_id\000"
+ 1982      636F6E5F 
+ 1982      696400
+ 1983              	.LASF14:
+ 1984 0480 75696E74 		.ascii	"uint32_t\000"
+ 1984      33325F74 
+ 1984      00
+ 1985              	.LASF66:
+ 1986 0489 696E6974 		.ascii	"initial_spcif_trim_m0_dac0\000"
+ 1986      69616C5F 
+ 1986      73706369 
+ 1986      665F7472 
+ 1986      696D5F6D 
+ 1987              	.LASF94:
+ 1988 04a4 7379735F 		.ascii	"sys_get_fw_img1_start_addr\000"
+ 1988      6765745F 
+ 1988      66775F69 
+ 1988      6D67315F 
+ 1988      73746172 
+ 1989              	.LASF35:
+ARM GAS  e:\temp\cczRWvrZ.s 			page 44
+
+
+ 1990 04bf 626F6F74 		.ascii	"boot_app_ver_status\000"
+ 1990      5F617070 
+ 1990      5F766572 
+ 1990      5F737461 
+ 1990      74757300 
+ 1991              	.LASF76:
+ 1992 04d3 70655F74 		.ascii	"pe_te_data\000"
+ 1992      655F6461 
+ 1992      746100
+ 1993              	.LASF20:
+ 1994 04de 72656733 		.ascii	"reg32\000"
+ 1994      3200
+ 1995              	.LASF51:
+ 1996 04e4 63707573 		.ascii	"cpuss_priv_rom_brom\000"
+ 1996      735F7072 
+ 1996      69765F72 
+ 1996      6F6D5F62 
+ 1996      726F6D00 
+ 1997              	.LASF5:
+ 1998 04f8 73686F72 		.ascii	"short unsigned int\000"
+ 1998      7420756E 
+ 1998      7369676E 
+ 1998      65642069 
+ 1998      6E7400
+ 1999              	.LASF90:
+ 2000 050b 7379735F 		.ascii	"sys_get_device_mode\000"
+ 2000      6765745F 
+ 2000      64657669 
+ 2000      63655F6D 
+ 2000      6F646500 
+ 2001              	.LASF33:
+ 2002 051f 72657365 		.ascii	"reserved2\000"
+ 2002      72766564 
+ 2002      3200
+ 2003              	.LASF19:
+ 2004 0529 63686172 		.ascii	"char\000"
+ 2004      00
+ 2005              	.LASF13:
+ 2006 052e 75696E74 		.ascii	"uint16_t\000"
+ 2006      31365F74 
+ 2006      00
+ 2007              	.LASF30:
+ 2008 0537 626F6F74 		.ascii	"boot_last_row\000"
+ 2008      5F6C6173 
+ 2008      745F726F 
+ 2008      7700
+ 2009              	.LASF112:
+ 2010 0545 676C5F69 		.ascii	"gl_img2_fw_metadata\000"
+ 2010      6D67325F 
+ 2010      66775F6D 
+ 2010      65746164 
+ 2010      61746100 
+ 2011              	.LASF15:
+ 2012 0559 75696E74 		.ascii	"uint8\000"
+ 2012      3800
+ 2013              	.LASF47:
+ 2014 055f 61765F70 		.ascii	"av_pairs_32b\000"
+ARM GAS  e:\temp\cczRWvrZ.s 			page 45
+
+
+ 2014      61697273 
+ 2014      5F333262 
+ 2014      00
+ 2015              	.LASF67:
+ 2016 056c 696E6974 		.ascii	"initial_spcif_trim_m0_dac0_inv\000"
+ 2016      69616C5F 
+ 2016      73706369 
+ 2016      665F7472 
+ 2016      696D5F6D 
+ 2017              	.LASF97:
+ 2018 058b 7379735F 		.ascii	"sys_set_device_mode\000"
+ 2018      7365745F 
+ 2018      64657669 
+ 2018      63655F6D 
+ 2018      6F646500 
+ 2019              	.LASF108:
+ 2020 059f 6170705F 		.ascii	"app_major_minor\000"
+ 2020      6D616A6F 
+ 2020      725F6D69 
+ 2020      6E6F7200 
+ 2021              	.LASF37:
+ 2022 05af 626F6F74 		.ascii	"boot_app_id\000"
+ 2022      5F617070 
+ 2022      5F696400 
+ 2023              	.LASF74:
+ 2024 05bb 6469655F 		.ascii	"die_minor\000"
+ 2024      6D696E6F 
+ 2024      7200
+ 2025              	.LASF16:
+ 2026 05c5 75696E74 		.ascii	"uint32\000"
+ 2026      333200
+ 2027              	.LASF8:
+ 2028 05cc 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2028      20756E73 
+ 2028      69676E65 
+ 2028      6420696E 
+ 2028      7400
+ 2029              	.LASF18:
+ 2030 05de 646F7562 		.ascii	"double\000"
+ 2030      6C6500
+ 2031              	.LASF34:
+ 2032 05e5 61637469 		.ascii	"active_boot_app\000"
+ 2032      76655F62 
+ 2032      6F6F745F 
+ 2032      61707000 
+ 2033              	.LASF114:
+ 2034 05f5 2E2E5C73 		.ascii	"..\\src\\system\\system.c\000"
+ 2034      72635C73 
+ 2034      79737465 
+ 2034      6D5C7379 
+ 2034      7374656D 
+ 2035              	.LASF7:
+ 2036 060c 5F5F7569 		.ascii	"__uint32_t\000"
+ 2036      6E743332 
+ 2036      5F7400
+ 2037              	.LASF72:
+ 2038 0617 6469655F 		.ascii	"die_y\000"
+ARM GAS  e:\temp\cczRWvrZ.s 			page 46
+
+
+ 2038      7900
+ 2039              	.LASF44:
+ 2040 061d 70726F74 		.ascii	"prot_protection\000"
+ 2040      5F70726F 
+ 2040      74656374 
+ 2040      696F6E00 
+ 2041              	.LASF102:
+ 2042 062d 73726576 		.ascii	"srev\000"
+ 2042      00
+ 2043              	.LASF83:
+ 2044 0632 696D6F5F 		.ascii	"imo_trim_usbmode_48\000"
+ 2044      7472696D 
+ 2044      5F757362 
+ 2044      6D6F6465 
+ 2044      5F343800 
+ 2045              	.LASF88:
+ 2046 0646 63686563 		.ascii	"checksum\000"
+ 2046      6B73756D 
+ 2046      00
+ 2047              	.LASF99:
+ 2048 064f 66775F6D 		.ascii	"fw_mode\000"
+ 2048      6F646500 
+ 2049              	.LASF101:
+ 2050 0657 7379735F 		.ascii	"sys_get_custom_info_addr\000"
+ 2050      6765745F 
+ 2050      63757374 
+ 2050      6F6D5F69 
+ 2050      6E666F5F 
+ 2051              	.LASF63:
+ 2052 0670 696E6974 		.ascii	"initial_pwr_bg_trim1_inv\000"
+ 2052      69616C5F 
+ 2052      7077725F 
+ 2052      62675F74 
+ 2052      72696D31 
+ 2053              	.LASF78:
+ 2054 0689 65615F70 		.ascii	"ea_p\000"
+ 2054      00
+ 2055              	.LASF82:
+ 2056 068e 696D6F5F 		.ascii	"imo_trim_usbmode_24\000"
+ 2056      7472696D 
+ 2056      5F757362 
+ 2056      6D6F6465 
+ 2056      5F323400 
+ 2057              	.LASF24:
+ 2058 06a2 5359535F 		.ascii	"SYS_FW_MODE_FWIMAGE_1\000"
+ 2058      46575F4D 
+ 2058      4F44455F 
+ 2058      4657494D 
+ 2058      4147455F 
+ 2059              	.LASF25:
+ 2060 06b8 5359535F 		.ascii	"SYS_FW_MODE_FWIMAGE_2\000"
+ 2060      46575F4D 
+ 2060      4F44455F 
+ 2060      4657494D 
+ 2060      4147455F 
+ 2061              	.LASF92:
+ 2062 06ce 7379735F 		.ascii	"sys_get_img1_fw_version\000"
+ARM GAS  e:\temp\cczRWvrZ.s 			page 47
+
+
+ 2062      6765745F 
+ 2062      696D6731 
+ 2062      5F66775F 
+ 2062      76657273 
+ 2063              	.LASF11:
+ 2064 06e6 756E7369 		.ascii	"unsigned int\000"
+ 2064      676E6564 
+ 2064      20696E74 
+ 2064      00
+ 2065              	.LASF86:
+ 2066 06f3 696D6F5F 		.ascii	"imo_trim_lt\000"
+ 2066      7472696D 
+ 2066      5F6C7400 
+ 2067              	.LASF107:
+ 2068 06ff 6170705F 		.ascii	"app_cir_num\000"
+ 2068      6369725F 
+ 2068      6E756D00 
+ 2069              	.LASF58:
+ 2070 070b 7377645F 		.ascii	"swd_listen\000"
+ 2070      6C697374 
+ 2070      656E00
+ 2071              	.LASF93:
+ 2072 0716 7379735F 		.ascii	"sys_get_img2_fw_version\000"
+ 2072      6765745F 
+ 2072      696D6732 
+ 2072      5F66775F 
+ 2072      76657273 
+ 2073              	.LASF48:
+ 2074 072e 63707573 		.ascii	"cpuss_wounding\000"
+ 2074      735F776F 
+ 2074      756E6469 
+ 2074      6E6700
+ 2075              	.LASF91:
+ 2076 073d 7379735F 		.ascii	"sys_get_boot_version\000"
+ 2076      6765745F 
+ 2076      626F6F74 
+ 2076      5F766572 
+ 2076      73696F6E 
+ 2077              	.LASF43:
+ 2078 0752 72737276 		.ascii	"rsrvd0\000"
+ 2078      643000
+ 2079              	.LASF73:
+ 2080 0759 6469655F 		.ascii	"die_sort\000"
+ 2080      736F7274 
+ 2080      00
+ 2081              	.LASF46:
+ 2082 0762 72737276 		.ascii	"rsrvd1\000"
+ 2082      643100
+ 2083              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

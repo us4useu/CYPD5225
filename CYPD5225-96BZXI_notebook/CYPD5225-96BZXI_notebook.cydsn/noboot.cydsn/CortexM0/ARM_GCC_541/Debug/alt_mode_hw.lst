@@ -1,0 +1,4929 @@
+ARM GAS  e:\temp\ccdmNCtc.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"alt_mode_hw.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.dp_src_hpd_cbk,"ax",%progbits
+  20              		.align	2
+  21              		.code	16
+  22              		.thumb_func
+  23              		.type	dp_src_hpd_cbk, %function
+  24              	dp_src_hpd_cbk:
+  25              	.LFB36:
+  26              		.file 1 "..\\src\\app\\alt_mode\\alt_mode_hw.c"
+   1:..\src\app\alt_mode/alt_mode_hw.c **** /**
+   2:..\src\app\alt_mode/alt_mode_hw.c ****  * @file alt_mode_hw.c
+   3:..\src\app\alt_mode/alt_mode_hw.c ****  *
+   4:..\src\app\alt_mode/alt_mode_hw.c ****  * @brief @{Hardware control for Alternate mode implementation.@}
+   5:..\src\app\alt_mode/alt_mode_hw.c ****  *
+   6:..\src\app\alt_mode/alt_mode_hw.c ****  *******************************************************************************
+   7:..\src\app\alt_mode/alt_mode_hw.c ****  *
+   8:..\src\app\alt_mode/alt_mode_hw.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+   9:..\src\app\alt_mode/alt_mode_hw.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  10:..\src\app\alt_mode/alt_mode_hw.c ****  *
+  11:..\src\app\alt_mode/alt_mode_hw.c ****  * This software, including source code, documentation and related materials
+  12:..\src\app\alt_mode/alt_mode_hw.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  13:..\src\app\alt_mode/alt_mode_hw.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  14:..\src\app\alt_mode/alt_mode_hw.c ****  * protection (United States and foreign), United States copyright laws and
+  15:..\src\app\alt_mode/alt_mode_hw.c ****  * international treaty provisions. Therefore, you may use this Software only
+  16:..\src\app\alt_mode/alt_mode_hw.c ****  * as provided in the license agreement accompanying the software package from
+  17:..\src\app\alt_mode/alt_mode_hw.c ****  * which you obtained this Software (“EULA”).
+  18:..\src\app\alt_mode/alt_mode_hw.c ****  *
+  19:..\src\app\alt_mode/alt_mode_hw.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  20:..\src\app\alt_mode/alt_mode_hw.c ****  * non-transferable license to copy, modify, and compile the Software source
+  21:..\src\app\alt_mode/alt_mode_hw.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  22:..\src\app\alt_mode/alt_mode_hw.c ****  * products. Any reproduction, modification, translation, compilation, or
+  23:..\src\app\alt_mode/alt_mode_hw.c ****  * representation of this Software except as specified above is prohibited
+  24:..\src\app\alt_mode/alt_mode_hw.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  25:..\src\app\alt_mode/alt_mode_hw.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  26:..\src\app\alt_mode/alt_mode_hw.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  27:..\src\app\alt_mode/alt_mode_hw.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  28:..\src\app\alt_mode/alt_mode_hw.c ****  * right to make changes to the Software without notice. Cypress does not
+  29:..\src\app\alt_mode/alt_mode_hw.c ****  * assume any liability arising out of the application or use of the Software
+  30:..\src\app\alt_mode/alt_mode_hw.c ****  * or any product or circuit described in the Software. Cypress does not
+  31:..\src\app\alt_mode/alt_mode_hw.c ****  * authorize its products for use in any products where a malfunction or
+ARM GAS  e:\temp\ccdmNCtc.s 			page 2
+
+
+  32:..\src\app\alt_mode/alt_mode_hw.c ****  * failure of the Cypress product may reasonably be expected to result in
+  33:..\src\app\alt_mode/alt_mode_hw.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  34:..\src\app\alt_mode/alt_mode_hw.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  35:..\src\app\alt_mode/alt_mode_hw.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  36:..\src\app\alt_mode/alt_mode_hw.c ****  * indemnify Cypress against all liability.
+  37:..\src\app\alt_mode/alt_mode_hw.c ****  */
+  38:..\src\app\alt_mode/alt_mode_hw.c **** 
+  39:..\src\app\alt_mode/alt_mode_hw.c **** #include <config.h>
+  40:..\src\app\alt_mode/alt_mode_hw.c **** #include <dpm.h>
+  41:..\src\app\alt_mode/alt_mode_hw.c **** #include <alt_mode_hw.h>
+  42:..\src\app\alt_mode/alt_mode_hw.c **** #include <app.h>
+  43:..\src\app\alt_mode/alt_mode_hw.c **** #include <hpi.h>
+  44:..\src\app\alt_mode/alt_mode_hw.c **** #include <timer.h>
+  45:..\src\app\alt_mode/alt_mode_hw.c **** 
+  46:..\src\app\alt_mode/alt_mode_hw.c **** #if ((DP_DFP_SUPP) || (DP_UFP_SUPP))
+  47:..\src\app\alt_mode/alt_mode_hw.c **** #include <gpio.h>
+  48:..\src\app\alt_mode/alt_mode_hw.c **** #include <hpd.h>
+  49:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+  50:..\src\app\alt_mode/alt_mode_hw.c **** 
+  51:..\src\app\alt_mode/alt_mode_hw.c **** #if (RIDGE_SLAVE_ENABLE)
+  52:..\src\app\alt_mode/alt_mode_hw.c **** #include <intel_ridge.h>
+  53:..\src\app\alt_mode/alt_mode_hw.c **** #include <ridge_slave.h>
+  54:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (RIDGE_SLAVE_ENABLE) */
+  55:..\src\app\alt_mode/alt_mode_hw.c **** 
+  56:..\src\app\alt_mode/alt_mode_hw.c **** /* Holds hw solution event/command data */
+  57:..\src\app\alt_mode/alt_mode_hw.c **** #if ((DP_DFP_SUPP) || (DP_UFP_SUPP))
+  58:..\src\app\alt_mode/alt_mode_hw.c **** static uint32_t hw_sln_data[NO_OF_TYPEC_PORTS];
+  59:..\src\app\alt_mode/alt_mode_hw.c **** /* Holds command callback information. */
+  60:..\src\app\alt_mode/alt_mode_hw.c **** static alt_mode_hw_cmd_cbk_t gl_hw_cmd_cbk[NO_OF_TYPEC_PORTS];
+  61:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+  62:..\src\app\alt_mode/alt_mode_hw.c **** 
+  63:..\src\app\alt_mode/alt_mode_hw.c **** /* Holds current HPD command status. */
+  64:..\src\app\alt_mode/alt_mode_hw.c **** static volatile bool gl_alt_mode_cmd_pending[NO_OF_TYPEC_PORTS];
+  65:..\src\app\alt_mode/alt_mode_hw.c **** /* Holds current HPD pin status */
+  66:..\src\app\alt_mode/alt_mode_hw.c **** #if ((DP_DFP_SUPP) || (DP_UFP_SUPP))
+  67:..\src\app\alt_mode/alt_mode_hw.c **** static volatile hpd_event_type_t gl_alt_mode_hpd_state[NO_OF_TYPEC_PORTS];
+  68:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+  69:..\src\app\alt_mode/alt_mode_hw.c **** 
+  70:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_DFP_SUPP
+  71:..\src\app\alt_mode/alt_mode_hw.c **** /* DFP HPD callback */
+  72:..\src\app\alt_mode/alt_mode_hw.c **** static void
+  73:..\src\app\alt_mode/alt_mode_hw.c **** dp_src_hpd_cbk(uint8_t port, hpd_event_type_t event);
+  74:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_DFP_SUPP */
+  75:..\src\app\alt_mode/alt_mode_hw.c **** 
+  76:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_UFP_SUPP
+  77:..\src\app\alt_mode/alt_mode_hw.c **** /* UFP HPD callback */
+  78:..\src\app\alt_mode/alt_mode_hw.c **** static void dp_snk_hpd_cbk(uint8_t port, hpd_event_type_t event);
+  79:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_UFP_SUPP */
+  80:..\src\app\alt_mode/alt_mode_hw.c **** 
+  81:..\src\app\alt_mode/alt_mode_hw.c **** static mux_select_t app_mux_state[NO_OF_TYPEC_PORTS];
+  82:..\src\app\alt_mode/alt_mode_hw.c **** 
+  83:..\src\app\alt_mode/alt_mode_hw.c **** /************************** Function definitions *****************************/
+  84:..\src\app\alt_mode/alt_mode_hw.c **** 
+  85:..\src\app\alt_mode/alt_mode_hw.c **** bool eval_app_alt_hw_cmd(uint8_t port, uint8_t *cmd_param)
+  86:..\src\app\alt_mode/alt_mode_hw.c **** {
+  87:..\src\app\alt_mode/alt_mode_hw.c ****     uint8_t             hw_type, data_role;
+  88:..\src\app\alt_mode/alt_mode_hw.c ****     alt_mode_hw_evt_t     cmd_info;
+ARM GAS  e:\temp\ccdmNCtc.s 			page 3
+
+
+  89:..\src\app\alt_mode/alt_mode_hw.c **** 
+  90:..\src\app\alt_mode/alt_mode_hw.c ****     /* Convert received cmd bytes as info and data */
+  91:..\src\app\alt_mode/alt_mode_hw.c ****     cmd_info  = (alt_mode_hw_evt_t)MAKE_DWORD(cmd_param[3], cmd_param[2], cmd_param[1], cmd_param[0
+  92:..\src\app\alt_mode/alt_mode_hw.c ****     hw_type   = cmd_info.hw_evt.hw_type;
+  93:..\src\app\alt_mode/alt_mode_hw.c ****     data_role = cmd_info.hw_evt.data_role;
+  94:..\src\app\alt_mode/alt_mode_hw.c **** 
+  95:..\src\app\alt_mode/alt_mode_hw.c ****     if (data_role == gl_dpm_port_type[port])
+  96:..\src\app\alt_mode/alt_mode_hw.c ****     {
+  97:..\src\app\alt_mode/alt_mode_hw.c ****         switch (hw_type)
+  98:..\src\app\alt_mode/alt_mode_hw.c ****         {
+  99:..\src\app\alt_mode/alt_mode_hw.c ****             case ALT_MODE_MUX:
+ 100:..\src\app\alt_mode/alt_mode_hw.c ****                 return eval_mux_cmd(port, cmd_info.hw_evt.evt_data);
+ 101:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 102:..\src\app\alt_mode/alt_mode_hw.c **** #if ((DP_DFP_SUPP) || (DP_UFP_SUPP))
+ 103:..\src\app\alt_mode/alt_mode_hw.c ****             case ALT_MODE_HPD:
+ 104:..\src\app\alt_mode/alt_mode_hw.c ****                 return eval_hpd_cmd(port, cmd_info.hw_evt.evt_data);
+ 105:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+ 106:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 107:..\src\app\alt_mode/alt_mode_hw.c ****             default:
+ 108:..\src\app\alt_mode/alt_mode_hw.c ****                 break;
+ 109:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 110:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 111:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 112:..\src\app\alt_mode/alt_mode_hw.c ****     return false;
+ 113:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 114:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 115:..\src\app\alt_mode/alt_mode_hw.c **** bool eval_mux_cmd(uint8_t port, uint32_t cmd)
+ 116:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 117:..\src\app\alt_mode/alt_mode_hw.c ****     if ((cmd >= MUX_CONFIG_ISOLATE)&&(cmd <= MUX_CONFIG_DP_4_LANE))
+ 118:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 119:..\src\app\alt_mode/alt_mode_hw.c ****         return set_mux(port, (mux_select_t)cmd, NO_DATA);
+ 120:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 121:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 122:..\src\app\alt_mode/alt_mode_hw.c ****     return false;
+ 123:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 124:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 125:..\src\app\alt_mode/alt_mode_hw.c **** #if ((DP_DFP_SUPP) || (DP_UFP_SUPP))
+ 126:..\src\app\alt_mode/alt_mode_hw.c **** void alt_mode_hw_set_cbk(uint8_t port, alt_mode_hw_cmd_cbk_t cbk)
+ 127:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 128:..\src\app\alt_mode/alt_mode_hw.c ****     /* Register the callback if the port is valid. */
+ 129:..\src\app\alt_mode/alt_mode_hw.c ****     if (port < NO_OF_TYPEC_PORTS)
+ 130:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 131:..\src\app\alt_mode/alt_mode_hw.c ****         gl_hw_cmd_cbk[port] = cbk;
+ 132:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 133:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 134:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 135:..\src\app\alt_mode/alt_mode_hw.c **** bool eval_hpd_cmd(uint8_t  port, uint32_t cmd)
+ 136:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 137:..\src\app\alt_mode/alt_mode_hw.c ****     if (cmd == HPD_DISABLE_CMD)
+ 138:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 139:..\src\app\alt_mode/alt_mode_hw.c ****         gl_alt_mode_cmd_pending[port] = false;
+ 140:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 141:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_I2C_HPD_ENABLE
+ 142:..\src\app\alt_mode/alt_mode_hw.c ****         tr_hpd_deinit(port);
+ 143:..\src\app\alt_mode/alt_mode_hw.c **** #else /* !RIDGE_I2C_HPD_ENABLE */
+ 144:..\src\app\alt_mode/alt_mode_hw.c ****         hpd_deinit(port);
+ 145:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ARM GAS  e:\temp\ccdmNCtc.s 			page 4
+
+
+ 146:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 147:..\src\app\alt_mode/alt_mode_hw.c ****         return true;
+ 148:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 149:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 150:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_DFP_SUPP
+ 151:..\src\app\alt_mode/alt_mode_hw.c ****     if (gl_dpm_port_type[port] != PRT_TYPE_UFP)
+ 152:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 153:..\src\app\alt_mode/alt_mode_hw.c ****         if (cmd == HPD_ENABLE_CMD)
+ 154:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 155:..\src\app\alt_mode/alt_mode_hw.c ****             gl_alt_mode_cmd_pending[port] = false;
+ 156:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 157:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_I2C_HPD_ENABLE
+ 158:..\src\app\alt_mode/alt_mode_hw.c ****             tr_hpd_init(port, dp_src_hpd_cbk);
+ 159:..\src\app\alt_mode/alt_mode_hw.c **** #else /* !RIDGE_I2C_HPD_ENABLE */
+ 160:..\src\app\alt_mode/alt_mode_hw.c ****             hpd_transmit_init(port, dp_src_hpd_cbk);
+ 161:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 162:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 163:..\src\app\alt_mode/alt_mode_hw.c ****             return true;
+ 164:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 165:..\src\app\alt_mode/alt_mode_hw.c ****         else
+ 166:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 167:..\src\app\alt_mode/alt_mode_hw.c ****             if (cmd < HPD_DISABLE_CMD)
+ 168:..\src\app\alt_mode/alt_mode_hw.c ****             {
+ 169:..\src\app\alt_mode/alt_mode_hw.c ****                 gl_alt_mode_cmd_pending[port] = true;
+ 170:..\src\app\alt_mode/alt_mode_hw.c ****                 gl_alt_mode_hpd_state[port]   = (hpd_event_type_t)cmd;
+ 171:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 172:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_I2C_HPD_ENABLE
+ 173:..\src\app\alt_mode/alt_mode_hw.c ****                 tr_hpd_sendevt(port, (hpd_event_type_t)cmd);
+ 174:..\src\app\alt_mode/alt_mode_hw.c **** #else /* !RIDGE_I2C_HPD_ENABLE */
+ 175:..\src\app\alt_mode/alt_mode_hw.c ****                 hpd_transmit_sendevt(port, (hpd_event_type_t)cmd , false);
+ 176:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 177:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 178:..\src\app\alt_mode/alt_mode_hw.c ****                 return true;
+ 179:..\src\app\alt_mode/alt_mode_hw.c ****             }
+ 180:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 181:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 182:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_DFP_SUPP */
+ 183:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 184:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_UFP_SUPP
+ 185:..\src\app\alt_mode/alt_mode_hw.c ****     if (gl_dpm_port_type[port] == PRT_TYPE_UFP)
+ 186:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 187:..\src\app\alt_mode/alt_mode_hw.c ****         if (cmd == HPD_ENABLE_CMD)
+ 188:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 189:..\src\app\alt_mode/alt_mode_hw.c ****             gl_alt_mode_hpd_state[port] = HPD_EVENT_UNPLUG;
+ 190:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 191:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_I2C_HPD_ENABLE
+ 192:..\src\app\alt_mode/alt_mode_hw.c ****             tr_hpd_init(port, dp_snk_hpd_cbk);
+ 193:..\src\app\alt_mode/alt_mode_hw.c **** #else /* !RIDGE_I2C_HPD_ENABLE */
+ 194:..\src\app\alt_mode/alt_mode_hw.c ****             hpd_receive_init(port, dp_snk_hpd_cbk);
+ 195:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 196:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 197:..\src\app\alt_mode/alt_mode_hw.c ****             return true;
+ 198:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 199:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_I2C_HPD_ENABLE
+ 200:..\src\app\alt_mode/alt_mode_hw.c ****         else if (cmd == HPD_COMMAND_DONE)
+ 201:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 202:..\src\app\alt_mode/alt_mode_hw.c ****             tr_hpd_sendevt(port, (hpd_event_type_t)cmd);
+ARM GAS  e:\temp\ccdmNCtc.s 			page 5
+
+
+ 203:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 204:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 205:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 206:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_UFP_SUPP */
+ 207:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 208:..\src\app\alt_mode/alt_mode_hw.c ****     return false;
+ 209:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 210:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 211:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+ 212:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 213:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 214:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_UFP_SUPP
+ 215:..\src\app\alt_mode/alt_mode_hw.c **** static void dp_snk_hpd_cbk(uint8_t port, hpd_event_type_t event)
+ 216:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 217:..\src\app\alt_mode/alt_mode_hw.c ****     alt_mode_hw_evt_t alt_mode_hw_data;
+ 218:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 219:..\src\app\alt_mode/alt_mode_hw.c ****     if ((event > HPD_ENABLE_CMD) && (event < HPD_DISABLE_CMD))
+ 220:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 221:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_data.hw_evt.data_role = PRT_TYPE_UFP;
+ 222:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_data.hw_evt.hw_type   = ALT_MODE_HPD;
+ 223:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 224:..\src\app\alt_mode/alt_mode_hw.c ****         /* Save first 4 bytes of event */
+ 225:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_data.hw_evt.evt_data = (uint32_t)event;
+ 226:..\src\app\alt_mode/alt_mode_hw.c ****         hw_sln_data[port] = (uint32_t)alt_mode_hw_data.val;
+ 227:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 228:..\src\app\alt_mode/alt_mode_hw.c ****         /* Store current HPD event. */
+ 229:..\src\app\alt_mode/alt_mode_hw.c ****         gl_alt_mode_hpd_state[port] = event;
+ 230:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 231:..\src\app\alt_mode/alt_mode_hw.c ****         /* Call the event callback, if it exists. */
+ 232:..\src\app\alt_mode/alt_mode_hw.c ****         if (gl_hw_cmd_cbk[port] != NULL)
+ 233:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 234:..\src\app\alt_mode/alt_mode_hw.c ****             gl_hw_cmd_cbk[port] (port, alt_mode_hw_data.val);
+ 235:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 236:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 237:..\src\app\alt_mode/alt_mode_hw.c ****         /* Send notification to the solution. */
+ 238:..\src\app\alt_mode/alt_mode_hw.c ****         sln_pd_event_handler (port, APP_EVT_APP_HW, &(hw_sln_data[port]));
+ 239:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 240:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 241:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 242:..\src\app\alt_mode/alt_mode_hw.c **** bool dp_snk_get_hpd_state(uint8_t port)
+ 243:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 244:..\src\app\alt_mode/alt_mode_hw.c ****     /*
+ 245:..\src\app\alt_mode/alt_mode_hw.c ****      * Return HPD state based on last HPD event from HAL.
+ 246:..\src\app\alt_mode/alt_mode_hw.c ****      * If last event was UNPLUG, HPD is not connected. If it was
+ 247:..\src\app\alt_mode/alt_mode_hw.c ****      * PLUG or IRQ, HPD is connected.
+ 248:..\src\app\alt_mode/alt_mode_hw.c ****      */
+ 249:..\src\app\alt_mode/alt_mode_hw.c **** #ifdef CCG4_DOCK
+ 250:..\src\app\alt_mode/alt_mode_hw.c ****     return  hpd_receive_get_status(port);
+ 251:..\src\app\alt_mode/alt_mode_hw.c **** #else    
+ 252:..\src\app\alt_mode/alt_mode_hw.c ****     if (gl_alt_mode_hpd_state[port] == HPD_EVENT_UNPLUG)
+ 253:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 254:..\src\app\alt_mode/alt_mode_hw.c ****         return false;
+ 255:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 256:..\src\app\alt_mode/alt_mode_hw.c ****     else
+ 257:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 258:..\src\app\alt_mode/alt_mode_hw.c ****         return true;
+ 259:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ARM GAS  e:\temp\ccdmNCtc.s 			page 6
+
+
+ 260:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* CCG4_DOCK */
+ 261:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 262:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_UFP_SUPP */
+ 263:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 264:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_DFP_SUPP
+ 265:..\src\app\alt_mode/alt_mode_hw.c **** static void dp_src_hpd_cbk(uint8_t port, hpd_event_type_t event)
+ 266:..\src\app\alt_mode/alt_mode_hw.c **** {
+  27              		.loc 1 266 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  36 0002 0400     		movs	r4, r0
+ 267:..\src\app\alt_mode/alt_mode_hw.c ****     if (event == HPD_COMMAND_DONE)
+  37              		.loc 1 267 0
+  38 0004 0429     		cmp	r1, #4
+  39 0006 18D1     		bne	.L1
+  40              	.LBB2:
+ 268:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 269:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_evt_t alt_mode_hw_data;
+ 270:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 271:..\src\app\alt_mode/alt_mode_hw.c ****         /* ALT. MODE command completed. */
+ 272:..\src\app\alt_mode/alt_mode_hw.c ****         gl_alt_mode_cmd_pending[port] = false;
+  41              		.loc 1 272 0
+  42 0008 0C4A     		ldr	r2, .L4
+  43 000a 0023     		movs	r3, #0
+  44 000c 1354     		strb	r3, [r2, r0]
+ 273:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 274:..\src\app\alt_mode/alt_mode_hw.c ****         /* Set data role and HW type */
+ 275:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_data.hw_evt.data_role = PRT_TYPE_DFP;
+ 276:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_data.hw_evt.hw_type   = ALT_MODE_HPD;
+ 277:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 278:..\src\app\alt_mode/alt_mode_hw.c ****         /* If HPD command done */
+ 279:..\src\app\alt_mode/alt_mode_hw.c ****         alt_mode_hw_data.hw_evt.evt_data = (uint32_t)event;
+  45              		.loc 1 279 0
+  46 000e 8020     		movs	r0, #128
+  47              	.LVL1:
+  48 0010 8002     		lsls	r0, r0, #10
+  49 0012 8023     		movs	r3, #128
+  50 0014 5B04     		lsls	r3, r3, #17
+  51 0016 0343     		orrs	r3, r0
+  52 0018 1943     		orrs	r1, r3
+  53              	.LVL2:
+ 280:..\src\app\alt_mode/alt_mode_hw.c ****         hw_sln_data[port] = (uint32_t)alt_mode_hw_data.val;
+  54              		.loc 1 280 0
+  55 001a A300     		lsls	r3, r4, #2
+  56 001c D318     		adds	r3, r2, r3
+  57              	.LVL3:
+  58 001e 5960     		str	r1, [r3, #4]
+ 281:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 282:..\src\app\alt_mode/alt_mode_hw.c ****         /* Call the event callback, if it exists. */
+ 283:..\src\app\alt_mode/alt_mode_hw.c ****         if (gl_hw_cmd_cbk[port] != NULL)
+  59              		.loc 1 283 0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 7
+
+
+  60 0020 DB68     		ldr	r3, [r3, #12]
+  61 0022 002B     		cmp	r3, #0
+  62 0024 01D0     		beq	.L3
+ 284:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 285:..\src\app\alt_mode/alt_mode_hw.c ****             gl_hw_cmd_cbk[port] (port, alt_mode_hw_data.val);
+  63              		.loc 1 285 0
+  64 0026 2000     		movs	r0, r4
+  65 0028 9847     		blx	r3
+  66              	.LVL4:
+  67              	.L3:
+ 286:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 287:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 288:..\src\app\alt_mode/alt_mode_hw.c ****         /* Send notification to the solution. */
+ 289:..\src\app\alt_mode/alt_mode_hw.c ****         sln_pd_event_handler(port, APP_EVT_APP_HW, &(hw_sln_data[port]));
+  68              		.loc 1 289 0
+  69 002a A300     		lsls	r3, r4, #2
+  70 002c 034A     		ldr	r2, .L4
+  71 002e 0432     		adds	r2, r2, #4
+  72 0030 D218     		adds	r2, r2, r3
+  73 0032 0721     		movs	r1, #7
+  74              	.LVL5:
+  75 0034 2000     		movs	r0, r4
+  76 0036 FFF7FEFF 		bl	sln_pd_event_handler
+  77              	.LVL6:
+  78              	.L1:
+  79              	.LBE2:
+ 290:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 291:..\src\app\alt_mode/alt_mode_hw.c **** }
+  80              		.loc 1 291 0
+  81              		@ sp needed
+  82 003a 10BD     		pop	{r4, pc}
+  83              	.L5:
+  84              		.align	2
+  85              	.L4:
+  86 003c 00000000 		.word	.LANCHOR0
+  87              		.cfi_endproc
+  88              	.LFE36:
+  89              		.size	dp_src_hpd_cbk, .-dp_src_hpd_cbk
+  90              		.section	.text.alt_mode_hw_set_cbk,"ax",%progbits
+  91              		.align	2
+  92              		.global	alt_mode_hw_set_cbk
+  93              		.code	16
+  94              		.thumb_func
+  95              		.type	alt_mode_hw_set_cbk, %function
+  96              	alt_mode_hw_set_cbk:
+  97              	.LFB34:
+ 127:..\src\app\alt_mode/alt_mode_hw.c ****     /* Register the callback if the port is valid. */
+  98              		.loc 1 127 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+ 103              	.LVL7:
+ 129:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 104              		.loc 1 129 0
+ 105 0000 0128     		cmp	r0, #1
+ 106 0002 03D8     		bhi	.L6
+ARM GAS  e:\temp\ccdmNCtc.s 			page 8
+
+
+ 131:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 107              		.loc 1 131 0
+ 108 0004 8000     		lsls	r0, r0, #2
+ 109              	.LVL8:
+ 110 0006 024B     		ldr	r3, .L8
+ 111 0008 1818     		adds	r0, r3, r0
+ 112 000a C160     		str	r1, [r0, #12]
+ 113              	.L6:
+ 133:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 114              		.loc 1 133 0
+ 115              		@ sp needed
+ 116 000c 7047     		bx	lr
+ 117              	.L9:
+ 118 000e C046     		.align	2
+ 119              	.L8:
+ 120 0010 00000000 		.word	.LANCHOR0
+ 121              		.cfi_endproc
+ 122              	.LFE34:
+ 123              		.size	alt_mode_hw_set_cbk, .-alt_mode_hw_set_cbk
+ 124              		.section	.text.eval_hpd_cmd,"ax",%progbits
+ 125              		.align	2
+ 126              		.global	eval_hpd_cmd
+ 127              		.code	16
+ 128              		.thumb_func
+ 129              		.type	eval_hpd_cmd, %function
+ 130              	eval_hpd_cmd:
+ 131              	.LFB35:
+ 136:..\src\app\alt_mode/alt_mode_hw.c ****     if (cmd == HPD_DISABLE_CMD)
+ 132              		.loc 1 136 0
+ 133              		.cfi_startproc
+ 134              		@ args = 0, pretend = 0, frame = 0
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136              	.LVL9:
+ 137 0000 10B5     		push	{r4, lr}
+ 138              		.cfi_def_cfa_offset 8
+ 139              		.cfi_offset 4, -8
+ 140              		.cfi_offset 14, -4
+ 137:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 141              		.loc 1 137 0
+ 142 0002 0529     		cmp	r1, #5
+ 143 0004 06D1     		bne	.L11
+ 139:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 144              		.loc 1 139 0
+ 145 0006 0022     		movs	r2, #0
+ 146 0008 124B     		ldr	r3, .L16
+ 147 000a 1A54     		strb	r2, [r3, r0]
+ 144:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 148              		.loc 1 144 0
+ 149 000c FFF7FEFF 		bl	hpd_deinit
+ 150              	.LVL10:
+ 147:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 151              		.loc 1 147 0
+ 152 0010 0120     		movs	r0, #1
+ 153 0012 1DE0     		b	.L12
+ 154              	.LVL11:
+ 155              	.L11:
+ 151:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ARM GAS  e:\temp\ccdmNCtc.s 			page 9
+
+
+ 156              		.loc 1 151 0
+ 157 0014 104B     		ldr	r3, .L16+4
+ 158 0016 1B5C     		ldrb	r3, [r3, r0]
+ 159 0018 002B     		cmp	r3, #0
+ 160 001a 16D0     		beq	.L14
+ 153:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 161              		.loc 1 153 0
+ 162 001c 0029     		cmp	r1, #0
+ 163 001e 07D1     		bne	.L13
+ 155:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 164              		.loc 1 155 0
+ 165 0020 0022     		movs	r2, #0
+ 166 0022 0C4B     		ldr	r3, .L16
+ 167 0024 1A54     		strb	r2, [r3, r0]
+ 160:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 168              		.loc 1 160 0
+ 169 0026 0D49     		ldr	r1, .L16+8
+ 170              	.LVL12:
+ 171 0028 FFF7FEFF 		bl	hpd_transmit_init
+ 172              	.LVL13:
+ 163:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 173              		.loc 1 163 0
+ 174 002c 0120     		movs	r0, #1
+ 175 002e 0FE0     		b	.L12
+ 176              	.LVL14:
+ 177              	.L13:
+ 167:..\src\app\alt_mode/alt_mode_hw.c ****             {
+ 178              		.loc 1 167 0
+ 179 0030 0429     		cmp	r1, #4
+ 180 0032 0CD8     		bhi	.L15
+ 169:..\src\app\alt_mode/alt_mode_hw.c ****                 gl_alt_mode_hpd_state[port]   = (hpd_event_type_t)cmd;
+ 181              		.loc 1 169 0
+ 182 0034 074B     		ldr	r3, .L16
+ 183 0036 0122     		movs	r2, #1
+ 184 0038 1A54     		strb	r2, [r3, r0]
+ 170:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 185              		.loc 1 170 0
+ 186 003a C9B2     		uxtb	r1, r1
+ 187              	.LVL15:
+ 188 003c 1B18     		adds	r3, r3, r0
+ 189 003e 1975     		strb	r1, [r3, #20]
+ 175:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 190              		.loc 1 175 0
+ 191 0040 0022     		movs	r2, #0
+ 192 0042 FFF7FEFF 		bl	hpd_transmit_sendevt
+ 193              	.LVL16:
+ 178:..\src\app\alt_mode/alt_mode_hw.c ****             }
+ 194              		.loc 1 178 0
+ 195 0046 0120     		movs	r0, #1
+ 196 0048 02E0     		b	.L12
+ 197              	.LVL17:
+ 198              	.L14:
+ 208:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 199              		.loc 1 208 0
+ 200 004a 0020     		movs	r0, #0
+ 201              	.LVL18:
+ 202 004c 00E0     		b	.L12
+ARM GAS  e:\temp\ccdmNCtc.s 			page 10
+
+
+ 203              	.LVL19:
+ 204              	.L15:
+ 205 004e 0020     		movs	r0, #0
+ 206              	.LVL20:
+ 207              	.L12:
+ 209:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 208              		.loc 1 209 0
+ 209              		@ sp needed
+ 210 0050 10BD     		pop	{r4, pc}
+ 211              	.L17:
+ 212 0052 C046     		.align	2
+ 213              	.L16:
+ 214 0054 00000000 		.word	.LANCHOR0
+ 215 0058 00000000 		.word	gl_dpm_port_type
+ 216 005c 00000000 		.word	dp_src_hpd_cbk
+ 217              		.cfi_endproc
+ 218              	.LFE35:
+ 219              		.size	eval_hpd_cmd, .-eval_hpd_cmd
+ 220              		.section	.text.get_mux_state,"ax",%progbits
+ 221              		.align	2
+ 222              		.global	get_mux_state
+ 223              		.code	16
+ 224              		.thumb_func
+ 225              		.type	get_mux_state, %function
+ 226              	get_mux_state:
+ 227              	.LFB38:
+ 292:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_DFP_SUPP */
+ 293:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 294:..\src\app\alt_mode/alt_mode_hw.c **** void alt_mode_hw_deinit(uint8_t port)
+ 295:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 296:..\src\app\alt_mode/alt_mode_hw.c ****     /* If we still have a device connected, switch MUX to USB mode. */
+ 297:..\src\app\alt_mode/alt_mode_hw.c ****     if (dpm_get_info(port)->attach)
+ 298:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 299:..\src\app\alt_mode/alt_mode_hw.c ****         if(dpm_get_info(port)->fault_active == false)
+ 300:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 301:..\src\app\alt_mode/alt_mode_hw.c ****             set_mux(port, MUX_CONFIG_SS_ONLY, NO_DATA);
+ 302:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 303:..\src\app\alt_mode/alt_mode_hw.c ****         else
+ 304:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 305:..\src\app\alt_mode/alt_mode_hw.c ****             /* CDT277908: in fault condition switch MUX to isolate state */
+ 306:..\src\app\alt_mode/alt_mode_hw.c ****             set_mux(port, MUX_CONFIG_ISOLATE, NO_DATA);
+ 307:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 308:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 309:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 310:..\src\app\alt_mode/alt_mode_hw.c **** #if ((DP_DFP_SUPP) || (DP_UFP_SUPP))
+ 311:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 312:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_I2C_HPD_ENABLE
+ 313:..\src\app\alt_mode/alt_mode_hw.c ****     tr_hpd_deinit(port);
+ 314:..\src\app\alt_mode/alt_mode_hw.c **** #else /* !RIDGE_I2C_HPD_ENABLE */
+ 315:..\src\app\alt_mode/alt_mode_hw.c ****     hpd_deinit(port);
+ 316:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 317:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 318:..\src\app\alt_mode/alt_mode_hw.c ****     /* Clear state variables. */
+ 319:..\src\app\alt_mode/alt_mode_hw.c ****     gl_alt_mode_cmd_pending[port] = false;
+ 320:..\src\app\alt_mode/alt_mode_hw.c ****     gl_alt_mode_hpd_state[port]   = HPD_EVENT_NONE;
+ 321:..\src\app\alt_mode/alt_mode_hw.c ****     gl_hw_cmd_cbk[port]           = NULL;
+ 322:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+ARM GAS  e:\temp\ccdmNCtc.s 			page 11
+
+
+ 323:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 324:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 325:..\src\app\alt_mode/alt_mode_hw.c **** mux_select_t get_mux_state(uint8_t port)
+ 326:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 228              		.loc 1 326 0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		@ link register save eliminated.
+ 233              	.LVL21:
+ 327:..\src\app\alt_mode/alt_mode_hw.c ****     if (port < NO_OF_TYPEC_PORTS)
+ 234              		.loc 1 327 0
+ 235 0000 0128     		cmp	r0, #1
+ 236 0002 03D8     		bhi	.L20
+ 328:..\src\app\alt_mode/alt_mode_hw.c ****         return (app_mux_state[port]);
+ 237              		.loc 1 328 0
+ 238 0004 024B     		ldr	r3, .L21
+ 239 0006 1818     		adds	r0, r3, r0
+ 240              	.LVL22:
+ 241 0008 007E     		ldrb	r0, [r0, #24]
+ 242 000a 00E0     		b	.L19
+ 243              	.LVL23:
+ 244              	.L20:
+ 329:..\src\app\alt_mode/alt_mode_hw.c ****     return (MUX_CONFIG_ISOLATE);
+ 245              		.loc 1 329 0
+ 246 000c 0020     		movs	r0, #0
+ 247              	.LVL24:
+ 248              	.L19:
+ 330:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 249              		.loc 1 330 0
+ 250              		@ sp needed
+ 251 000e 7047     		bx	lr
+ 252              	.L22:
+ 253              		.align	2
+ 254              	.L21:
+ 255 0010 00000000 		.word	.LANCHOR0
+ 256              		.cfi_endproc
+ 257              	.LFE38:
+ 258              		.size	get_mux_state, .-get_mux_state
+ 259              		.section	.text.set_mux,"ax",%progbits
+ 260              		.align	2
+ 261              		.global	set_mux
+ 262              		.code	16
+ 263              		.thumb_func
+ 264              		.type	set_mux, %function
+ 265              	set_mux:
+ 266              	.LFB39:
+ 331:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 332:..\src\app\alt_mode/alt_mode_hw.c **** #if MUX_DELAY_EN
+ 333:..\src\app\alt_mode/alt_mode_hw.c **** void mux_cbk (uint8_t port, timer_id_t id)
+ 334:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 335:..\src\app\alt_mode/alt_mode_hw.c ****     (void)id;
+ 336:..\src\app\alt_mode/alt_mode_hw.c ****     app_status_t* app_stat = app_get_status(port);
+ 337:..\src\app\alt_mode/alt_mode_hw.c ****     /* Stop Delay timer */
+ 338:..\src\app\alt_mode/alt_mode_hw.c ****     timer_stop(port, APP_MUX_DELAY_TIMER);
+ 339:..\src\app\alt_mode/alt_mode_hw.c ****     /* If UFP should respond to VDM then send VDM response */
+ 340:..\src\app\alt_mode/alt_mode_hw.c ****     if ((gl_dpm_port_type[port] == PRT_TYPE_UFP) && (app_stat->is_vdm_pending != false))
+ARM GAS  e:\temp\ccdmNCtc.s 			page 12
+
+
+ 341:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 342:..\src\app\alt_mode/alt_mode_hw.c ****         app_stat->vdm_resp_cbk(port, &app_stat->vdm_resp);
+ 343:..\src\app\alt_mode/alt_mode_hw.c ****         app_stat->is_vdm_pending = false;
+ 344:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 345:..\src\app\alt_mode/alt_mode_hw.c ****     app_stat->is_mux_busy = false;
+ 346:..\src\app\alt_mode/alt_mode_hw.c **** #if MUX_POLL_EN
+ 347:..\src\app\alt_mode/alt_mode_hw.c ****     timer_stop(port, APP_MUX_POLL_TIMER);
+ 348:..\src\app\alt_mode/alt_mode_hw.c **** #if (CCG_HPI_ENABLE) && (CCG_HPI_PD_ENABLE)
+ 349:..\src\app\alt_mode/alt_mode_hw.c ****     /* Send MUX Error notification if MUX failed */
+ 350:..\src\app\alt_mode/alt_mode_hw.c ****     if (
+ 351:..\src\app\alt_mode/alt_mode_hw.c ****             (app_stat->vdm_resp.resp_buf[VDM_HEADER_IDX].std_vdm_hdr.cmd_type == CMD_TYPE_RESP_NAK)
+ 352:..\src\app\alt_mode/alt_mode_hw.c ****             (app_stat->vdm_resp.resp_buf[VDM_HEADER_IDX].std_vdm_hdr.cmd_type = CMD_TYPE_RESP_BUSY)
+ 353:..\src\app\alt_mode/alt_mode_hw.c ****        )
+ 354:..\src\app\alt_mode/alt_mode_hw.c ****         /* Notify the EC if there is a MUX access error. */
+ 355:..\src\app\alt_mode/alt_mode_hw.c ****         hpi_send_hw_error_event (port, SYS_HW_ERROR_MUX_ACCESS);
+ 356:..\src\app\alt_mode/alt_mode_hw.c **** #endif
+ 357:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* MUX_POLL_EN */
+ 358:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 359:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 360:..\src\app\alt_mode/alt_mode_hw.c **** #if MUX_POLL_EN
+ 361:..\src\app\alt_mode/alt_mode_hw.c **** void mux_poll_cbk (uint8_t port, timer_id_t id)
+ 362:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 363:..\src\app\alt_mode/alt_mode_hw.c ****     (void)id;
+ 364:..\src\app\alt_mode/alt_mode_hw.c ****     mux_poll_status_t mux_stat;
+ 365:..\src\app\alt_mode/alt_mode_hw.c ****     app_status_t*     app_stat = app_get_status(port);
+ 366:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 367:..\src\app\alt_mode/alt_mode_hw.c ****     if (app_stat->mux_poll_cbk != NULL)
+ 368:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 369:..\src\app\alt_mode/alt_mode_hw.c ****         /* Run and analyse MUX polling function */
+ 370:..\src\app\alt_mode/alt_mode_hw.c ****         mux_stat = app_stat->mux_poll_cbk(port);
+ 371:..\src\app\alt_mode/alt_mode_hw.c ****         switch(mux_stat)
+ 372:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 373:..\src\app\alt_mode/alt_mode_hw.c ****             case MUX_STATE_FAIL:
+ 374:..\src\app\alt_mode/alt_mode_hw.c ****                 /* Save status and goto MUX handler */
+ 375:..\src\app\alt_mode/alt_mode_hw.c ****                 app_stat->vdm_resp.resp_buf[VDM_HEADER_IDX].std_vdm_hdr.cmd_type = CMD_TYPE_RESP_NA
+ 376:..\src\app\alt_mode/alt_mode_hw.c ****                 mux_cbk(port, APP_MUX_DELAY_TIMER);
+ 377:..\src\app\alt_mode/alt_mode_hw.c ****                 break;
+ 378:..\src\app\alt_mode/alt_mode_hw.c ****             case MUX_STATE_SUCCESS:
+ 379:..\src\app\alt_mode/alt_mode_hw.c ****                 /* Save status and goto MUX handler */
+ 380:..\src\app\alt_mode/alt_mode_hw.c ****                 app_stat->vdm_resp.resp_buf[VDM_HEADER_IDX].std_vdm_hdr.cmd_type = CMD_TYPE_RESP_AC
+ 381:..\src\app\alt_mode/alt_mode_hw.c ****                 mux_cbk(port, APP_MUX_DELAY_TIMER);
+ 382:..\src\app\alt_mode/alt_mode_hw.c ****                 break;
+ 383:..\src\app\alt_mode/alt_mode_hw.c ****             default:
+ 384:..\src\app\alt_mode/alt_mode_hw.c ****                 /* Run polling again */
+ 385:..\src\app\alt_mode/alt_mode_hw.c ****                 app_stat->vdm_resp.resp_buf[VDM_HEADER_IDX].std_vdm_hdr.cmd_type = CMD_TYPE_RESP_BU
+ 386:..\src\app\alt_mode/alt_mode_hw.c ****                 timer_start(port, APP_MUX_POLL_TIMER, APP_MUX_POLL_TIMER_PERIOD, mux_poll_cbk);
+ 387:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 388:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 389:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 390:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* MUX_POLL_EN */
+ 391:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* MUX_DELAY_EN */
+ 392:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 393:..\src\app\alt_mode/alt_mode_hw.c **** bool set_mux(uint8_t port, mux_select_t cfg, uint32_t custom_data)
+ 394:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 267              		.loc 1 394 0
+ 268              		.cfi_startproc
+ 269              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 13
+
+
+ 270              		@ frame_needed = 0, uses_anonymous_args = 0
+ 271              	.LVL25:
+ 272 0000 70B5     		push	{r4, r5, r6, lr}
+ 273              		.cfi_def_cfa_offset 16
+ 274              		.cfi_offset 4, -16
+ 275              		.cfi_offset 5, -12
+ 276              		.cfi_offset 6, -8
+ 277              		.cfi_offset 14, -4
+ 278 0002 0500     		movs	r5, r0
+ 279 0004 0C00     		movs	r4, r1
+ 280              	.LVL26:
+ 395:..\src\app\alt_mode/alt_mode_hw.c ****     bool retval = true;
+ 396:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 397:..\src\app\alt_mode/alt_mode_hw.c ****     (void)custom_data;
+ 398:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 399:..\src\app\alt_mode/alt_mode_hw.c ****     /* Store the current MUX configuration. */
+ 400:..\src\app\alt_mode/alt_mode_hw.c ****     app_mux_state[port] = cfg;
+ 281              		.loc 1 400 0
+ 282 0006 0B4B     		ldr	r3, .L26
+ 283 0008 1B18     		adds	r3, r3, r0
+ 284 000a 1976     		strb	r1, [r3, #24]
+ 401:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 402:..\src\app\alt_mode/alt_mode_hw.c **** #if (MUX_TYPE == DP_MUX)
+ 403:..\src\app\alt_mode/alt_mode_hw.c ****     if (cfg <= MUX_CONFIG_RIDGE_CUSTOM)
+ 285              		.loc 1 403 0
+ 286 000c 0529     		cmp	r1, #5
+ 287 000e 0DD8     		bhi	.L25
+ 404:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 405:..\src\app\alt_mode/alt_mode_hw.c ****         retval = mux_ctrl_set_cfg (port, cfg,  dpm_get_polarity (port));
+ 288              		.loc 1 405 0
+ 289 0010 FFF7FEFF 		bl	dpm_get_polarity
+ 290              	.LVL27:
+ 291 0014 0200     		movs	r2, r0
+ 292 0016 2100     		movs	r1, r4
+ 293 0018 2800     		movs	r0, r5
+ 294 001a FFF7FEFF 		bl	mux_ctrl_set_cfg
+ 295              	.LVL28:
+ 296 001e 041E     		subs	r4, r0, #0
+ 297              	.LVL29:
+ 406:..\src\app\alt_mode/alt_mode_hw.c **** #if (CCG_HPI_ENABLE) && (CCG_HPI_PD_ENABLE)
+ 407:..\src\app\alt_mode/alt_mode_hw.c ****         if (!retval)
+ 298              		.loc 1 407 0
+ 299 0020 05D1     		bne	.L24
+ 408:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 409:..\src\app\alt_mode/alt_mode_hw.c ****             /* Notify the EC if there is a MUX access error. */
+ 410:..\src\app\alt_mode/alt_mode_hw.c ****             hpi_send_hw_error_event (port, SYS_HW_ERROR_MUX_ACCESS);
+ 300              		.loc 1 410 0
+ 301 0022 0121     		movs	r1, #1
+ 302 0024 2800     		movs	r0, r5
+ 303              	.LVL30:
+ 304 0026 FFF7FEFF 		bl	hpi_send_hw_error_event
+ 305              	.LVL31:
+ 306 002a 00E0     		b	.L24
+ 307              	.LVL32:
+ 308              	.L25:
+ 411:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 412:..\src\app\alt_mode/alt_mode_hw.c **** #endif
+ARM GAS  e:\temp\ccdmNCtc.s 			page 14
+
+
+ 413:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 414:..\src\app\alt_mode/alt_mode_hw.c ****     else
+ 415:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 416:..\src\app\alt_mode/alt_mode_hw.c ****         retval = false;
+ 309              		.loc 1 416 0
+ 310 002c 0024     		movs	r4, #0
+ 311              	.LVL33:
+ 312              	.L24:
+ 417:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 418:..\src\app\alt_mode/alt_mode_hw.c **** #elif (MUX_TYPE == RIDGE_MUX)
+ 419:..\src\app\alt_mode/alt_mode_hw.c ****     /* In TBT use cases, this call is used to configure the SBU Mux.
+ 420:..\src\app\alt_mode/alt_mode_hw.c ****      * This has to be configured before notifying Alpine/Titan Ridge. */
+ 421:..\src\app\alt_mode/alt_mode_hw.c ****     if (cfg <= MUX_CONFIG_RIDGE_CUSTOM)
+ 422:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 423:..\src\app\alt_mode/alt_mode_hw.c ****         retval = mux_ctrl_set_cfg (port, cfg,  dpm_get_polarity (port));
+ 424:..\src\app\alt_mode/alt_mode_hw.c **** #if CCG_HPI_ENABLE
+ 425:..\src\app\alt_mode/alt_mode_hw.c ****         if (!retval)
+ 426:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 427:..\src\app\alt_mode/alt_mode_hw.c ****             /* Notify the EC if there is a MUX access error. */
+ 428:..\src\app\alt_mode/alt_mode_hw.c ****             hpi_send_hw_error_event (port, SYS_HW_ERROR_MUX_ACCESS);
+ 429:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 430:..\src\app\alt_mode/alt_mode_hw.c **** #endif
+ 431:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 432:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 433:..\src\app\alt_mode/alt_mode_hw.c **** #if RIDGE_SLAVE_ENABLE
+ 434:..\src\app\alt_mode/alt_mode_hw.c ****     /*
+ 435:..\src\app\alt_mode/alt_mode_hw.c ****        Update the Alpine/Titan Ridge status register. Do this even if the above call failed.
+ 436:..\src\app\alt_mode/alt_mode_hw.c ****        This function is not expected to fail as it is an internal operation.
+ 437:..\src\app\alt_mode/alt_mode_hw.c ****      */
+ 438:..\src\app\alt_mode/alt_mode_hw.c ****     ridge_set_mux (port, cfg, dpm_get_polarity(port), custom_data);
+ 439:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_SLAVE_ENABLE */
+ 440:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* MUX_TYPE */
+ 441:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 442:..\src\app\alt_mode/alt_mode_hw.c **** #if MUX_DELAY_EN
+ 443:..\src\app\alt_mode/alt_mode_hw.c ****     if (retval != false)
+ 444:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 445:..\src\app\alt_mode/alt_mode_hw.c ****         /* Run MUX delay timer */
+ 446:..\src\app\alt_mode/alt_mode_hw.c ****         app_get_status(port)->is_mux_busy = true;
+ 447:..\src\app\alt_mode/alt_mode_hw.c ****         timer_start(port, APP_MUX_DELAY_TIMER, APP_MUX_VDM_DELAY_TIMER_PERIOD, mux_cbk);
+ 448:..\src\app\alt_mode/alt_mode_hw.c **** #if MUX_POLL_EN
+ 449:..\src\app\alt_mode/alt_mode_hw.c ****         /* Run MUX polling timer */
+ 450:..\src\app\alt_mode/alt_mode_hw.c ****         timer_start(port, APP_MUX_POLL_TIMER, APP_MUX_POLL_TIMER_PERIOD, mux_poll_cbk);
+ 451:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* MUX_POLL_EN */
+ 452:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 453:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* MUX_DELAY_EN */
+ 454:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 455:..\src\app\alt_mode/alt_mode_hw.c ****     return retval;
+ 456:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 313              		.loc 1 456 0
+ 314 002e 2000     		movs	r0, r4
+ 315              		@ sp needed
+ 316              	.LVL34:
+ 317 0030 70BD     		pop	{r4, r5, r6, pc}
+ 318              	.L27:
+ 319 0032 C046     		.align	2
+ 320              	.L26:
+ 321 0034 00000000 		.word	.LANCHOR0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 15
+
+
+ 322              		.cfi_endproc
+ 323              	.LFE39:
+ 324              		.size	set_mux, .-set_mux
+ 325              		.section	.text.eval_mux_cmd,"ax",%progbits
+ 326              		.align	2
+ 327              		.global	eval_mux_cmd
+ 328              		.code	16
+ 329              		.thumb_func
+ 330              		.type	eval_mux_cmd, %function
+ 331              	eval_mux_cmd:
+ 332              	.LFB33:
+ 116:..\src\app\alt_mode/alt_mode_hw.c ****     if ((cmd >= MUX_CONFIG_ISOLATE)&&(cmd <= MUX_CONFIG_DP_4_LANE))
+ 333              		.loc 1 116 0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 0
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337              	.LVL35:
+ 338 0000 10B5     		push	{r4, lr}
+ 339              		.cfi_def_cfa_offset 8
+ 340              		.cfi_offset 4, -8
+ 341              		.cfi_offset 14, -4
+ 117:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 342              		.loc 1 117 0
+ 343 0002 0429     		cmp	r1, #4
+ 344 0004 04D8     		bhi	.L30
+ 119:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 345              		.loc 1 119 0
+ 346 0006 C9B2     		uxtb	r1, r1
+ 347              	.LVL36:
+ 348 0008 0022     		movs	r2, #0
+ 349 000a FFF7FEFF 		bl	set_mux
+ 350              	.LVL37:
+ 351 000e 00E0     		b	.L29
+ 352              	.LVL38:
+ 353              	.L30:
+ 122:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 354              		.loc 1 122 0
+ 355 0010 0020     		movs	r0, #0
+ 356              	.LVL39:
+ 357              	.L29:
+ 123:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 358              		.loc 1 123 0
+ 359              		@ sp needed
+ 360 0012 10BD     		pop	{r4, pc}
+ 361              		.cfi_endproc
+ 362              	.LFE33:
+ 363              		.size	eval_mux_cmd, .-eval_mux_cmd
+ 364              		.section	.text.eval_app_alt_hw_cmd,"ax",%progbits
+ 365              		.align	2
+ 366              		.global	eval_app_alt_hw_cmd
+ 367              		.code	16
+ 368              		.thumb_func
+ 369              		.type	eval_app_alt_hw_cmd, %function
+ 370              	eval_app_alt_hw_cmd:
+ 371              	.LFB32:
+  86:..\src\app\alt_mode/alt_mode_hw.c ****     uint8_t             hw_type, data_role;
+ 372              		.loc 1 86 0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 16
+
+
+ 373              		.cfi_startproc
+ 374              		@ args = 0, pretend = 0, frame = 0
+ 375              		@ frame_needed = 0, uses_anonymous_args = 0
+ 376              	.LVL40:
+ 377 0000 10B5     		push	{r4, lr}
+ 378              		.cfi_def_cfa_offset 8
+ 379              		.cfi_offset 4, -8
+ 380              		.cfi_offset 14, -4
+  91:..\src\app\alt_mode/alt_mode_hw.c ****     hw_type   = cmd_info.hw_evt.hw_type;
+ 381              		.loc 1 91 0
+ 382 0002 CB78     		ldrb	r3, [r1, #3]
+ 383 0004 1A06     		lsls	r2, r3, #24
+ 384 0006 8B78     		ldrb	r3, [r1, #2]
+ 385 0008 1B04     		lsls	r3, r3, #16
+ 386 000a 1343     		orrs	r3, r2
+ 387 000c 4A78     		ldrb	r2, [r1, #1]
+ 388 000e 1202     		lsls	r2, r2, #8
+ 389 0010 1343     		orrs	r3, r2
+ 390 0012 0978     		ldrb	r1, [r1]
+ 391              	.LVL41:
+ 392 0014 0B43     		orrs	r3, r1
+ 393              	.LVL42:
+  92:..\src\app\alt_mode/alt_mode_hw.c ****     data_role = cmd_info.hw_evt.data_role;
+ 394              		.loc 1 92 0
+ 395 0016 1A02     		lsls	r2, r3, #8
+ 396 0018 120E     		lsrs	r2, r2, #24
+ 397              	.LVL43:
+  93:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 398              		.loc 1 93 0
+ 399 001a 1C0E     		lsrs	r4, r3, #24
+ 400              	.LVL44:
+  95:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 401              		.loc 1 95 0
+ 402 001c 0A49     		ldr	r1, .L38
+ 403 001e 095C     		ldrb	r1, [r1, r0]
+ 404 0020 8C42     		cmp	r4, r1
+ 405 0022 0CD1     		bne	.L35
+  97:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 406              		.loc 1 97 0
+ 407 0024 012A     		cmp	r2, #1
+ 408 0026 02D0     		beq	.L33
+ 409 0028 022A     		cmp	r2, #2
+ 410 002a 04D0     		beq	.L34
+ 411 002c 09E0     		b	.L37
+ 412              	.L33:
+ 100:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 413              		.loc 1 100 0
+ 414 002e 99B2     		uxth	r1, r3
+ 415 0030 FFF7FEFF 		bl	eval_mux_cmd
+ 416              	.LVL45:
+ 417 0034 06E0     		b	.L32
+ 418              	.LVL46:
+ 419              	.L34:
+ 104:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+ 420              		.loc 1 104 0
+ 421 0036 99B2     		uxth	r1, r3
+ 422 0038 FFF7FEFF 		bl	eval_hpd_cmd
+ARM GAS  e:\temp\ccdmNCtc.s 			page 17
+
+
+ 423              	.LVL47:
+ 424 003c 02E0     		b	.L32
+ 425              	.LVL48:
+ 426              	.L35:
+ 112:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 427              		.loc 1 112 0
+ 428 003e 0020     		movs	r0, #0
+ 429              	.LVL49:
+ 430 0040 00E0     		b	.L32
+ 431              	.LVL50:
+ 432              	.L37:
+ 433 0042 0020     		movs	r0, #0
+ 434              	.LVL51:
+ 435              	.L32:
+ 113:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 436              		.loc 1 113 0
+ 437              		@ sp needed
+ 438 0044 10BD     		pop	{r4, pc}
+ 439              	.L39:
+ 440 0046 C046     		.align	2
+ 441              	.L38:
+ 442 0048 00000000 		.word	gl_dpm_port_type
+ 443              		.cfi_endproc
+ 444              	.LFE32:
+ 445              		.size	eval_app_alt_hw_cmd, .-eval_app_alt_hw_cmd
+ 446              		.section	.text.alt_mode_hw_deinit,"ax",%progbits
+ 447              		.align	2
+ 448              		.global	alt_mode_hw_deinit
+ 449              		.code	16
+ 450              		.thumb_func
+ 451              		.type	alt_mode_hw_deinit, %function
+ 452              	alt_mode_hw_deinit:
+ 453              	.LFB37:
+ 295:..\src\app\alt_mode/alt_mode_hw.c ****     /* If we still have a device connected, switch MUX to USB mode. */
+ 454              		.loc 1 295 0
+ 455              		.cfi_startproc
+ 456              		@ args = 0, pretend = 0, frame = 0
+ 457              		@ frame_needed = 0, uses_anonymous_args = 0
+ 458              	.LVL52:
+ 459 0000 10B5     		push	{r4, lr}
+ 460              		.cfi_def_cfa_offset 8
+ 461              		.cfi_offset 4, -8
+ 462              		.cfi_offset 14, -4
+ 463 0002 0400     		movs	r4, r0
+ 297:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 464              		.loc 1 297 0
+ 465 0004 FFF7FEFF 		bl	dpm_get_info
+ 466              	.LVL53:
+ 467 0008 7223     		movs	r3, #114
+ 468 000a C35C     		ldrb	r3, [r0, r3]
+ 469 000c 002B     		cmp	r3, #0
+ 470 000e 11D0     		beq	.L41
+ 299:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 471              		.loc 1 299 0
+ 472 0010 2000     		movs	r0, r4
+ 473 0012 FFF7FEFF 		bl	dpm_get_info
+ 474              	.LVL54:
+ARM GAS  e:\temp\ccdmNCtc.s 			page 18
+
+
+ 475 0016 A123     		movs	r3, #161
+ 476 0018 C35C     		ldrb	r3, [r0, r3]
+ 477 001a 002B     		cmp	r3, #0
+ 478 001c 05D1     		bne	.L42
+ 301:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 479              		.loc 1 301 0
+ 480 001e 0022     		movs	r2, #0
+ 481 0020 0221     		movs	r1, #2
+ 482 0022 2000     		movs	r0, r4
+ 483 0024 FFF7FEFF 		bl	set_mux
+ 484              	.LVL55:
+ 485 0028 04E0     		b	.L41
+ 486              	.L42:
+ 306:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 487              		.loc 1 306 0
+ 488 002a 0022     		movs	r2, #0
+ 489 002c 0021     		movs	r1, #0
+ 490 002e 2000     		movs	r0, r4
+ 491 0030 FFF7FEFF 		bl	set_mux
+ 492              	.LVL56:
+ 493              	.L41:
+ 315:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* RIDGE_I2C_HPD_ENABLE */
+ 494              		.loc 1 315 0
+ 495 0034 2000     		movs	r0, r4
+ 496 0036 FFF7FEFF 		bl	hpd_deinit
+ 497              	.LVL57:
+ 319:..\src\app\alt_mode/alt_mode_hw.c ****     gl_alt_mode_hpd_state[port]   = HPD_EVENT_NONE;
+ 498              		.loc 1 319 0
+ 499 003a 044A     		ldr	r2, .L43
+ 500 003c 0023     		movs	r3, #0
+ 501 003e 1355     		strb	r3, [r2, r4]
+ 320:..\src\app\alt_mode/alt_mode_hw.c ****     gl_hw_cmd_cbk[port]           = NULL;
+ 502              		.loc 1 320 0
+ 503 0040 1119     		adds	r1, r2, r4
+ 504 0042 0B75     		strb	r3, [r1, #20]
+ 321:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (DP_DFP_SUPP) || (DP_UFP_SUPP) */
+ 505              		.loc 1 321 0
+ 506 0044 A400     		lsls	r4, r4, #2
+ 507 0046 1419     		adds	r4, r2, r4
+ 508 0048 E360     		str	r3, [r4, #12]
+ 323:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 509              		.loc 1 323 0
+ 510              		@ sp needed
+ 511 004a 10BD     		pop	{r4, pc}
+ 512              	.L44:
+ 513              		.align	2
+ 514              	.L43:
+ 515 004c 00000000 		.word	.LANCHOR0
+ 516              		.cfi_endproc
+ 517              	.LFE37:
+ 518              		.size	alt_mode_hw_deinit, .-alt_mode_hw_deinit
+ 519              		.section	.text.alt_mode_hw_is_idle,"ax",%progbits
+ 520              		.align	2
+ 521              		.global	alt_mode_hw_is_idle
+ 522              		.code	16
+ 523              		.thumb_func
+ 524              		.type	alt_mode_hw_is_idle, %function
+ARM GAS  e:\temp\ccdmNCtc.s 			page 19
+
+
+ 525              	alt_mode_hw_is_idle:
+ 526              	.LFB40:
+ 457:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 458:..\src\app\alt_mode/alt_mode_hw.c **** bool alt_mode_hw_is_idle(uint8_t port)
+ 459:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 527              		.loc 1 459 0
+ 528              		.cfi_startproc
+ 529              		@ args = 0, pretend = 0, frame = 0
+ 530              		@ frame_needed = 0, uses_anonymous_args = 0
+ 531              		@ link register save eliminated.
+ 532              	.LVL58:
+ 460:..\src\app\alt_mode/alt_mode_hw.c ****     return (!gl_alt_mode_cmd_pending[port]);
+ 533              		.loc 1 460 0
+ 534 0000 024B     		ldr	r3, .L46
+ 535 0002 185C     		ldrb	r0, [r3, r0]
+ 536              	.LVL59:
+ 537 0004 0123     		movs	r3, #1
+ 538 0006 5840     		eors	r0, r3
+ 539 0008 C0B2     		uxtb	r0, r0
+ 461:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 540              		.loc 1 461 0
+ 541              		@ sp needed
+ 542 000a 7047     		bx	lr
+ 543              	.L47:
+ 544              		.align	2
+ 545              	.L46:
+ 546 000c 00000000 		.word	.LANCHOR0
+ 547              		.cfi_endproc
+ 548              	.LFE40:
+ 549              		.size	alt_mode_hw_is_idle, .-alt_mode_hw_is_idle
+ 550              		.section	.text.alt_mode_hw_sleep,"ax",%progbits
+ 551              		.align	2
+ 552              		.global	alt_mode_hw_sleep
+ 553              		.code	16
+ 554              		.thumb_func
+ 555              		.type	alt_mode_hw_sleep, %function
+ 556              	alt_mode_hw_sleep:
+ 557              	.LFB41:
+ 462:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 463:..\src\app\alt_mode/alt_mode_hw.c **** void alt_mode_hw_sleep(uint8_t port)
+ 464:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 558              		.loc 1 464 0
+ 559              		.cfi_startproc
+ 560              		@ args = 0, pretend = 0, frame = 0
+ 561              		@ frame_needed = 0, uses_anonymous_args = 0
+ 562              	.LVL60:
+ 563 0000 10B5     		push	{r4, lr}
+ 564              		.cfi_def_cfa_offset 8
+ 565              		.cfi_offset 4, -8
+ 566              		.cfi_offset 14, -4
+ 567 0002 0400     		movs	r4, r0
+ 465:..\src\app\alt_mode/alt_mode_hw.c **** #if (RIDGE_I2C_HPD_ENABLE == 0)
+ 466:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 467:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_DFP_SUPP
+ 468:..\src\app\alt_mode/alt_mode_hw.c ****     /* We can use the presence of a callback as indication that the HPD block is active. */
+ 469:..\src\app\alt_mode/alt_mode_hw.c ****     if (gl_hw_cmd_cbk[port] != NULL)
+ 568              		.loc 1 469 0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 20
+
+
+ 569 0004 8300     		lsls	r3, r0, #2
+ 570 0006 104A     		ldr	r2, .L52
+ 571 0008 D318     		adds	r3, r2, r3
+ 572 000a DB68     		ldr	r3, [r3, #12]
+ 573 000c 002B     		cmp	r3, #0
+ 574 000e 1AD0     		beq	.L48
+ 470:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 471:..\src\app\alt_mode/alt_mode_hw.c ****         /* Set the value of the HPD GPIO based on the last event. */
+ 472:..\src\app\alt_mode/alt_mode_hw.c ****         if (port == 0)
+ 575              		.loc 1 472 0
+ 576 0010 0028     		cmp	r0, #0
+ 577 0012 0AD1     		bne	.L50
+ 473:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 474:..\src\app\alt_mode/alt_mode_hw.c ****             gpio_set_value (HPD_P0_PORT_PIN, (gl_alt_mode_hpd_state[port] > HPD_EVENT_UNPLUG));
+ 578              		.loc 1 474 0
+ 579 0014 1318     		adds	r3, r2, r0
+ 580 0016 197D     		ldrb	r1, [r3, #20]
+ 581 0018 C9B2     		uxtb	r1, r1
+ 582 001a 0123     		movs	r3, #1
+ 583 001c 8B42     		cmp	r3, r1
+ 584 001e 8941     		sbcs	r1, r1, r1
+ 585 0020 4942     		rsbs	r1, r1, #0
+ 586 0022 3020     		movs	r0, #48
+ 587              	.LVL61:
+ 588 0024 FFF7FEFF 		bl	gpio_set_value
+ 589              	.LVL62:
+ 590 0028 0AE0     		b	.L51
+ 591              	.LVL63:
+ 592              	.L50:
+ 475:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 476:..\src\app\alt_mode/alt_mode_hw.c ****         else
+ 477:..\src\app\alt_mode/alt_mode_hw.c ****         {
+ 478:..\src\app\alt_mode/alt_mode_hw.c ****             gpio_set_value (HPD_P1_PORT_PIN, (gl_alt_mode_hpd_state[port] > HPD_EVENT_UNPLUG));
+ 593              		.loc 1 478 0
+ 594 002a 074B     		ldr	r3, .L52
+ 595 002c 1B18     		adds	r3, r3, r0
+ 596 002e 197D     		ldrb	r1, [r3, #20]
+ 597 0030 C9B2     		uxtb	r1, r1
+ 598 0032 0123     		movs	r3, #1
+ 599 0034 8B42     		cmp	r3, r1
+ 600 0036 8941     		sbcs	r1, r1, r1
+ 601 0038 4942     		rsbs	r1, r1, #0
+ 602 003a 3420     		movs	r0, #52
+ 603              	.LVL64:
+ 604 003c FFF7FEFF 		bl	gpio_set_value
+ 605              	.LVL65:
+ 606              	.L51:
+ 479:..\src\app\alt_mode/alt_mode_hw.c ****         }
+ 480:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 481:..\src\app\alt_mode/alt_mode_hw.c ****         /* Move the HPD pin from HPD IO mode to GPIO mode. */
+ 482:..\src\app\alt_mode/alt_mode_hw.c ****         hpd_sleep_entry (port);
+ 607              		.loc 1 482 0
+ 608 0040 2000     		movs	r0, r4
+ 609 0042 FFF7FEFF 		bl	hpd_sleep_entry
+ 610              	.LVL66:
+ 611              	.L48:
+ 483:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ARM GAS  e:\temp\ccdmNCtc.s 			page 21
+
+
+ 484:..\src\app\alt_mode/alt_mode_hw.c **** #endif
+ 485:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 486:..\src\app\alt_mode/alt_mode_hw.c **** #if (DP_UFP_SUPP) && (CCG_HPD_RX_ENABLE)
+ 487:..\src\app\alt_mode/alt_mode_hw.c ****     /* CDT 245126 workaround: Prepare to enter deep sleep. */
+ 488:..\src\app\alt_mode/alt_mode_hw.c ****     hpd_rx_sleep_entry (port, dp_snk_get_hpd_state(port));
+ 489:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_UFP_SUPP  && CCG_HPD_RX_ENABLE */
+ 490:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 491:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (RIDGE_I2C_HPD_ENABLE == 0) */
+ 492:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 612              		.loc 1 492 0
+ 613              		@ sp needed
+ 614 0046 10BD     		pop	{r4, pc}
+ 615              	.L53:
+ 616              		.align	2
+ 617              	.L52:
+ 618 0048 00000000 		.word	.LANCHOR0
+ 619              		.cfi_endproc
+ 620              	.LFE41:
+ 621              		.size	alt_mode_hw_sleep, .-alt_mode_hw_sleep
+ 622              		.section	.text.alt_mode_hw_wakeup,"ax",%progbits
+ 623              		.align	2
+ 624              		.global	alt_mode_hw_wakeup
+ 625              		.code	16
+ 626              		.thumb_func
+ 627              		.type	alt_mode_hw_wakeup, %function
+ 628              	alt_mode_hw_wakeup:
+ 629              	.LFB42:
+ 493:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 494:..\src\app\alt_mode/alt_mode_hw.c **** void alt_mode_hw_wakeup(uint8_t port)
+ 495:..\src\app\alt_mode/alt_mode_hw.c **** {
+ 630              		.loc 1 495 0
+ 631              		.cfi_startproc
+ 632              		@ args = 0, pretend = 0, frame = 0
+ 633              		@ frame_needed = 0, uses_anonymous_args = 0
+ 634              	.LVL67:
+ 635 0000 10B5     		push	{r4, lr}
+ 636              		.cfi_def_cfa_offset 8
+ 637              		.cfi_offset 4, -8
+ 638              		.cfi_offset 14, -4
+ 496:..\src\app\alt_mode/alt_mode_hw.c **** #if (RIDGE_I2C_HPD_ENABLE == 0)
+ 497:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 498:..\src\app\alt_mode/alt_mode_hw.c **** #if DP_DFP_SUPP
+ 499:..\src\app\alt_mode/alt_mode_hw.c ****     /* We can use the presence of a callback as indication that the HPD block is active. */
+ 500:..\src\app\alt_mode/alt_mode_hw.c ****     if (gl_hw_cmd_cbk[port] != NULL)
+ 639              		.loc 1 500 0
+ 640 0002 8300     		lsls	r3, r0, #2
+ 641 0004 074A     		ldr	r2, .L56
+ 642 0006 D318     		adds	r3, r2, r3
+ 643 0008 DB68     		ldr	r3, [r3, #12]
+ 644 000a 002B     		cmp	r3, #0
+ 645 000c 08D0     		beq	.L54
+ 501:..\src\app\alt_mode/alt_mode_hw.c ****     {
+ 502:..\src\app\alt_mode/alt_mode_hw.c ****         /* Move the HPD pin back to HPD IO mode. */
+ 503:..\src\app\alt_mode/alt_mode_hw.c ****         hpd_wakeup (port, (gl_alt_mode_hpd_state[port] > HPD_EVENT_UNPLUG));
+ 646              		.loc 1 503 0
+ 647 000e 1318     		adds	r3, r2, r0
+ 648 0010 197D     		ldrb	r1, [r3, #20]
+ARM GAS  e:\temp\ccdmNCtc.s 			page 22
+
+
+ 649 0012 C9B2     		uxtb	r1, r1
+ 650 0014 0123     		movs	r3, #1
+ 651 0016 8B42     		cmp	r3, r1
+ 652 0018 8941     		sbcs	r1, r1, r1
+ 653 001a 4942     		rsbs	r1, r1, #0
+ 654 001c FFF7FEFF 		bl	hpd_wakeup
+ 655              	.LVL68:
+ 656              	.L54:
+ 504:..\src\app\alt_mode/alt_mode_hw.c ****     }
+ 505:..\src\app\alt_mode/alt_mode_hw.c **** #endif
+ 506:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 507:..\src\app\alt_mode/alt_mode_hw.c **** #if (DP_UFP_SUPP) && (CCG_HPD_RX_ENABLE)
+ 508:..\src\app\alt_mode/alt_mode_hw.c ****     /* CDT 245126 workaround: Wakeup and revert HPD RX configurations. */
+ 509:..\src\app\alt_mode/alt_mode_hw.c ****     hpd_rx_wakeup (port);
+ 510:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* DP_UFP_SUPP  && CCG_HPD_RX_ENABLE */
+ 511:..\src\app\alt_mode/alt_mode_hw.c **** 
+ 512:..\src\app\alt_mode/alt_mode_hw.c **** #endif /* (RIDGE_I2C_HPD_ENABLE == 0) */
+ 513:..\src\app\alt_mode/alt_mode_hw.c **** }
+ 657              		.loc 1 513 0
+ 658              		@ sp needed
+ 659 0020 10BD     		pop	{r4, pc}
+ 660              	.L57:
+ 661 0022 C046     		.align	2
+ 662              	.L56:
+ 663 0024 00000000 		.word	.LANCHOR0
+ 664              		.cfi_endproc
+ 665              	.LFE42:
+ 666              		.size	alt_mode_hw_wakeup, .-alt_mode_hw_wakeup
+ 667              		.bss
+ 668              		.align	2
+ 669              		.set	.LANCHOR0,. + 0
+ 670              		.type	gl_alt_mode_cmd_pending, %object
+ 671              		.size	gl_alt_mode_cmd_pending, 2
+ 672              	gl_alt_mode_cmd_pending:
+ 673 0000 0000     		.space	2
+ 674 0002 0000     		.space	2
+ 675              		.type	hw_sln_data, %object
+ 676              		.size	hw_sln_data, 8
+ 677              	hw_sln_data:
+ 678 0004 00000000 		.space	8
+ 678      00000000 
+ 679              		.type	gl_hw_cmd_cbk, %object
+ 680              		.size	gl_hw_cmd_cbk, 8
+ 681              	gl_hw_cmd_cbk:
+ 682 000c 00000000 		.space	8
+ 682      00000000 
+ 683              		.type	gl_alt_mode_hpd_state, %object
+ 684              		.size	gl_alt_mode_hpd_state, 2
+ 685              	gl_alt_mode_hpd_state:
+ 686 0014 0000     		.space	2
+ 687 0016 0000     		.space	2
+ 688              		.type	app_mux_state, %object
+ 689              		.size	app_mux_state, 2
+ 690              	app_mux_state:
+ 691 0018 0000     		.space	2
+ 692              		.text
+ 693              	.Letext0:
+ARM GAS  e:\temp\ccdmNCtc.s 			page 23
+
+
+ 694              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 695              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 696              		.file 4 "..\\src\\pd_common/pd.h"
+ 697              		.file 5 "..\\src\\app\\alt_mode/alt_mode_hw.h"
+ 698              		.file 6 "..\\src\\app/app.h"
+ 699              		.file 7 "..\\src\\system/gpio.h"
+ 700              		.file 8 "..\\src\\pd_hal/hpd.h"
+ 701              		.file 9 "..\\src\\pd_common/dpm.h"
+ 702              		.file 10 "..\\src\\hpiss/hpi.h"
+ 703              		.section	.debug_info,"",%progbits
+ 704              	.Ldebug_info0:
+ 705 0000 C1090000 		.4byte	0x9c1
+ 706 0004 0400     		.2byte	0x4
+ 707 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 708 000a 04       		.byte	0x4
+ 709 000b 01       		.uleb128 0x1
+ 710 000c D8080000 		.4byte	.LASF174
+ 711 0010 0C       		.byte	0xc
+ 712 0011 860D0000 		.4byte	.LASF175
+ 713 0015 D7040000 		.4byte	.LASF176
+ 714 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 715 001d 00000000 		.4byte	0
+ 716 0021 00000000 		.4byte	.Ldebug_line0
+ 717 0025 02       		.uleb128 0x2
+ 718 0026 01       		.byte	0x1
+ 719 0027 06       		.byte	0x6
+ 720 0028 04020000 		.4byte	.LASF0
+ 721 002c 03       		.uleb128 0x3
+ 722 002d 93000000 		.4byte	.LASF5
+ 723 0031 02       		.byte	0x2
+ 724 0032 1D       		.byte	0x1d
+ 725 0033 37000000 		.4byte	0x37
+ 726 0037 02       		.uleb128 0x2
+ 727 0038 01       		.byte	0x1
+ 728 0039 08       		.byte	0x8
+ 729 003a B4090000 		.4byte	.LASF1
+ 730 003e 02       		.uleb128 0x2
+ 731 003f 02       		.byte	0x2
+ 732 0040 05       		.byte	0x5
+ 733 0041 E5090000 		.4byte	.LASF2
+ 734 0045 02       		.uleb128 0x2
+ 735 0046 02       		.byte	0x2
+ 736 0047 07       		.byte	0x7
+ 737 0048 C00B0000 		.4byte	.LASF3
+ 738 004c 02       		.uleb128 0x2
+ 739 004d 04       		.byte	0x4
+ 740 004e 05       		.byte	0x5
+ 741 004f E6000000 		.4byte	.LASF4
+ 742 0053 03       		.uleb128 0x3
+ 743 0054 93040000 		.4byte	.LASF6
+ 744 0058 02       		.byte	0x2
+ 745 0059 41       		.byte	0x41
+ 746 005a 5E000000 		.4byte	0x5e
+ 747 005e 02       		.uleb128 0x2
+ 748 005f 04       		.byte	0x4
+ 749 0060 07       		.byte	0x7
+ 750 0061 18020000 		.4byte	.LASF7
+ARM GAS  e:\temp\ccdmNCtc.s 			page 24
+
+
+ 751 0065 02       		.uleb128 0x2
+ 752 0066 08       		.byte	0x8
+ 753 0067 05       		.byte	0x5
+ 754 0068 F6010000 		.4byte	.LASF8
+ 755 006c 02       		.uleb128 0x2
+ 756 006d 08       		.byte	0x8
+ 757 006e 07       		.byte	0x7
+ 758 006f 4F050000 		.4byte	.LASF9
+ 759 0073 04       		.uleb128 0x4
+ 760 0074 04       		.byte	0x4
+ 761 0075 05       		.byte	0x5
+ 762 0076 696E7400 		.ascii	"int\000"
+ 763 007a 02       		.uleb128 0x2
+ 764 007b 04       		.byte	0x4
+ 765 007c 07       		.byte	0x7
+ 766 007d CF050000 		.4byte	.LASF10
+ 767 0081 03       		.uleb128 0x3
+ 768 0082 070D0000 		.4byte	.LASF11
+ 769 0086 03       		.byte	0x3
+ 770 0087 18       		.byte	0x18
+ 771 0088 2C000000 		.4byte	0x2c
+ 772 008c 03       		.uleb128 0x3
+ 773 008d 280B0000 		.4byte	.LASF12
+ 774 0091 03       		.byte	0x3
+ 775 0092 30       		.byte	0x30
+ 776 0093 53000000 		.4byte	0x53
+ 777 0097 02       		.uleb128 0x2
+ 778 0098 04       		.byte	0x4
+ 779 0099 04       		.byte	0x4
+ 780 009a 76080000 		.4byte	.LASF13
+ 781 009e 02       		.uleb128 0x2
+ 782 009f 08       		.byte	0x8
+ 783 00a0 04       		.byte	0x4
+ 784 00a1 E2030000 		.4byte	.LASF14
+ 785 00a5 02       		.uleb128 0x2
+ 786 00a6 01       		.byte	0x1
+ 787 00a7 08       		.byte	0x8
+ 788 00a8 5B0B0000 		.4byte	.LASF15
+ 789 00ac 02       		.uleb128 0x2
+ 790 00ad 08       		.byte	0x8
+ 791 00ae 04       		.byte	0x4
+ 792 00af 4F0B0000 		.4byte	.LASF16
+ 793 00b3 02       		.uleb128 0x2
+ 794 00b4 04       		.byte	0x4
+ 795 00b5 07       		.byte	0x7
+ 796 00b6 D3070000 		.4byte	.LASF17
+ 797 00ba 05       		.uleb128 0x5
+ 798 00bb 01       		.byte	0x1
+ 799 00bc 37000000 		.4byte	0x37
+ 800 00c0 04       		.byte	0x4
+ 801 00c1 0504     		.2byte	0x405
+ 802 00c3 DA000000 		.4byte	0xda
+ 803 00c7 06       		.uleb128 0x6
+ 804 00c8 8E070000 		.4byte	.LASF18
+ 805 00cc 00       		.byte	0
+ 806 00cd 06       		.uleb128 0x6
+ 807 00ce 12080000 		.4byte	.LASF19
+ARM GAS  e:\temp\ccdmNCtc.s 			page 25
+
+
+ 808 00d2 01       		.byte	0x1
+ 809 00d3 06       		.uleb128 0x6
+ 810 00d4 99010000 		.4byte	.LASF20
+ 811 00d8 02       		.byte	0x2
+ 812 00d9 00       		.byte	0
+ 813 00da 07       		.uleb128 0x7
+ 814 00db F00C0000 		.4byte	.LASF21
+ 815 00df 04       		.byte	0x4
+ 816 00e0 0904     		.2byte	0x409
+ 817 00e2 BA000000 		.4byte	0xba
+ 818 00e6 05       		.uleb128 0x5
+ 819 00e7 01       		.byte	0x1
+ 820 00e8 37000000 		.4byte	0x37
+ 821 00ec 04       		.byte	0x4
+ 822 00ed 8005     		.2byte	0x580
+ 823 00ef EA010000 		.4byte	0x1ea
+ 824 00f3 06       		.uleb128 0x6
+ 825 00f4 C2090000 		.4byte	.LASF22
+ 826 00f8 00       		.byte	0
+ 827 00f9 06       		.uleb128 0x6
+ 828 00fa 310B0000 		.4byte	.LASF23
+ 829 00fe 01       		.byte	0x1
+ 830 00ff 06       		.uleb128 0x6
+ 831 0100 9C0B0000 		.4byte	.LASF24
+ 832 0104 02       		.byte	0x2
+ 833 0105 06       		.uleb128 0x6
+ 834 0106 19030000 		.4byte	.LASF25
+ 835 010a 03       		.byte	0x3
+ 836 010b 06       		.uleb128 0x6
+ 837 010c C2080000 		.4byte	.LASF26
+ 838 0110 04       		.byte	0x4
+ 839 0111 06       		.uleb128 0x6
+ 840 0112 29010000 		.4byte	.LASF27
+ 841 0116 05       		.byte	0x5
+ 842 0117 06       		.uleb128 0x6
+ 843 0118 D2020000 		.4byte	.LASF28
+ 844 011c 06       		.byte	0x6
+ 845 011d 06       		.uleb128 0x6
+ 846 011e D7000000 		.4byte	.LASF29
+ 847 0122 07       		.byte	0x7
+ 848 0123 06       		.uleb128 0x6
+ 849 0124 FC0C0000 		.4byte	.LASF30
+ 850 0128 08       		.byte	0x8
+ 851 0129 06       		.uleb128 0x6
+ 852 012a 8A0B0000 		.4byte	.LASF31
+ 853 012e 09       		.byte	0x9
+ 854 012f 06       		.uleb128 0x6
+ 855 0130 B50A0000 		.4byte	.LASF32
+ 856 0134 0A       		.byte	0xa
+ 857 0135 06       		.uleb128 0x6
+ 858 0136 77000000 		.4byte	.LASF33
+ 859 013a 0B       		.byte	0xb
+ 860 013b 06       		.uleb128 0x6
+ 861 013c E50A0000 		.4byte	.LASF34
+ 862 0140 0C       		.byte	0xc
+ 863 0141 06       		.uleb128 0x6
+ 864 0142 43010000 		.4byte	.LASF35
+ARM GAS  e:\temp\ccdmNCtc.s 			page 26
+
+
+ 865 0146 0D       		.byte	0xd
+ 866 0147 06       		.uleb128 0x6
+ 867 0148 190D0000 		.4byte	.LASF36
+ 868 014c 0E       		.byte	0xe
+ 869 014d 06       		.uleb128 0x6
+ 870 014e 92060000 		.4byte	.LASF37
+ 871 0152 0F       		.byte	0xf
+ 872 0153 06       		.uleb128 0x6
+ 873 0154 080B0000 		.4byte	.LASF38
+ 874 0158 10       		.byte	0x10
+ 875 0159 06       		.uleb128 0x6
+ 876 015a 56080000 		.4byte	.LASF39
+ 877 015e 11       		.byte	0x11
+ 878 015f 06       		.uleb128 0x6
+ 879 0160 8E030000 		.4byte	.LASF40
+ 880 0164 12       		.byte	0x12
+ 881 0165 06       		.uleb128 0x6
+ 882 0166 7C080000 		.4byte	.LASF41
+ 883 016a 13       		.byte	0x13
+ 884 016b 06       		.uleb128 0x6
+ 885 016c 0E040000 		.4byte	.LASF42
+ 886 0170 14       		.byte	0x14
+ 887 0171 06       		.uleb128 0x6
+ 888 0172 AC0B0000 		.4byte	.LASF43
+ 889 0176 15       		.byte	0x15
+ 890 0177 06       		.uleb128 0x6
+ 891 0178 CD060000 		.4byte	.LASF44
+ 892 017c 16       		.byte	0x16
+ 893 017d 06       		.uleb128 0x6
+ 894 017e C00C0000 		.4byte	.LASF45
+ 895 0182 17       		.byte	0x17
+ 896 0183 06       		.uleb128 0x6
+ 897 0184 15000000 		.4byte	.LASF46
+ 898 0188 18       		.byte	0x18
+ 899 0189 06       		.uleb128 0x6
+ 900 018a B2000000 		.4byte	.LASF47
+ 901 018e 19       		.byte	0x19
+ 902 018f 06       		.uleb128 0x6
+ 903 0190 3F070000 		.4byte	.LASF48
+ 904 0194 1A       		.byte	0x1a
+ 905 0195 06       		.uleb128 0x6
+ 906 0196 32080000 		.4byte	.LASF49
+ 907 019a 1B       		.byte	0x1b
+ 908 019b 06       		.uleb128 0x6
+ 909 019c 6E010000 		.4byte	.LASF50
+ 910 01a0 1C       		.byte	0x1c
+ 911 01a1 06       		.uleb128 0x6
+ 912 01a2 0F010000 		.4byte	.LASF51
+ 913 01a6 1D       		.byte	0x1d
+ 914 01a7 06       		.uleb128 0x6
+ 915 01a8 23070000 		.4byte	.LASF52
+ 916 01ac 1E       		.byte	0x1e
+ 917 01ad 06       		.uleb128 0x6
+ 918 01ae 600B0000 		.4byte	.LASF53
+ 919 01b2 1F       		.byte	0x1f
+ 920 01b3 06       		.uleb128 0x6
+ 921 01b4 AB080000 		.4byte	.LASF54
+ARM GAS  e:\temp\ccdmNCtc.s 			page 27
+
+
+ 922 01b8 20       		.byte	0x20
+ 923 01b9 06       		.uleb128 0x6
+ 924 01ba 63070000 		.4byte	.LASF55
+ 925 01be 21       		.byte	0x21
+ 926 01bf 06       		.uleb128 0x6
+ 927 01c0 5E040000 		.4byte	.LASF56
+ 928 01c4 22       		.byte	0x22
+ 929 01c5 06       		.uleb128 0x6
+ 930 01c6 870C0000 		.4byte	.LASF57
+ 931 01ca 23       		.byte	0x23
+ 932 01cb 06       		.uleb128 0x6
+ 933 01cc 7F030000 		.4byte	.LASF58
+ 934 01d0 24       		.byte	0x24
+ 935 01d1 06       		.uleb128 0x6
+ 936 01d2 FB060000 		.4byte	.LASF59
+ 937 01d6 25       		.byte	0x25
+ 938 01d7 06       		.uleb128 0x6
+ 939 01d8 9D090000 		.4byte	.LASF60
+ 940 01dc 26       		.byte	0x26
+ 941 01dd 06       		.uleb128 0x6
+ 942 01de 9E040000 		.4byte	.LASF61
+ 943 01e2 27       		.byte	0x27
+ 944 01e3 06       		.uleb128 0x6
+ 945 01e4 D5010000 		.4byte	.LASF62
+ 946 01e8 28       		.byte	0x28
+ 947 01e9 00       		.byte	0
+ 948 01ea 08       		.uleb128 0x8
+ 949 01eb 04       		.byte	0x4
+ 950 01ec 81000000 		.4byte	0x81
+ 951 01f0 08       		.uleb128 0x8
+ 952 01f1 04       		.byte	0x4
+ 953 01f2 F6010000 		.4byte	0x1f6
+ 954 01f6 09       		.uleb128 0x9
+ 955 01f7 06020000 		.4byte	0x206
+ 956 01fb 0A       		.uleb128 0xa
+ 957 01fc 81000000 		.4byte	0x81
+ 958 0200 0A       		.uleb128 0xa
+ 959 0201 8C000000 		.4byte	0x8c
+ 960 0205 00       		.byte	0
+ 961 0206 02       		.uleb128 0x2
+ 962 0207 01       		.byte	0x1
+ 963 0208 02       		.byte	0x2
+ 964 0209 97090000 		.4byte	.LASF63
+ 965 020d 0B       		.uleb128 0xb
+ 966 020e 06020000 		.4byte	0x206
+ 967 0212 0C       		.uleb128 0xc
+ 968 0213 01       		.byte	0x1
+ 969 0214 37000000 		.4byte	0x37
+ 970 0218 05       		.byte	0x5
+ 971 0219 4C       		.byte	0x4c
+ 972 021a 2B020000 		.4byte	0x22b
+ 973 021e 06       		.uleb128 0x6
+ 974 021f 54000000 		.4byte	.LASF64
+ 975 0223 01       		.byte	0x1
+ 976 0224 06       		.uleb128 0x6
+ 977 0225 E9030000 		.4byte	.LASF65
+ 978 0229 02       		.byte	0x2
+ARM GAS  e:\temp\ccdmNCtc.s 			page 28
+
+
+ 979 022a 00       		.byte	0
+ 980 022b 0C       		.uleb128 0xc
+ 981 022c 01       		.byte	0x1
+ 982 022d 37000000 		.4byte	0x37
+ 983 0231 05       		.byte	0x5
+ 984 0232 58       		.byte	0x58
+ 985 0233 68020000 		.4byte	0x268
+ 986 0237 06       		.uleb128 0x6
+ 987 0238 510D0000 		.4byte	.LASF66
+ 988 023c 00       		.byte	0
+ 989 023d 06       		.uleb128 0x6
+ 990 023e 03080000 		.4byte	.LASF67
+ 991 0242 01       		.byte	0x1
+ 992 0243 06       		.uleb128 0x6
+ 993 0244 770B0000 		.4byte	.LASF68
+ 994 0248 02       		.byte	0x2
+ 995 0249 06       		.uleb128 0x6
+ 996 024a EE070000 		.4byte	.LASF69
+ 997 024e 03       		.byte	0x3
+ 998 024f 06       		.uleb128 0x6
+ 999 0250 9D000000 		.4byte	.LASF70
+ 1000 0254 04       		.byte	0x4
+ 1001 0255 06       		.uleb128 0x6
+ 1002 0256 CA030000 		.4byte	.LASF71
+ 1003 025a 05       		.byte	0x5
+ 1004 025b 06       		.uleb128 0x6
+ 1005 025c 2D0C0000 		.4byte	.LASF72
+ 1006 0260 06       		.byte	0x6
+ 1007 0261 06       		.uleb128 0x6
+ 1008 0262 25040000 		.4byte	.LASF73
+ 1009 0266 07       		.byte	0x7
+ 1010 0267 00       		.byte	0
+ 1011 0268 03       		.uleb128 0x3
+ 1012 0269 CA000000 		.4byte	.LASF74
+ 1013 026d 05       		.byte	0x5
+ 1014 026e 62       		.byte	0x62
+ 1015 026f 2B020000 		.4byte	0x22b
+ 1016 0273 0D       		.uleb128 0xd
+ 1017 0274 E00C0000 		.4byte	.LASF177
+ 1018 0278 04       		.byte	0x4
+ 1019 0279 05       		.byte	0x5
+ 1020 027a 7E       		.byte	0x7e
+ 1021 027b AD020000 		.4byte	0x2ad
+ 1022 027f 0E       		.uleb128 0xe
+ 1023 0280 8E090000 		.4byte	.LASF75
+ 1024 0284 05       		.byte	0x5
+ 1025 0285 80       		.byte	0x80
+ 1026 0286 8C000000 		.4byte	0x8c
+ 1027 028a 04       		.byte	0x4
+ 1028 028b 10       		.byte	0x10
+ 1029 028c 10       		.byte	0x10
+ 1030 028d 00       		.byte	0
+ 1031 028e 0E       		.uleb128 0xe
+ 1032 028f 10020000 		.4byte	.LASF76
+ 1033 0293 05       		.byte	0x5
+ 1034 0294 81       		.byte	0x81
+ 1035 0295 8C000000 		.4byte	0x8c
+ARM GAS  e:\temp\ccdmNCtc.s 			page 29
+
+
+ 1036 0299 04       		.byte	0x4
+ 1037 029a 08       		.byte	0x8
+ 1038 029b 08       		.byte	0x8
+ 1039 029c 00       		.byte	0
+ 1040 029d 0E       		.uleb128 0xe
+ 1041 029e 0F0D0000 		.4byte	.LASF77
+ 1042 02a2 05       		.byte	0x5
+ 1043 02a3 82       		.byte	0x82
+ 1044 02a4 8C000000 		.4byte	0x8c
+ 1045 02a8 04       		.byte	0x4
+ 1046 02a9 08       		.byte	0x8
+ 1047 02aa 00       		.byte	0
+ 1048 02ab 00       		.byte	0
+ 1049 02ac 00       		.byte	0
+ 1050 02ad 0F       		.uleb128 0xf
+ 1051 02ae 04       		.byte	0x4
+ 1052 02af 05       		.byte	0x5
+ 1053 02b0 78       		.byte	0x78
+ 1054 02b1 CC020000 		.4byte	0x2cc
+ 1055 02b5 10       		.uleb128 0x10
+ 1056 02b6 76616C00 		.ascii	"val\000"
+ 1057 02ba 05       		.byte	0x5
+ 1058 02bb 7B       		.byte	0x7b
+ 1059 02bc 8C000000 		.4byte	0x8c
+ 1060 02c0 11       		.uleb128 0x11
+ 1061 02c1 2B080000 		.4byte	.LASF78
+ 1062 02c5 05       		.byte	0x5
+ 1063 02c6 83       		.byte	0x83
+ 1064 02c7 73020000 		.4byte	0x273
+ 1065 02cb 00       		.byte	0
+ 1066 02cc 03       		.uleb128 0x3
+ 1067 02cd 5C010000 		.4byte	.LASF79
+ 1068 02d1 05       		.byte	0x5
+ 1069 02d2 85       		.byte	0x85
+ 1070 02d3 AD020000 		.4byte	0x2ad
+ 1071 02d7 03       		.uleb128 0x3
+ 1072 02d8 2C000000 		.4byte	.LASF80
+ 1073 02dc 05       		.byte	0x5
+ 1074 02dd 8B       		.byte	0x8b
+ 1075 02de F0010000 		.4byte	0x1f0
+ 1076 02e2 05       		.uleb128 0x5
+ 1077 02e3 01       		.byte	0x1
+ 1078 02e4 37000000 		.4byte	0x37
+ 1079 02e8 06       		.byte	0x6
+ 1080 02e9 8601     		.2byte	0x186
+ 1081 02eb 08030000 		.4byte	0x308
+ 1082 02ef 06       		.uleb128 0x6
+ 1083 02f0 87010000 		.4byte	.LASF81
+ 1084 02f4 00       		.byte	0
+ 1085 02f5 06       		.uleb128 0x6
+ 1086 02f6 F6030000 		.4byte	.LASF82
+ 1087 02fa 01       		.byte	0x1
+ 1088 02fb 06       		.uleb128 0x6
+ 1089 02fc 0B070000 		.4byte	.LASF83
+ 1090 0300 02       		.byte	0x2
+ 1091 0301 06       		.uleb128 0x6
+ 1092 0302 B4060000 		.4byte	.LASF84
+ARM GAS  e:\temp\ccdmNCtc.s 			page 30
+
+
+ 1093 0306 04       		.byte	0x4
+ 1094 0307 00       		.byte	0
+ 1095 0308 0C       		.uleb128 0xc
+ 1096 0309 01       		.byte	0x1
+ 1097 030a 37000000 		.4byte	0x37
+ 1098 030e 07       		.byte	0x7
+ 1099 030f 61       		.byte	0x61
+ 1100 0310 41040000 		.4byte	0x441
+ 1101 0314 06       		.uleb128 0x6
+ 1102 0315 66050000 		.4byte	.LASF85
+ 1103 0319 00       		.byte	0
+ 1104 031a 06       		.uleb128 0x6
+ 1105 031b 78050000 		.4byte	.LASF86
+ 1106 031f 01       		.byte	0x1
+ 1107 0320 06       		.uleb128 0x6
+ 1108 0321 8A050000 		.4byte	.LASF87
+ 1109 0325 02       		.byte	0x2
+ 1110 0326 06       		.uleb128 0x6
+ 1111 0327 9C050000 		.4byte	.LASF88
+ 1112 032b 03       		.byte	0x3
+ 1113 032c 06       		.uleb128 0x6
+ 1114 032d 750C0000 		.4byte	.LASF89
+ 1115 0331 04       		.byte	0x4
+ 1116 0332 06       		.uleb128 0x6
+ 1117 0333 BD050000 		.4byte	.LASF90
+ 1118 0337 05       		.byte	0x5
+ 1119 0338 06       		.uleb128 0x6
+ 1120 0339 9C0C0000 		.4byte	.LASF91
+ 1121 033d 06       		.byte	0x6
+ 1122 033e 06       		.uleb128 0x6
+ 1123 033f DC050000 		.4byte	.LASF92
+ 1124 0343 07       		.byte	0x7
+ 1125 0344 06       		.uleb128 0x6
+ 1126 0345 D30B0000 		.4byte	.LASF93
+ 1127 0349 10       		.byte	0x10
+ 1128 034a 06       		.uleb128 0x6
+ 1129 034b E50B0000 		.4byte	.LASF94
+ 1130 034f 11       		.byte	0x11
+ 1131 0350 06       		.uleb128 0x6
+ 1132 0351 F70B0000 		.4byte	.LASF95
+ 1133 0355 12       		.byte	0x12
+ 1134 0356 06       		.uleb128 0x6
+ 1135 0357 090C0000 		.4byte	.LASF96
+ 1136 035b 13       		.byte	0x13
+ 1137 035c 06       		.uleb128 0x6
+ 1138 035d 1B0C0000 		.4byte	.LASF97
+ 1139 0361 14       		.byte	0x14
+ 1140 0362 06       		.uleb128 0x6
+ 1141 0363 DC070000 		.4byte	.LASF98
+ 1142 0367 15       		.byte	0x15
+ 1143 0368 06       		.uleb128 0x6
+ 1144 0369 3D0C0000 		.4byte	.LASF99
+ 1145 036d 16       		.byte	0x16
+ 1146 036e 06       		.uleb128 0x6
+ 1147 036f 4F0C0000 		.4byte	.LASF100
+ 1148 0373 17       		.byte	0x17
+ 1149 0374 06       		.uleb128 0x6
+ARM GAS  e:\temp\ccdmNCtc.s 			page 31
+
+
+ 1150 0375 F60A0000 		.4byte	.LASF101
+ 1151 0379 20       		.byte	0x20
+ 1152 037a 06       		.uleb128 0x6
+ 1153 037b 14060000 		.4byte	.LASF102
+ 1154 037f 21       		.byte	0x21
+ 1155 0380 06       		.uleb128 0x6
+ 1156 0381 26060000 		.4byte	.LASF103
+ 1157 0385 22       		.byte	0x22
+ 1158 0386 06       		.uleb128 0x6
+ 1159 0387 38060000 		.4byte	.LASF104
+ 1160 038b 23       		.byte	0x23
+ 1161 038c 06       		.uleb128 0x6
+ 1162 038d 4A060000 		.4byte	.LASF105
+ 1163 0391 24       		.byte	0x24
+ 1164 0392 06       		.uleb128 0x6
+ 1165 0393 5C060000 		.4byte	.LASF106
+ 1166 0397 25       		.byte	0x25
+ 1167 0398 06       		.uleb128 0x6
+ 1168 0399 6E060000 		.4byte	.LASF107
+ 1169 039d 26       		.byte	0x26
+ 1170 039e 06       		.uleb128 0x6
+ 1171 039f 80060000 		.4byte	.LASF108
+ 1172 03a3 27       		.byte	0x27
+ 1173 03a4 06       		.uleb128 0x6
+ 1174 03a5 2A020000 		.4byte	.LASF109
+ 1175 03a9 30       		.byte	0x30
+ 1176 03aa 06       		.uleb128 0x6
+ 1177 03ab 3C020000 		.4byte	.LASF110
+ 1178 03af 31       		.byte	0x31
+ 1179 03b0 06       		.uleb128 0x6
+ 1180 03b1 4E020000 		.4byte	.LASF111
+ 1181 03b5 32       		.byte	0x32
+ 1182 03b6 06       		.uleb128 0x6
+ 1183 03b7 60020000 		.4byte	.LASF112
+ 1184 03bb 33       		.byte	0x33
+ 1185 03bc 06       		.uleb128 0x6
+ 1186 03bd 72020000 		.4byte	.LASF113
+ 1187 03c1 34       		.byte	0x34
+ 1188 03c2 06       		.uleb128 0x6
+ 1189 03c3 84020000 		.4byte	.LASF114
+ 1190 03c7 35       		.byte	0x35
+ 1191 03c8 06       		.uleb128 0x6
+ 1192 03c9 96020000 		.4byte	.LASF115
+ 1193 03cd 36       		.byte	0x36
+ 1194 03ce 06       		.uleb128 0x6
+ 1195 03cf A8020000 		.4byte	.LASF116
+ 1196 03d3 37       		.byte	0x37
+ 1197 03d4 06       		.uleb128 0x6
+ 1198 03d5 C5040000 		.4byte	.LASF117
+ 1199 03d9 40       		.byte	0x40
+ 1200 03da 06       		.uleb128 0x6
+ 1201 03db 130A0000 		.4byte	.LASF118
+ 1202 03df 41       		.byte	0x41
+ 1203 03e0 06       		.uleb128 0x6
+ 1204 03e1 250A0000 		.4byte	.LASF119
+ 1205 03e5 42       		.byte	0x42
+ 1206 03e6 06       		.uleb128 0x6
+ARM GAS  e:\temp\ccdmNCtc.s 			page 32
+
+
+ 1207 03e7 370A0000 		.4byte	.LASF120
+ 1208 03eb 43       		.byte	0x43
+ 1209 03ec 06       		.uleb128 0x6
+ 1210 03ed 490A0000 		.4byte	.LASF121
+ 1211 03f1 44       		.byte	0x44
+ 1212 03f2 06       		.uleb128 0x6
+ 1213 03f3 5B0A0000 		.4byte	.LASF122
+ 1214 03f7 45       		.byte	0x45
+ 1215 03f8 06       		.uleb128 0x6
+ 1216 03f9 6D0A0000 		.4byte	.LASF123
+ 1217 03fd 46       		.byte	0x46
+ 1218 03fe 06       		.uleb128 0x6
+ 1219 03ff 7F0A0000 		.4byte	.LASF124
+ 1220 0403 47       		.byte	0x47
+ 1221 0404 06       		.uleb128 0x6
+ 1222 0405 E3020000 		.4byte	.LASF125
+ 1223 0409 50       		.byte	0x50
+ 1224 040a 06       		.uleb128 0x6
+ 1225 040b F5020000 		.4byte	.LASF126
+ 1226 040f 51       		.byte	0x51
+ 1227 0410 06       		.uleb128 0x6
+ 1228 0411 07030000 		.4byte	.LASF127
+ 1229 0415 52       		.byte	0x52
+ 1230 0416 06       		.uleb128 0x6
+ 1231 0417 AE0C0000 		.4byte	.LASF128
+ 1232 041b 53       		.byte	0x53
+ 1233 041c 06       		.uleb128 0x6
+ 1234 041d 2C030000 		.4byte	.LASF129
+ 1235 0421 54       		.byte	0x54
+ 1236 0422 06       		.uleb128 0x6
+ 1237 0423 3E030000 		.4byte	.LASF130
+ 1238 0427 55       		.byte	0x55
+ 1239 0428 06       		.uleb128 0x6
+ 1240 0429 50030000 		.4byte	.LASF131
+ 1241 042d 56       		.byte	0x56
+ 1242 042e 06       		.uleb128 0x6
+ 1243 042f 62030000 		.4byte	.LASF132
+ 1244 0433 57       		.byte	0x57
+ 1245 0434 06       		.uleb128 0x6
+ 1246 0435 910A0000 		.4byte	.LASF133
+ 1247 0439 60       		.byte	0x60
+ 1248 043a 06       		.uleb128 0x6
+ 1249 043b A30A0000 		.4byte	.LASF134
+ 1250 043f 61       		.byte	0x61
+ 1251 0440 00       		.byte	0
+ 1252 0441 0C       		.uleb128 0xc
+ 1253 0442 01       		.byte	0x1
+ 1254 0443 37000000 		.4byte	0x37
+ 1255 0447 08       		.byte	0x8
+ 1256 0448 74       		.byte	0x74
+ 1257 0449 6C040000 		.4byte	0x46c
+ 1258 044d 06       		.uleb128 0x6
+ 1259 044e A6030000 		.4byte	.LASF135
+ 1260 0452 00       		.byte	0
+ 1261 0453 06       		.uleb128 0x6
+ 1262 0454 7D070000 		.4byte	.LASF136
+ 1263 0458 01       		.byte	0x1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 33
+
+
+ 1264 0459 06       		.uleb128 0x6
+ 1265 045a AE050000 		.4byte	.LASF137
+ 1266 045e 02       		.byte	0x2
+ 1267 045f 06       		.uleb128 0x6
+ 1268 0460 48080000 		.4byte	.LASF138
+ 1269 0464 03       		.byte	0x3
+ 1270 0465 06       		.uleb128 0x6
+ 1271 0466 C4010000 		.4byte	.LASF139
+ 1272 046a 04       		.byte	0x4
+ 1273 046b 00       		.byte	0
+ 1274 046c 03       		.uleb128 0x3
+ 1275 046d FE000000 		.4byte	.LASF140
+ 1276 0471 08       		.byte	0x8
+ 1277 0472 7A       		.byte	0x7a
+ 1278 0473 41040000 		.4byte	0x441
+ 1279 0477 12       		.uleb128 0x12
+ 1280 0478 320D0000 		.4byte	.LASF178
+ 1281 047c 01       		.byte	0x1
+ 1282 047d 0901     		.2byte	0x109
+ 1283 047f 00000000 		.4byte	.LFB36
+ 1284 0483 40000000 		.4byte	.LFE36-.LFB36
+ 1285 0487 01       		.uleb128 0x1
+ 1286 0488 9C       		.byte	0x9c
+ 1287 0489 FB040000 		.4byte	0x4fb
+ 1288 048d 13       		.uleb128 0x13
+ 1289 048e F6060000 		.4byte	.LASF141
+ 1290 0492 01       		.byte	0x1
+ 1291 0493 0901     		.2byte	0x109
+ 1292 0495 81000000 		.4byte	0x81
+ 1293 0499 00000000 		.4byte	.LLST0
+ 1294 049d 13       		.uleb128 0x13
+ 1295 049e AE060000 		.4byte	.LASF142
+ 1296 04a2 01       		.byte	0x1
+ 1297 04a3 0901     		.2byte	0x109
+ 1298 04a5 6C040000 		.4byte	0x46c
+ 1299 04a9 21000000 		.4byte	.LLST1
+ 1300 04ad 14       		.uleb128 0x14
+ 1301 04ae 08000000 		.4byte	.LBB2
+ 1302 04b2 32000000 		.4byte	.LBE2-.LBB2
+ 1303 04b6 15       		.uleb128 0x15
+ 1304 04b7 B3010000 		.4byte	.LASF147
+ 1305 04bb 01       		.byte	0x1
+ 1306 04bc 0D01     		.2byte	0x10d
+ 1307 04be CC020000 		.4byte	0x2cc
+ 1308 04c2 42000000 		.4byte	.LLST2
+ 1309 04c6 16       		.uleb128 0x16
+ 1310 04c7 2A000000 		.4byte	.LVL4
+ 1311 04cb D6040000 		.4byte	0x4d6
+ 1312 04cf 17       		.uleb128 0x17
+ 1313 04d0 01       		.uleb128 0x1
+ 1314 04d1 50       		.byte	0x50
+ 1315 04d2 02       		.uleb128 0x2
+ 1316 04d3 74       		.byte	0x74
+ 1317 04d4 00       		.sleb128 0
+ 1318 04d5 00       		.byte	0
+ 1319 04d6 18       		.uleb128 0x18
+ 1320 04d7 3A000000 		.4byte	.LVL6
+ARM GAS  e:\temp\ccdmNCtc.s 			page 34
+
+
+ 1321 04db 46090000 		.4byte	0x946
+ 1322 04df 17       		.uleb128 0x17
+ 1323 04e0 01       		.uleb128 0x1
+ 1324 04e1 50       		.byte	0x50
+ 1325 04e2 02       		.uleb128 0x2
+ 1326 04e3 74       		.byte	0x74
+ 1327 04e4 00       		.sleb128 0
+ 1328 04e5 17       		.uleb128 0x17
+ 1329 04e6 01       		.uleb128 0x1
+ 1330 04e7 51       		.byte	0x51
+ 1331 04e8 01       		.uleb128 0x1
+ 1332 04e9 37       		.byte	0x37
+ 1333 04ea 17       		.uleb128 0x17
+ 1334 04eb 01       		.uleb128 0x1
+ 1335 04ec 52       		.byte	0x52
+ 1336 04ed 0A       		.uleb128 0xa
+ 1337 04ee 74       		.byte	0x74
+ 1338 04ef 00       		.sleb128 0
+ 1339 04f0 32       		.byte	0x32
+ 1340 04f1 24       		.byte	0x24
+ 1341 04f2 03       		.byte	0x3
+ 1342 04f3 04000000 		.4byte	.LANCHOR0+4
+ 1343 04f7 22       		.byte	0x22
+ 1344 04f8 00       		.byte	0
+ 1345 04f9 00       		.byte	0
+ 1346 04fa 00       		.byte	0
+ 1347 04fb 19       		.uleb128 0x19
+ 1348 04fc 720D0000 		.4byte	.LASF153
+ 1349 0500 01       		.byte	0x1
+ 1350 0501 7E       		.byte	0x7e
+ 1351 0502 00000000 		.4byte	.LFB34
+ 1352 0506 14000000 		.4byte	.LFE34-.LFB34
+ 1353 050a 01       		.uleb128 0x1
+ 1354 050b 9C       		.byte	0x9c
+ 1355 050c 2D050000 		.4byte	0x52d
+ 1356 0510 1A       		.uleb128 0x1a
+ 1357 0511 F6060000 		.4byte	.LASF141
+ 1358 0515 01       		.byte	0x1
+ 1359 0516 7E       		.byte	0x7e
+ 1360 0517 81000000 		.4byte	0x81
+ 1361 051b 60000000 		.4byte	.LLST3
+ 1362 051f 1B       		.uleb128 0x1b
+ 1363 0520 63626B00 		.ascii	"cbk\000"
+ 1364 0524 01       		.byte	0x1
+ 1365 0525 7E       		.byte	0x7e
+ 1366 0526 D7020000 		.4byte	0x2d7
+ 1367 052a 01       		.uleb128 0x1
+ 1368 052b 51       		.byte	0x51
+ 1369 052c 00       		.byte	0
+ 1370 052d 1C       		.uleb128 0x1c
+ 1371 052e A6010000 		.4byte	.LASF143
+ 1372 0532 01       		.byte	0x1
+ 1373 0533 87       		.byte	0x87
+ 1374 0534 06020000 		.4byte	0x206
+ 1375 0538 00000000 		.4byte	.LFB35
+ 1376 053c 60000000 		.4byte	.LFE35-.LFB35
+ 1377 0540 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 35
+
+
+ 1378 0541 9C       		.byte	0x9c
+ 1379 0542 94050000 		.4byte	0x594
+ 1380 0546 1A       		.uleb128 0x1a
+ 1381 0547 F6060000 		.4byte	.LASF141
+ 1382 054b 01       		.byte	0x1
+ 1383 054c 87       		.byte	0x87
+ 1384 054d 81000000 		.4byte	0x81
+ 1385 0551 81000000 		.4byte	.LLST4
+ 1386 0555 1D       		.uleb128 0x1d
+ 1387 0556 636D6400 		.ascii	"cmd\000"
+ 1388 055a 01       		.byte	0x1
+ 1389 055b 87       		.byte	0x87
+ 1390 055c 8C000000 		.4byte	0x8c
+ 1391 0560 06010000 		.4byte	.LLST5
+ 1392 0564 1E       		.uleb128 0x1e
+ 1393 0565 10000000 		.4byte	.LVL10
+ 1394 0569 52090000 		.4byte	0x952
+ 1395 056d 1F       		.uleb128 0x1f
+ 1396 056e 2C000000 		.4byte	.LVL13
+ 1397 0572 5D090000 		.4byte	0x95d
+ 1398 0576 84050000 		.4byte	0x584
+ 1399 057a 17       		.uleb128 0x17
+ 1400 057b 01       		.uleb128 0x1
+ 1401 057c 51       		.byte	0x51
+ 1402 057d 05       		.uleb128 0x5
+ 1403 057e 03       		.byte	0x3
+ 1404 057f 00000000 		.4byte	dp_src_hpd_cbk
+ 1405 0583 00       		.byte	0
+ 1406 0584 18       		.uleb128 0x18
+ 1407 0585 46000000 		.4byte	.LVL16
+ 1408 0589 68090000 		.4byte	0x968
+ 1409 058d 17       		.uleb128 0x17
+ 1410 058e 01       		.uleb128 0x1
+ 1411 058f 52       		.byte	0x52
+ 1412 0590 01       		.uleb128 0x1
+ 1413 0591 30       		.byte	0x30
+ 1414 0592 00       		.byte	0
+ 1415 0593 00       		.byte	0
+ 1416 0594 20       		.uleb128 0x20
+ 1417 0595 A80D0000 		.4byte	.LASF144
+ 1418 0599 01       		.byte	0x1
+ 1419 059a 4501     		.2byte	0x145
+ 1420 059c 68020000 		.4byte	0x268
+ 1421 05a0 00000000 		.4byte	.LFB38
+ 1422 05a4 14000000 		.4byte	.LFE38-.LFB38
+ 1423 05a8 01       		.uleb128 0x1
+ 1424 05a9 9C       		.byte	0x9c
+ 1425 05aa BF050000 		.4byte	0x5bf
+ 1426 05ae 13       		.uleb128 0x13
+ 1427 05af F6060000 		.4byte	.LASF141
+ 1428 05b3 01       		.byte	0x1
+ 1429 05b4 4501     		.2byte	0x145
+ 1430 05b6 81000000 		.4byte	0x81
+ 1431 05ba 72010000 		.4byte	.LLST6
+ 1432 05be 00       		.byte	0
+ 1433 05bf 20       		.uleb128 0x20
+ 1434 05c0 9B070000 		.4byte	.LASF145
+ARM GAS  e:\temp\ccdmNCtc.s 			page 36
+
+
+ 1435 05c4 01       		.byte	0x1
+ 1436 05c5 8901     		.2byte	0x189
+ 1437 05c7 06020000 		.4byte	0x206
+ 1438 05cb 00000000 		.4byte	.LFB39
+ 1439 05cf 38000000 		.4byte	.LFE39-.LFB39
+ 1440 05d3 01       		.uleb128 0x1
+ 1441 05d4 9C       		.byte	0x9c
+ 1442 05d5 5D060000 		.4byte	0x65d
+ 1443 05d9 13       		.uleb128 0x13
+ 1444 05da F6060000 		.4byte	.LASF141
+ 1445 05de 01       		.byte	0x1
+ 1446 05df 8901     		.2byte	0x189
+ 1447 05e1 81000000 		.4byte	0x81
+ 1448 05e5 AC010000 		.4byte	.LLST7
+ 1449 05e9 21       		.uleb128 0x21
+ 1450 05ea 63666700 		.ascii	"cfg\000"
+ 1451 05ee 01       		.byte	0x1
+ 1452 05ef 8901     		.2byte	0x189
+ 1453 05f1 68020000 		.4byte	0x268
+ 1454 05f5 E6010000 		.4byte	.LLST8
+ 1455 05f9 13       		.uleb128 0x13
+ 1456 05fa 1F080000 		.4byte	.LASF146
+ 1457 05fe 01       		.byte	0x1
+ 1458 05ff 8901     		.2byte	0x189
+ 1459 0601 8C000000 		.4byte	0x8c
+ 1460 0605 20020000 		.4byte	.LLST9
+ 1461 0609 15       		.uleb128 0x15
+ 1462 060a C3030000 		.4byte	.LASF148
+ 1463 060e 01       		.byte	0x1
+ 1464 060f 8B01     		.2byte	0x18b
+ 1465 0611 06020000 		.4byte	0x206
+ 1466 0615 5A020000 		.4byte	.LLST10
+ 1467 0619 1F       		.uleb128 0x1f
+ 1468 061a 14000000 		.4byte	.LVL27
+ 1469 061e 73090000 		.4byte	0x973
+ 1470 0622 2D060000 		.4byte	0x62d
+ 1471 0626 17       		.uleb128 0x17
+ 1472 0627 01       		.uleb128 0x1
+ 1473 0628 50       		.byte	0x50
+ 1474 0629 02       		.uleb128 0x2
+ 1475 062a 75       		.byte	0x75
+ 1476 062b 00       		.sleb128 0
+ 1477 062c 00       		.byte	0
+ 1478 062d 1F       		.uleb128 0x1f
+ 1479 062e 1E000000 		.4byte	.LVL28
+ 1480 0632 7F090000 		.4byte	0x97f
+ 1481 0636 47060000 		.4byte	0x647
+ 1482 063a 17       		.uleb128 0x17
+ 1483 063b 01       		.uleb128 0x1
+ 1484 063c 50       		.byte	0x50
+ 1485 063d 02       		.uleb128 0x2
+ 1486 063e 75       		.byte	0x75
+ 1487 063f 00       		.sleb128 0
+ 1488 0640 17       		.uleb128 0x17
+ 1489 0641 01       		.uleb128 0x1
+ 1490 0642 51       		.byte	0x51
+ 1491 0643 02       		.uleb128 0x2
+ARM GAS  e:\temp\ccdmNCtc.s 			page 37
+
+
+ 1492 0644 74       		.byte	0x74
+ 1493 0645 00       		.sleb128 0
+ 1494 0646 00       		.byte	0
+ 1495 0647 18       		.uleb128 0x18
+ 1496 0648 2A000000 		.4byte	.LVL31
+ 1497 064c 8B090000 		.4byte	0x98b
+ 1498 0650 17       		.uleb128 0x17
+ 1499 0651 01       		.uleb128 0x1
+ 1500 0652 50       		.byte	0x50
+ 1501 0653 02       		.uleb128 0x2
+ 1502 0654 75       		.byte	0x75
+ 1503 0655 00       		.sleb128 0
+ 1504 0656 17       		.uleb128 0x17
+ 1505 0657 01       		.uleb128 0x1
+ 1506 0658 51       		.byte	0x51
+ 1507 0659 01       		.uleb128 0x1
+ 1508 065a 31       		.byte	0x31
+ 1509 065b 00       		.byte	0
+ 1510 065c 00       		.byte	0
+ 1511 065d 1C       		.uleb128 0x1c
+ 1512 065e A3070000 		.4byte	.LASF149
+ 1513 0662 01       		.byte	0x1
+ 1514 0663 73       		.byte	0x73
+ 1515 0664 06020000 		.4byte	0x206
+ 1516 0668 00000000 		.4byte	.LFB33
+ 1517 066c 14000000 		.4byte	.LFE33-.LFB33
+ 1518 0670 01       		.uleb128 0x1
+ 1519 0671 9C       		.byte	0x9c
+ 1520 0672 AB060000 		.4byte	0x6ab
+ 1521 0676 1A       		.uleb128 0x1a
+ 1522 0677 F6060000 		.4byte	.LASF141
+ 1523 067b 01       		.byte	0x1
+ 1524 067c 73       		.byte	0x73
+ 1525 067d 81000000 		.4byte	0x81
+ 1526 0681 9B020000 		.4byte	.LLST11
+ 1527 0685 1D       		.uleb128 0x1d
+ 1528 0686 636D6400 		.ascii	"cmd\000"
+ 1529 068a 01       		.byte	0x1
+ 1530 068b 73       		.byte	0x73
+ 1531 068c 8C000000 		.4byte	0x8c
+ 1532 0690 D5020000 		.4byte	.LLST12
+ 1533 0694 18       		.uleb128 0x18
+ 1534 0695 0E000000 		.4byte	.LVL37
+ 1535 0699 BF050000 		.4byte	0x5bf
+ 1536 069d 17       		.uleb128 0x17
+ 1537 069e 01       		.uleb128 0x1
+ 1538 069f 51       		.byte	0x51
+ 1539 06a0 03       		.uleb128 0x3
+ 1540 06a1 F3       		.byte	0xf3
+ 1541 06a2 01       		.uleb128 0x1
+ 1542 06a3 51       		.byte	0x51
+ 1543 06a4 17       		.uleb128 0x17
+ 1544 06a5 01       		.uleb128 0x1
+ 1545 06a6 52       		.byte	0x52
+ 1546 06a7 01       		.uleb128 0x1
+ 1547 06a8 30       		.byte	0x30
+ 1548 06a9 00       		.byte	0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 38
+
+
+ 1549 06aa 00       		.byte	0
+ 1550 06ab 1C       		.uleb128 0x1c
+ 1551 06ac 610C0000 		.4byte	.LASF150
+ 1552 06b0 01       		.byte	0x1
+ 1553 06b1 55       		.byte	0x55
+ 1554 06b2 06020000 		.4byte	0x206
+ 1555 06b6 00000000 		.4byte	.LFB32
+ 1556 06ba 4C000000 		.4byte	.LFE32-.LFB32
+ 1557 06be 01       		.uleb128 0x1
+ 1558 06bf 9C       		.byte	0x9c
+ 1559 06c0 22070000 		.4byte	0x722
+ 1560 06c4 1A       		.uleb128 0x1a
+ 1561 06c5 F6060000 		.4byte	.LASF141
+ 1562 06c9 01       		.byte	0x1
+ 1563 06ca 55       		.byte	0x55
+ 1564 06cb 81000000 		.4byte	0x81
+ 1565 06cf 0F030000 		.4byte	.LLST13
+ 1566 06d3 1A       		.uleb128 0x1a
+ 1567 06d4 59070000 		.4byte	.LASF151
+ 1568 06d8 01       		.byte	0x1
+ 1569 06d9 55       		.byte	0x55
+ 1570 06da EA010000 		.4byte	0x1ea
+ 1571 06de 7B030000 		.4byte	.LLST14
+ 1572 06e2 22       		.uleb128 0x22
+ 1573 06e3 10020000 		.4byte	.LASF76
+ 1574 06e7 01       		.byte	0x1
+ 1575 06e8 57       		.byte	0x57
+ 1576 06e9 81000000 		.4byte	0x81
+ 1577 06ed 9C030000 		.4byte	.LLST15
+ 1578 06f1 22       		.uleb128 0x22
+ 1579 06f2 0F0D0000 		.4byte	.LASF77
+ 1580 06f6 01       		.byte	0x1
+ 1581 06f7 57       		.byte	0x57
+ 1582 06f8 81000000 		.4byte	0x81
+ 1583 06fc D7030000 		.4byte	.LLST16
+ 1584 0700 22       		.uleb128 0x22
+ 1585 0701 D70C0000 		.4byte	.LASF152
+ 1586 0705 01       		.byte	0x1
+ 1587 0706 58       		.byte	0x58
+ 1588 0707 CC020000 		.4byte	0x2cc
+ 1589 070b 0C040000 		.4byte	.LLST17
+ 1590 070f 1E       		.uleb128 0x1e
+ 1591 0710 34000000 		.4byte	.LVL45
+ 1592 0714 5D060000 		.4byte	0x65d
+ 1593 0718 1E       		.uleb128 0x1e
+ 1594 0719 3C000000 		.4byte	.LVL47
+ 1595 071d 2D050000 		.4byte	0x52d
+ 1596 0721 00       		.byte	0
+ 1597 0722 23       		.uleb128 0x23
+ 1598 0723 EF090000 		.4byte	.LASF154
+ 1599 0727 01       		.byte	0x1
+ 1600 0728 2601     		.2byte	0x126
+ 1601 072a 00000000 		.4byte	.LFB37
+ 1602 072e 50000000 		.4byte	.LFE37-.LFB37
+ 1603 0732 01       		.uleb128 0x1
+ 1604 0733 9C       		.byte	0x9c
+ 1605 0734 BD070000 		.4byte	0x7bd
+ARM GAS  e:\temp\ccdmNCtc.s 			page 39
+
+
+ 1606 0738 13       		.uleb128 0x13
+ 1607 0739 F6060000 		.4byte	.LASF141
+ 1608 073d 01       		.byte	0x1
+ 1609 073e 2601     		.2byte	0x126
+ 1610 0740 81000000 		.4byte	0x81
+ 1611 0744 35040000 		.4byte	.LLST18
+ 1612 0748 1F       		.uleb128 0x1f
+ 1613 0749 08000000 		.4byte	.LVL53
+ 1614 074d 97090000 		.4byte	0x997
+ 1615 0751 5C070000 		.4byte	0x75c
+ 1616 0755 17       		.uleb128 0x17
+ 1617 0756 01       		.uleb128 0x1
+ 1618 0757 50       		.byte	0x50
+ 1619 0758 02       		.uleb128 0x2
+ 1620 0759 74       		.byte	0x74
+ 1621 075a 00       		.sleb128 0
+ 1622 075b 00       		.byte	0
+ 1623 075c 1F       		.uleb128 0x1f
+ 1624 075d 16000000 		.4byte	.LVL54
+ 1625 0761 97090000 		.4byte	0x997
+ 1626 0765 70070000 		.4byte	0x770
+ 1627 0769 17       		.uleb128 0x17
+ 1628 076a 01       		.uleb128 0x1
+ 1629 076b 50       		.byte	0x50
+ 1630 076c 02       		.uleb128 0x2
+ 1631 076d 74       		.byte	0x74
+ 1632 076e 00       		.sleb128 0
+ 1633 076f 00       		.byte	0
+ 1634 0770 1F       		.uleb128 0x1f
+ 1635 0771 28000000 		.4byte	.LVL55
+ 1636 0775 BF050000 		.4byte	0x5bf
+ 1637 0779 8E070000 		.4byte	0x78e
+ 1638 077d 17       		.uleb128 0x17
+ 1639 077e 01       		.uleb128 0x1
+ 1640 077f 50       		.byte	0x50
+ 1641 0780 02       		.uleb128 0x2
+ 1642 0781 74       		.byte	0x74
+ 1643 0782 00       		.sleb128 0
+ 1644 0783 17       		.uleb128 0x17
+ 1645 0784 01       		.uleb128 0x1
+ 1646 0785 51       		.byte	0x51
+ 1647 0786 01       		.uleb128 0x1
+ 1648 0787 32       		.byte	0x32
+ 1649 0788 17       		.uleb128 0x17
+ 1650 0789 01       		.uleb128 0x1
+ 1651 078a 52       		.byte	0x52
+ 1652 078b 01       		.uleb128 0x1
+ 1653 078c 30       		.byte	0x30
+ 1654 078d 00       		.byte	0
+ 1655 078e 1F       		.uleb128 0x1f
+ 1656 078f 34000000 		.4byte	.LVL56
+ 1657 0793 BF050000 		.4byte	0x5bf
+ 1658 0797 AC070000 		.4byte	0x7ac
+ 1659 079b 17       		.uleb128 0x17
+ 1660 079c 01       		.uleb128 0x1
+ 1661 079d 50       		.byte	0x50
+ 1662 079e 02       		.uleb128 0x2
+ARM GAS  e:\temp\ccdmNCtc.s 			page 40
+
+
+ 1663 079f 74       		.byte	0x74
+ 1664 07a0 00       		.sleb128 0
+ 1665 07a1 17       		.uleb128 0x17
+ 1666 07a2 01       		.uleb128 0x1
+ 1667 07a3 51       		.byte	0x51
+ 1668 07a4 01       		.uleb128 0x1
+ 1669 07a5 30       		.byte	0x30
+ 1670 07a6 17       		.uleb128 0x17
+ 1671 07a7 01       		.uleb128 0x1
+ 1672 07a8 52       		.byte	0x52
+ 1673 07a9 01       		.uleb128 0x1
+ 1674 07aa 30       		.byte	0x30
+ 1675 07ab 00       		.byte	0
+ 1676 07ac 18       		.uleb128 0x18
+ 1677 07ad 3A000000 		.4byte	.LVL57
+ 1678 07b1 52090000 		.4byte	0x952
+ 1679 07b5 17       		.uleb128 0x17
+ 1680 07b6 01       		.uleb128 0x1
+ 1681 07b7 50       		.byte	0x50
+ 1682 07b8 02       		.uleb128 0x2
+ 1683 07b9 74       		.byte	0x74
+ 1684 07ba 00       		.sleb128 0
+ 1685 07bb 00       		.byte	0
+ 1686 07bc 00       		.byte	0
+ 1687 07bd 20       		.uleb128 0x20
+ 1688 07be 4A040000 		.4byte	.LASF155
+ 1689 07c2 01       		.byte	0x1
+ 1690 07c3 CA01     		.2byte	0x1ca
+ 1691 07c5 06020000 		.4byte	0x206
+ 1692 07c9 00000000 		.4byte	.LFB40
+ 1693 07cd 10000000 		.4byte	.LFE40-.LFB40
+ 1694 07d1 01       		.uleb128 0x1
+ 1695 07d2 9C       		.byte	0x9c
+ 1696 07d3 E8070000 		.4byte	0x7e8
+ 1697 07d7 13       		.uleb128 0x13
+ 1698 07d8 F6060000 		.4byte	.LASF141
+ 1699 07dc 01       		.byte	0x1
+ 1700 07dd CA01     		.2byte	0x1ca
+ 1701 07df 81000000 		.4byte	0x81
+ 1702 07e3 56040000 		.4byte	.LLST19
+ 1703 07e7 00       		.byte	0
+ 1704 07e8 23       		.uleb128 0x23
+ 1705 07e9 C1070000 		.4byte	.LASF156
+ 1706 07ed 01       		.byte	0x1
+ 1707 07ee CF01     		.2byte	0x1cf
+ 1708 07f0 00000000 		.4byte	.LFB41
+ 1709 07f4 4C000000 		.4byte	.LFE41-.LFB41
+ 1710 07f8 01       		.uleb128 0x1
+ 1711 07f9 9C       		.byte	0x9c
+ 1712 07fa 47080000 		.4byte	0x847
+ 1713 07fe 13       		.uleb128 0x13
+ 1714 07ff F6060000 		.4byte	.LASF141
+ 1715 0803 01       		.byte	0x1
+ 1716 0804 CF01     		.2byte	0x1cf
+ 1717 0806 81000000 		.4byte	0x81
+ 1718 080a 77040000 		.4byte	.LLST20
+ 1719 080e 1F       		.uleb128 0x1f
+ARM GAS  e:\temp\ccdmNCtc.s 			page 41
+
+
+ 1720 080f 28000000 		.4byte	.LVL62
+ 1721 0813 A2090000 		.4byte	0x9a2
+ 1722 0817 22080000 		.4byte	0x822
+ 1723 081b 17       		.uleb128 0x17
+ 1724 081c 01       		.uleb128 0x1
+ 1725 081d 50       		.byte	0x50
+ 1726 081e 02       		.uleb128 0x2
+ 1727 081f 08       		.byte	0x8
+ 1728 0820 30       		.byte	0x30
+ 1729 0821 00       		.byte	0
+ 1730 0822 1F       		.uleb128 0x1f
+ 1731 0823 40000000 		.4byte	.LVL65
+ 1732 0827 A2090000 		.4byte	0x9a2
+ 1733 082b 36080000 		.4byte	0x836
+ 1734 082f 17       		.uleb128 0x17
+ 1735 0830 01       		.uleb128 0x1
+ 1736 0831 50       		.byte	0x50
+ 1737 0832 02       		.uleb128 0x2
+ 1738 0833 08       		.byte	0x8
+ 1739 0834 34       		.byte	0x34
+ 1740 0835 00       		.byte	0
+ 1741 0836 18       		.uleb128 0x18
+ 1742 0837 46000000 		.4byte	.LVL66
+ 1743 083b AE090000 		.4byte	0x9ae
+ 1744 083f 17       		.uleb128 0x17
+ 1745 0840 01       		.uleb128 0x1
+ 1746 0841 50       		.byte	0x50
+ 1747 0842 02       		.uleb128 0x2
+ 1748 0843 74       		.byte	0x74
+ 1749 0844 00       		.sleb128 0
+ 1750 0845 00       		.byte	0
+ 1751 0846 00       		.byte	0
+ 1752 0847 23       		.uleb128 0x23
+ 1753 0848 37040000 		.4byte	.LASF157
+ 1754 084c 01       		.byte	0x1
+ 1755 084d EE01     		.2byte	0x1ee
+ 1756 084f 00000000 		.4byte	.LFB42
+ 1757 0853 28000000 		.4byte	.LFE42-.LFB42
+ 1758 0857 01       		.uleb128 0x1
+ 1759 0858 9C       		.byte	0x9c
+ 1760 0859 77080000 		.4byte	0x877
+ 1761 085d 13       		.uleb128 0x13
+ 1762 085e F6060000 		.4byte	.LASF141
+ 1763 0862 01       		.byte	0x1
+ 1764 0863 EE01     		.2byte	0x1ee
+ 1765 0865 81000000 		.4byte	0x81
+ 1766 0869 B1040000 		.4byte	.LLST21
+ 1767 086d 1E       		.uleb128 0x1e
+ 1768 086e 20000000 		.4byte	.LVL68
+ 1769 0872 B9090000 		.4byte	0x9b9
+ 1770 0876 00       		.byte	0
+ 1771 0877 24       		.uleb128 0x24
+ 1772 0878 8C000000 		.4byte	0x8c
+ 1773 087c 87080000 		.4byte	0x887
+ 1774 0880 25       		.uleb128 0x25
+ 1775 0881 B3000000 		.4byte	0xb3
+ 1776 0885 01       		.byte	0x1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 42
+
+
+ 1777 0886 00       		.byte	0
+ 1778 0887 26       		.uleb128 0x26
+ 1779 0888 9F080000 		.4byte	.LASF158
+ 1780 088c 01       		.byte	0x1
+ 1781 088d 3A       		.byte	0x3a
+ 1782 088e 77080000 		.4byte	0x877
+ 1783 0892 05       		.uleb128 0x5
+ 1784 0893 03       		.byte	0x3
+ 1785 0894 04000000 		.4byte	hw_sln_data
+ 1786 0898 24       		.uleb128 0x24
+ 1787 0899 D7020000 		.4byte	0x2d7
+ 1788 089d A8080000 		.4byte	0x8a8
+ 1789 08a1 25       		.uleb128 0x25
+ 1790 08a2 B3000000 		.4byte	0xb3
+ 1791 08a6 01       		.byte	0x1
+ 1792 08a7 00       		.byte	0
+ 1793 08a8 26       		.uleb128 0x26
+ 1794 08a9 640D0000 		.4byte	.LASF159
+ 1795 08ad 01       		.byte	0x1
+ 1796 08ae 3C       		.byte	0x3c
+ 1797 08af 98080000 		.4byte	0x898
+ 1798 08b3 05       		.uleb128 0x5
+ 1799 08b4 03       		.byte	0x3
+ 1800 08b5 0C000000 		.4byte	gl_hw_cmd_cbk
+ 1801 08b9 24       		.uleb128 0x24
+ 1802 08ba 0D020000 		.4byte	0x20d
+ 1803 08be C9080000 		.4byte	0x8c9
+ 1804 08c2 25       		.uleb128 0x25
+ 1805 08c3 B3000000 		.4byte	0xb3
+ 1806 08c7 01       		.byte	0x1
+ 1807 08c8 00       		.byte	0
+ 1808 08c9 26       		.uleb128 0x26
+ 1809 08ca BA020000 		.4byte	.LASF160
+ 1810 08ce 01       		.byte	0x1
+ 1811 08cf 40       		.byte	0x40
+ 1812 08d0 DA080000 		.4byte	0x8da
+ 1813 08d4 05       		.uleb128 0x5
+ 1814 08d5 03       		.byte	0x3
+ 1815 08d6 00000000 		.4byte	gl_alt_mode_cmd_pending
+ 1816 08da 0B       		.uleb128 0xb
+ 1817 08db B9080000 		.4byte	0x8b9
+ 1818 08df 24       		.uleb128 0x24
+ 1819 08e0 EF080000 		.4byte	0x8ef
+ 1820 08e4 EF080000 		.4byte	0x8ef
+ 1821 08e8 25       		.uleb128 0x25
+ 1822 08e9 B3000000 		.4byte	0xb3
+ 1823 08ed 01       		.byte	0x1
+ 1824 08ee 00       		.byte	0
+ 1825 08ef 0B       		.uleb128 0xb
+ 1826 08f0 6C040000 		.4byte	0x46c
+ 1827 08f4 26       		.uleb128 0x26
+ 1828 08f5 61000000 		.4byte	.LASF161
+ 1829 08f9 01       		.byte	0x1
+ 1830 08fa 43       		.byte	0x43
+ 1831 08fb 05090000 		.4byte	0x905
+ 1832 08ff 05       		.uleb128 0x5
+ 1833 0900 03       		.byte	0x3
+ARM GAS  e:\temp\ccdmNCtc.s 			page 43
+
+
+ 1834 0901 14000000 		.4byte	gl_alt_mode_hpd_state
+ 1835 0905 0B       		.uleb128 0xb
+ 1836 0906 DF080000 		.4byte	0x8df
+ 1837 090a 24       		.uleb128 0x24
+ 1838 090b 68020000 		.4byte	0x268
+ 1839 090f 1A090000 		.4byte	0x91a
+ 1840 0913 25       		.uleb128 0x25
+ 1841 0914 B3000000 		.4byte	0xb3
+ 1842 0918 01       		.byte	0x1
+ 1843 0919 00       		.byte	0
+ 1844 091a 26       		.uleb128 0x26
+ 1845 091b B5030000 		.4byte	.LASF162
+ 1846 091f 01       		.byte	0x1
+ 1847 0920 51       		.byte	0x51
+ 1848 0921 0A090000 		.4byte	0x90a
+ 1849 0925 05       		.uleb128 0x5
+ 1850 0926 03       		.byte	0x3
+ 1851 0927 18000000 		.4byte	app_mux_state
+ 1852 092b 24       		.uleb128 0x24
+ 1853 092c DA000000 		.4byte	0xda
+ 1854 0930 3B090000 		.4byte	0x93b
+ 1855 0934 25       		.uleb128 0x25
+ 1856 0935 B3000000 		.4byte	0xb3
+ 1857 0939 01       		.byte	0x1
+ 1858 093a 00       		.byte	0
+ 1859 093b 27       		.uleb128 0x27
+ 1860 093c B0070000 		.4byte	.LASF179
+ 1861 0940 09       		.byte	0x9
+ 1862 0941 3B       		.byte	0x3b
+ 1863 0942 2B090000 		.4byte	0x92b
+ 1864 0946 28       		.uleb128 0x28
+ 1865 0947 00000000 		.4byte	.LASF163
+ 1866 094b 00000000 		.4byte	.LASF163
+ 1867 094f 06       		.byte	0x6
+ 1868 0950 B501     		.2byte	0x1b5
+ 1869 0952 29       		.uleb128 0x29
+ 1870 0953 94080000 		.4byte	.LASF164
+ 1871 0957 94080000 		.4byte	.LASF164
+ 1872 095b 08       		.byte	0x8
+ 1873 095c AC       		.byte	0xac
+ 1874 095d 29       		.uleb128 0x29
+ 1875 095e 42000000 		.4byte	.LASF165
+ 1876 0962 42000000 		.4byte	.LASF165
+ 1877 0966 08       		.byte	0x8
+ 1878 0967 A3       		.byte	0xa3
+ 1879 0968 29       		.uleb128 0x29
+ 1880 0969 FF050000 		.4byte	.LASF166
+ 1881 096d FF050000 		.4byte	.LASF166
+ 1882 0971 08       		.byte	0x8
+ 1883 0972 C2       		.byte	0xc2
+ 1884 0973 28       		.uleb128 0x28
+ 1885 0974 EE050000 		.4byte	.LASF167
+ 1886 0978 EE050000 		.4byte	.LASF167
+ 1887 097c 09       		.byte	0x9
+ 1888 097d 6001     		.2byte	0x160
+ 1889 097f 28       		.uleb128 0x28
+ 1890 0980 020A0000 		.4byte	.LASF168
+ARM GAS  e:\temp\ccdmNCtc.s 			page 44
+
+
+ 1891 0984 020A0000 		.4byte	.LASF168
+ 1892 0988 06       		.byte	0x6
+ 1893 0989 AF02     		.2byte	0x2af
+ 1894 098b 28       		.uleb128 0x28
+ 1895 098c CD0A0000 		.4byte	.LASF169
+ 1896 0990 CD0A0000 		.4byte	.LASF169
+ 1897 0994 0A       		.byte	0xa
+ 1898 0995 B501     		.2byte	0x1b5
+ 1899 0997 29       		.uleb128 0x29
+ 1900 0998 86040000 		.4byte	.LASF170
+ 1901 099c 86040000 		.4byte	.LASF170
+ 1902 09a0 09       		.byte	0x9
+ 1903 09a1 8F       		.byte	0x8f
+ 1904 09a2 28       		.uleb128 0x28
+ 1905 09a3 EF000000 		.4byte	.LASF171
+ 1906 09a7 EF000000 		.4byte	.LASF171
+ 1907 09ab 07       		.byte	0x7
+ 1908 09ac 9901     		.2byte	0x199
+ 1909 09ae 29       		.uleb128 0x29
+ 1910 09af 410D0000 		.4byte	.LASF172
+ 1911 09b3 410D0000 		.4byte	.LASF172
+ 1912 09b7 08       		.byte	0x8
+ 1913 09b8 CC       		.byte	0xcc
+ 1914 09b9 29       		.uleb128 0x29
+ 1915 09ba 74030000 		.4byte	.LASF173
+ 1916 09be 74030000 		.4byte	.LASF173
+ 1917 09c2 08       		.byte	0x8
+ 1918 09c3 D7       		.byte	0xd7
+ 1919 09c4 00       		.byte	0
+ 1920              		.section	.debug_abbrev,"",%progbits
+ 1921              	.Ldebug_abbrev0:
+ 1922 0000 01       		.uleb128 0x1
+ 1923 0001 11       		.uleb128 0x11
+ 1924 0002 01       		.byte	0x1
+ 1925 0003 25       		.uleb128 0x25
+ 1926 0004 0E       		.uleb128 0xe
+ 1927 0005 13       		.uleb128 0x13
+ 1928 0006 0B       		.uleb128 0xb
+ 1929 0007 03       		.uleb128 0x3
+ 1930 0008 0E       		.uleb128 0xe
+ 1931 0009 1B       		.uleb128 0x1b
+ 1932 000a 0E       		.uleb128 0xe
+ 1933 000b 55       		.uleb128 0x55
+ 1934 000c 17       		.uleb128 0x17
+ 1935 000d 11       		.uleb128 0x11
+ 1936 000e 01       		.uleb128 0x1
+ 1937 000f 10       		.uleb128 0x10
+ 1938 0010 17       		.uleb128 0x17
+ 1939 0011 00       		.byte	0
+ 1940 0012 00       		.byte	0
+ 1941 0013 02       		.uleb128 0x2
+ 1942 0014 24       		.uleb128 0x24
+ 1943 0015 00       		.byte	0
+ 1944 0016 0B       		.uleb128 0xb
+ 1945 0017 0B       		.uleb128 0xb
+ 1946 0018 3E       		.uleb128 0x3e
+ 1947 0019 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccdmNCtc.s 			page 45
+
+
+ 1948 001a 03       		.uleb128 0x3
+ 1949 001b 0E       		.uleb128 0xe
+ 1950 001c 00       		.byte	0
+ 1951 001d 00       		.byte	0
+ 1952 001e 03       		.uleb128 0x3
+ 1953 001f 16       		.uleb128 0x16
+ 1954 0020 00       		.byte	0
+ 1955 0021 03       		.uleb128 0x3
+ 1956 0022 0E       		.uleb128 0xe
+ 1957 0023 3A       		.uleb128 0x3a
+ 1958 0024 0B       		.uleb128 0xb
+ 1959 0025 3B       		.uleb128 0x3b
+ 1960 0026 0B       		.uleb128 0xb
+ 1961 0027 49       		.uleb128 0x49
+ 1962 0028 13       		.uleb128 0x13
+ 1963 0029 00       		.byte	0
+ 1964 002a 00       		.byte	0
+ 1965 002b 04       		.uleb128 0x4
+ 1966 002c 24       		.uleb128 0x24
+ 1967 002d 00       		.byte	0
+ 1968 002e 0B       		.uleb128 0xb
+ 1969 002f 0B       		.uleb128 0xb
+ 1970 0030 3E       		.uleb128 0x3e
+ 1971 0031 0B       		.uleb128 0xb
+ 1972 0032 03       		.uleb128 0x3
+ 1973 0033 08       		.uleb128 0x8
+ 1974 0034 00       		.byte	0
+ 1975 0035 00       		.byte	0
+ 1976 0036 05       		.uleb128 0x5
+ 1977 0037 04       		.uleb128 0x4
+ 1978 0038 01       		.byte	0x1
+ 1979 0039 0B       		.uleb128 0xb
+ 1980 003a 0B       		.uleb128 0xb
+ 1981 003b 49       		.uleb128 0x49
+ 1982 003c 13       		.uleb128 0x13
+ 1983 003d 3A       		.uleb128 0x3a
+ 1984 003e 0B       		.uleb128 0xb
+ 1985 003f 3B       		.uleb128 0x3b
+ 1986 0040 05       		.uleb128 0x5
+ 1987 0041 01       		.uleb128 0x1
+ 1988 0042 13       		.uleb128 0x13
+ 1989 0043 00       		.byte	0
+ 1990 0044 00       		.byte	0
+ 1991 0045 06       		.uleb128 0x6
+ 1992 0046 28       		.uleb128 0x28
+ 1993 0047 00       		.byte	0
+ 1994 0048 03       		.uleb128 0x3
+ 1995 0049 0E       		.uleb128 0xe
+ 1996 004a 1C       		.uleb128 0x1c
+ 1997 004b 0B       		.uleb128 0xb
+ 1998 004c 00       		.byte	0
+ 1999 004d 00       		.byte	0
+ 2000 004e 07       		.uleb128 0x7
+ 2001 004f 16       		.uleb128 0x16
+ 2002 0050 00       		.byte	0
+ 2003 0051 03       		.uleb128 0x3
+ 2004 0052 0E       		.uleb128 0xe
+ARM GAS  e:\temp\ccdmNCtc.s 			page 46
+
+
+ 2005 0053 3A       		.uleb128 0x3a
+ 2006 0054 0B       		.uleb128 0xb
+ 2007 0055 3B       		.uleb128 0x3b
+ 2008 0056 05       		.uleb128 0x5
+ 2009 0057 49       		.uleb128 0x49
+ 2010 0058 13       		.uleb128 0x13
+ 2011 0059 00       		.byte	0
+ 2012 005a 00       		.byte	0
+ 2013 005b 08       		.uleb128 0x8
+ 2014 005c 0F       		.uleb128 0xf
+ 2015 005d 00       		.byte	0
+ 2016 005e 0B       		.uleb128 0xb
+ 2017 005f 0B       		.uleb128 0xb
+ 2018 0060 49       		.uleb128 0x49
+ 2019 0061 13       		.uleb128 0x13
+ 2020 0062 00       		.byte	0
+ 2021 0063 00       		.byte	0
+ 2022 0064 09       		.uleb128 0x9
+ 2023 0065 15       		.uleb128 0x15
+ 2024 0066 01       		.byte	0x1
+ 2025 0067 27       		.uleb128 0x27
+ 2026 0068 19       		.uleb128 0x19
+ 2027 0069 01       		.uleb128 0x1
+ 2028 006a 13       		.uleb128 0x13
+ 2029 006b 00       		.byte	0
+ 2030 006c 00       		.byte	0
+ 2031 006d 0A       		.uleb128 0xa
+ 2032 006e 05       		.uleb128 0x5
+ 2033 006f 00       		.byte	0
+ 2034 0070 49       		.uleb128 0x49
+ 2035 0071 13       		.uleb128 0x13
+ 2036 0072 00       		.byte	0
+ 2037 0073 00       		.byte	0
+ 2038 0074 0B       		.uleb128 0xb
+ 2039 0075 35       		.uleb128 0x35
+ 2040 0076 00       		.byte	0
+ 2041 0077 49       		.uleb128 0x49
+ 2042 0078 13       		.uleb128 0x13
+ 2043 0079 00       		.byte	0
+ 2044 007a 00       		.byte	0
+ 2045 007b 0C       		.uleb128 0xc
+ 2046 007c 04       		.uleb128 0x4
+ 2047 007d 01       		.byte	0x1
+ 2048 007e 0B       		.uleb128 0xb
+ 2049 007f 0B       		.uleb128 0xb
+ 2050 0080 49       		.uleb128 0x49
+ 2051 0081 13       		.uleb128 0x13
+ 2052 0082 3A       		.uleb128 0x3a
+ 2053 0083 0B       		.uleb128 0xb
+ 2054 0084 3B       		.uleb128 0x3b
+ 2055 0085 0B       		.uleb128 0xb
+ 2056 0086 01       		.uleb128 0x1
+ 2057 0087 13       		.uleb128 0x13
+ 2058 0088 00       		.byte	0
+ 2059 0089 00       		.byte	0
+ 2060 008a 0D       		.uleb128 0xd
+ 2061 008b 13       		.uleb128 0x13
+ARM GAS  e:\temp\ccdmNCtc.s 			page 47
+
+
+ 2062 008c 01       		.byte	0x1
+ 2063 008d 03       		.uleb128 0x3
+ 2064 008e 0E       		.uleb128 0xe
+ 2065 008f 0B       		.uleb128 0xb
+ 2066 0090 0B       		.uleb128 0xb
+ 2067 0091 3A       		.uleb128 0x3a
+ 2068 0092 0B       		.uleb128 0xb
+ 2069 0093 3B       		.uleb128 0x3b
+ 2070 0094 0B       		.uleb128 0xb
+ 2071 0095 01       		.uleb128 0x1
+ 2072 0096 13       		.uleb128 0x13
+ 2073 0097 00       		.byte	0
+ 2074 0098 00       		.byte	0
+ 2075 0099 0E       		.uleb128 0xe
+ 2076 009a 0D       		.uleb128 0xd
+ 2077 009b 00       		.byte	0
+ 2078 009c 03       		.uleb128 0x3
+ 2079 009d 0E       		.uleb128 0xe
+ 2080 009e 3A       		.uleb128 0x3a
+ 2081 009f 0B       		.uleb128 0xb
+ 2082 00a0 3B       		.uleb128 0x3b
+ 2083 00a1 0B       		.uleb128 0xb
+ 2084 00a2 49       		.uleb128 0x49
+ 2085 00a3 13       		.uleb128 0x13
+ 2086 00a4 0B       		.uleb128 0xb
+ 2087 00a5 0B       		.uleb128 0xb
+ 2088 00a6 0D       		.uleb128 0xd
+ 2089 00a7 0B       		.uleb128 0xb
+ 2090 00a8 0C       		.uleb128 0xc
+ 2091 00a9 0B       		.uleb128 0xb
+ 2092 00aa 38       		.uleb128 0x38
+ 2093 00ab 0B       		.uleb128 0xb
+ 2094 00ac 00       		.byte	0
+ 2095 00ad 00       		.byte	0
+ 2096 00ae 0F       		.uleb128 0xf
+ 2097 00af 17       		.uleb128 0x17
+ 2098 00b0 01       		.byte	0x1
+ 2099 00b1 0B       		.uleb128 0xb
+ 2100 00b2 0B       		.uleb128 0xb
+ 2101 00b3 3A       		.uleb128 0x3a
+ 2102 00b4 0B       		.uleb128 0xb
+ 2103 00b5 3B       		.uleb128 0x3b
+ 2104 00b6 0B       		.uleb128 0xb
+ 2105 00b7 01       		.uleb128 0x1
+ 2106 00b8 13       		.uleb128 0x13
+ 2107 00b9 00       		.byte	0
+ 2108 00ba 00       		.byte	0
+ 2109 00bb 10       		.uleb128 0x10
+ 2110 00bc 0D       		.uleb128 0xd
+ 2111 00bd 00       		.byte	0
+ 2112 00be 03       		.uleb128 0x3
+ 2113 00bf 08       		.uleb128 0x8
+ 2114 00c0 3A       		.uleb128 0x3a
+ 2115 00c1 0B       		.uleb128 0xb
+ 2116 00c2 3B       		.uleb128 0x3b
+ 2117 00c3 0B       		.uleb128 0xb
+ 2118 00c4 49       		.uleb128 0x49
+ARM GAS  e:\temp\ccdmNCtc.s 			page 48
+
+
+ 2119 00c5 13       		.uleb128 0x13
+ 2120 00c6 00       		.byte	0
+ 2121 00c7 00       		.byte	0
+ 2122 00c8 11       		.uleb128 0x11
+ 2123 00c9 0D       		.uleb128 0xd
+ 2124 00ca 00       		.byte	0
+ 2125 00cb 03       		.uleb128 0x3
+ 2126 00cc 0E       		.uleb128 0xe
+ 2127 00cd 3A       		.uleb128 0x3a
+ 2128 00ce 0B       		.uleb128 0xb
+ 2129 00cf 3B       		.uleb128 0x3b
+ 2130 00d0 0B       		.uleb128 0xb
+ 2131 00d1 49       		.uleb128 0x49
+ 2132 00d2 13       		.uleb128 0x13
+ 2133 00d3 00       		.byte	0
+ 2134 00d4 00       		.byte	0
+ 2135 00d5 12       		.uleb128 0x12
+ 2136 00d6 2E       		.uleb128 0x2e
+ 2137 00d7 01       		.byte	0x1
+ 2138 00d8 03       		.uleb128 0x3
+ 2139 00d9 0E       		.uleb128 0xe
+ 2140 00da 3A       		.uleb128 0x3a
+ 2141 00db 0B       		.uleb128 0xb
+ 2142 00dc 3B       		.uleb128 0x3b
+ 2143 00dd 05       		.uleb128 0x5
+ 2144 00de 27       		.uleb128 0x27
+ 2145 00df 19       		.uleb128 0x19
+ 2146 00e0 11       		.uleb128 0x11
+ 2147 00e1 01       		.uleb128 0x1
+ 2148 00e2 12       		.uleb128 0x12
+ 2149 00e3 06       		.uleb128 0x6
+ 2150 00e4 40       		.uleb128 0x40
+ 2151 00e5 18       		.uleb128 0x18
+ 2152 00e6 9742     		.uleb128 0x2117
+ 2153 00e8 19       		.uleb128 0x19
+ 2154 00e9 01       		.uleb128 0x1
+ 2155 00ea 13       		.uleb128 0x13
+ 2156 00eb 00       		.byte	0
+ 2157 00ec 00       		.byte	0
+ 2158 00ed 13       		.uleb128 0x13
+ 2159 00ee 05       		.uleb128 0x5
+ 2160 00ef 00       		.byte	0
+ 2161 00f0 03       		.uleb128 0x3
+ 2162 00f1 0E       		.uleb128 0xe
+ 2163 00f2 3A       		.uleb128 0x3a
+ 2164 00f3 0B       		.uleb128 0xb
+ 2165 00f4 3B       		.uleb128 0x3b
+ 2166 00f5 05       		.uleb128 0x5
+ 2167 00f6 49       		.uleb128 0x49
+ 2168 00f7 13       		.uleb128 0x13
+ 2169 00f8 02       		.uleb128 0x2
+ 2170 00f9 17       		.uleb128 0x17
+ 2171 00fa 00       		.byte	0
+ 2172 00fb 00       		.byte	0
+ 2173 00fc 14       		.uleb128 0x14
+ 2174 00fd 0B       		.uleb128 0xb
+ 2175 00fe 01       		.byte	0x1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 49
+
+
+ 2176 00ff 11       		.uleb128 0x11
+ 2177 0100 01       		.uleb128 0x1
+ 2178 0101 12       		.uleb128 0x12
+ 2179 0102 06       		.uleb128 0x6
+ 2180 0103 00       		.byte	0
+ 2181 0104 00       		.byte	0
+ 2182 0105 15       		.uleb128 0x15
+ 2183 0106 34       		.uleb128 0x34
+ 2184 0107 00       		.byte	0
+ 2185 0108 03       		.uleb128 0x3
+ 2186 0109 0E       		.uleb128 0xe
+ 2187 010a 3A       		.uleb128 0x3a
+ 2188 010b 0B       		.uleb128 0xb
+ 2189 010c 3B       		.uleb128 0x3b
+ 2190 010d 05       		.uleb128 0x5
+ 2191 010e 49       		.uleb128 0x49
+ 2192 010f 13       		.uleb128 0x13
+ 2193 0110 02       		.uleb128 0x2
+ 2194 0111 17       		.uleb128 0x17
+ 2195 0112 00       		.byte	0
+ 2196 0113 00       		.byte	0
+ 2197 0114 16       		.uleb128 0x16
+ 2198 0115 898201   		.uleb128 0x4109
+ 2199 0118 01       		.byte	0x1
+ 2200 0119 11       		.uleb128 0x11
+ 2201 011a 01       		.uleb128 0x1
+ 2202 011b 01       		.uleb128 0x1
+ 2203 011c 13       		.uleb128 0x13
+ 2204 011d 00       		.byte	0
+ 2205 011e 00       		.byte	0
+ 2206 011f 17       		.uleb128 0x17
+ 2207 0120 8A8201   		.uleb128 0x410a
+ 2208 0123 00       		.byte	0
+ 2209 0124 02       		.uleb128 0x2
+ 2210 0125 18       		.uleb128 0x18
+ 2211 0126 9142     		.uleb128 0x2111
+ 2212 0128 18       		.uleb128 0x18
+ 2213 0129 00       		.byte	0
+ 2214 012a 00       		.byte	0
+ 2215 012b 18       		.uleb128 0x18
+ 2216 012c 898201   		.uleb128 0x4109
+ 2217 012f 01       		.byte	0x1
+ 2218 0130 11       		.uleb128 0x11
+ 2219 0131 01       		.uleb128 0x1
+ 2220 0132 31       		.uleb128 0x31
+ 2221 0133 13       		.uleb128 0x13
+ 2222 0134 00       		.byte	0
+ 2223 0135 00       		.byte	0
+ 2224 0136 19       		.uleb128 0x19
+ 2225 0137 2E       		.uleb128 0x2e
+ 2226 0138 01       		.byte	0x1
+ 2227 0139 3F       		.uleb128 0x3f
+ 2228 013a 19       		.uleb128 0x19
+ 2229 013b 03       		.uleb128 0x3
+ 2230 013c 0E       		.uleb128 0xe
+ 2231 013d 3A       		.uleb128 0x3a
+ 2232 013e 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccdmNCtc.s 			page 50
+
+
+ 2233 013f 3B       		.uleb128 0x3b
+ 2234 0140 0B       		.uleb128 0xb
+ 2235 0141 27       		.uleb128 0x27
+ 2236 0142 19       		.uleb128 0x19
+ 2237 0143 11       		.uleb128 0x11
+ 2238 0144 01       		.uleb128 0x1
+ 2239 0145 12       		.uleb128 0x12
+ 2240 0146 06       		.uleb128 0x6
+ 2241 0147 40       		.uleb128 0x40
+ 2242 0148 18       		.uleb128 0x18
+ 2243 0149 9742     		.uleb128 0x2117
+ 2244 014b 19       		.uleb128 0x19
+ 2245 014c 01       		.uleb128 0x1
+ 2246 014d 13       		.uleb128 0x13
+ 2247 014e 00       		.byte	0
+ 2248 014f 00       		.byte	0
+ 2249 0150 1A       		.uleb128 0x1a
+ 2250 0151 05       		.uleb128 0x5
+ 2251 0152 00       		.byte	0
+ 2252 0153 03       		.uleb128 0x3
+ 2253 0154 0E       		.uleb128 0xe
+ 2254 0155 3A       		.uleb128 0x3a
+ 2255 0156 0B       		.uleb128 0xb
+ 2256 0157 3B       		.uleb128 0x3b
+ 2257 0158 0B       		.uleb128 0xb
+ 2258 0159 49       		.uleb128 0x49
+ 2259 015a 13       		.uleb128 0x13
+ 2260 015b 02       		.uleb128 0x2
+ 2261 015c 17       		.uleb128 0x17
+ 2262 015d 00       		.byte	0
+ 2263 015e 00       		.byte	0
+ 2264 015f 1B       		.uleb128 0x1b
+ 2265 0160 05       		.uleb128 0x5
+ 2266 0161 00       		.byte	0
+ 2267 0162 03       		.uleb128 0x3
+ 2268 0163 08       		.uleb128 0x8
+ 2269 0164 3A       		.uleb128 0x3a
+ 2270 0165 0B       		.uleb128 0xb
+ 2271 0166 3B       		.uleb128 0x3b
+ 2272 0167 0B       		.uleb128 0xb
+ 2273 0168 49       		.uleb128 0x49
+ 2274 0169 13       		.uleb128 0x13
+ 2275 016a 02       		.uleb128 0x2
+ 2276 016b 18       		.uleb128 0x18
+ 2277 016c 00       		.byte	0
+ 2278 016d 00       		.byte	0
+ 2279 016e 1C       		.uleb128 0x1c
+ 2280 016f 2E       		.uleb128 0x2e
+ 2281 0170 01       		.byte	0x1
+ 2282 0171 3F       		.uleb128 0x3f
+ 2283 0172 19       		.uleb128 0x19
+ 2284 0173 03       		.uleb128 0x3
+ 2285 0174 0E       		.uleb128 0xe
+ 2286 0175 3A       		.uleb128 0x3a
+ 2287 0176 0B       		.uleb128 0xb
+ 2288 0177 3B       		.uleb128 0x3b
+ 2289 0178 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccdmNCtc.s 			page 51
+
+
+ 2290 0179 27       		.uleb128 0x27
+ 2291 017a 19       		.uleb128 0x19
+ 2292 017b 49       		.uleb128 0x49
+ 2293 017c 13       		.uleb128 0x13
+ 2294 017d 11       		.uleb128 0x11
+ 2295 017e 01       		.uleb128 0x1
+ 2296 017f 12       		.uleb128 0x12
+ 2297 0180 06       		.uleb128 0x6
+ 2298 0181 40       		.uleb128 0x40
+ 2299 0182 18       		.uleb128 0x18
+ 2300 0183 9742     		.uleb128 0x2117
+ 2301 0185 19       		.uleb128 0x19
+ 2302 0186 01       		.uleb128 0x1
+ 2303 0187 13       		.uleb128 0x13
+ 2304 0188 00       		.byte	0
+ 2305 0189 00       		.byte	0
+ 2306 018a 1D       		.uleb128 0x1d
+ 2307 018b 05       		.uleb128 0x5
+ 2308 018c 00       		.byte	0
+ 2309 018d 03       		.uleb128 0x3
+ 2310 018e 08       		.uleb128 0x8
+ 2311 018f 3A       		.uleb128 0x3a
+ 2312 0190 0B       		.uleb128 0xb
+ 2313 0191 3B       		.uleb128 0x3b
+ 2314 0192 0B       		.uleb128 0xb
+ 2315 0193 49       		.uleb128 0x49
+ 2316 0194 13       		.uleb128 0x13
+ 2317 0195 02       		.uleb128 0x2
+ 2318 0196 17       		.uleb128 0x17
+ 2319 0197 00       		.byte	0
+ 2320 0198 00       		.byte	0
+ 2321 0199 1E       		.uleb128 0x1e
+ 2322 019a 898201   		.uleb128 0x4109
+ 2323 019d 00       		.byte	0
+ 2324 019e 11       		.uleb128 0x11
+ 2325 019f 01       		.uleb128 0x1
+ 2326 01a0 31       		.uleb128 0x31
+ 2327 01a1 13       		.uleb128 0x13
+ 2328 01a2 00       		.byte	0
+ 2329 01a3 00       		.byte	0
+ 2330 01a4 1F       		.uleb128 0x1f
+ 2331 01a5 898201   		.uleb128 0x4109
+ 2332 01a8 01       		.byte	0x1
+ 2333 01a9 11       		.uleb128 0x11
+ 2334 01aa 01       		.uleb128 0x1
+ 2335 01ab 31       		.uleb128 0x31
+ 2336 01ac 13       		.uleb128 0x13
+ 2337 01ad 01       		.uleb128 0x1
+ 2338 01ae 13       		.uleb128 0x13
+ 2339 01af 00       		.byte	0
+ 2340 01b0 00       		.byte	0
+ 2341 01b1 20       		.uleb128 0x20
+ 2342 01b2 2E       		.uleb128 0x2e
+ 2343 01b3 01       		.byte	0x1
+ 2344 01b4 3F       		.uleb128 0x3f
+ 2345 01b5 19       		.uleb128 0x19
+ 2346 01b6 03       		.uleb128 0x3
+ARM GAS  e:\temp\ccdmNCtc.s 			page 52
+
+
+ 2347 01b7 0E       		.uleb128 0xe
+ 2348 01b8 3A       		.uleb128 0x3a
+ 2349 01b9 0B       		.uleb128 0xb
+ 2350 01ba 3B       		.uleb128 0x3b
+ 2351 01bb 05       		.uleb128 0x5
+ 2352 01bc 27       		.uleb128 0x27
+ 2353 01bd 19       		.uleb128 0x19
+ 2354 01be 49       		.uleb128 0x49
+ 2355 01bf 13       		.uleb128 0x13
+ 2356 01c0 11       		.uleb128 0x11
+ 2357 01c1 01       		.uleb128 0x1
+ 2358 01c2 12       		.uleb128 0x12
+ 2359 01c3 06       		.uleb128 0x6
+ 2360 01c4 40       		.uleb128 0x40
+ 2361 01c5 18       		.uleb128 0x18
+ 2362 01c6 9742     		.uleb128 0x2117
+ 2363 01c8 19       		.uleb128 0x19
+ 2364 01c9 01       		.uleb128 0x1
+ 2365 01ca 13       		.uleb128 0x13
+ 2366 01cb 00       		.byte	0
+ 2367 01cc 00       		.byte	0
+ 2368 01cd 21       		.uleb128 0x21
+ 2369 01ce 05       		.uleb128 0x5
+ 2370 01cf 00       		.byte	0
+ 2371 01d0 03       		.uleb128 0x3
+ 2372 01d1 08       		.uleb128 0x8
+ 2373 01d2 3A       		.uleb128 0x3a
+ 2374 01d3 0B       		.uleb128 0xb
+ 2375 01d4 3B       		.uleb128 0x3b
+ 2376 01d5 05       		.uleb128 0x5
+ 2377 01d6 49       		.uleb128 0x49
+ 2378 01d7 13       		.uleb128 0x13
+ 2379 01d8 02       		.uleb128 0x2
+ 2380 01d9 17       		.uleb128 0x17
+ 2381 01da 00       		.byte	0
+ 2382 01db 00       		.byte	0
+ 2383 01dc 22       		.uleb128 0x22
+ 2384 01dd 34       		.uleb128 0x34
+ 2385 01de 00       		.byte	0
+ 2386 01df 03       		.uleb128 0x3
+ 2387 01e0 0E       		.uleb128 0xe
+ 2388 01e1 3A       		.uleb128 0x3a
+ 2389 01e2 0B       		.uleb128 0xb
+ 2390 01e3 3B       		.uleb128 0x3b
+ 2391 01e4 0B       		.uleb128 0xb
+ 2392 01e5 49       		.uleb128 0x49
+ 2393 01e6 13       		.uleb128 0x13
+ 2394 01e7 02       		.uleb128 0x2
+ 2395 01e8 17       		.uleb128 0x17
+ 2396 01e9 00       		.byte	0
+ 2397 01ea 00       		.byte	0
+ 2398 01eb 23       		.uleb128 0x23
+ 2399 01ec 2E       		.uleb128 0x2e
+ 2400 01ed 01       		.byte	0x1
+ 2401 01ee 3F       		.uleb128 0x3f
+ 2402 01ef 19       		.uleb128 0x19
+ 2403 01f0 03       		.uleb128 0x3
+ARM GAS  e:\temp\ccdmNCtc.s 			page 53
+
+
+ 2404 01f1 0E       		.uleb128 0xe
+ 2405 01f2 3A       		.uleb128 0x3a
+ 2406 01f3 0B       		.uleb128 0xb
+ 2407 01f4 3B       		.uleb128 0x3b
+ 2408 01f5 05       		.uleb128 0x5
+ 2409 01f6 27       		.uleb128 0x27
+ 2410 01f7 19       		.uleb128 0x19
+ 2411 01f8 11       		.uleb128 0x11
+ 2412 01f9 01       		.uleb128 0x1
+ 2413 01fa 12       		.uleb128 0x12
+ 2414 01fb 06       		.uleb128 0x6
+ 2415 01fc 40       		.uleb128 0x40
+ 2416 01fd 18       		.uleb128 0x18
+ 2417 01fe 9742     		.uleb128 0x2117
+ 2418 0200 19       		.uleb128 0x19
+ 2419 0201 01       		.uleb128 0x1
+ 2420 0202 13       		.uleb128 0x13
+ 2421 0203 00       		.byte	0
+ 2422 0204 00       		.byte	0
+ 2423 0205 24       		.uleb128 0x24
+ 2424 0206 01       		.uleb128 0x1
+ 2425 0207 01       		.byte	0x1
+ 2426 0208 49       		.uleb128 0x49
+ 2427 0209 13       		.uleb128 0x13
+ 2428 020a 01       		.uleb128 0x1
+ 2429 020b 13       		.uleb128 0x13
+ 2430 020c 00       		.byte	0
+ 2431 020d 00       		.byte	0
+ 2432 020e 25       		.uleb128 0x25
+ 2433 020f 21       		.uleb128 0x21
+ 2434 0210 00       		.byte	0
+ 2435 0211 49       		.uleb128 0x49
+ 2436 0212 13       		.uleb128 0x13
+ 2437 0213 2F       		.uleb128 0x2f
+ 2438 0214 0B       		.uleb128 0xb
+ 2439 0215 00       		.byte	0
+ 2440 0216 00       		.byte	0
+ 2441 0217 26       		.uleb128 0x26
+ 2442 0218 34       		.uleb128 0x34
+ 2443 0219 00       		.byte	0
+ 2444 021a 03       		.uleb128 0x3
+ 2445 021b 0E       		.uleb128 0xe
+ 2446 021c 3A       		.uleb128 0x3a
+ 2447 021d 0B       		.uleb128 0xb
+ 2448 021e 3B       		.uleb128 0x3b
+ 2449 021f 0B       		.uleb128 0xb
+ 2450 0220 49       		.uleb128 0x49
+ 2451 0221 13       		.uleb128 0x13
+ 2452 0222 02       		.uleb128 0x2
+ 2453 0223 18       		.uleb128 0x18
+ 2454 0224 00       		.byte	0
+ 2455 0225 00       		.byte	0
+ 2456 0226 27       		.uleb128 0x27
+ 2457 0227 34       		.uleb128 0x34
+ 2458 0228 00       		.byte	0
+ 2459 0229 03       		.uleb128 0x3
+ 2460 022a 0E       		.uleb128 0xe
+ARM GAS  e:\temp\ccdmNCtc.s 			page 54
+
+
+ 2461 022b 3A       		.uleb128 0x3a
+ 2462 022c 0B       		.uleb128 0xb
+ 2463 022d 3B       		.uleb128 0x3b
+ 2464 022e 0B       		.uleb128 0xb
+ 2465 022f 49       		.uleb128 0x49
+ 2466 0230 13       		.uleb128 0x13
+ 2467 0231 3F       		.uleb128 0x3f
+ 2468 0232 19       		.uleb128 0x19
+ 2469 0233 3C       		.uleb128 0x3c
+ 2470 0234 19       		.uleb128 0x19
+ 2471 0235 00       		.byte	0
+ 2472 0236 00       		.byte	0
+ 2473 0237 28       		.uleb128 0x28
+ 2474 0238 2E       		.uleb128 0x2e
+ 2475 0239 00       		.byte	0
+ 2476 023a 3F       		.uleb128 0x3f
+ 2477 023b 19       		.uleb128 0x19
+ 2478 023c 3C       		.uleb128 0x3c
+ 2479 023d 19       		.uleb128 0x19
+ 2480 023e 6E       		.uleb128 0x6e
+ 2481 023f 0E       		.uleb128 0xe
+ 2482 0240 03       		.uleb128 0x3
+ 2483 0241 0E       		.uleb128 0xe
+ 2484 0242 3A       		.uleb128 0x3a
+ 2485 0243 0B       		.uleb128 0xb
+ 2486 0244 3B       		.uleb128 0x3b
+ 2487 0245 05       		.uleb128 0x5
+ 2488 0246 00       		.byte	0
+ 2489 0247 00       		.byte	0
+ 2490 0248 29       		.uleb128 0x29
+ 2491 0249 2E       		.uleb128 0x2e
+ 2492 024a 00       		.byte	0
+ 2493 024b 3F       		.uleb128 0x3f
+ 2494 024c 19       		.uleb128 0x19
+ 2495 024d 3C       		.uleb128 0x3c
+ 2496 024e 19       		.uleb128 0x19
+ 2497 024f 6E       		.uleb128 0x6e
+ 2498 0250 0E       		.uleb128 0xe
+ 2499 0251 03       		.uleb128 0x3
+ 2500 0252 0E       		.uleb128 0xe
+ 2501 0253 3A       		.uleb128 0x3a
+ 2502 0254 0B       		.uleb128 0xb
+ 2503 0255 3B       		.uleb128 0x3b
+ 2504 0256 0B       		.uleb128 0xb
+ 2505 0257 00       		.byte	0
+ 2506 0258 00       		.byte	0
+ 2507 0259 00       		.byte	0
+ 2508              		.section	.debug_loc,"",%progbits
+ 2509              	.Ldebug_loc0:
+ 2510              	.LLST0:
+ 2511 0000 00000000 		.4byte	.LVL0
+ 2512 0004 10000000 		.4byte	.LVL1
+ 2513 0008 0100     		.2byte	0x1
+ 2514 000a 50       		.byte	0x50
+ 2515 000b 10000000 		.4byte	.LVL1
+ 2516 000f 40000000 		.4byte	.LFE36
+ 2517 0013 0400     		.2byte	0x4
+ARM GAS  e:\temp\ccdmNCtc.s 			page 55
+
+
+ 2518 0015 F3       		.byte	0xf3
+ 2519 0016 01       		.uleb128 0x1
+ 2520 0017 50       		.byte	0x50
+ 2521 0018 9F       		.byte	0x9f
+ 2522 0019 00000000 		.4byte	0
+ 2523 001d 00000000 		.4byte	0
+ 2524              	.LLST1:
+ 2525 0021 00000000 		.4byte	.LVL0
+ 2526 0025 1A000000 		.4byte	.LVL2
+ 2527 0029 0100     		.2byte	0x1
+ 2528 002b 51       		.byte	0x51
+ 2529 002c 1A000000 		.4byte	.LVL2
+ 2530 0030 40000000 		.4byte	.LFE36
+ 2531 0034 0400     		.2byte	0x4
+ 2532 0036 F3       		.byte	0xf3
+ 2533 0037 01       		.uleb128 0x1
+ 2534 0038 51       		.byte	0x51
+ 2535 0039 9F       		.byte	0x9f
+ 2536 003a 00000000 		.4byte	0
+ 2537 003e 00000000 		.4byte	0
+ 2538              	.LLST2:
+ 2539 0042 1E000000 		.4byte	.LVL3
+ 2540 0046 29000000 		.4byte	.LVL4-1
+ 2541 004a 0100     		.2byte	0x1
+ 2542 004c 51       		.byte	0x51
+ 2543 004d 2A000000 		.4byte	.LVL4
+ 2544 0051 34000000 		.4byte	.LVL5
+ 2545 0055 0100     		.2byte	0x1
+ 2546 0057 51       		.byte	0x51
+ 2547 0058 00000000 		.4byte	0
+ 2548 005c 00000000 		.4byte	0
+ 2549              	.LLST3:
+ 2550 0060 00000000 		.4byte	.LVL7
+ 2551 0064 06000000 		.4byte	.LVL8
+ 2552 0068 0100     		.2byte	0x1
+ 2553 006a 50       		.byte	0x50
+ 2554 006b 06000000 		.4byte	.LVL8
+ 2555 006f 14000000 		.4byte	.LFE34
+ 2556 0073 0400     		.2byte	0x4
+ 2557 0075 F3       		.byte	0xf3
+ 2558 0076 01       		.uleb128 0x1
+ 2559 0077 50       		.byte	0x50
+ 2560 0078 9F       		.byte	0x9f
+ 2561 0079 00000000 		.4byte	0
+ 2562 007d 00000000 		.4byte	0
+ 2563              	.LLST4:
+ 2564 0081 00000000 		.4byte	.LVL9
+ 2565 0085 0F000000 		.4byte	.LVL10-1
+ 2566 0089 0100     		.2byte	0x1
+ 2567 008b 50       		.byte	0x50
+ 2568 008c 0F000000 		.4byte	.LVL10-1
+ 2569 0090 14000000 		.4byte	.LVL11
+ 2570 0094 0400     		.2byte	0x4
+ 2571 0096 F3       		.byte	0xf3
+ 2572 0097 01       		.uleb128 0x1
+ 2573 0098 50       		.byte	0x50
+ 2574 0099 9F       		.byte	0x9f
+ARM GAS  e:\temp\ccdmNCtc.s 			page 56
+
+
+ 2575 009a 14000000 		.4byte	.LVL11
+ 2576 009e 2B000000 		.4byte	.LVL13-1
+ 2577 00a2 0100     		.2byte	0x1
+ 2578 00a4 50       		.byte	0x50
+ 2579 00a5 2B000000 		.4byte	.LVL13-1
+ 2580 00a9 30000000 		.4byte	.LVL14
+ 2581 00ad 0400     		.2byte	0x4
+ 2582 00af F3       		.byte	0xf3
+ 2583 00b0 01       		.uleb128 0x1
+ 2584 00b1 50       		.byte	0x50
+ 2585 00b2 9F       		.byte	0x9f
+ 2586 00b3 30000000 		.4byte	.LVL14
+ 2587 00b7 45000000 		.4byte	.LVL16-1
+ 2588 00bb 0100     		.2byte	0x1
+ 2589 00bd 50       		.byte	0x50
+ 2590 00be 45000000 		.4byte	.LVL16-1
+ 2591 00c2 4A000000 		.4byte	.LVL17
+ 2592 00c6 0400     		.2byte	0x4
+ 2593 00c8 F3       		.byte	0xf3
+ 2594 00c9 01       		.uleb128 0x1
+ 2595 00ca 50       		.byte	0x50
+ 2596 00cb 9F       		.byte	0x9f
+ 2597 00cc 4A000000 		.4byte	.LVL17
+ 2598 00d0 4C000000 		.4byte	.LVL18
+ 2599 00d4 0100     		.2byte	0x1
+ 2600 00d6 50       		.byte	0x50
+ 2601 00d7 4C000000 		.4byte	.LVL18
+ 2602 00db 4E000000 		.4byte	.LVL19
+ 2603 00df 0400     		.2byte	0x4
+ 2604 00e1 F3       		.byte	0xf3
+ 2605 00e2 01       		.uleb128 0x1
+ 2606 00e3 50       		.byte	0x50
+ 2607 00e4 9F       		.byte	0x9f
+ 2608 00e5 4E000000 		.4byte	.LVL19
+ 2609 00e9 50000000 		.4byte	.LVL20
+ 2610 00ed 0100     		.2byte	0x1
+ 2611 00ef 50       		.byte	0x50
+ 2612 00f0 50000000 		.4byte	.LVL20
+ 2613 00f4 60000000 		.4byte	.LFE35
+ 2614 00f8 0400     		.2byte	0x4
+ 2615 00fa F3       		.byte	0xf3
+ 2616 00fb 01       		.uleb128 0x1
+ 2617 00fc 50       		.byte	0x50
+ 2618 00fd 9F       		.byte	0x9f
+ 2619 00fe 00000000 		.4byte	0
+ 2620 0102 00000000 		.4byte	0
+ 2621              	.LLST5:
+ 2622 0106 00000000 		.4byte	.LVL9
+ 2623 010a 0F000000 		.4byte	.LVL10-1
+ 2624 010e 0100     		.2byte	0x1
+ 2625 0110 51       		.byte	0x51
+ 2626 0111 0F000000 		.4byte	.LVL10-1
+ 2627 0115 14000000 		.4byte	.LVL11
+ 2628 0119 0400     		.2byte	0x4
+ 2629 011b F3       		.byte	0xf3
+ 2630 011c 01       		.uleb128 0x1
+ 2631 011d 51       		.byte	0x51
+ARM GAS  e:\temp\ccdmNCtc.s 			page 57
+
+
+ 2632 011e 9F       		.byte	0x9f
+ 2633 011f 14000000 		.4byte	.LVL11
+ 2634 0123 28000000 		.4byte	.LVL12
+ 2635 0127 0100     		.2byte	0x1
+ 2636 0129 51       		.byte	0x51
+ 2637 012a 28000000 		.4byte	.LVL12
+ 2638 012e 30000000 		.4byte	.LVL14
+ 2639 0132 0400     		.2byte	0x4
+ 2640 0134 F3       		.byte	0xf3
+ 2641 0135 01       		.uleb128 0x1
+ 2642 0136 51       		.byte	0x51
+ 2643 0137 9F       		.byte	0x9f
+ 2644 0138 30000000 		.4byte	.LVL14
+ 2645 013c 3C000000 		.4byte	.LVL15
+ 2646 0140 0100     		.2byte	0x1
+ 2647 0142 51       		.byte	0x51
+ 2648 0143 3C000000 		.4byte	.LVL15
+ 2649 0147 4A000000 		.4byte	.LVL17
+ 2650 014b 0400     		.2byte	0x4
+ 2651 014d F3       		.byte	0xf3
+ 2652 014e 01       		.uleb128 0x1
+ 2653 014f 51       		.byte	0x51
+ 2654 0150 9F       		.byte	0x9f
+ 2655 0151 4A000000 		.4byte	.LVL17
+ 2656 0155 50000000 		.4byte	.LVL20
+ 2657 0159 0100     		.2byte	0x1
+ 2658 015b 51       		.byte	0x51
+ 2659 015c 50000000 		.4byte	.LVL20
+ 2660 0160 60000000 		.4byte	.LFE35
+ 2661 0164 0400     		.2byte	0x4
+ 2662 0166 F3       		.byte	0xf3
+ 2663 0167 01       		.uleb128 0x1
+ 2664 0168 51       		.byte	0x51
+ 2665 0169 9F       		.byte	0x9f
+ 2666 016a 00000000 		.4byte	0
+ 2667 016e 00000000 		.4byte	0
+ 2668              	.LLST6:
+ 2669 0172 00000000 		.4byte	.LVL21
+ 2670 0176 08000000 		.4byte	.LVL22
+ 2671 017a 0100     		.2byte	0x1
+ 2672 017c 50       		.byte	0x50
+ 2673 017d 08000000 		.4byte	.LVL22
+ 2674 0181 0C000000 		.4byte	.LVL23
+ 2675 0185 0400     		.2byte	0x4
+ 2676 0187 F3       		.byte	0xf3
+ 2677 0188 01       		.uleb128 0x1
+ 2678 0189 50       		.byte	0x50
+ 2679 018a 9F       		.byte	0x9f
+ 2680 018b 0C000000 		.4byte	.LVL23
+ 2681 018f 0E000000 		.4byte	.LVL24
+ 2682 0193 0100     		.2byte	0x1
+ 2683 0195 50       		.byte	0x50
+ 2684 0196 0E000000 		.4byte	.LVL24
+ 2685 019a 14000000 		.4byte	.LFE38
+ 2686 019e 0400     		.2byte	0x4
+ 2687 01a0 F3       		.byte	0xf3
+ 2688 01a1 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 58
+
+
+ 2689 01a2 50       		.byte	0x50
+ 2690 01a3 9F       		.byte	0x9f
+ 2691 01a4 00000000 		.4byte	0
+ 2692 01a8 00000000 		.4byte	0
+ 2693              	.LLST7:
+ 2694 01ac 00000000 		.4byte	.LVL25
+ 2695 01b0 13000000 		.4byte	.LVL27-1
+ 2696 01b4 0100     		.2byte	0x1
+ 2697 01b6 50       		.byte	0x50
+ 2698 01b7 13000000 		.4byte	.LVL27-1
+ 2699 01bb 2C000000 		.4byte	.LVL32
+ 2700 01bf 0400     		.2byte	0x4
+ 2701 01c1 F3       		.byte	0xf3
+ 2702 01c2 01       		.uleb128 0x1
+ 2703 01c3 50       		.byte	0x50
+ 2704 01c4 9F       		.byte	0x9f
+ 2705 01c5 2C000000 		.4byte	.LVL32
+ 2706 01c9 2E000000 		.4byte	.LVL33
+ 2707 01cd 0100     		.2byte	0x1
+ 2708 01cf 50       		.byte	0x50
+ 2709 01d0 2E000000 		.4byte	.LVL33
+ 2710 01d4 38000000 		.4byte	.LFE39
+ 2711 01d8 0400     		.2byte	0x4
+ 2712 01da F3       		.byte	0xf3
+ 2713 01db 01       		.uleb128 0x1
+ 2714 01dc 50       		.byte	0x50
+ 2715 01dd 9F       		.byte	0x9f
+ 2716 01de 00000000 		.4byte	0
+ 2717 01e2 00000000 		.4byte	0
+ 2718              	.LLST8:
+ 2719 01e6 00000000 		.4byte	.LVL25
+ 2720 01ea 13000000 		.4byte	.LVL27-1
+ 2721 01ee 0100     		.2byte	0x1
+ 2722 01f0 51       		.byte	0x51
+ 2723 01f1 13000000 		.4byte	.LVL27-1
+ 2724 01f5 2C000000 		.4byte	.LVL32
+ 2725 01f9 0400     		.2byte	0x4
+ 2726 01fb F3       		.byte	0xf3
+ 2727 01fc 01       		.uleb128 0x1
+ 2728 01fd 51       		.byte	0x51
+ 2729 01fe 9F       		.byte	0x9f
+ 2730 01ff 2C000000 		.4byte	.LVL32
+ 2731 0203 2E000000 		.4byte	.LVL33
+ 2732 0207 0100     		.2byte	0x1
+ 2733 0209 51       		.byte	0x51
+ 2734 020a 2E000000 		.4byte	.LVL33
+ 2735 020e 38000000 		.4byte	.LFE39
+ 2736 0212 0400     		.2byte	0x4
+ 2737 0214 F3       		.byte	0xf3
+ 2738 0215 01       		.uleb128 0x1
+ 2739 0216 51       		.byte	0x51
+ 2740 0217 9F       		.byte	0x9f
+ 2741 0218 00000000 		.4byte	0
+ 2742 021c 00000000 		.4byte	0
+ 2743              	.LLST9:
+ 2744 0220 00000000 		.4byte	.LVL25
+ 2745 0224 13000000 		.4byte	.LVL27-1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 59
+
+
+ 2746 0228 0100     		.2byte	0x1
+ 2747 022a 52       		.byte	0x52
+ 2748 022b 13000000 		.4byte	.LVL27-1
+ 2749 022f 2C000000 		.4byte	.LVL32
+ 2750 0233 0400     		.2byte	0x4
+ 2751 0235 F3       		.byte	0xf3
+ 2752 0236 01       		.uleb128 0x1
+ 2753 0237 52       		.byte	0x52
+ 2754 0238 9F       		.byte	0x9f
+ 2755 0239 2C000000 		.4byte	.LVL32
+ 2756 023d 2E000000 		.4byte	.LVL33
+ 2757 0241 0100     		.2byte	0x1
+ 2758 0243 52       		.byte	0x52
+ 2759 0244 2E000000 		.4byte	.LVL33
+ 2760 0248 38000000 		.4byte	.LFE39
+ 2761 024c 0400     		.2byte	0x4
+ 2762 024e F3       		.byte	0xf3
+ 2763 024f 01       		.uleb128 0x1
+ 2764 0250 52       		.byte	0x52
+ 2765 0251 9F       		.byte	0x9f
+ 2766 0252 00000000 		.4byte	0
+ 2767 0256 00000000 		.4byte	0
+ 2768              	.LLST10:
+ 2769 025a 06000000 		.4byte	.LVL26
+ 2770 025e 20000000 		.4byte	.LVL29
+ 2771 0262 0200     		.2byte	0x2
+ 2772 0264 31       		.byte	0x31
+ 2773 0265 9F       		.byte	0x9f
+ 2774 0266 20000000 		.4byte	.LVL29
+ 2775 026a 26000000 		.4byte	.LVL30
+ 2776 026e 0100     		.2byte	0x1
+ 2777 0270 50       		.byte	0x50
+ 2778 0271 26000000 		.4byte	.LVL30
+ 2779 0275 2C000000 		.4byte	.LVL32
+ 2780 0279 0100     		.2byte	0x1
+ 2781 027b 54       		.byte	0x54
+ 2782 027c 2C000000 		.4byte	.LVL32
+ 2783 0280 2E000000 		.4byte	.LVL33
+ 2784 0284 0200     		.2byte	0x2
+ 2785 0286 31       		.byte	0x31
+ 2786 0287 9F       		.byte	0x9f
+ 2787 0288 2E000000 		.4byte	.LVL33
+ 2788 028c 30000000 		.4byte	.LVL34
+ 2789 0290 0100     		.2byte	0x1
+ 2790 0292 54       		.byte	0x54
+ 2791 0293 00000000 		.4byte	0
+ 2792 0297 00000000 		.4byte	0
+ 2793              	.LLST11:
+ 2794 029b 00000000 		.4byte	.LVL35
+ 2795 029f 0D000000 		.4byte	.LVL37-1
+ 2796 02a3 0100     		.2byte	0x1
+ 2797 02a5 50       		.byte	0x50
+ 2798 02a6 0D000000 		.4byte	.LVL37-1
+ 2799 02aa 10000000 		.4byte	.LVL38
+ 2800 02ae 0400     		.2byte	0x4
+ 2801 02b0 F3       		.byte	0xf3
+ 2802 02b1 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 60
+
+
+ 2803 02b2 50       		.byte	0x50
+ 2804 02b3 9F       		.byte	0x9f
+ 2805 02b4 10000000 		.4byte	.LVL38
+ 2806 02b8 12000000 		.4byte	.LVL39
+ 2807 02bc 0100     		.2byte	0x1
+ 2808 02be 50       		.byte	0x50
+ 2809 02bf 12000000 		.4byte	.LVL39
+ 2810 02c3 14000000 		.4byte	.LFE33
+ 2811 02c7 0400     		.2byte	0x4
+ 2812 02c9 F3       		.byte	0xf3
+ 2813 02ca 01       		.uleb128 0x1
+ 2814 02cb 50       		.byte	0x50
+ 2815 02cc 9F       		.byte	0x9f
+ 2816 02cd 00000000 		.4byte	0
+ 2817 02d1 00000000 		.4byte	0
+ 2818              	.LLST12:
+ 2819 02d5 00000000 		.4byte	.LVL35
+ 2820 02d9 08000000 		.4byte	.LVL36
+ 2821 02dd 0100     		.2byte	0x1
+ 2822 02df 51       		.byte	0x51
+ 2823 02e0 08000000 		.4byte	.LVL36
+ 2824 02e4 10000000 		.4byte	.LVL38
+ 2825 02e8 0400     		.2byte	0x4
+ 2826 02ea F3       		.byte	0xf3
+ 2827 02eb 01       		.uleb128 0x1
+ 2828 02ec 51       		.byte	0x51
+ 2829 02ed 9F       		.byte	0x9f
+ 2830 02ee 10000000 		.4byte	.LVL38
+ 2831 02f2 12000000 		.4byte	.LVL39
+ 2832 02f6 0100     		.2byte	0x1
+ 2833 02f8 51       		.byte	0x51
+ 2834 02f9 12000000 		.4byte	.LVL39
+ 2835 02fd 14000000 		.4byte	.LFE33
+ 2836 0301 0400     		.2byte	0x4
+ 2837 0303 F3       		.byte	0xf3
+ 2838 0304 01       		.uleb128 0x1
+ 2839 0305 51       		.byte	0x51
+ 2840 0306 9F       		.byte	0x9f
+ 2841 0307 00000000 		.4byte	0
+ 2842 030b 00000000 		.4byte	0
+ 2843              	.LLST13:
+ 2844 030f 00000000 		.4byte	.LVL40
+ 2845 0313 33000000 		.4byte	.LVL45-1
+ 2846 0317 0100     		.2byte	0x1
+ 2847 0319 50       		.byte	0x50
+ 2848 031a 33000000 		.4byte	.LVL45-1
+ 2849 031e 36000000 		.4byte	.LVL46
+ 2850 0322 0400     		.2byte	0x4
+ 2851 0324 F3       		.byte	0xf3
+ 2852 0325 01       		.uleb128 0x1
+ 2853 0326 50       		.byte	0x50
+ 2854 0327 9F       		.byte	0x9f
+ 2855 0328 36000000 		.4byte	.LVL46
+ 2856 032c 3B000000 		.4byte	.LVL47-1
+ 2857 0330 0100     		.2byte	0x1
+ 2858 0332 50       		.byte	0x50
+ 2859 0333 3B000000 		.4byte	.LVL47-1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 61
+
+
+ 2860 0337 3E000000 		.4byte	.LVL48
+ 2861 033b 0400     		.2byte	0x4
+ 2862 033d F3       		.byte	0xf3
+ 2863 033e 01       		.uleb128 0x1
+ 2864 033f 50       		.byte	0x50
+ 2865 0340 9F       		.byte	0x9f
+ 2866 0341 3E000000 		.4byte	.LVL48
+ 2867 0345 40000000 		.4byte	.LVL49
+ 2868 0349 0100     		.2byte	0x1
+ 2869 034b 50       		.byte	0x50
+ 2870 034c 40000000 		.4byte	.LVL49
+ 2871 0350 42000000 		.4byte	.LVL50
+ 2872 0354 0400     		.2byte	0x4
+ 2873 0356 F3       		.byte	0xf3
+ 2874 0357 01       		.uleb128 0x1
+ 2875 0358 50       		.byte	0x50
+ 2876 0359 9F       		.byte	0x9f
+ 2877 035a 42000000 		.4byte	.LVL50
+ 2878 035e 44000000 		.4byte	.LVL51
+ 2879 0362 0100     		.2byte	0x1
+ 2880 0364 50       		.byte	0x50
+ 2881 0365 44000000 		.4byte	.LVL51
+ 2882 0369 4C000000 		.4byte	.LFE32
+ 2883 036d 0400     		.2byte	0x4
+ 2884 036f F3       		.byte	0xf3
+ 2885 0370 01       		.uleb128 0x1
+ 2886 0371 50       		.byte	0x50
+ 2887 0372 9F       		.byte	0x9f
+ 2888 0373 00000000 		.4byte	0
+ 2889 0377 00000000 		.4byte	0
+ 2890              	.LLST14:
+ 2891 037b 00000000 		.4byte	.LVL40
+ 2892 037f 14000000 		.4byte	.LVL41
+ 2893 0383 0100     		.2byte	0x1
+ 2894 0385 51       		.byte	0x51
+ 2895 0386 14000000 		.4byte	.LVL41
+ 2896 038a 4C000000 		.4byte	.LFE32
+ 2897 038e 0400     		.2byte	0x4
+ 2898 0390 F3       		.byte	0xf3
+ 2899 0391 01       		.uleb128 0x1
+ 2900 0392 51       		.byte	0x51
+ 2901 0393 9F       		.byte	0x9f
+ 2902 0394 00000000 		.4byte	0
+ 2903 0398 00000000 		.4byte	0
+ 2904              	.LLST15:
+ 2905 039c 1A000000 		.4byte	.LVL43
+ 2906 03a0 33000000 		.4byte	.LVL45-1
+ 2907 03a4 0700     		.2byte	0x7
+ 2908 03a6 73       		.byte	0x73
+ 2909 03a7 00       		.sleb128 0
+ 2910 03a8 38       		.byte	0x38
+ 2911 03a9 24       		.byte	0x24
+ 2912 03aa 48       		.byte	0x48
+ 2913 03ab 25       		.byte	0x25
+ 2914 03ac 9F       		.byte	0x9f
+ 2915 03ad 36000000 		.4byte	.LVL46
+ 2916 03b1 3B000000 		.4byte	.LVL47-1
+ARM GAS  e:\temp\ccdmNCtc.s 			page 62
+
+
+ 2917 03b5 0700     		.2byte	0x7
+ 2918 03b7 73       		.byte	0x73
+ 2919 03b8 00       		.sleb128 0
+ 2920 03b9 38       		.byte	0x38
+ 2921 03ba 24       		.byte	0x24
+ 2922 03bb 48       		.byte	0x48
+ 2923 03bc 25       		.byte	0x25
+ 2924 03bd 9F       		.byte	0x9f
+ 2925 03be 3E000000 		.4byte	.LVL48
+ 2926 03c2 44000000 		.4byte	.LVL51
+ 2927 03c6 0700     		.2byte	0x7
+ 2928 03c8 73       		.byte	0x73
+ 2929 03c9 00       		.sleb128 0
+ 2930 03ca 38       		.byte	0x38
+ 2931 03cb 24       		.byte	0x24
+ 2932 03cc 48       		.byte	0x48
+ 2933 03cd 25       		.byte	0x25
+ 2934 03ce 9F       		.byte	0x9f
+ 2935 03cf 00000000 		.4byte	0
+ 2936 03d3 00000000 		.4byte	0
+ 2937              	.LLST16:
+ 2938 03d7 1C000000 		.4byte	.LVL44
+ 2939 03db 33000000 		.4byte	.LVL45-1
+ 2940 03df 0500     		.2byte	0x5
+ 2941 03e1 73       		.byte	0x73
+ 2942 03e2 00       		.sleb128 0
+ 2943 03e3 48       		.byte	0x48
+ 2944 03e4 25       		.byte	0x25
+ 2945 03e5 9F       		.byte	0x9f
+ 2946 03e6 36000000 		.4byte	.LVL46
+ 2947 03ea 3B000000 		.4byte	.LVL47-1
+ 2948 03ee 0500     		.2byte	0x5
+ 2949 03f0 73       		.byte	0x73
+ 2950 03f1 00       		.sleb128 0
+ 2951 03f2 48       		.byte	0x48
+ 2952 03f3 25       		.byte	0x25
+ 2953 03f4 9F       		.byte	0x9f
+ 2954 03f5 3E000000 		.4byte	.LVL48
+ 2955 03f9 44000000 		.4byte	.LVL51
+ 2956 03fd 0500     		.2byte	0x5
+ 2957 03ff 73       		.byte	0x73
+ 2958 0400 00       		.sleb128 0
+ 2959 0401 48       		.byte	0x48
+ 2960 0402 25       		.byte	0x25
+ 2961 0403 9F       		.byte	0x9f
+ 2962 0404 00000000 		.4byte	0
+ 2963 0408 00000000 		.4byte	0
+ 2964              	.LLST17:
+ 2965 040c 16000000 		.4byte	.LVL42
+ 2966 0410 33000000 		.4byte	.LVL45-1
+ 2967 0414 0100     		.2byte	0x1
+ 2968 0416 53       		.byte	0x53
+ 2969 0417 36000000 		.4byte	.LVL46
+ 2970 041b 3B000000 		.4byte	.LVL47-1
+ 2971 041f 0100     		.2byte	0x1
+ 2972 0421 53       		.byte	0x53
+ 2973 0422 3E000000 		.4byte	.LVL48
+ARM GAS  e:\temp\ccdmNCtc.s 			page 63
+
+
+ 2974 0426 4C000000 		.4byte	.LFE32
+ 2975 042a 0100     		.2byte	0x1
+ 2976 042c 53       		.byte	0x53
+ 2977 042d 00000000 		.4byte	0
+ 2978 0431 00000000 		.4byte	0
+ 2979              	.LLST18:
+ 2980 0435 00000000 		.4byte	.LVL52
+ 2981 0439 07000000 		.4byte	.LVL53-1
+ 2982 043d 0100     		.2byte	0x1
+ 2983 043f 50       		.byte	0x50
+ 2984 0440 07000000 		.4byte	.LVL53-1
+ 2985 0444 50000000 		.4byte	.LFE37
+ 2986 0448 0400     		.2byte	0x4
+ 2987 044a F3       		.byte	0xf3
+ 2988 044b 01       		.uleb128 0x1
+ 2989 044c 50       		.byte	0x50
+ 2990 044d 9F       		.byte	0x9f
+ 2991 044e 00000000 		.4byte	0
+ 2992 0452 00000000 		.4byte	0
+ 2993              	.LLST19:
+ 2994 0456 00000000 		.4byte	.LVL58
+ 2995 045a 04000000 		.4byte	.LVL59
+ 2996 045e 0100     		.2byte	0x1
+ 2997 0460 50       		.byte	0x50
+ 2998 0461 04000000 		.4byte	.LVL59
+ 2999 0465 10000000 		.4byte	.LFE40
+ 3000 0469 0400     		.2byte	0x4
+ 3001 046b F3       		.byte	0xf3
+ 3002 046c 01       		.uleb128 0x1
+ 3003 046d 50       		.byte	0x50
+ 3004 046e 9F       		.byte	0x9f
+ 3005 046f 00000000 		.4byte	0
+ 3006 0473 00000000 		.4byte	0
+ 3007              	.LLST20:
+ 3008 0477 00000000 		.4byte	.LVL60
+ 3009 047b 24000000 		.4byte	.LVL61
+ 3010 047f 0100     		.2byte	0x1
+ 3011 0481 50       		.byte	0x50
+ 3012 0482 24000000 		.4byte	.LVL61
+ 3013 0486 2A000000 		.4byte	.LVL63
+ 3014 048a 0400     		.2byte	0x4
+ 3015 048c F3       		.byte	0xf3
+ 3016 048d 01       		.uleb128 0x1
+ 3017 048e 50       		.byte	0x50
+ 3018 048f 9F       		.byte	0x9f
+ 3019 0490 2A000000 		.4byte	.LVL63
+ 3020 0494 3C000000 		.4byte	.LVL64
+ 3021 0498 0100     		.2byte	0x1
+ 3022 049a 50       		.byte	0x50
+ 3023 049b 3C000000 		.4byte	.LVL64
+ 3024 049f 4C000000 		.4byte	.LFE41
+ 3025 04a3 0400     		.2byte	0x4
+ 3026 04a5 F3       		.byte	0xf3
+ 3027 04a6 01       		.uleb128 0x1
+ 3028 04a7 50       		.byte	0x50
+ 3029 04a8 9F       		.byte	0x9f
+ 3030 04a9 00000000 		.4byte	0
+ARM GAS  e:\temp\ccdmNCtc.s 			page 64
+
+
+ 3031 04ad 00000000 		.4byte	0
+ 3032              	.LLST21:
+ 3033 04b1 00000000 		.4byte	.LVL67
+ 3034 04b5 1F000000 		.4byte	.LVL68-1
+ 3035 04b9 0100     		.2byte	0x1
+ 3036 04bb 50       		.byte	0x50
+ 3037 04bc 1F000000 		.4byte	.LVL68-1
+ 3038 04c0 28000000 		.4byte	.LFE42
+ 3039 04c4 0400     		.2byte	0x4
+ 3040 04c6 F3       		.byte	0xf3
+ 3041 04c7 01       		.uleb128 0x1
+ 3042 04c8 50       		.byte	0x50
+ 3043 04c9 9F       		.byte	0x9f
+ 3044 04ca 00000000 		.4byte	0
+ 3045 04ce 00000000 		.4byte	0
+ 3046              		.section	.debug_aranges,"",%progbits
+ 3047 0000 6C000000 		.4byte	0x6c
+ 3048 0004 0200     		.2byte	0x2
+ 3049 0006 00000000 		.4byte	.Ldebug_info0
+ 3050 000a 04       		.byte	0x4
+ 3051 000b 00       		.byte	0
+ 3052 000c 0000     		.2byte	0
+ 3053 000e 0000     		.2byte	0
+ 3054 0010 00000000 		.4byte	.LFB36
+ 3055 0014 40000000 		.4byte	.LFE36-.LFB36
+ 3056 0018 00000000 		.4byte	.LFB34
+ 3057 001c 14000000 		.4byte	.LFE34-.LFB34
+ 3058 0020 00000000 		.4byte	.LFB35
+ 3059 0024 60000000 		.4byte	.LFE35-.LFB35
+ 3060 0028 00000000 		.4byte	.LFB38
+ 3061 002c 14000000 		.4byte	.LFE38-.LFB38
+ 3062 0030 00000000 		.4byte	.LFB39
+ 3063 0034 38000000 		.4byte	.LFE39-.LFB39
+ 3064 0038 00000000 		.4byte	.LFB33
+ 3065 003c 14000000 		.4byte	.LFE33-.LFB33
+ 3066 0040 00000000 		.4byte	.LFB32
+ 3067 0044 4C000000 		.4byte	.LFE32-.LFB32
+ 3068 0048 00000000 		.4byte	.LFB37
+ 3069 004c 50000000 		.4byte	.LFE37-.LFB37
+ 3070 0050 00000000 		.4byte	.LFB40
+ 3071 0054 10000000 		.4byte	.LFE40-.LFB40
+ 3072 0058 00000000 		.4byte	.LFB41
+ 3073 005c 4C000000 		.4byte	.LFE41-.LFB41
+ 3074 0060 00000000 		.4byte	.LFB42
+ 3075 0064 28000000 		.4byte	.LFE42-.LFB42
+ 3076 0068 00000000 		.4byte	0
+ 3077 006c 00000000 		.4byte	0
+ 3078              		.section	.debug_ranges,"",%progbits
+ 3079              	.Ldebug_ranges0:
+ 3080 0000 00000000 		.4byte	.LFB36
+ 3081 0004 40000000 		.4byte	.LFE36
+ 3082 0008 00000000 		.4byte	.LFB34
+ 3083 000c 14000000 		.4byte	.LFE34
+ 3084 0010 00000000 		.4byte	.LFB35
+ 3085 0014 60000000 		.4byte	.LFE35
+ 3086 0018 00000000 		.4byte	.LFB38
+ 3087 001c 14000000 		.4byte	.LFE38
+ARM GAS  e:\temp\ccdmNCtc.s 			page 65
+
+
+ 3088 0020 00000000 		.4byte	.LFB39
+ 3089 0024 38000000 		.4byte	.LFE39
+ 3090 0028 00000000 		.4byte	.LFB33
+ 3091 002c 14000000 		.4byte	.LFE33
+ 3092 0030 00000000 		.4byte	.LFB32
+ 3093 0034 4C000000 		.4byte	.LFE32
+ 3094 0038 00000000 		.4byte	.LFB37
+ 3095 003c 50000000 		.4byte	.LFE37
+ 3096 0040 00000000 		.4byte	.LFB40
+ 3097 0044 10000000 		.4byte	.LFE40
+ 3098 0048 00000000 		.4byte	.LFB41
+ 3099 004c 4C000000 		.4byte	.LFE41
+ 3100 0050 00000000 		.4byte	.LFB42
+ 3101 0054 28000000 		.4byte	.LFE42
+ 3102 0058 00000000 		.4byte	0
+ 3103 005c 00000000 		.4byte	0
+ 3104              		.section	.debug_line,"",%progbits
+ 3105              	.Ldebug_line0:
+ 3106 0000 A0020000 		.section	.debug_str,"MS",%progbits,1
+ 3106      02009901 
+ 3106      00000201 
+ 3106      FB0E0D00 
+ 3106      01010101 
+ 3107              	.LASF163:
+ 3108 0000 736C6E5F 		.ascii	"sln_pd_event_handler\000"
+ 3108      70645F65 
+ 3108      76656E74 
+ 3108      5F68616E 
+ 3108      646C6572 
+ 3109              	.LASF46:
+ 3110 0015 4150505F 		.ascii	"APP_EVT_VBUS_OCP_FAULT\000"
+ 3110      4556545F 
+ 3110      56425553 
+ 3110      5F4F4350 
+ 3110      5F464155 
+ 3111              	.LASF80:
+ 3112 002c 616C745F 		.ascii	"alt_mode_hw_cmd_cbk_t\000"
+ 3112      6D6F6465 
+ 3112      5F68775F 
+ 3112      636D645F 
+ 3112      63626B5F 
+ 3113              	.LASF165:
+ 3114 0042 6870645F 		.ascii	"hpd_transmit_init\000"
+ 3114      7472616E 
+ 3114      736D6974 
+ 3114      5F696E69 
+ 3114      7400
+ 3115              	.LASF64:
+ 3116 0054 414C545F 		.ascii	"ALT_MODE_MUX\000"
+ 3116      4D4F4445 
+ 3116      5F4D5558 
+ 3116      00
+ 3117              	.LASF161:
+ 3118 0061 676C5F61 		.ascii	"gl_alt_mode_hpd_state\000"
+ 3118      6C745F6D 
+ 3118      6F64655F 
+ 3118      6870645F 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 66
+
+
+ 3118      73746174 
+ 3119              	.LASF33:
+ 3120 0077 4150505F 		.ascii	"APP_EVT_HARD_RESET_COMPLETE\000"
+ 3120      4556545F 
+ 3120      48415244 
+ 3120      5F524553 
+ 3120      45545F43 
+ 3121              	.LASF5:
+ 3122 0093 5F5F7569 		.ascii	"__uint8_t\000"
+ 3122      6E74385F 
+ 3122      7400
+ 3123              	.LASF70:
+ 3124 009d 4D55585F 		.ascii	"MUX_CONFIG_DP_4_LANE\000"
+ 3124      434F4E46 
+ 3124      49475F44 
+ 3124      505F345F 
+ 3124      4C414E45 
+ 3125              	.LASF47:
+ 3126 00b2 4150505F 		.ascii	"APP_EVT_VCONN_OCP_FAULT\000"
+ 3126      4556545F 
+ 3126      56434F4E 
+ 3126      4E5F4F43 
+ 3126      505F4641 
+ 3127              	.LASF74:
+ 3128 00ca 6D75785F 		.ascii	"mux_select_t\000"
+ 3128      73656C65 
+ 3128      63745F74 
+ 3128      00
+ 3129              	.LASF29:
+ 3130 00d7 4150505F 		.ascii	"APP_EVT_APP_HW\000"
+ 3130      4556545F 
+ 3130      4150505F 
+ 3130      485700
+ 3131              	.LASF4:
+ 3132 00e6 6C6F6E67 		.ascii	"long int\000"
+ 3132      20696E74 
+ 3132      00
+ 3133              	.LASF171:
+ 3134 00ef 6770696F 		.ascii	"gpio_set_value\000"
+ 3134      5F736574 
+ 3134      5F76616C 
+ 3134      756500
+ 3135              	.LASF140:
+ 3136 00fe 6870645F 		.ascii	"hpd_event_type_t\000"
+ 3136      6576656E 
+ 3136      745F7479 
+ 3136      70655F74 
+ 3136      00
+ 3137              	.LASF51:
+ 3138 010f 4150505F 		.ascii	"APP_EVT_TEMPERATURE_FAULT\000"
+ 3138      4556545F 
+ 3138      54454D50 
+ 3138      45524154 
+ 3138      5552455F 
+ 3139              	.LASF27:
+ 3140 0129 4150505F 		.ascii	"APP_EVT_EMCA_NOT_DETECTED\000"
+ 3140      4556545F 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 67
+
+
+ 3140      454D4341 
+ 3140      5F4E4F54 
+ 3140      5F444554 
+ 3141              	.LASF35:
+ 3142 0143 4150505F 		.ascii	"APP_EVT_PR_SWAP_COMPLETE\000"
+ 3142      4556545F 
+ 3142      50525F53 
+ 3142      5741505F 
+ 3142      434F4D50 
+ 3143              	.LASF79:
+ 3144 015c 616C745F 		.ascii	"alt_mode_hw_evt_t\000"
+ 3144      6D6F6465 
+ 3144      5F68775F 
+ 3144      6576745F 
+ 3144      7400
+ 3145              	.LASF50:
+ 3146 016e 4150505F 		.ascii	"APP_EVT_FR_SWAP_COMPLETE\000"
+ 3146      4556545F 
+ 3146      46525F53 
+ 3146      5741505F 
+ 3146      434F4D50 
+ 3147              	.LASF81:
+ 3148 0187 5359535F 		.ascii	"SYS_HW_ERROR_NONE\000"
+ 3148      48575F45 
+ 3148      52524F52 
+ 3148      5F4E4F4E 
+ 3148      4500
+ 3149              	.LASF20:
+ 3150 0199 5052545F 		.ascii	"PRT_TYPE_DRP\000"
+ 3150      54595045 
+ 3150      5F445250 
+ 3150      00
+ 3151              	.LASF143:
+ 3152 01a6 6576616C 		.ascii	"eval_hpd_cmd\000"
+ 3152      5F687064 
+ 3152      5F636D64 
+ 3152      00
+ 3153              	.LASF147:
+ 3154 01b3 616C745F 		.ascii	"alt_mode_hw_data\000"
+ 3154      6D6F6465 
+ 3154      5F68775F 
+ 3154      64617461 
+ 3154      00
+ 3155              	.LASF139:
+ 3156 01c4 4850445F 		.ascii	"HPD_COMMAND_DONE\000"
+ 3156      434F4D4D 
+ 3156      414E445F 
+ 3156      444F4E45 
+ 3156      00
+ 3157              	.LASF62:
+ 3158 01d5 4150505F 		.ascii	"APP_EVT_PD_SINK_DEVICE_CONNECTED\000"
+ 3158      4556545F 
+ 3158      50445F53 
+ 3158      494E4B5F 
+ 3158      44455649 
+ 3159              	.LASF8:
+ 3160 01f6 6C6F6E67 		.ascii	"long long int\000"
+ARM GAS  e:\temp\ccdmNCtc.s 			page 68
+
+
+ 3160      206C6F6E 
+ 3160      6720696E 
+ 3160      7400
+ 3161              	.LASF0:
+ 3162 0204 7369676E 		.ascii	"signed char\000"
+ 3162      65642063 
+ 3162      68617200 
+ 3163              	.LASF76:
+ 3164 0210 68775F74 		.ascii	"hw_type\000"
+ 3164      79706500 
+ 3165              	.LASF7:
+ 3166 0218 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3166      20756E73 
+ 3166      69676E65 
+ 3166      6420696E 
+ 3166      7400
+ 3167              	.LASF109:
+ 3168 022a 4750494F 		.ascii	"GPIO_PORT_3_PIN_0\000"
+ 3168      5F504F52 
+ 3168      545F335F 
+ 3168      50494E5F 
+ 3168      3000
+ 3169              	.LASF110:
+ 3170 023c 4750494F 		.ascii	"GPIO_PORT_3_PIN_1\000"
+ 3170      5F504F52 
+ 3170      545F335F 
+ 3170      50494E5F 
+ 3170      3100
+ 3171              	.LASF111:
+ 3172 024e 4750494F 		.ascii	"GPIO_PORT_3_PIN_2\000"
+ 3172      5F504F52 
+ 3172      545F335F 
+ 3172      50494E5F 
+ 3172      3200
+ 3173              	.LASF112:
+ 3174 0260 4750494F 		.ascii	"GPIO_PORT_3_PIN_3\000"
+ 3174      5F504F52 
+ 3174      545F335F 
+ 3174      50494E5F 
+ 3174      3300
+ 3175              	.LASF113:
+ 3176 0272 4750494F 		.ascii	"GPIO_PORT_3_PIN_4\000"
+ 3176      5F504F52 
+ 3176      545F335F 
+ 3176      50494E5F 
+ 3176      3400
+ 3177              	.LASF114:
+ 3178 0284 4750494F 		.ascii	"GPIO_PORT_3_PIN_5\000"
+ 3178      5F504F52 
+ 3178      545F335F 
+ 3178      50494E5F 
+ 3178      3500
+ 3179              	.LASF115:
+ 3180 0296 4750494F 		.ascii	"GPIO_PORT_3_PIN_6\000"
+ 3180      5F504F52 
+ 3180      545F335F 
+ 3180      50494E5F 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 69
+
+
+ 3180      3600
+ 3181              	.LASF116:
+ 3182 02a8 4750494F 		.ascii	"GPIO_PORT_3_PIN_7\000"
+ 3182      5F504F52 
+ 3182      545F335F 
+ 3182      50494E5F 
+ 3182      3700
+ 3183              	.LASF160:
+ 3184 02ba 676C5F61 		.ascii	"gl_alt_mode_cmd_pending\000"
+ 3184      6C745F6D 
+ 3184      6F64655F 
+ 3184      636D645F 
+ 3184      70656E64 
+ 3185              	.LASF28:
+ 3186 02d2 4150505F 		.ascii	"APP_EVT_ALT_MODE\000"
+ 3186      4556545F 
+ 3186      414C545F 
+ 3186      4D4F4445 
+ 3186      00
+ 3187              	.LASF125:
+ 3188 02e3 4750494F 		.ascii	"GPIO_PORT_5_PIN_0\000"
+ 3188      5F504F52 
+ 3188      545F355F 
+ 3188      50494E5F 
+ 3188      3000
+ 3189              	.LASF126:
+ 3190 02f5 4750494F 		.ascii	"GPIO_PORT_5_PIN_1\000"
+ 3190      5F504F52 
+ 3190      545F355F 
+ 3190      50494E5F 
+ 3190      3100
+ 3191              	.LASF127:
+ 3192 0307 4750494F 		.ascii	"GPIO_PORT_5_PIN_2\000"
+ 3192      5F504F52 
+ 3192      545F355F 
+ 3192      50494E5F 
+ 3192      3200
+ 3193              	.LASF25:
+ 3194 0319 4150505F 		.ascii	"APP_EVT_DISCONNECT\000"
+ 3194      4556545F 
+ 3194      44495343 
+ 3194      4F4E4E45 
+ 3194      435400
+ 3195              	.LASF129:
+ 3196 032c 4750494F 		.ascii	"GPIO_PORT_5_PIN_4\000"
+ 3196      5F504F52 
+ 3196      545F355F 
+ 3196      50494E5F 
+ 3196      3400
+ 3197              	.LASF130:
+ 3198 033e 4750494F 		.ascii	"GPIO_PORT_5_PIN_5\000"
+ 3198      5F504F52 
+ 3198      545F355F 
+ 3198      50494E5F 
+ 3198      3500
+ 3199              	.LASF131:
+ 3200 0350 4750494F 		.ascii	"GPIO_PORT_5_PIN_6\000"
+ARM GAS  e:\temp\ccdmNCtc.s 			page 70
+
+
+ 3200      5F504F52 
+ 3200      545F355F 
+ 3200      50494E5F 
+ 3200      3600
+ 3201              	.LASF132:
+ 3202 0362 4750494F 		.ascii	"GPIO_PORT_5_PIN_7\000"
+ 3202      5F504F52 
+ 3202      545F355F 
+ 3202      50494E5F 
+ 3202      3700
+ 3203              	.LASF173:
+ 3204 0374 6870645F 		.ascii	"hpd_wakeup\000"
+ 3204      77616B65 
+ 3204      757000
+ 3205              	.LASF58:
+ 3206 037f 4150505F 		.ascii	"APP_EVT_CC_OVP\000"
+ 3206      4556545F 
+ 3206      43435F4F 
+ 3206      565000
+ 3207              	.LASF40:
+ 3208 038e 4150505F 		.ascii	"APP_EVT_HARD_RESET_SENT\000"
+ 3208      4556545F 
+ 3208      48415244 
+ 3208      5F524553 
+ 3208      45545F53 
+ 3209              	.LASF135:
+ 3210 03a6 4850445F 		.ascii	"HPD_EVENT_NONE\000"
+ 3210      4556454E 
+ 3210      545F4E4F 
+ 3210      4E4500
+ 3211              	.LASF162:
+ 3212 03b5 6170705F 		.ascii	"app_mux_state\000"
+ 3212      6D75785F 
+ 3212      73746174 
+ 3212      6500
+ 3213              	.LASF148:
+ 3214 03c3 72657476 		.ascii	"retval\000"
+ 3214      616C00
+ 3215              	.LASF71:
+ 3216 03ca 4D55585F 		.ascii	"MUX_CONFIG_RIDGE_CUSTOM\000"
+ 3216      434F4E46 
+ 3216      49475F52 
+ 3216      49444745 
+ 3216      5F435553 
+ 3217              	.LASF14:
+ 3218 03e2 646F7562 		.ascii	"double\000"
+ 3218      6C6500
+ 3219              	.LASF65:
+ 3220 03e9 414C545F 		.ascii	"ALT_MODE_HPD\000"
+ 3220      4D4F4445 
+ 3220      5F485044 
+ 3220      00
+ 3221              	.LASF82:
+ 3222 03f6 5359535F 		.ascii	"SYS_HW_ERROR_MUX_ACCESS\000"
+ 3222      48575F45 
+ 3222      52524F52 
+ 3222      5F4D5558 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 71
+
+
+ 3222      5F414343 
+ 3223              	.LASF42:
+ 3224 040e 4150505F 		.ascii	"APP_EVT_CBL_RESET_SENT\000"
+ 3224      4556545F 
+ 3224      43424C5F 
+ 3224      52455345 
+ 3224      545F5345 
+ 3225              	.LASF73:
+ 3226 0425 4D55585F 		.ascii	"MUX_CONFIG_DEINIT\000"
+ 3226      434F4E46 
+ 3226      49475F44 
+ 3226      45494E49 
+ 3226      5400
+ 3227              	.LASF157:
+ 3228 0437 616C745F 		.ascii	"alt_mode_hw_wakeup\000"
+ 3228      6D6F6465 
+ 3228      5F68775F 
+ 3228      77616B65 
+ 3228      757000
+ 3229              	.LASF155:
+ 3230 044a 616C745F 		.ascii	"alt_mode_hw_is_idle\000"
+ 3230      6D6F6465 
+ 3230      5F68775F 
+ 3230      69735F69 
+ 3230      646C6500 
+ 3231              	.LASF56:
+ 3232 045e 4150505F 		.ascii	"APP_EVT_TYPEC_ATTACH_WAIT_TO_UNATTACHED\000"
+ 3232      4556545F 
+ 3232      54595045 
+ 3232      435F4154 
+ 3232      54414348 
+ 3233              	.LASF170:
+ 3234 0486 64706D5F 		.ascii	"dpm_get_info\000"
+ 3234      6765745F 
+ 3234      696E666F 
+ 3234      00
+ 3235              	.LASF6:
+ 3236 0493 5F5F7569 		.ascii	"__uint32_t\000"
+ 3236      6E743332 
+ 3236      5F7400
+ 3237              	.LASF61:
+ 3238 049e 4150505F 		.ascii	"APP_EVT_SRC_CAP_TRIED_WITH_NO_RESPONSE\000"
+ 3238      4556545F 
+ 3238      5352435F 
+ 3238      4341505F 
+ 3238      54524945 
+ 3239              	.LASF117:
+ 3240 04c5 4750494F 		.ascii	"GPIO_PORT_4_PIN_0\000"
+ 3240      5F504F52 
+ 3240      545F345F 
+ 3240      50494E5F 
+ 3240      3000
+ 3241              	.LASF176:
+ 3242 04d7 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 3242      73657273 
+ 3242      5C41646D 
+ 3242      696E5C44 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 72
+
+
+ 3242      65736B74 
+ 3243 0504 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 3243      355C4359 
+ 3243      50443532 
+ 3243      32352D39 
+ 3243      36425A58 
+ 3244 0535 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 3244      6F6B2E63 
+ 3244      7964736E 
+ 3244      5C6E6F62 
+ 3244      6F6F742E 
+ 3245              	.LASF9:
+ 3246 054f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 3246      206C6F6E 
+ 3246      6720756E 
+ 3246      7369676E 
+ 3246      65642069 
+ 3247              	.LASF85:
+ 3248 0566 4750494F 		.ascii	"GPIO_PORT_0_PIN_0\000"
+ 3248      5F504F52 
+ 3248      545F305F 
+ 3248      50494E5F 
+ 3248      3000
+ 3249              	.LASF86:
+ 3250 0578 4750494F 		.ascii	"GPIO_PORT_0_PIN_1\000"
+ 3250      5F504F52 
+ 3250      545F305F 
+ 3250      50494E5F 
+ 3250      3100
+ 3251              	.LASF87:
+ 3252 058a 4750494F 		.ascii	"GPIO_PORT_0_PIN_2\000"
+ 3252      5F504F52 
+ 3252      545F305F 
+ 3252      50494E5F 
+ 3252      3200
+ 3253              	.LASF88:
+ 3254 059c 4750494F 		.ascii	"GPIO_PORT_0_PIN_3\000"
+ 3254      5F504F52 
+ 3254      545F305F 
+ 3254      50494E5F 
+ 3254      3300
+ 3255              	.LASF137:
+ 3256 05ae 4850445F 		.ascii	"HPD_EVENT_PLUG\000"
+ 3256      4556454E 
+ 3256      545F504C 
+ 3256      554700
+ 3257              	.LASF90:
+ 3258 05bd 4750494F 		.ascii	"GPIO_PORT_0_PIN_5\000"
+ 3258      5F504F52 
+ 3258      545F305F 
+ 3258      50494E5F 
+ 3258      3500
+ 3259              	.LASF10:
+ 3260 05cf 756E7369 		.ascii	"unsigned int\000"
+ 3260      676E6564 
+ 3260      20696E74 
+ 3260      00
+ARM GAS  e:\temp\ccdmNCtc.s 			page 73
+
+
+ 3261              	.LASF92:
+ 3262 05dc 4750494F 		.ascii	"GPIO_PORT_0_PIN_7\000"
+ 3262      5F504F52 
+ 3262      545F305F 
+ 3262      50494E5F 
+ 3262      3700
+ 3263              	.LASF167:
+ 3264 05ee 64706D5F 		.ascii	"dpm_get_polarity\000"
+ 3264      6765745F 
+ 3264      706F6C61 
+ 3264      72697479 
+ 3264      00
+ 3265              	.LASF166:
+ 3266 05ff 6870645F 		.ascii	"hpd_transmit_sendevt\000"
+ 3266      7472616E 
+ 3266      736D6974 
+ 3266      5F73656E 
+ 3266      64657674 
+ 3267              	.LASF102:
+ 3268 0614 4750494F 		.ascii	"GPIO_PORT_2_PIN_1\000"
+ 3268      5F504F52 
+ 3268      545F325F 
+ 3268      50494E5F 
+ 3268      3100
+ 3269              	.LASF103:
+ 3270 0626 4750494F 		.ascii	"GPIO_PORT_2_PIN_2\000"
+ 3270      5F504F52 
+ 3270      545F325F 
+ 3270      50494E5F 
+ 3270      3200
+ 3271              	.LASF104:
+ 3272 0638 4750494F 		.ascii	"GPIO_PORT_2_PIN_3\000"
+ 3272      5F504F52 
+ 3272      545F325F 
+ 3272      50494E5F 
+ 3272      3300
+ 3273              	.LASF105:
+ 3274 064a 4750494F 		.ascii	"GPIO_PORT_2_PIN_4\000"
+ 3274      5F504F52 
+ 3274      545F325F 
+ 3274      50494E5F 
+ 3274      3400
+ 3275              	.LASF106:
+ 3276 065c 4750494F 		.ascii	"GPIO_PORT_2_PIN_5\000"
+ 3276      5F504F52 
+ 3276      545F325F 
+ 3276      50494E5F 
+ 3276      3500
+ 3277              	.LASF107:
+ 3278 066e 4750494F 		.ascii	"GPIO_PORT_2_PIN_6\000"
+ 3278      5F504F52 
+ 3278      545F325F 
+ 3278      50494E5F 
+ 3278      3600
+ 3279              	.LASF108:
+ 3280 0680 4750494F 		.ascii	"GPIO_PORT_2_PIN_7\000"
+ 3280      5F504F52 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 74
+
+
+ 3280      545F325F 
+ 3280      50494E5F 
+ 3280      3700
+ 3281              	.LASF37:
+ 3282 0692 4150505F 		.ascii	"APP_EVT_VCONN_SWAP_COMPLETE\000"
+ 3282      4556545F 
+ 3282      56434F4E 
+ 3282      4E5F5357 
+ 3282      41505F43 
+ 3283              	.LASF142:
+ 3284 06ae 6576656E 		.ascii	"event\000"
+ 3284      7400
+ 3285              	.LASF84:
+ 3286 06b4 5359535F 		.ascii	"SYS_HW_ERROR_BAD_VOLTAGE\000"
+ 3286      48575F45 
+ 3286      52524F52 
+ 3286      5F424144 
+ 3286      5F564F4C 
+ 3287              	.LASF44:
+ 3288 06cd 4150505F 		.ascii	"APP_EVT_PD_CONTRACT_NEGOTIATION_COMPLETE\000"
+ 3288      4556545F 
+ 3288      50445F43 
+ 3288      4F4E5452 
+ 3288      4143545F 
+ 3289              	.LASF141:
+ 3290 06f6 706F7274 		.ascii	"port\000"
+ 3290      00
+ 3291              	.LASF59:
+ 3292 06fb 4150505F 		.ascii	"APP_EVT_SBU_OVP\000"
+ 3292      4556545F 
+ 3292      5342555F 
+ 3292      4F565000 
+ 3293              	.LASF83:
+ 3294 070b 5359535F 		.ascii	"SYS_HW_ERROR_REG_ACCESS\000"
+ 3294      48575F45 
+ 3294      52524F52 
+ 3294      5F524547 
+ 3294      5F414343 
+ 3295              	.LASF52:
+ 3296 0723 4150505F 		.ascii	"APP_EVT_HANDLE_EXTENDED_MSG\000"
+ 3296      4556545F 
+ 3296      48414E44 
+ 3296      4C455F45 
+ 3296      5854454E 
+ 3297              	.LASF48:
+ 3298 073f 4150505F 		.ascii	"APP_EVT_VBUS_PORT_DISABLE\000"
+ 3298      4556545F 
+ 3298      56425553 
+ 3298      5F504F52 
+ 3298      545F4449 
+ 3299              	.LASF151:
+ 3300 0759 636D645F 		.ascii	"cmd_param\000"
+ 3300      70617261 
+ 3300      6D00
+ 3301              	.LASF55:
+ 3302 0763 4150505F 		.ascii	"APP_EVT_TYPEC_ATTACH_WAIT\000"
+ 3302      4556545F 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 75
+
+
+ 3302      54595045 
+ 3302      435F4154 
+ 3302      54414348 
+ 3303              	.LASF136:
+ 3304 077d 4850445F 		.ascii	"HPD_EVENT_UNPLUG\000"
+ 3304      4556454E 
+ 3304      545F554E 
+ 3304      504C5547 
+ 3304      00
+ 3305              	.LASF18:
+ 3306 078e 5052545F 		.ascii	"PRT_TYPE_UFP\000"
+ 3306      54595045 
+ 3306      5F554650 
+ 3306      00
+ 3307              	.LASF145:
+ 3308 079b 7365745F 		.ascii	"set_mux\000"
+ 3308      6D757800 
+ 3309              	.LASF149:
+ 3310 07a3 6576616C 		.ascii	"eval_mux_cmd\000"
+ 3310      5F6D7578 
+ 3310      5F636D64 
+ 3310      00
+ 3311              	.LASF179:
+ 3312 07b0 676C5F64 		.ascii	"gl_dpm_port_type\000"
+ 3312      706D5F70 
+ 3312      6F72745F 
+ 3312      74797065 
+ 3312      00
+ 3313              	.LASF156:
+ 3314 07c1 616C745F 		.ascii	"alt_mode_hw_sleep\000"
+ 3314      6D6F6465 
+ 3314      5F68775F 
+ 3314      736C6565 
+ 3314      7000
+ 3315              	.LASF17:
+ 3316 07d3 73697A65 		.ascii	"sizetype\000"
+ 3316      74797065 
+ 3316      00
+ 3317              	.LASF98:
+ 3318 07dc 4750494F 		.ascii	"GPIO_PORT_1_PIN_5\000"
+ 3318      5F504F52 
+ 3318      545F315F 
+ 3318      50494E5F 
+ 3318      3500
+ 3319              	.LASF69:
+ 3320 07ee 4D55585F 		.ascii	"MUX_CONFIG_DP_2_LANE\000"
+ 3320      434F4E46 
+ 3320      49475F44 
+ 3320      505F325F 
+ 3320      4C414E45 
+ 3321              	.LASF67:
+ 3322 0803 4D55585F 		.ascii	"MUX_CONFIG_2_0\000"
+ 3322      434F4E46 
+ 3322      49475F32 
+ 3322      5F3000
+ 3323              	.LASF19:
+ 3324 0812 5052545F 		.ascii	"PRT_TYPE_DFP\000"
+ARM GAS  e:\temp\ccdmNCtc.s 			page 76
+
+
+ 3324      54595045 
+ 3324      5F444650 
+ 3324      00
+ 3325              	.LASF146:
+ 3326 081f 63757374 		.ascii	"custom_data\000"
+ 3326      6F6D5F64 
+ 3326      61746100 
+ 3327              	.LASF78:
+ 3328 082b 68775F65 		.ascii	"hw_evt\000"
+ 3328      767400
+ 3329              	.LASF49:
+ 3330 0832 4150505F 		.ascii	"APP_EVT_TYPEC_STARTED\000"
+ 3330      4556545F 
+ 3330      54595045 
+ 3330      435F5354 
+ 3330      41525445 
+ 3331              	.LASF138:
+ 3332 0848 4850445F 		.ascii	"HPD_EVENT_IRQ\000"
+ 3332      4556454E 
+ 3332      545F4952 
+ 3332      5100
+ 3333              	.LASF39:
+ 3334 0856 4150505F 		.ascii	"APP_EVT_VENDOR_RESPONSE_TIMEOUT\000"
+ 3334      4556545F 
+ 3334      56454E44 
+ 3334      4F525F52 
+ 3334      4553504F 
+ 3335              	.LASF13:
+ 3336 0876 666C6F61 		.ascii	"float\000"
+ 3336      7400
+ 3337              	.LASF41:
+ 3338 087c 4150505F 		.ascii	"APP_EVT_SOFT_RESET_SENT\000"
+ 3338      4556545F 
+ 3338      534F4654 
+ 3338      5F524553 
+ 3338      45545F53 
+ 3339              	.LASF164:
+ 3340 0894 6870645F 		.ascii	"hpd_deinit\000"
+ 3340      6465696E 
+ 3340      697400
+ 3341              	.LASF158:
+ 3342 089f 68775F73 		.ascii	"hw_sln_data\000"
+ 3342      6C6E5F64 
+ 3342      61746100 
+ 3343              	.LASF54:
+ 3344 08ab 4150505F 		.ascii	"APP_EVT_VBUS_SCP_FAULT\000"
+ 3344      4556545F 
+ 3344      56425553 
+ 3344      5F534350 
+ 3344      5F464155 
+ 3345              	.LASF26:
+ 3346 08c2 4150505F 		.ascii	"APP_EVT_EMCA_DETECTED\000"
+ 3346      4556545F 
+ 3346      454D4341 
+ 3346      5F444554 
+ 3346      45435445 
+ 3347              	.LASF174:
+ARM GAS  e:\temp\ccdmNCtc.s 			page 77
+
+
+ 3348 08d8 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3348      43313120 
+ 3348      352E342E 
+ 3348      31203230 
+ 3348      31363036 
+ 3349 090b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 3349      20726576 
+ 3349      6973696F 
+ 3349      6E203233 
+ 3349      37373135 
+ 3350 093e 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 3350      66756E63 
+ 3350      74696F6E 
+ 3350      2D736563 
+ 3350      74696F6E 
+ 3351 0971 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 3351      6F6E7320 
+ 3351      2D666E6F 
+ 3351      2D737472 
+ 3351      6963742D 
+ 3352              	.LASF75:
+ 3353 098e 6576745F 		.ascii	"evt_data\000"
+ 3353      64617461 
+ 3353      00
+ 3354              	.LASF63:
+ 3355 0997 5F426F6F 		.ascii	"_Bool\000"
+ 3355      6C00
+ 3356              	.LASF60:
+ 3357 099d 4150505F 		.ascii	"APP_EVT_ALERT_RECEIVED\000"
+ 3357      4556545F 
+ 3357      414C4552 
+ 3357      545F5245 
+ 3357      43454956 
+ 3358              	.LASF1:
+ 3359 09b4 756E7369 		.ascii	"unsigned char\000"
+ 3359      676E6564 
+ 3359      20636861 
+ 3359      7200
+ 3360              	.LASF22:
+ 3361 09c2 4150505F 		.ascii	"APP_EVT_UNEXPECTED_VOLTAGE_ON_VBUS\000"
+ 3361      4556545F 
+ 3361      554E4558 
+ 3361      50454354 
+ 3361      45445F56 
+ 3362              	.LASF2:
+ 3363 09e5 73686F72 		.ascii	"short int\000"
+ 3363      7420696E 
+ 3363      7400
+ 3364              	.LASF154:
+ 3365 09ef 616C745F 		.ascii	"alt_mode_hw_deinit\000"
+ 3365      6D6F6465 
+ 3365      5F68775F 
+ 3365      6465696E 
+ 3365      697400
+ 3366              	.LASF168:
+ 3367 0a02 6D75785F 		.ascii	"mux_ctrl_set_cfg\000"
+ 3367      6374726C 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 78
+
+
+ 3367      5F736574 
+ 3367      5F636667 
+ 3367      00
+ 3368              	.LASF118:
+ 3369 0a13 4750494F 		.ascii	"GPIO_PORT_4_PIN_1\000"
+ 3369      5F504F52 
+ 3369      545F345F 
+ 3369      50494E5F 
+ 3369      3100
+ 3370              	.LASF119:
+ 3371 0a25 4750494F 		.ascii	"GPIO_PORT_4_PIN_2\000"
+ 3371      5F504F52 
+ 3371      545F345F 
+ 3371      50494E5F 
+ 3371      3200
+ 3372              	.LASF120:
+ 3373 0a37 4750494F 		.ascii	"GPIO_PORT_4_PIN_3\000"
+ 3373      5F504F52 
+ 3373      545F345F 
+ 3373      50494E5F 
+ 3373      3300
+ 3374              	.LASF121:
+ 3375 0a49 4750494F 		.ascii	"GPIO_PORT_4_PIN_4\000"
+ 3375      5F504F52 
+ 3375      545F345F 
+ 3375      50494E5F 
+ 3375      3400
+ 3376              	.LASF122:
+ 3377 0a5b 4750494F 		.ascii	"GPIO_PORT_4_PIN_5\000"
+ 3377      5F504F52 
+ 3377      545F345F 
+ 3377      50494E5F 
+ 3377      3500
+ 3378              	.LASF123:
+ 3379 0a6d 4750494F 		.ascii	"GPIO_PORT_4_PIN_6\000"
+ 3379      5F504F52 
+ 3379      545F345F 
+ 3379      50494E5F 
+ 3379      3600
+ 3380              	.LASF124:
+ 3381 0a7f 4750494F 		.ascii	"GPIO_PORT_4_PIN_7\000"
+ 3381      5F504F52 
+ 3381      545F345F 
+ 3381      50494E5F 
+ 3381      3700
+ 3382              	.LASF133:
+ 3383 0a91 4750494F 		.ascii	"GPIO_PORT_6_PIN_0\000"
+ 3383      5F504F52 
+ 3383      545F365F 
+ 3383      50494E5F 
+ 3383      3000
+ 3384              	.LASF134:
+ 3385 0aa3 4750494F 		.ascii	"GPIO_PORT_6_PIN_1\000"
+ 3385      5F504F52 
+ 3385      545F365F 
+ 3385      50494E5F 
+ 3385      3100
+ARM GAS  e:\temp\ccdmNCtc.s 			page 79
+
+
+ 3386              	.LASF32:
+ 3387 0ab5 4150505F 		.ascii	"APP_EVT_HARD_RESET_RCVD\000"
+ 3387      4556545F 
+ 3387      48415244 
+ 3387      5F524553 
+ 3387      45545F52 
+ 3388              	.LASF169:
+ 3389 0acd 6870695F 		.ascii	"hpi_send_hw_error_event\000"
+ 3389      73656E64 
+ 3389      5F68775F 
+ 3389      6572726F 
+ 3389      725F6576 
+ 3390              	.LASF34:
+ 3391 0ae5 4150505F 		.ascii	"APP_EVT_PKT_RCVD\000"
+ 3391      4556545F 
+ 3391      504B545F 
+ 3391      52435644 
+ 3391      00
+ 3392              	.LASF101:
+ 3393 0af6 4750494F 		.ascii	"GPIO_PORT_2_PIN_0\000"
+ 3393      5F504F52 
+ 3393      545F325F 
+ 3393      50494E5F 
+ 3393      3000
+ 3394              	.LASF38:
+ 3395 0b08 4150505F 		.ascii	"APP_EVT_SENDER_RESPONSE_TIMEOUT\000"
+ 3395      4556545F 
+ 3395      53454E44 
+ 3395      45525F52 
+ 3395      4553504F 
+ 3396              	.LASF12:
+ 3397 0b28 75696E74 		.ascii	"uint32_t\000"
+ 3397      33325F74 
+ 3397      00
+ 3398              	.LASF23:
+ 3399 0b31 4150505F 		.ascii	"APP_EVT_TYPE_C_ERROR_RECOVERY\000"
+ 3399      4556545F 
+ 3399      54595045 
+ 3399      5F435F45 
+ 3399      52524F52 
+ 3400              	.LASF16:
+ 3401 0b4f 6C6F6E67 		.ascii	"long double\000"
+ 3401      20646F75 
+ 3401      626C6500 
+ 3402              	.LASF15:
+ 3403 0b5b 63686172 		.ascii	"char\000"
+ 3403      00
+ 3404              	.LASF53:
+ 3405 0b60 4150505F 		.ascii	"APP_EVT_VBUS_UVP_FAULT\000"
+ 3405      4556545F 
+ 3405      56425553 
+ 3405      5F555650 
+ 3405      5F464155 
+ 3406              	.LASF68:
+ 3407 0b77 4D55585F 		.ascii	"MUX_CONFIG_SS_ONLY\000"
+ 3407      434F4E46 
+ 3407      49475F53 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 80
+
+
+ 3407      535F4F4E 
+ 3407      4C5900
+ 3408              	.LASF31:
+ 3409 0b8a 4150505F 		.ascii	"APP_EVT_RP_CHANGE\000"
+ 3409      4556545F 
+ 3409      52505F43 
+ 3409      48414E47 
+ 3409      4500
+ 3410              	.LASF24:
+ 3411 0b9c 4150505F 		.ascii	"APP_EVT_CONNECT\000"
+ 3411      4556545F 
+ 3411      434F4E4E 
+ 3411      45435400 
+ 3412              	.LASF43:
+ 3413 0bac 4150505F 		.ascii	"APP_EVT_PE_DISABLED\000"
+ 3413      4556545F 
+ 3413      50455F44 
+ 3413      49534142 
+ 3413      4C454400 
+ 3414              	.LASF3:
+ 3415 0bc0 73686F72 		.ascii	"short unsigned int\000"
+ 3415      7420756E 
+ 3415      7369676E 
+ 3415      65642069 
+ 3415      6E7400
+ 3416              	.LASF93:
+ 3417 0bd3 4750494F 		.ascii	"GPIO_PORT_1_PIN_0\000"
+ 3417      5F504F52 
+ 3417      545F315F 
+ 3417      50494E5F 
+ 3417      3000
+ 3418              	.LASF94:
+ 3419 0be5 4750494F 		.ascii	"GPIO_PORT_1_PIN_1\000"
+ 3419      5F504F52 
+ 3419      545F315F 
+ 3419      50494E5F 
+ 3419      3100
+ 3420              	.LASF95:
+ 3421 0bf7 4750494F 		.ascii	"GPIO_PORT_1_PIN_2\000"
+ 3421      5F504F52 
+ 3421      545F315F 
+ 3421      50494E5F 
+ 3421      3200
+ 3422              	.LASF96:
+ 3423 0c09 4750494F 		.ascii	"GPIO_PORT_1_PIN_3\000"
+ 3423      5F504F52 
+ 3423      545F315F 
+ 3423      50494E5F 
+ 3423      3300
+ 3424              	.LASF97:
+ 3425 0c1b 4750494F 		.ascii	"GPIO_PORT_1_PIN_4\000"
+ 3425      5F504F52 
+ 3425      545F315F 
+ 3425      50494E5F 
+ 3425      3400
+ 3426              	.LASF72:
+ 3427 0c2d 4D55585F 		.ascii	"MUX_CONFIG_INIT\000"
+ARM GAS  e:\temp\ccdmNCtc.s 			page 81
+
+
+ 3427      434F4E46 
+ 3427      49475F49 
+ 3427      4E495400 
+ 3428              	.LASF99:
+ 3429 0c3d 4750494F 		.ascii	"GPIO_PORT_1_PIN_6\000"
+ 3429      5F504F52 
+ 3429      545F315F 
+ 3429      50494E5F 
+ 3429      3600
+ 3430              	.LASF100:
+ 3431 0c4f 4750494F 		.ascii	"GPIO_PORT_1_PIN_7\000"
+ 3431      5F504F52 
+ 3431      545F315F 
+ 3431      50494E5F 
+ 3431      3700
+ 3432              	.LASF150:
+ 3433 0c61 6576616C 		.ascii	"eval_app_alt_hw_cmd\000"
+ 3433      5F617070 
+ 3433      5F616C74 
+ 3433      5F68775F 
+ 3433      636D6400 
+ 3434              	.LASF89:
+ 3435 0c75 4750494F 		.ascii	"GPIO_PORT_0_PIN_4\000"
+ 3435      5F504F52 
+ 3435      545F305F 
+ 3435      50494E5F 
+ 3435      3400
+ 3436              	.LASF57:
+ 3437 0c87 4150505F 		.ascii	"APP_EVT_TYPEC_ATTACH\000"
+ 3437      4556545F 
+ 3437      54595045 
+ 3437      435F4154 
+ 3437      54414348 
+ 3438              	.LASF91:
+ 3439 0c9c 4750494F 		.ascii	"GPIO_PORT_0_PIN_6\000"
+ 3439      5F504F52 
+ 3439      545F305F 
+ 3439      50494E5F 
+ 3439      3600
+ 3440              	.LASF128:
+ 3441 0cae 4750494F 		.ascii	"GPIO_PORT_5_PIN_3\000"
+ 3441      5F504F52 
+ 3441      545F355F 
+ 3441      50494E5F 
+ 3441      3300
+ 3442              	.LASF45:
+ 3443 0cc0 4150505F 		.ascii	"APP_EVT_VBUS_OVP_FAULT\000"
+ 3443      4556545F 
+ 3443      56425553 
+ 3443      5F4F5650 
+ 3443      5F464155 
+ 3444              	.LASF152:
+ 3445 0cd7 636D645F 		.ascii	"cmd_info\000"
+ 3445      696E666F 
+ 3445      00
+ 3446              	.LASF177:
+ 3447 0ce0 414C545F 		.ascii	"ALT_MODE_HW_EVT\000"
+ARM GAS  e:\temp\ccdmNCtc.s 			page 82
+
+
+ 3447      4D4F4445 
+ 3447      5F48575F 
+ 3447      45565400 
+ 3448              	.LASF21:
+ 3449 0cf0 706F7274 		.ascii	"port_type_t\000"
+ 3449      5F747970 
+ 3449      655F7400 
+ 3450              	.LASF30:
+ 3451 0cfc 4150505F 		.ascii	"APP_EVT_BB\000"
+ 3451      4556545F 
+ 3451      424200
+ 3452              	.LASF11:
+ 3453 0d07 75696E74 		.ascii	"uint8_t\000"
+ 3453      385F7400 
+ 3454              	.LASF77:
+ 3455 0d0f 64617461 		.ascii	"data_role\000"
+ 3455      5F726F6C 
+ 3455      6500
+ 3456              	.LASF36:
+ 3457 0d19 4150505F 		.ascii	"APP_EVT_DR_SWAP_COMPLETE\000"
+ 3457      4556545F 
+ 3457      44525F53 
+ 3457      5741505F 
+ 3457      434F4D50 
+ 3458              	.LASF178:
+ 3459 0d32 64705F73 		.ascii	"dp_src_hpd_cbk\000"
+ 3459      72635F68 
+ 3459      70645F63 
+ 3459      626B00
+ 3460              	.LASF172:
+ 3461 0d41 6870645F 		.ascii	"hpd_sleep_entry\000"
+ 3461      736C6565 
+ 3461      705F656E 
+ 3461      74727900 
+ 3462              	.LASF66:
+ 3463 0d51 4D55585F 		.ascii	"MUX_CONFIG_ISOLATE\000"
+ 3463      434F4E46 
+ 3463      49475F49 
+ 3463      534F4C41 
+ 3463      544500
+ 3464              	.LASF159:
+ 3465 0d64 676C5F68 		.ascii	"gl_hw_cmd_cbk\000"
+ 3465      775F636D 
+ 3465      645F6362 
+ 3465      6B00
+ 3466              	.LASF153:
+ 3467 0d72 616C745F 		.ascii	"alt_mode_hw_set_cbk\000"
+ 3467      6D6F6465 
+ 3467      5F68775F 
+ 3467      7365745F 
+ 3467      63626B00 
+ 3468              	.LASF175:
+ 3469 0d86 2E2E5C73 		.ascii	"..\\src\\app\\alt_mode\\alt_mode_hw.c\000"
+ 3469      72635C61 
+ 3469      70705C61 
+ 3469      6C745F6D 
+ 3469      6F64655C 
+ARM GAS  e:\temp\ccdmNCtc.s 			page 83
+
+
+ 3470              	.LASF144:
+ 3471 0da8 6765745F 		.ascii	"get_mux_state\000"
+ 3471      6D75785F 
+ 3471      73746174 
+ 3471      6500
+ 3472              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

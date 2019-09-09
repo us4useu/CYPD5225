@@ -1,0 +1,2358 @@
+ARM GAS  e:\temp\ccdQoWUD.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"vdm_task_mngr.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.section	.gnu.lto_.profile.62404518,"",%progbits
+  19 0000 789C6361 		.ascii	"x\234ca`d`a`\000\222\\\034\000\000\206\000\035"
+  19      60646061 
+  19      6000925C 
+  19      1C000086 
+  19      001D
+  20              		.text
+  21              		.section	.gnu.lto_.icf.62404518,"",%progbits
+  22 0000 789C6361 		.ascii	"x\234ca`d\000\001>\006\004`b\330t\344\360J.F0\311\000"
+  22      60640001 
+  22      3E060460 
+  22      62D874E4 
+  22      F04A2E46 
+  23 0017 002E1705 		.ascii	"\000.\027\005\357"
+  23      EF
+  24              		.text
+  25              		.section	.gnu.lto_.jmpfuncs.62404518,"",%progbits
+  26 0000 789C6361 		.ascii	"x\234ca`d\000\001\001\006\004`b`bddb\250g\204P\014\000"
+  26      60640001 
+  26      01060460 
+  26      62606264 
+  26      6462A867 
+  27 0018 089F0123 		.ascii	"\010\237\001#"
+  28              		.text
+  29              		.section	.gnu.lto_.inline.62404518,"",%progbits
+  30 0000 789C6361 		.ascii	"x\234ca`d\000\201z\006\004`b``cedfT\310\372\313\304"
+  30      60640081 
+  30      7A060460 
+  30      62606063 
+  30      65646654 
+  31 0018 38ADF5D0 		.ascii	"8\255\365\320y\366/L\255\314@\205\214\313\031e\030\030"
+  31      79F62F4C 
+  31      ADCC4085 
+  31      8CCB1965 
+  31      1818
+  32 002a 15B2A134 		.ascii	"\025\262\2414P'+P9\333\002y&\006\226\005\362\002\014"
+  32      50272B50 
+  32      39DB0279 
+  32      26069605 
+  32      F2020C
+ARM GAS  e:\temp\ccdQoWUD.s 			page 2
+
+
+  33 003d 8C4DEC1C 		.ascii	"\214M\354\034L`\022d\014#\314\024\322\2641\000\000\032"
+  33      4C601264 
+  33      0C23CC14 
+  33      D2B43100 
+  33      001A
+  34 004f 3E10E8   		.ascii	">\020\350"
+  35              		.text
+  36              		.section	.gnu.lto_.pureconst.62404518,"",%progbits
+  37 0000 789C6361 		.ascii	"x\234ca`d`e```b\220b\224\002\000\000\355\000B"
+  37      60646065 
+  37      60606062 
+  37      90629402 
+  37      0000ED00 
+  38              		.text
+  39              		.section	.gnu.lto_vdm_get_disc_id_resp.62404518,"",%progbits
+  40 0000 789C5551 		.ascii	"x\234UQAk\023Q\020\236\357\315\266I\323*\036z\314\241"
+  40      416B1351 
+  40      109EEFCD 
+  40      B649D32A 
+  40      1E7ACCA1 
+  41 0014 076B2848 		.ascii	"\007k(H\020D\004\177\201\347\236#!\264\301\203M\273"
+  41      1044047F 
+  41      81E79E23 
+  41      21B4C183 
+  41      4DBB
+  42 0026 6E82D7BE 		.ascii	"n\202\327\276l\022\260=\210\012\026\232*\021\244\326"
+  42      6C12B03D 
+  42      880A169A 
+  42      2A11A4D6 
+  43 0036 AAB54915 		.ascii	"\252\265I\025\361\340!(\250\210F-\236\004\241\246(R"
+  43      F1E02128 
+  43      A888462D 
+  43      9E04A1A6 
+  43      2852
+  44 0048 0F76A12A 		.ascii	"\017v\241*\0364\316l[\321\201\307\274\231\375\276\371"
+  44      1E34CE6C 
+  44      5BD181C7 
+  44      BC99FDBE 
+  44      F9
+  45 0059 BE37EB10 		.ascii	"\2767\353\020HcC\3221\311G\344\240\213`\316\267\210"
+  45      486343D2 
+  45      31C947E4 
+  45      A08B60CE 
+  45      B788
+  46 006b 8A51639C 		.ascii	"\212Qc\234\357\021\2621\256>!\262}\014g\273\357\000"
+  46      EF11B231 
+  46      AE3E21B2 
+  46      7D0C67BB 
+  46      EF00
+  47 007d 7AB151D0 		.ascii	"z\261Q\320\244a\007\223\370f~\031\274)\327/\363\226"
+  47      A4610793 
+  47      F8667E19 
+  47      BC29D72F 
+  47      F396
+  48 008f A930C191 		.ascii	"\2510\301\2212xY]\337\253%0 \345\234]\235\212\014-X"
+  48      3278595D 
+  48      DFAB2530 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 3
+
+
+  48      20E59C5D 
+  48      9D8A0C2D 
+  49 00a4 EBDBB58F 		.ascii	"\353\333\265\217\355\376\352\312k\333SaC\035C\270\201"
+  49      EDFEEACA 
+  49      6BDB5361 
+  49      431D43B8 
+  49      81
+  50 00b5 38161057 		.ascii	"8\026\020W\365E\014\011\370q\253\363 \306\011\220\334"
+  50      F5450C09 
+  50      F871ABF3 
+  50      20C60990 
+  50      DC
+  51 00c6 A71E7EFD 		.ascii	"\247\036~\375\331\233\230W\242\255\235\260\\a\306M\260"
+  51      D99B9857 
+  51      A2AD9DB0 
+  51      5C61C64D 
+  51      B0
+  52 00d7 F20EC771 		.ascii	"\362\016\307q(N\322 \334BB\260\253K\305\343|0\244\255"
+  52      284ED220 
+  52      DC4242B0 
+  52      AB4BC5E3 
+  52      7C30A4AD 
+  53 00eb DDBB7A3F 		.ascii	"\335\273z?\272C{\237\015\265p{\233\266+\247\362XBB\341"
+  53      BA437B9F 
+  53      0DB5707B 
+  53      9BB62BA7 
+  53      F2584242 
+  54 0100 E7DE4EB7 		.ascii	"\347\336N\267\231\217\206\324y[\237\356\031\274\246"
+  54      998F86D4 
+  54      795B9FEE 
+  54      19BCA6
+  55 010f D4E6DCF5 		.ascii	"\324\346\334\365\323\027J\366\231u\224\177\347\177\276"
+  55      D3174AF6 
+  55      9975947F 
+  55      E77FBE
+  56 011e 86C0DB8D 		.ascii	"\206\300\333\215\337\227\366t\227\255\304\000\2261\250"
+  56      DF97F674 
+  56      97ADC400 
+  56      9631A8
+  57 012d 4F9297D4 		.ascii	"O\222\227\324\321\255\333]\036n\332N\247d\233\263\007"
+  57      D1ADDB5D 
+  57      1E6EDA4E 
+  57      A7649BB3 
+  57      07
+  58 013e 2E7EFED2 		.ascii	".~\376\322\337e\020J\322\246\200t\213\2011\232\271\015"
+  58      DF65104A 
+  58      D2A68074 
+  58      8B81319A 
+  58      B90D
+  59 0150 5FC40284 		.ascii	"_\304\002\204<\231\"\203g*\217^Et\203\006\204\206\010"
+  59      3C992283 
+  59      672A8F5E 
+  59      45748306 
+  59      848608
+  60 0163 7E40F95D 		.ascii	"~@\371]i\375\205\317\012*I\273\261\343\"0L\362\223\370"
+  60      69FD85CF 
+  60      0A2A49BB 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 4
+
+
+  60      B1E32230 
+  60      4CF293F8 
+  61 0177 13FCAD7A 		.ascii	"\023\374\255zkqX\277\313\200\037O\237\237\355\253\341"
+  61      6B7158BF 
+  61      CB801F4F 
+  61      9F9FEDAB 
+  61      E1
+  62 0188 4A51BDF5 		.ascii	"JQ\275\365\312\236\376r\260\202\032\376\225`\221\270"
+  62      CA9EFE72 
+  62      B0821AFE 
+  62      956091B8 
+  63 0198 1B4E0B8C 		.ascii	"\033N\013\214\023\032\332\200\277\217v\0256\305\202"
+  63      131ADA80 
+  63      BF8F7615 
+  63      36C582
+  64 01a7 34C5F3FE 		.ascii	"4\305\363\376d2\225\367FR\031\327Me\306\012\351\334"
+  64      643295F7 
+  64      465219D7 
+  64      4D65C60A 
+  64      E9DC
+  65 01b9 C4683675 		.ascii	"\304h6uf4\227.d\362\247\322\271\361\223^r\204\034w\302"
+  65      6634972E 
+  65      64F2A7D2 
+  65      B9F1935E 
+  65      72841C77 
+  66 01ce 2BC4BC6C 		.ascii	"+\304\274l\336M\217e\307\323.\273\005\357\017\233\004"
+  66      DE4D8F65 
+  66      C7D32EBB 
+  66      05EF0F9B 
+  66      04
+  67 01df BE36     		.ascii	"\2766"
+  68              		.text
+  69              		.section	.gnu.lto_vdm_get_disc_svid_resp.62404518,"",%progbits
+  70 0000 789C5551 		.ascii	"x\234UQAk\023Q\020\236\357\315\266I\323*\036z\314\241"
+  70      416B1351 
+  70      109EEFCD 
+  70      B649D32A 
+  70      1E7ACCA1 
+  71 0014 076B2848 		.ascii	"\007k(H\020D\004\177\201\347\236#Kh\203\007\233vM\202"
+  71      1044047F 
+  71      81E79E23 
+  71      4B688307 
+  71      9B764D82 
+  72 0028 D7BE6C12 		.ascii	"\327\276l\022\260=\210\012\366\020\225\012\022\333\252"
+  72      B03D880A 
+  72      F610950A 
+  72      12DBAA
+  73 0037 B5492BE2 		.ascii	"\265I+\342\301CPP\021Z\265x\362T#z\350A\273\320\032"
+  73      C1435050 
+  73      115AB578 
+  73      F254237A 
+  73      E841BBD0 
+  74 004c 4434CE6C 		.ascii	"D4\316l[\251\003\217y3\373}\363}o\326!\220\306\246\244"
+  74      5BA9038F 
+  74      7933FB7D 
+  74      F37D6FD6 
+  74      2190C6A6 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 5
+
+
+  75 0061 33924FC9 		.ascii	"3\222O\311A\027\301\\]#*F\215q~D\310\306\270\372\222"
+  75      4117C15C 
+  75      5D232A46 
+  75      8D717E44 
+  75      C8C6B8FA 
+  76 0076 C8F6319C 		.ascii	"\310\3661\234\335\276\003\350\305FA\223\206\035Lb\307"
+  76      DDBE03E8 
+  76      C5464193 
+  76      861D4C62 
+  76      C7
+  77 0087 FC36785F 		.ascii	"\3746x_\256\337\342mSa\202#e\260Z\375|XK`@\312\233v"
+  77      AEDFE26D 
+  77      53618223 
+  77      65B05AFD 
+  77      7C584B60 
+  78 009f 7D2A3234 		.ascii	"}*24g\255o7j\337\372\253\313\357lO\205\015u\014a\036"
+  78      67AD6F37 
+  78      6ADFFAAB 
+  78      CBEF6C4F 
+  78      850D750C 
+  79 00b5 71CC21AE 		.ascii	"q\314!\256\352\013\030\022\360\213\265\316\323\030'"
+  79      EA0B1812 
+  79      F08BB5CE 
+  79      D31827
+  80 00c4 40729F7A 		.ascii	"@r\237z\366\375go\242\246D\273r\316r\205\031\367\301"
+  80      F6FD676F 
+  80      A2A644BB 
+  80      72CE7285 
+  80      19F7C1
+  81 00d7 CA3B19C7 		.ascii	"\312;\031\307\2118I\203\360\000\011\301\256/\026\317"
+  81      89384983 
+  81      F00009C1 
+  81      AE2F16CF 
+  82 00e7 F2F190B6 		.ascii	"\362\361\220\266\361\370\316\223\350\036-\310\204Zx"
+  82      F1F8CE93 
+  82      E81E2DC8 
+  82      845A78
+  83 00f6 B84BDB97 		.ascii	"\270K\333\227Sy,\"\241\360+\037\246[\314\247Cj\315\326"
+  83      53792C22 
+  83      A1F02B1F 
+  83      A65BCCA7 
+  83      436ACDD6 
+  84 010a A77B06EF 		.ascii	"\247{\006\357*\265\331\276w\361Z\311\276\266\216\362"
+  84      2AB5D9BE 
+  84      77F15AC9 
+  84      BEB68EF2 
+  85 011a 1FFDCFD7 		.ascii	"\037\375\317\327\020x\253\361\347\306\241\356\262\225"
+  85      1078ABF1 
+  85      E7C6A1EE 
+  85      B295
+  86 0128 18C01206 		.ascii	"\030\300\022\006\365I\362\222:\272u\273K\303M\333\351"
+  86      F549F292 
+  86      3ABA75BB 
+  86      4BC34DDB 
+  86      E9
+  87 0139 946C73E7 		.ascii	"\224ls\347\330\365\371v\177\227A(I[\002\322-\006\306"
+  87      D8F5F976 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 6
+
+
+  87      7F974128 
+  87      495B02D2 
+  87      2D06C6
+  88 014c 68E6167C 		.ascii	"h\346\026|\021\013\020\362d\212\014\236\251<\177\033"
+  88      110B10F2 
+  88      648A0C9E 
+  88      A93C7F1B 
+  89 015c D10D1A10 		.ascii	"\321\015\032\020\032\"\370\011\345\217\245_\253>+\250"
+  89      1A22F809 
+  89      E58FA55F 
+  89      AB3E2BA8 
+  90 016c 24EDC69E 		.ascii	"$\355\306\236\213\3000\311O\342\257\360\267\353_\026"
+  90      8BC030C9 
+  90      4FE2AFF0 
+  90      B7EB5F16 
+  91 017c 86F5BB0C 		.ascii	"\206\365\273\014h\277zs\271o\026\267\213\352\255W\366"
+  91      68BF7A73 
+  91      B96F16B7 
+  91      8BEAAD57 
+  91      F6
+  92 018d F48F8365 		.ascii	"\364\217\203e\314\342\240\004\213\304J8-0Nhh\023\376"
+  92      CCE2A004 
+  92      8BC44A38 
+  92      2D304E68 
+  92      6813FE
+  93 01a0 11DA57D8 		.ascii	"\021\332W\330\022\013\322\024\317G\223\311T>7\222J{"
+  93      120BD214 
+  93      CF4793C9 
+  93      543E3792 
+  93      4A7B
+  94 01b2 5E2A3D56 		.ascii	"^*=Vp\263\023\243\231\324\245\321\254[H\347/\270\331"
+  94      70B313A3 
+  94      99D4A5D1 
+  94      AC5B48E7 
+  94      2FB8D9
+  95 01c5 F1F3B9E4 		.ascii	"\361\363\271\344\0109\336D\256\020\313e\362\236;\226"
+  95      0839DE44 
+  95      AE10CB65 
+  95      F29E3B96 
+  96 01d5 19773DF6 		.ascii	"\031w=\366\012\271\277\204s\277:"
+  96      0AB9BF84 
+  96      73BF3A
+  97              		.text
+  98              		.section	.gnu.lto_.symbol_nodes.62404518,"",%progbits
+  99 0000 789C6361 		.ascii	"x\234ca`dPa\000\002&\305z\006\206\011\347\030\030\200"
+  99      60645061 
+  99      000226C5 
+  99      7A068609 
+  99      E7181880 
+ 100 0014 D4AE0645 		.ascii	"\324\256\006E\240\200R=#\212\000\003\000\226h\007\340"
+ 100      A080523D 
+ 100      238A0003 
+ 100      00966807 
+ 100      E0
+ 101              		.text
+ 102              		.section	.gnu.lto_.refs.62404518,"",%progbits
+ 103 0000 789C6361 		.ascii	"x\234ca`\004B \000\000\0009\000\007"
+ARM GAS  e:\temp\ccdQoWUD.s 			page 7
+
+
+ 103      60044220 
+ 103      00000039 
+ 103      0007
+ 104              		.text
+ 105              		.section	.gnu.lto_.decls.62404518,"",%progbits
+ 106 0000 789CB552 		.ascii	"x\234\265RKHTQ\030>\377\271\227\324\361\211H\270\230"
+ 106      4B485451 
+ 106      183EFFB9 
+ 106      97D4F189 
+ 106      48B898
+ 107 0013 C5202DDC 		.ascii	"\305 -\334x\3112\210\210 \242\307\252]\255.\\\256wn"
+ 107      78C93288 
+ 107      8820A2C7 
+ 107      AA5DAD2E 
+ 107      5CAE776E 
+ 108 0027 3AE43C98 		.ascii	":\344<\230{Gpwp\012D\010]D\231%\015\0056\223o\2354\037"
+ 108      7B477077 
+ 108      700A4408 
+ 108      5D449925 
+ 108      0D053693 
+ 109 003f C410BA2A 		.ascii	"\304\020\272*\027\2723\027\012\271\353\201\246 \022"
+ 109      17BA3317 
+ 109      0AB9EB81 
+ 109      A62012
+ 110 004e 36FDE7DC 		.ascii	"6\375\347\334\353\214\226\320\252\237\373\237s\376\327"
+ 110      EB8C96D0 
+ 110      AA9FFB9F 
+ 110      73FED7
+ 111 005d F7FDF73F 		.ascii	"\367\375\367?G&@\270\\\224\010\271\204\307\036<gQ\320"
+ 111      472640B8 
+ 111      5C9408B9 
+ 111      84C71E3C 
+ 111      6751D0
+ 112 0070 24B75179 		.ascii	"$\267Qyt\2348BQgP\347\310\337\302\3752j%j\225[3\346"
+ 112      749C3842 
+ 112      516750E7 
+ 112      C8DFC2FD 
+ 112      326A256A 
+ 113 0088 C6C08DFF 		.ascii	"\306\300\215\377)s\377\2509\216g\237\302\322\275\321"
+ 113      2973FFA8 
+ 113      398E679F 
+ 113      C2D2BDD1 
+ 114 0098 67D20E85 		.ascii	"g\322\016\205J\017\310hn-\366~.C\263\312\003>4G\356"
+ 114      4A0FC868 
+ 114      6E2DF67E 
+ 114      2E43B3CA 
+ 114      033E3447 
+ 115 00ad 6FA40AD1 		.ascii	"o\244\012\321\364z \013\334\376:\275W\352\330\274xm"
+ 115      F47A200B 
+ 115      DCFE3ABD 
+ 115      57EAD8BC 
+ 115      786D
+ 116 00bf 2F794D19 		.ascii	"/yM\031d(\335\214Q\232GMg\266\207d\251\230'\321\245"
+ 116      6428DD8C 
+ 116      519A474D 
+ 116      67B68764 
+ 116      A99827D1 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 8
+
+
+ 117 00d4 89958522 		.ascii	"\211\225\205\"\250\365\364\363\274\365\325\235\313q"
+ 117      A8F5F4F3 
+ 117      BCF5D59D 
+ 117      CB71
+ 118 00e2 C60086C1 		.ascii	"\306\000\206\301\003\203 \301\000(\274A\257\007\327"
+ 118      038320C1 
+ 118      0028BC41 
+ 118      AF07D7
+ 119 00f1 0EC6DAD9 		.ascii	"\016\306\332\331\346\013v\242\232\300Y/\234\366\022"
+ 119      E60B76A2 
+ 119      9AC0592F 
+ 119      9CF612
+ 120 0100 18825A4E 		.ascii	"\030\202ZN\306\263\3405x!\005^\216\237z\236\234/\225"
+ 120      C6B3E035 
+ 120      7821055E 
+ 120      8E9F7A9E 
+ 120      9C2F95
+ 121 0113 E22008BE 		.ascii	"\342 \010\276=\374\322!\345\010\246:\275\003\214U\300"
+ 121      3DFCD221 
+ 121      E508A63A 
+ 121      BD038C55 
+ 121      C0
+ 122 0124 18128CE4 		.ascii	"\030\022\214\344\011\220\357x\206\321\343\031\262\275"
+ 122      0990EF78 
+ 122      86D1E319 
+ 122      B2BD
+ 123 0132 5B3D0525 		.ascii	"[=\005%\235<\277;\316*o\010\274$\306_a\234\3008\224"
+ 123      9D3CBF3B 
+ 123      CE2A6F08 
+ 123      BC24C65F 
+ 123      619CC038 
+ 124 0147 88C1E2CE 		.ascii	"\210\301\342\316\223\373\206\223E\253\260\002\024\334"
+ 124      93FB8693 
+ 124      45ABB002 
+ 124      14DC
+ 125 0155 1740009C 		.ascii	"\027@\000\234\025\204\022G\205\211\007*V\222s\3456\302"
+ 125      15841247 
+ 125      8589072A 
+ 125      569273E5 
+ 125      36C2
+ 126 0167 57E2E40B 		.ascii	"W\342\344\013_\036L|\007{\366@\004H\036\035\334\"\310"
+ 126      5F1E4C7C 
+ 126      077BF640 
+ 126      04481E1D 
+ 126      DC22C8
+ 127 017a 75E05439 		.ascii	"u\340T9q\352\246\021\007\234\346\013\016\3419\355\036"
+ 127      71EAA611 
+ 127      079CE60B 
+ 127      0EE139ED 
+ 127      1E
+ 128 018b EA098EFE 		.ascii	"\352\011\216\376\023\034\334\361\273O\017\342\262\364"
+ 128      131CDCF1 
+ 128      BB4F0FE2 
+ 128      B2F4
+ 129 0199 5DDC016C 		.ascii	"]\334\001l\374L\316\227\313\324\231\0104\312\3347\224"
+ 129      FC4CCE97 
+ 129      CBD49908 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 9
+
+
+ 129      34CADC37 
+ 129      94
+ 130 01aa 48BF2C13 		.ascii	"H\277,\023>>\2737 \234\013\331\335L\271\363\336(\232"
+ 130      3E3EBB37 
+ 130      209C0BD9 
+ 130      DD4CB9F3 
+ 130      DE289A
+ 131 01bd CB9B1FFB 		.ascii	"\313\233\037\373\212\235\367V\301\337\315v\327/\251"
+ 131      8A9DF756 
+ 131      C1DFCD76 
+ 131      D72FA9
+ 132 01cc FA11BF48 		.ascii	"\372\021\277H\026g>*\320\336\342\324\247\304\324\247"
+ 132      16673E2A 
+ 132      D0DEE2D4 
+ 132      A7C4D4A7 
+ 133 01dc A11AD749 		.ascii	"\241\032\327I\220\235\016z\272\026\237\226\327$Xb\224"
+ 133      909D0E7A 
+ 133      BA169F96 
+ 133      D7245862 
+ 133      94
+ 134 01ed AD3F5EBE 		.ascii	"\255?^\276\232Jo0\346\221y\026\244\3637\217G\276M\300"
+ 134      9A4A6F30 
+ 134      E6917916 
+ 134      A4F3378F 
+ 134      47BE4DC0 
+ 135 0201 2AFEC80C 		.ascii	"*\376\310\014\324`\341\356\344\342\2072)IE\353\373\211"
+ 135      D460E1EE 
+ 135      E4E28732 
+ 135      294945EB 
+ 135      FB89
+ 136 0213 F7E3C50E 		.ascii	"\367\343\305\016J\346G?<a\231vd\247\002f6\0173{\030"
+ 136      4AE6473F 
+ 136      3C619976 
+ 136      64A70266 
+ 136      360F337B 
+ 137 0228 660E6A48 		.ascii	"f\016jH\341\365\233\267|W\352\353I\221\246\305\002!"
+ 137      E1F59BB7 
+ 137      7C57EAEB 
+ 137      4991A6C5 
+ 137      0221
+ 138 023a FBBC6607 		.ascii	"\373\274f\007\315\013\252\321\026\211\232\226\245F\254"
+ 138      CD0BAAD1 
+ 138      16899A96 
+ 138      A546AC
+ 139 0249 B0E133A2 		.ascii	"\260\3413\242\246n\207\243j\203r\346\250#\020\214\204"
+ 139      A66E87A3 
+ 139      6A8372E6 
+ 139      A823108C 
+ 139      84
+ 140 025a A3B6DA14 		.ascii	"\243\266\332\024\212\251z4\250\236S\032\224z~\252\013"
+ 140      8AA97A34 
+ 140      A89E531A 
+ 140      947A7EAA 
+ 140      0B
+ 141 026b 8543669D 		.ascii	"\205Cf\235\2517\006\324@\310h\211\371M5\250\033\315"
+ 141      A93706D4 
+ 141      40C86889 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 10
+
+
+ 141      F94D35A8 
+ 141      1BCD
+ 142 027d 8190A96A 		.ascii	"\201\220\251j~\363\216\036k\2615\273-bZJ3)pY\033\377"
+ 142      7EF38E1E 
+ 142      6BB135BB 
+ 142      2D625A4A 
+ 142      33297059 
+ 143 0293 07ABD566 		.ascii	"\007\253\325f\251\232e\373\221\002\251\252Z\375A\255"
+ 143      A99A65FB 
+ 143      9102A9AA 
+ 143      5AFD41AD 
+ 144 02a3 C9B4357F 		.ascii	"\311\2645\177\3002\264\200_C\262\310)EQ\255\250\241"
+ 144      C032B480 
+ 144      5F43B2C8 
+ 144      294551AD 
+ 144      A8A1
+ 145 02b5 EA9188AA 		.ascii	"\352\221\210\252c_\3010\326\361D[\267\356j\301PST1\310"
+ 145      635FC130 
+ 145      D6F1445B 
+ 145      B7EE6AC1 
+ 145      50535431 
+ 146 02ca C9239556 		.ascii	"\311#\225V\253[\373\033\203}L\312"
+ 146      AB5BFB1B 
+ 146      837D4CCA 
+ 147              		.text
+ 148              		.section	.gnu.lto_.symtab.62404518,"",%progbits
+ 149 0000 76646D5F 		.ascii	"vdm_get_disc_id_resp\000"
+ 149      6765745F 
+ 149      64697363 
+ 149      5F69645F 
+ 149      72657370 
+ 150 0015 00       		.ascii	"\000"
+ 151 0016 00       		.ascii	"\000"
+ 152 0017 00       		.ascii	"\000"
+ 153 0018 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 153      00000000 
+ 154 0020 BA000000 		.ascii	"\272\000\000\000"
+ 155 0024 76646D5F 		.ascii	"vdm_get_disc_svid_resp\000"
+ 155      6765745F 
+ 155      64697363 
+ 155      5F737669 
+ 155      645F7265 
+ 156 003b 00       		.ascii	"\000"
+ 157 003c 00       		.ascii	"\000"
+ 158 003d 00       		.ascii	"\000"
+ 159 003e 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 159      00000000 
+ 160 0046 BC000000 		.ascii	"\274\000\000\000"
+ 161              		.text
+ 162              		.section	.gnu.lto_.opts,"",%progbits
+ 163 0000 272D666D 		.ascii	"'-fmath-errno' '-fsigned-zeros' '-ftrapping-math' '"
+ 163      6174682D 
+ 163      6572726E 
+ 163      6F272027 
+ 163      2D667369 
+ 164 0033 2D666E6F 		.ascii	"-fno-trapv' '-fno-openmp' '-fno-openacc' '-mcpu=cor"
+ 164      2D747261 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 11
+
+
+ 164      70762720 
+ 164      272D666E 
+ 164      6F2D6F70 
+ 165 0066 7465782D 		.ascii	"tex-m0' '-mthumb' '-g' '-Os' '-Werror' '-ffunction-"
+ 165      6D302720 
+ 165      272D6D74 
+ 165      68756D62 
+ 165      2720272D 
+ 166 0099 73656374 		.ascii	"sections' '-ffat-lto-objects' '-finline-functions' "
+ 166      696F6E73 
+ 166      2720272D 
+ 166      66666174 
+ 166      2D6C746F 
+ 167 00cc 272D666C 		.ascii	"'-flto' '-fno-strict-aliasing'\000"
+ 167      746F2720 
+ 167      272D666E 
+ 167      6F2D7374 
+ 167      72696374 
+ 168              		.text
+ 169              		.cfi_sections	.debug_frame
+ 170              		.section	.text.vdm_get_disc_id_resp,"ax",%progbits
+ 171              		.align	1
+ 172              		.global	vdm_get_disc_id_resp
+ 173              		.code	16
+ 174              		.thumb_func
+ 175              		.type	vdm_get_disc_id_resp, %function
+ 176              	vdm_get_disc_id_resp:
+ 177              	.LFB35:
+ 178              		.cfi_startproc
+ 179              		@ args = 0, pretend = 0, frame = 0
+ 180              		@ frame_needed = 0, uses_anonymous_args = 0
+ 181              		@ link register save eliminated.
+ 182 0000 0029     		cmp	r1, #0
+ 183 0002 01D0     		beq	.L2
+ 184 0004 0023     		movs	r3, #0
+ 185 0006 0B70     		strb	r3, [r1]
+ 186              	.L2:
+ 187 0008 0020     		movs	r0, #0
+ 188              		@ sp needed
+ 189 000a 7047     		bx	lr
+ 190              		.cfi_endproc
+ 191              	.LFE35:
+ 192              		.size	vdm_get_disc_id_resp, .-vdm_get_disc_id_resp
+ 193              		.section	.text.vdm_get_disc_svid_resp,"ax",%progbits
+ 194              		.align	1
+ 195              		.global	vdm_get_disc_svid_resp
+ 196              		.code	16
+ 197              		.thumb_func
+ 198              		.type	vdm_get_disc_svid_resp, %function
+ 199              	vdm_get_disc_svid_resp:
+ 200              	.LFB33:
+ 201              		.file 1 "..\\src\\app\\alt_mode\\vdm_task_mngr.c"
+   1:..\src\app\alt_mode/vdm_task_mngr.c **** /**
+   2:..\src\app\alt_mode/vdm_task_mngr.c ****  * @file vdm_task_mngr.c
+   3:..\src\app\alt_mode/vdm_task_mngr.c ****  *
+   4:..\src\app\alt_mode/vdm_task_mngr.c ****  * @brief @{VDM task manager source file.@}
+   5:..\src\app\alt_mode/vdm_task_mngr.c ****  *
+ARM GAS  e:\temp\ccdQoWUD.s 			page 12
+
+
+   6:..\src\app\alt_mode/vdm_task_mngr.c ****  *******************************************************************************
+   7:..\src\app\alt_mode/vdm_task_mngr.c ****  *
+   8:..\src\app\alt_mode/vdm_task_mngr.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+   9:..\src\app\alt_mode/vdm_task_mngr.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  10:..\src\app\alt_mode/vdm_task_mngr.c ****  *
+  11:..\src\app\alt_mode/vdm_task_mngr.c ****  * This software, including source code, documentation and related materials
+  12:..\src\app\alt_mode/vdm_task_mngr.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  13:..\src\app\alt_mode/vdm_task_mngr.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  14:..\src\app\alt_mode/vdm_task_mngr.c ****  * protection (United States and foreign), United States copyright laws and
+  15:..\src\app\alt_mode/vdm_task_mngr.c ****  * international treaty provisions. Therefore, you may use this Software only
+  16:..\src\app\alt_mode/vdm_task_mngr.c ****  * as provided in the license agreement accompanying the software package from
+  17:..\src\app\alt_mode/vdm_task_mngr.c ****  * which you obtained this Software (“EULA”).
+  18:..\src\app\alt_mode/vdm_task_mngr.c ****  *
+  19:..\src\app\alt_mode/vdm_task_mngr.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  20:..\src\app\alt_mode/vdm_task_mngr.c ****  * non-transferable license to copy, modify, and compile the Software source
+  21:..\src\app\alt_mode/vdm_task_mngr.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  22:..\src\app\alt_mode/vdm_task_mngr.c ****  * products. Any reproduction, modification, translation, compilation, or
+  23:..\src\app\alt_mode/vdm_task_mngr.c ****  * representation of this Software except as specified above is prohibited
+  24:..\src\app\alt_mode/vdm_task_mngr.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  25:..\src\app\alt_mode/vdm_task_mngr.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  26:..\src\app\alt_mode/vdm_task_mngr.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  27:..\src\app\alt_mode/vdm_task_mngr.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  28:..\src\app\alt_mode/vdm_task_mngr.c ****  * right to make changes to the Software without notice. Cypress does not
+  29:..\src\app\alt_mode/vdm_task_mngr.c ****  * assume any liability arising out of the application or use of the Software
+  30:..\src\app\alt_mode/vdm_task_mngr.c ****  * or any product or circuit described in the Software. Cypress does not
+  31:..\src\app\alt_mode/vdm_task_mngr.c ****  * authorize its products for use in any products where a malfunction or
+  32:..\src\app\alt_mode/vdm_task_mngr.c ****  * failure of the Cypress product may reasonably be expected to result in
+  33:..\src\app\alt_mode/vdm_task_mngr.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  34:..\src\app\alt_mode/vdm_task_mngr.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  35:..\src\app\alt_mode/vdm_task_mngr.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  36:..\src\app\alt_mode/vdm_task_mngr.c ****  * indemnify Cypress against all liability.
+  37:..\src\app\alt_mode/vdm_task_mngr.c ****  */
+  38:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  39:..\src\app\alt_mode/vdm_task_mngr.c **** #include <vdm.h>
+  40:..\src\app\alt_mode/vdm_task_mngr.c **** #include <pd.h>
+  41:..\src\app\alt_mode/vdm_task_mngr.c **** #include <dpm.h>
+  42:..\src\app\alt_mode/vdm_task_mngr.c **** #include <timer.h>
+  43:..\src\app\alt_mode/vdm_task_mngr.c **** #include <app.h>
+  44:..\src\app\alt_mode/vdm_task_mngr.c **** #include <alt_mode_hw.h>
+  45:..\src\app\alt_mode/vdm_task_mngr.c **** #include <hpi.h>
+  46:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) || (UFP_ALT_MODE_SUPP))
+  47:..\src\app\alt_mode/vdm_task_mngr.c **** #include <vdm_task_mngr.h>
+  48:..\src\app\alt_mode/vdm_task_mngr.c **** #include <alt_modes_mngr.h>
+  49:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  50:..\src\app\alt_mode/vdm_task_mngr.c **** /**
+  51:..\src\app\alt_mode/vdm_task_mngr.c ****  * @typedef vdm_task_status_t
+  52:..\src\app\alt_mode/vdm_task_mngr.c ****  * @brief struct to hold vdm manager status
+  53:..\src\app\alt_mode/vdm_task_mngr.c ****  */
+  54:..\src\app\alt_mode/vdm_task_mngr.c **** typedef struct
+  55:..\src\app\alt_mode/vdm_task_mngr.c **** {
+  56:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Current VDM manager state */
+  57:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_task_t      vdm_task;
+  58:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Current VDM manager event */
+  59:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_evt_t       vdm_evt;
+  60:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Info about cable, device/AMA */
+  61:..\src\app\alt_mode/vdm_task_mngr.c ****     atch_tgt_info_t atch_tgt;
+  62:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Struct with received/sent VDM info */
+ARM GAS  e:\temp\ccdQoWUD.s 			page 13
+
+
+  63:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t  vdm_msg;
+  64:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Sent/received VDM retry counters */
+  65:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t         rec_retry_cnt;
+  66:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Holds svid index if we have more than one Disc SVID response */
+  67:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t         svid_idx;
+  68:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Holds count of D_SVID requests sent. */
+  69:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t         dsvid_cnt;
+  70:..\src\app\alt_mode/vdm_task_mngr.c **** }vdm_task_status_t;
+  71:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  72:..\src\app\alt_mode/vdm_task_mngr.c **** #if VDM_RESP_QUERY_SUPPORTED
+  73:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  74:..\src\app\alt_mode/vdm_task_mngr.c **** #define MAX_DISC_ID_RESP_LEN    (MAX_NO_OF_DO)
+  75:..\src\app\alt_mode/vdm_task_mngr.c **** #define MAX_DISC_SVID_RESP_LEN  (18u)
+  76:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  77:..\src\app\alt_mode/vdm_task_mngr.c **** /* Array to store the D_ID response received from the port partner. */
+  78:..\src\app\alt_mode/vdm_task_mngr.c **** static uint32_t vdm_disc_id_resp[NO_OF_TYPEC_PORTS][MAX_DISC_ID_RESP_LEN];
+  79:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t  vdm_disc_id_resp_len[NO_OF_TYPEC_PORTS];
+  80:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  81:..\src\app\alt_mode/vdm_task_mngr.c **** /* Array to store the D_SVID response received from the port partner. */
+  82:..\src\app\alt_mode/vdm_task_mngr.c **** static uint32_t vdm_disc_svid_resp[NO_OF_TYPEC_PORTS][MAX_DISC_SVID_RESP_LEN];
+  83:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t  vdm_disc_svid_resp_len[NO_OF_TYPEC_PORTS];
+  84:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  85:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* VDM_RESP_QUERY_SUPPORTED */
+  86:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  87:..\src\app\alt_mode/vdm_task_mngr.c **** /* Main structure to hold variables for VDM task manager */
+  88:..\src\app\alt_mode/vdm_task_mngr.c **** vdm_task_status_t vdm_stat[NO_OF_TYPEC_PORTS];
+  89:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  90:..\src\app\alt_mode/vdm_task_mngr.c **** /* Init VDM task mngr */
+  91:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t vdm_task_mngr_init(uint8_t port);
+  92:..\src\app\alt_mode/vdm_task_mngr.c **** 
+  93:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE))
+  94:..\src\app\alt_mode/vdm_task_mngr.c **** /* Discover ID cmd handler */
+  95:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t vdm_task_mng_disc_id(uint8_t port, vdm_evt_t vdm_evt);
+  96:..\src\app\alt_mode/vdm_task_mngr.c **** /* Discovery SVID cmd handler */
+  97:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t vdm_task_mng_disc_svid(uint8_t port, vdm_evt_t vdm_evt);
+  98:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE)) */
+  99:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 100:..\src\app\alt_mode/vdm_task_mngr.c **** /* Sets recevied VDM response command as failed */
+ 101:..\src\app\alt_mode/vdm_task_mngr.c **** static void set_vdm_failed(uint8_t port, fail_status_t fail_stat);
+ 102:..\src\app\alt_mode/vdm_task_mngr.c **** /* Check VDM retries */
+ 103:..\src\app\alt_mode/vdm_task_mngr.c **** static bool vdm_retry_check(uint8_t port, fail_status_t fail_stat);
+ 104:..\src\app\alt_mode/vdm_task_mngr.c **** /* Parses received VDM resp to vdm_msg_info_t struct */
+ 105:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t parse_vdm(uint8_t port, const pd_packet_t* rec_vdm);
+ 106:..\src\app\alt_mode/vdm_task_mngr.c **** /* Callback function for sent VDM */
+ 107:..\src\app\alt_mode/vdm_task_mngr.c **** static void vdm_rec_cbk(uint8_t port, resp_status_t status, const pd_packet_t *rec_vdm);
+ 108:..\src\app\alt_mode/vdm_task_mngr.c **** /* Function to send VDM */
+ 109:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t send_vdm(uint8_t port);
+ 110:..\src\app\alt_mode/vdm_task_mngr.c **** /* Checks if VDM mngr is enabled */
+ 111:..\src\app\alt_mode/vdm_task_mngr.c **** static bool is_vdm_mngr_enabled(uint8_t port);
+ 112:..\src\app\alt_mode/vdm_task_mngr.c **** /* Returns pointer to vdm_msg_info_t struct */
+ 113:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_msg_info_t* get_msg(uint8_t port);
+ 114:..\src\app\alt_mode/vdm_task_mngr.c **** /* Composes vdm_msg_info_t data to dpm_pd_cmd_buf_t struct */
+ 115:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t compose_vdm(uint8_t port);
+ 116:..\src\app\alt_mode/vdm_task_mngr.c **** /* Reset vdm mngr info */
+ 117:..\src\app\alt_mode/vdm_task_mngr.c **** static void reset_vdm_mngr(uint8_t port);
+ 118:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 119:..\src\app\alt_mode/vdm_task_mngr.c **** /* VDM field set/get functions. */
+ARM GAS  e:\temp\ccdQoWUD.s 			page 14
+
+
+ 120:..\src\app\alt_mode/vdm_task_mngr.c **** vdm_evt_t get_evt(uint8_t port);
+ 121:..\src\app\alt_mode/vdm_task_mngr.c **** vdm_task_t get_task(uint8_t port);
+ 122:..\src\app\alt_mode/vdm_task_mngr.c **** void set_task(uint8_t port, vdm_task_t task);
+ 123:..\src\app\alt_mode/vdm_task_mngr.c **** void set_evt(uint8_t port, vdm_evt_t evt);
+ 124:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 125:..\src\app\alt_mode/vdm_task_mngr.c **** /**
+ 126:..\src\app\alt_mode/vdm_task_mngr.c ****    @typedef cable_dp_reset_state_t
+ 127:..\src\app\alt_mode/vdm_task_mngr.c ****    @brief Enumeration tracking current cable (SOP'') soft reset state.
+ 128:..\src\app\alt_mode/vdm_task_mngr.c ****  */
+ 129:..\src\app\alt_mode/vdm_task_mngr.c **** typedef enum {
+ 130:..\src\app\alt_mode/vdm_task_mngr.c ****     CABLE_DP_RESET_IDLE = 0,    /**< No Cable (SOP'') reset state. */
+ 131:..\src\app\alt_mode/vdm_task_mngr.c ****     CABLE_DP_RESET_WAIT,        /**< Waiting for response from cable (SOP'') soft reset. */
+ 132:..\src\app\alt_mode/vdm_task_mngr.c ****     CABLE_DP_RESET_RETRY,       /**< Cable soft reset (SOP'') to be attempted. */
+ 133:..\src\app\alt_mode/vdm_task_mngr.c ****     CABLE_DP_RESET_DONE         /**< Cable soft reset (SOP'') has been completed. */
+ 134:..\src\app\alt_mode/vdm_task_mngr.c **** } cable_dp_reset_state_t;
+ 135:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 136:..\src\app\alt_mode/vdm_task_mngr.c **** /* Maximum number of EMCA SOFT_RESET attempts to be made. */
+ 137:..\src\app\alt_mode/vdm_task_mngr.c **** #define MAX_EMCA_DP_RESET_COUNT         (3u)
+ 138:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 139:..\src\app\alt_mode/vdm_task_mngr.c **** static cable_dp_reset_state_t vdm_emca_rst_state[NO_OF_TYPEC_PORTS] = {
+ 140:..\src\app\alt_mode/vdm_task_mngr.c ****     CABLE_DP_RESET_IDLE
+ 141:..\src\app\alt_mode/vdm_task_mngr.c **** #if (NO_OF_TYPEC_PORTS > 1)
+ 142:..\src\app\alt_mode/vdm_task_mngr.c ****     ,
+ 143:..\src\app\alt_mode/vdm_task_mngr.c ****     CABLE_DP_RESET_IDLE
+ 144:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (NO_OF_TYPEC_PORTS > 1) */
+ 145:..\src\app\alt_mode/vdm_task_mngr.c **** };
+ 146:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 147:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t vdm_emca_rst_count[NO_OF_TYPEC_PORTS] = {
+ 148:..\src\app\alt_mode/vdm_task_mngr.c ****     0
+ 149:..\src\app\alt_mode/vdm_task_mngr.c **** #if (NO_OF_TYPEC_PORTS > 1)
+ 150:..\src\app\alt_mode/vdm_task_mngr.c ****     ,
+ 151:..\src\app\alt_mode/vdm_task_mngr.c ****     0
+ 152:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (NO_OF_TYPEC_PORTS > 1) */
+ 153:..\src\app\alt_mode/vdm_task_mngr.c **** };
+ 154:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 155:..\src\app\alt_mode/vdm_task_mngr.c **** void enable_vdm_task_mngr(uint8_t port)
+ 156:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 157:..\src\app\alt_mode/vdm_task_mngr.c ****     /* If the VDM Task is already running, do nothing. */
+ 158:..\src\app\alt_mode/vdm_task_mngr.c ****     if (app_get_status(port)->vdm_task_en == false)
+ 159:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 160:..\src\app\alt_mode/vdm_task_mngr.c ****         set_task(port, VDM_TASK_INIT);
+ 161:..\src\app\alt_mode/vdm_task_mngr.c ****         app_get_status(port)->vdm_task_en = true;
+ 162:..\src\app\alt_mode/vdm_task_mngr.c ****         app_get_status(port)->vdm_prcs_failed = false;
+ 163:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 164:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 165:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 166:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t vdm_task_mngr_init(uint8_t port)
+ 167:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 168:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_task_t ret = VDM_TASK_EXIT;
+ 169:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 170:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Reset vdm mngr info */
+ 171:..\src\app\alt_mode/vdm_task_mngr.c ****     reset_vdm_mngr(port);
+ 172:..\src\app\alt_mode/vdm_task_mngr.c ****     set_evt(port, VDM_EVT_RUN);
+ 173:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 174:..\src\app\alt_mode/vdm_task_mngr.c **** #if CCG4_DOCK
+ 175:..\src\app\alt_mode/vdm_task_mngr.c ****     if (gl_dpm_port_type[port] != PRT_TYPE_UFP)
+ 176:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ARM GAS  e:\temp\ccdQoWUD.s 			page 15
+
+
+ 177:..\src\app\alt_mode/vdm_task_mngr.c ****         /* in CCG4 Dock US is UFP only, so it should not init D_ID */
+ 178:..\src\app\alt_mode/vdm_task_mngr.c ****         if(port == 0u) return VDM_TASK_EXIT;
+ 179:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 180:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* CCG4_DOCK */
+ 181:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 182:..\src\app\alt_mode/vdm_task_mngr.c ****     if (get_alt_mode_numb(port) != false)
+ 183:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 184:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Check if current data role is DFP */
+ 185:..\src\app\alt_mode/vdm_task_mngr.c ****         if (gl_dpm_port_type[port] != PRT_TYPE_UFP)
+ 186:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 187:..\src\app\alt_mode/vdm_task_mngr.c ****             ret = VDM_TASK_DISC_ID;
+ 188:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 189:..\src\app\alt_mode/vdm_task_mngr.c ****         else
+ 190:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 191:..\src\app\alt_mode/vdm_task_mngr.c ****             ret = VDM_TASK_REG_ATCH_TGT_INFO;
+ 192:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 193:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 194:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 195:..\src\app\alt_mode/vdm_task_mngr.c ****     return ret;
+ 196:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 197:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 198:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 199:..\src\app\alt_mode/vdm_task_mngr.c **** bool is_vdm_task_idle(uint8_t port)
+ 200:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 201:..\src\app\alt_mode/vdm_task_mngr.c ****     /*
+ 202:..\src\app\alt_mode/vdm_task_mngr.c ****        If VDM manager is enabled, check
+ 203:..\src\app\alt_mode/vdm_task_mngr.c ****        1. Whether BUSY timer is running.
+ 204:..\src\app\alt_mode/vdm_task_mngr.c ****        2. Whether the ALT mode tasks are idle.
+ 205:..\src\app\alt_mode/vdm_task_mngr.c ****      */
+ 206:..\src\app\alt_mode/vdm_task_mngr.c ****     return !(is_vdm_mngr_enabled (port) &&
+ 207:..\src\app\alt_mode/vdm_task_mngr.c ****             ((timer_is_running (port, APP_VDM_BUSY_TIMER)) ||
+ 208:..\src\app\alt_mode/vdm_task_mngr.c ****              (get_task(port) != VDM_TASK_ALT_MODE) ||
+ 209:..\src\app\alt_mode/vdm_task_mngr.c ****              (is_alt_mode_mngr_idle(port) == false))
+ 210:..\src\app\alt_mode/vdm_task_mngr.c ****             );
+ 211:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 212:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 213:..\src\app\alt_mode/vdm_task_mngr.c **** void vdm_task_mngr(uint8_t port)
+ 214:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 215:..\src\app\alt_mode/vdm_task_mngr.c ****     /* The VDM task enabled check is performed by the caller. */
+ 216:..\src\app\alt_mode/vdm_task_mngr.c ****     if (
+ 217:..\src\app\alt_mode/vdm_task_mngr.c ****             (timer_is_running(port, APP_VDM_BUSY_TIMER) == true)
+ 218:..\src\app\alt_mode/vdm_task_mngr.c **** #if MUX_DELAY_EN			
+ 219:..\src\app\alt_mode/vdm_task_mngr.c **** 			|| (app_get_status(port)->is_mux_busy != false)
+ 220:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* MUX_DELAY_EN */			
+ 221:..\src\app\alt_mode/vdm_task_mngr.c ****        )
+ 222:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 223:..\src\app\alt_mode/vdm_task_mngr.c ****         return;
+ 224:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 225:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 226:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Get current vdm task */
+ 227:..\src\app\alt_mode/vdm_task_mngr.c ****     switch (get_task(port))
+ 228:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 229:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_WAIT:
+ 230:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 231:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 232:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_INIT:
+ 233:..\src\app\alt_mode/vdm_task_mngr.c ****             set_task(port, vdm_task_mngr_init(port));
+ARM GAS  e:\temp\ccdQoWUD.s 			page 16
+
+
+ 234:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 235:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 236:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE))
+ 237:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_DISC_ID:
+ 238:..\src\app\alt_mode/vdm_task_mngr.c ****             set_task(port, vdm_task_mng_disc_id(port, get_evt(port)));
+ 239:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 240:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 241:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_DISC_SVID:
+ 242:..\src\app\alt_mode/vdm_task_mngr.c ****             set_task(port, vdm_task_mng_disc_svid(port, get_evt(port)));
+ 243:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 244:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE)) */
+ 245:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 246:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_SEND_MSG:
+ 247:..\src\app\alt_mode/vdm_task_mngr.c ****             compose_vdm(port);
+ 248:..\src\app\alt_mode/vdm_task_mngr.c ****             set_task(port, send_vdm(port));
+ 249:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 250:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 251:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_REG_ATCH_TGT_INFO:
+ 252:..\src\app\alt_mode/vdm_task_mngr.c ****             set_task(port, reg_alt_mode_mngr(port, &vdm_stat[port].atch_tgt, get_msg(port)));
+ 253:..\src\app\alt_mode/vdm_task_mngr.c ****             set_evt(port, VDM_EVT_RUN);
+ 254:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 255:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 256:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_ALT_MODE:
+ 257:..\src\app\alt_mode/vdm_task_mngr.c ****             set_task(port, vdm_task_mngr_alt_mode_process(port, get_evt(port)));
+ 258:..\src\app\alt_mode/vdm_task_mngr.c ****             if ((get_task(port) == VDM_TASK_SEND_MSG) || (get_task(port) == VDM_TASK_ALT_MODE))
+ 259:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 260:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_evt(port, VDM_EVT_RUN);
+ 261:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 262:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 263:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 264:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_TASK_EXIT:
+ 265:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_task_mngr_deinit(port);
+ 266:..\src\app\alt_mode/vdm_task_mngr.c ****             app_get_status(port)->vdm_prcs_failed = true;
+ 267:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 268:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 269:..\src\app\alt_mode/vdm_task_mngr.c ****         default:
+ 270:..\src\app\alt_mode/vdm_task_mngr.c ****             return;
+ 271:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 272:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 273:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 274:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 275:..\src\app\alt_mode/vdm_task_mngr.c **** static bool vdm_retry_check(uint8_t port, fail_status_t fail_stat)
+ 276:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 277:..\src\app\alt_mode/vdm_task_mngr.c ****     (vdm_stat[port].rec_retry_cnt)++;
+ 278:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 279:..\src\app\alt_mode/vdm_task_mngr.c ****     /* If we don't receive response more than rec_retry_cnt notify that fail */
+ 280:..\src\app\alt_mode/vdm_task_mngr.c ****     if (vdm_stat[port].rec_retry_cnt > MAX_RETRY_CNT)
+ 281:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 282:..\src\app\alt_mode/vdm_task_mngr.c ****         set_vdm_failed(port, fail_stat);
+ 283:..\src\app\alt_mode/vdm_task_mngr.c ****         return false;
+ 284:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 285:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Try to send msg again */
+ 286:..\src\app\alt_mode/vdm_task_mngr.c ****     set_task(port, VDM_TASK_SEND_MSG);
+ 287:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Start a timer to delay the retry attempt. */
+ 288:..\src\app\alt_mode/vdm_task_mngr.c ****     timer_start(port, APP_VDM_BUSY_TIMER, APP_VDM_FAIL_RETRY_PERIOD, NULL);
+ 289:..\src\app\alt_mode/vdm_task_mngr.c ****     return true;
+ 290:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ARM GAS  e:\temp\ccdQoWUD.s 			page 17
+
+
+ 291:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 292:..\src\app\alt_mode/vdm_task_mngr.c **** static void set_vdm_failed(uint8_t port, fail_status_t fail_stat)
+ 293:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 294:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Reset retry counters */
+ 295:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].rec_retry_cnt = 0;
+ 296:..\src\app\alt_mode/vdm_task_mngr.c ****     set_evt(port, VDM_EVT_FAIL);
+ 297:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Set failed and save failed command */
+ 298:..\src\app\alt_mode/vdm_task_mngr.c ****     get_msg(port)->VDM_HDR.cmd = get_vdm_buff(port)->cmd_do->std_vdm_hdr.cmd;
+ 299:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Save Failure code in the object position field */
+ 300:..\src\app\alt_mode/vdm_task_mngr.c ****     get_msg(port)->VDM_HDR.obj_pos = (uint32_t)fail_stat;
+ 301:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 302:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 303:..\src\app\alt_mode/vdm_task_mngr.c **** /* Received VDM callback */
+ 304:..\src\app\alt_mode/vdm_task_mngr.c **** static void vdm_rec_cbk(uint8_t port, resp_status_t status, const pd_packet_t* rec_vdm)
+ 305:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 306:..\src\app\alt_mode/vdm_task_mngr.c ****     uint32_t response;
+ 307:..\src\app\alt_mode/vdm_task_mngr.c ****     bool     run_task_flag = false;
+ 308:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 309:..\src\app\alt_mode/vdm_task_mngr.c ****     /* If response ACK */
+ 310:..\src\app\alt_mode/vdm_task_mngr.c ****     if (status == RES_RCVD)
+ 311:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 312:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Handle Standard VDM */
+ 313:..\src\app\alt_mode/vdm_task_mngr.c ****         if (rec_vdm->dat[VDM_HEADER_IDX].std_vdm_hdr.vdm_type == VDM_TYPE_STRUCTURED)
+ 314:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 315:..\src\app\alt_mode/vdm_task_mngr.c ****             response = rec_vdm->dat[VDM_HEADER_IDX].std_vdm_hdr.cmd_type;
+ 316:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 317:..\src\app\alt_mode/vdm_task_mngr.c **** #if CCG_PD_REV3_ENABLE
+ 318:..\src\app\alt_mode/vdm_task_mngr.c ****             if (rec_vdm->sop == SOP)
+ 319:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 320:..\src\app\alt_mode/vdm_task_mngr.c ****                 app_get_status(port)->vdm_version =
+ 321:..\src\app\alt_mode/vdm_task_mngr.c ****                     GET_MIN (app_get_status(port)->vdm_version, rec_vdm->dat[VDM_HEADER_IDX].std_vd
+ 322:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 323:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* CCG_PD_REV3_ENABLE */
+ 324:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 325:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Actual response received. */
+ 326:..\src\app\alt_mode/vdm_task_mngr.c ****             switch (response)
+ 327:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 328:..\src\app\alt_mode/vdm_task_mngr.c ****                 case CMD_TYPE_RESP_ACK:
+ 329:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 330:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Check if received response is expected. */
+ 331:..\src\app\alt_mode/vdm_task_mngr.c ****                         if ((rec_vdm->dat[VDM_HEADER_IDX].std_vdm_hdr.cmd) ==
+ 332:..\src\app\alt_mode/vdm_task_mngr.c ****                                 (get_vdm_buff(port)->cmd_do[VDM_HEADER_IDX].std_vdm_hdr.cmd))
+ 333:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 334:..\src\app\alt_mode/vdm_task_mngr.c ****                             parse_vdm(port, rec_vdm);
+ 335:..\src\app\alt_mode/vdm_task_mngr.c ****                             set_evt(port, VDM_EVT_EVAL);
+ 336:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 337:..\src\app\alt_mode/vdm_task_mngr.c ****                             /* Reset timer counter when ACK. */
+ 338:..\src\app\alt_mode/vdm_task_mngr.c ****                             vdm_stat[port].rec_retry_cnt = 0;
+ 339:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 340:..\src\app\alt_mode/vdm_task_mngr.c ****                         else
+ 341:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 342:..\src\app\alt_mode/vdm_task_mngr.c ****                             /* Set failed and save failed command */
+ 343:..\src\app\alt_mode/vdm_task_mngr.c ****                             set_vdm_failed(port, TIMEOUT);
+ 344:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 345:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 346:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Continue the state machine operation. */
+ 347:..\src\app\alt_mode/vdm_task_mngr.c ****                         run_task_flag = true;
+ARM GAS  e:\temp\ccdQoWUD.s 			page 18
+
+
+ 348:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 349:..\src\app\alt_mode/vdm_task_mngr.c ****                     break;
+ 350:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 351:..\src\app\alt_mode/vdm_task_mngr.c ****                 case CMD_TYPE_RESP_BUSY:
+ 352:..\src\app\alt_mode/vdm_task_mngr.c ****                     /* Target is BUSY. */
+ 353:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 354:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Check if command should be retried. We always have to continue task exec
+ 355:..\src\app\alt_mode/vdm_task_mngr.c ****                         vdm_stat[port].rec_retry_cnt++;
+ 356:..\src\app\alt_mode/vdm_task_mngr.c ****                         if (vdm_stat[port].rec_retry_cnt > MAX_RETRY_CNT)
+ 357:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 358:..\src\app\alt_mode/vdm_task_mngr.c ****                             set_vdm_failed(port, BUSY);
+ 359:..\src\app\alt_mode/vdm_task_mngr.c ****                             run_task_flag = true;
+ 360:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 361:..\src\app\alt_mode/vdm_task_mngr.c ****                         else
+ 362:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 363:..\src\app\alt_mode/vdm_task_mngr.c ****                             /* Try to send msg again */
+ 364:..\src\app\alt_mode/vdm_task_mngr.c ****                             set_task(port, VDM_TASK_SEND_MSG);
+ 365:..\src\app\alt_mode/vdm_task_mngr.c ****                             /* Start a timer. Command will be retried when timer expires. */
+ 366:..\src\app\alt_mode/vdm_task_mngr.c ****                             timer_start(port, APP_VDM_BUSY_TIMER, APP_VDM_BUSY_TIMER_PERIOD, NULL);
+ 367:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 368:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 369:..\src\app\alt_mode/vdm_task_mngr.c ****                     break;
+ 370:..\src\app\alt_mode/vdm_task_mngr.c ****                 default:
+ 371:..\src\app\alt_mode/vdm_task_mngr.c ****                     /* Target NAK-ed the message. */
+ 372:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 373:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Notify manager with failed event */
+ 374:..\src\app\alt_mode/vdm_task_mngr.c ****                         set_vdm_failed(port, NACK);
+ 375:..\src\app\alt_mode/vdm_task_mngr.c ****                         run_task_flag = true;
+ 376:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 377:..\src\app\alt_mode/vdm_task_mngr.c ****                     break;
+ 378:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 379:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 380:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Handle UVDM */
+ 381:..\src\app\alt_mode/vdm_task_mngr.c ****         else
+ 382:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 383:..\src\app\alt_mode/vdm_task_mngr.c ****             parse_vdm(port, rec_vdm);
+ 384:..\src\app\alt_mode/vdm_task_mngr.c ****             set_evt(port, VDM_EVT_EVAL);
+ 385:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Reset timer counter when ACK */
+ 386:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_stat[port].rec_retry_cnt = 0;
+ 387:..\src\app\alt_mode/vdm_task_mngr.c ****             run_task_flag = true;
+ 388:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 389:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 390:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Attention related handler */
+ 391:..\src\app\alt_mode/vdm_task_mngr.c ****     else if (get_msg(port)->VDM_HDR.cmd == VDM_CMD_ATTENTION)
+ 392:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 393:..\src\app\alt_mode/vdm_task_mngr.c ****         /* This statement need to notify alt mode that Attention VDM was successfuly sent */
+ 394:..\src\app\alt_mode/vdm_task_mngr.c ****         if ((status == CMD_SENT) && (get_task(port) == VDM_TASK_WAIT))
+ 395:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 396:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Start a timer. Command will be retried when timer expires. */
+ 397:..\src\app\alt_mode/vdm_task_mngr.c ****             timer_stop(port, APP_VDM_BUSY_TIMER);
+ 398:..\src\app\alt_mode/vdm_task_mngr.c ****             set_evt(port, VDM_EVT_EVAL);
+ 399:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Reset retry counter */
+ 400:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_stat[port].rec_retry_cnt = 0;
+ 401:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Continue the state machine operation. */
+ 402:..\src\app\alt_mode/vdm_task_mngr.c ****             run_task_flag = true;
+ 403:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 404:..\src\app\alt_mode/vdm_task_mngr.c ****         else if (status == SEQ_ABORTED)
+ARM GAS  e:\temp\ccdQoWUD.s 			page 19
+
+
+ 405:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 406:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Try to send msg again */
+ 407:..\src\app\alt_mode/vdm_task_mngr.c ****             run_task_flag = true;
+ 408:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 409:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 410:..\src\app\alt_mode/vdm_task_mngr.c ****     else
+ 411:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 412:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Good CRC not received or no response (maybe corrupted packet). */
+ 413:..\src\app\alt_mode/vdm_task_mngr.c ****         if ((status == CMD_FAILED) || (status == RES_TIMEOUT))
+ 414:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 415:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Check for retries. If failure persists after all retries, go to exit. */
+ 416:..\src\app\alt_mode/vdm_task_mngr.c ****             if (vdm_retry_check (port, (fail_status_t)status) == false)
+ 417:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 418:..\src\app\alt_mode/vdm_task_mngr.c ****                 run_task_flag = true;
+ 419:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 420:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 421:..\src\app\alt_mode/vdm_task_mngr.c ****         else
+ 422:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 423:..\src\app\alt_mode/vdm_task_mngr.c ****             if (status == SEQ_ABORTED)
+ 424:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 425:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Try to send msg again */
+ 426:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_task(port, VDM_TASK_SEND_MSG);
+ 427:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 428:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 429:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 430:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 431:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Check if we need run any task */
+ 432:..\src\app\alt_mode/vdm_task_mngr.c ****     if (run_task_flag == true)
+ 433:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 434:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE))
+ 435:..\src\app\alt_mode/vdm_task_mngr.c ****         switch (vdm_stat[port].vdm_msg.VDM_HDR.cmd)
+ 436:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 437:..\src\app\alt_mode/vdm_task_mngr.c ****             case VDM_CMD_DSC_IDENTITY:
+ 438:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_task(port, VDM_TASK_DISC_ID);
+ 439:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 440:..\src\app\alt_mode/vdm_task_mngr.c ****             case VDM_CMD_DSC_SVIDS:
+ 441:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_task(port, VDM_TASK_DISC_SVID);
+ 442:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 443:..\src\app\alt_mode/vdm_task_mngr.c ****             default:
+ 444:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_task(port, VDM_TASK_ALT_MODE);
+ 445:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 446:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 447:..\src\app\alt_mode/vdm_task_mngr.c **** #else /* ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE)) */
+ 448:..\src\app\alt_mode/vdm_task_mngr.c ****         set_task(port, VDM_TASK_ALT_MODE);
+ 449:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE)) */
+ 450:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 451:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 452:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 453:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE))
+ 454:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 455:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t vdm_task_mng_disc_id(uint8_t port, vdm_evt_t vdm_evt)
+ 456:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 457:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t *msg_p  = get_msg (port);
+ 458:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_task_t ret         = VDM_TASK_EXIT;
+ 459:..\src\app\alt_mode/vdm_task_mngr.c ****     const dpm_status_t *dpm_stat = dpm_get_info(port);
+ 460:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 461:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE))
+ARM GAS  e:\temp\ccdQoWUD.s 			page 20
+
+
+ 462:..\src\app\alt_mode/vdm_task_mngr.c ****     bool pd3_ufp = ((bool)(dpm_get_info(port)->spec_rev_sop_live >= PD_REV3) &&
+ 463:..\src\app\alt_mode/vdm_task_mngr.c ****             (gl_dpm_port_type[port] == PRT_TYPE_UFP));
+ 464:..\src\app\alt_mode/vdm_task_mngr.c **** #endif
+ 465:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 466:..\src\app\alt_mode/vdm_task_mngr.c ****     switch (vdm_evt)
+ 467:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 468:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_EVT_RUN:
+ 469:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Form Discover ID VDM packet. */
+ 470:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->vdm_header.val   = NO_DATA;
+ 471:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->VDM_HDR.svid     = STD_SVID;
+ 472:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->VDM_HDR.cmd      = VDM_CMD_DSC_IDENTITY;
+ 473:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->vdo_numb         = NO_DATA;
+ 474:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->sop_type         = SOP;
+ 475:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->VDM_HDR.vdm_type = VDM_TYPE_STRUCTURED;
+ 476:..\src\app\alt_mode/vdm_task_mngr.c ****             ret                     = VDM_TASK_SEND_MSG;
+ 477:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 478:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 479:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Evaluate received response */
+ 480:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_EVT_EVAL:
+ 481:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Check is current port date role DFP */
+ 482:..\src\app\alt_mode/vdm_task_mngr.c ****             if (gl_dpm_port_type[port] != PRT_TYPE_UFP)
+ 483:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 484:..\src\app\alt_mode/vdm_task_mngr.c **** #if VDM_RESP_QUERY_SUPPORTED
+ 485:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Store the D_ID response received. */
+ 486:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_disc_id_resp[port][0] = msg_p->vdm_header.val;
+ 487:..\src\app\alt_mode/vdm_task_mngr.c ****                 memcpy ((uint8_t *)&vdm_disc_id_resp[port][1], (uint8_t *)msg_p->vdo, msg_p->vdo_nu
+ 488:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_disc_id_resp_len[port] = msg_p->vdo_numb + 1;
+ 489:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* VDM_RESP_QUERY_SUPPORTED */
+ 490:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 491:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Set svid idx to zero before start DISC SVID */
+ 492:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_stat[port].svid_idx  = NO_DATA;
+ 493:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_stat[port].dsvid_cnt = 0;
+ 494:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 495:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Copy ID header to info struct */
+ 496:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_stat[port].atch_tgt.ama_vdo.val = msg_p->vdo[PD_DISC_ID_AMA_VDO_IDX].val;
+ 497:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Copy AMA VDO to info struct */
+ 498:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_stat[port].atch_tgt.tgt_id_header.val = msg_p->vdo[VDO_START_IDX - 1].val;
+ 499:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 500:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* If AMA and cable (if present) do not need Vconn, disable VConn. */
+ 501:..\src\app\alt_mode/vdm_task_mngr.c ****                 if (
+ 502:..\src\app\alt_mode/vdm_task_mngr.c ****                         (dpm_stat->vconn_retain == 0) &&
+ 503:..\src\app\alt_mode/vdm_task_mngr.c ****                         ((msg_p->vdo[VDO_START_IDX - 1].std_id_hdr.prod_type != PROD_TYPE_AMA) ||
+ 504:..\src\app\alt_mode/vdm_task_mngr.c ****                             (msg_p->vdo[PD_DISC_ID_AMA_VDO_IDX].std_ama_vdo.vcon_req == 0)) &&
+ 505:..\src\app\alt_mode/vdm_task_mngr.c ****                         ((dpm_stat->emca_present == false) ||
+ 506:..\src\app\alt_mode/vdm_task_mngr.c ****                          (dpm_stat->cbl_vdo.std_cbl_vdo.cbl_term == CBL_TERM_BOTH_PAS_VCONN_NOT_REQ
+ 507:..\src\app\alt_mode/vdm_task_mngr.c ****                    )
+ 508:..\src\app\alt_mode/vdm_task_mngr.c ****                 {
+ 509:..\src\app\alt_mode/vdm_task_mngr.c ****                     vconn_disable(port, dpm_stat->rev_pol);
+ 510:..\src\app\alt_mode/vdm_task_mngr.c ****                 }
+ 511:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 512:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* If alt modes not supported. */
+ 513:..\src\app\alt_mode/vdm_task_mngr.c ****                 if (msg_p->vdo[VDO_START_IDX - 1].std_id_hdr.mod_support == false)
+ 514:..\src\app\alt_mode/vdm_task_mngr.c ****                 {
+ 515:..\src\app\alt_mode/vdm_task_mngr.c ****                     break;
+ 516:..\src\app\alt_mode/vdm_task_mngr.c ****                 }
+ 517:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 518:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Send Disc SVID cmd */
+ARM GAS  e:\temp\ccdQoWUD.s 			page 21
+
+
+ 519:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_evt(port, VDM_EVT_RUN);
+ 520:..\src\app\alt_mode/vdm_task_mngr.c ****                 ret = VDM_TASK_DISC_SVID;
+ 521:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 522:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 523:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE))
+ 524:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Check is current port date role UFP */
+ 525:..\src\app\alt_mode/vdm_task_mngr.c ****             if (pd3_ufp)
+ 526:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 527:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Send Disc SVID cmd */
+ 528:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_evt(port, VDM_EVT_RUN);
+ 529:..\src\app\alt_mode/vdm_task_mngr.c ****                 ret = VDM_TASK_DISC_SVID;
+ 530:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 531:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE) */
+ 532:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 533:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 534:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE))
+ 535:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_EVT_FAIL:
+ 536:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Check is current port date role UFP */
+ 537:..\src\app\alt_mode/vdm_task_mngr.c ****             if (pd3_ufp)
+ 538:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 539:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Send Disc SVID cmd */
+ 540:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_evt(port, VDM_EVT_RUN);
+ 541:..\src\app\alt_mode/vdm_task_mngr.c ****                 ret = VDM_TASK_DISC_SVID;
+ 542:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 543:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE) */
+ 544:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 545:..\src\app\alt_mode/vdm_task_mngr.c ****         default:
+ 546:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 547:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 548:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 549:..\src\app\alt_mode/vdm_task_mngr.c ****     return ret;
+ 550:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 551:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 552:..\src\app\alt_mode/vdm_task_mngr.c **** /* Checks if input SVID already saved. */
+ 553:..\src\app\alt_mode/vdm_task_mngr.c **** static bool is_svid_stored(uint16_t *svid_arr, uint16_t svid)
+ 554:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 555:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t  idx;
+ 556:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 557:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Go through all SVIDs and compare with input SVID */
+ 558:..\src\app\alt_mode/vdm_task_mngr.c ****     for (idx = 0; idx < MAX_SVID_VDO_SUPP; idx++)
+ 559:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 560:..\src\app\alt_mode/vdm_task_mngr.c ****         /* If input SVID already saved */
+ 561:..\src\app\alt_mode/vdm_task_mngr.c ****         if (svid_arr[idx] == svid)
+ 562:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 563:..\src\app\alt_mode/vdm_task_mngr.c ****             return true;
+ 564:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 565:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 566:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 567:..\src\app\alt_mode/vdm_task_mngr.c ****     return false;
+ 568:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 569:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 570:..\src\app\alt_mode/vdm_task_mngr.c **** /*
+ 571:..\src\app\alt_mode/vdm_task_mngr.c ****    This function saves received Discover SVID resp,
+ 572:..\src\app\alt_mode/vdm_task_mngr.c ****    returns true if a NULL SVID was received.
+ 573:..\src\app\alt_mode/vdm_task_mngr.c ****  */
+ 574:..\src\app\alt_mode/vdm_task_mngr.c **** static bool save_svids(uint8_t port, uint16_t *svid_arr, uint8_t max_svid)
+ 575:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ARM GAS  e:\temp\ccdQoWUD.s 			page 22
+
+
+ 576:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t         idx, vdo_count;
+ 577:..\src\app\alt_mode/vdm_task_mngr.c ****     uint16_t        svid;
+ 578:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t         svid_idx = vdm_stat[port].svid_idx;
+ 579:..\src\app\alt_mode/vdm_task_mngr.c ****     bool            retval   = false;
+ 580:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t  *msg_p   = get_msg (port);
+ 581:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 582:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Compare received SVIDs with supported SVIDs */
+ 583:..\src\app\alt_mode/vdm_task_mngr.c ****     vdo_count = msg_p->vdo_numb;
+ 584:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 585:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Stop further discovery if this response does not have the maximum no. of DOs. */
+ 586:..\src\app\alt_mode/vdm_task_mngr.c ****     if (vdo_count < (MAX_NO_OF_DO - 1))
+ 587:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 588:..\src\app\alt_mode/vdm_task_mngr.c ****         retval = true;
+ 589:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 590:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 591:..\src\app\alt_mode/vdm_task_mngr.c ****     for (idx = 0; idx < (vdo_count * 2); idx++)
+ 592:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 593:..\src\app\alt_mode/vdm_task_mngr.c ****         if ((idx & 1) == 0)
+ 594:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 595:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Upper half of the DO. */
+ 596:..\src\app\alt_mode/vdm_task_mngr.c ****             svid = msg_p->vdo[idx >> 1].val >> 16u;
+ 597:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 598:..\src\app\alt_mode/vdm_task_mngr.c ****         else
+ 599:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 600:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Lower half of the DO. */
+ 601:..\src\app\alt_mode/vdm_task_mngr.c ****             svid = msg_p->vdo[idx >> 1].val & 0xFFFFu;
+ 602:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 603:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 604:..\src\app\alt_mode/vdm_task_mngr.c ****         if (svid_idx < (max_svid - 1))
+ 605:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 606:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Stop on NULL SVID. */
+ 607:..\src\app\alt_mode/vdm_task_mngr.c ****             if (svid == NO_DATA)
+ 608:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 609:..\src\app\alt_mode/vdm_task_mngr.c ****                 retval = true;
+ 610:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 611:..\src\app\alt_mode/vdm_task_mngr.c ****             else
+ 612:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 613:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* If SVID not saved previously then save */
+ 614:..\src\app\alt_mode/vdm_task_mngr.c ****                 if (is_svid_stored(svid_arr, svid) == false)
+ 615:..\src\app\alt_mode/vdm_task_mngr.c ****                 {
+ 616:..\src\app\alt_mode/vdm_task_mngr.c **** #if SAVE_SUPP_SVID_ONLY
+ 617:..\src\app\alt_mode/vdm_task_mngr.c ****                     if (is_svid_supported(svid, port) != false)
+ 618:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* SAVE_SUPP_SVID_ONLY */
+ 619:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 620:..\src\app\alt_mode/vdm_task_mngr.c ****                         svid_arr[svid_idx] = svid;
+ 621:..\src\app\alt_mode/vdm_task_mngr.c ****                         svid_idx++;
+ 622:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 623:..\src\app\alt_mode/vdm_task_mngr.c ****                 }
+ 624:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 625:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 626:..\src\app\alt_mode/vdm_task_mngr.c ****         else
+ 627:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 628:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Cannot continue as we have no more space. */
+ 629:..\src\app\alt_mode/vdm_task_mngr.c ****             retval = true;
+ 630:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 631:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 632:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ARM GAS  e:\temp\ccdQoWUD.s 			page 23
+
+
+ 633:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 634:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Set zero after last SVID in info */
+ 635:..\src\app\alt_mode/vdm_task_mngr.c ****     svid_arr[svid_idx] = NO_DATA;
+ 636:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].svid_idx = svid_idx;
+ 637:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 638:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Terminate discovery after MAX_DISC_SVID_COUNT attempts. */
+ 639:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].dsvid_cnt++;
+ 640:..\src\app\alt_mode/vdm_task_mngr.c ****     if (vdm_stat[port].dsvid_cnt >= MAX_DISC_SVID_COUNT)
+ 641:..\src\app\alt_mode/vdm_task_mngr.c ****         retval = true;
+ 642:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 643:..\src\app\alt_mode/vdm_task_mngr.c ****     return retval;
+ 644:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 645:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 646:..\src\app\alt_mode/vdm_task_mngr.c **** static void set_disc_svid_param (uint8_t port, uint8_t sop)
+ 647:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 648:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t *msg_p = get_msg (port);
+ 649:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 650:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->vdm_header.val   = NO_DATA;
+ 651:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->VDM_HDR.svid     = STD_SVID;
+ 652:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->VDM_HDR.cmd      = VDM_CMD_DSC_SVIDS;
+ 653:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->VDM_HDR.obj_pos  = NO_DATA;
+ 654:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->sop_type         = sop;
+ 655:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->vdo_numb         = NO_DATA;
+ 656:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->VDM_HDR.vdm_type = VDM_TYPE_STRUCTURED;
+ 657:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 658:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 659:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t vdm_task_mng_disc_svid(uint8_t port, vdm_evt_t vdm_evt)
+ 660:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 661:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_task_t ret               = VDM_TASK_EXIT;
+ 662:..\src\app\alt_mode/vdm_task_mngr.c ****     const dpm_status_t *dpm_stat = dpm_get_info(port);
+ 663:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t *msg_p        = get_msg (port);
+ 664:..\src\app\alt_mode/vdm_task_mngr.c **** #if VDM_RESP_QUERY_SUPPORTED
+ 665:..\src\app\alt_mode/vdm_task_mngr.c ****     uint32_t tmp;
+ 666:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* VDM_RESP_QUERY_SUPPORTED */
+ 667:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 668:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE))
+ 669:..\src\app\alt_mode/vdm_task_mngr.c ****     bool pd3_ufp = ((bool)(dpm_stat->spec_rev_sop_live >= PD_REV3) &&
+ 670:..\src\app\alt_mode/vdm_task_mngr.c ****             (gl_dpm_port_type[port] == PRT_TYPE_UFP));
+ 671:..\src\app\alt_mode/vdm_task_mngr.c **** #endif
+ 672:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 673:..\src\app\alt_mode/vdm_task_mngr.c ****     switch (vdm_evt)
+ 674:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 675:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_EVT_RUN:
+ 676:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Form Discover SVID VDM packet */
+ 677:..\src\app\alt_mode/vdm_task_mngr.c ****             set_disc_svid_param (port, SOP);
+ 678:..\src\app\alt_mode/vdm_task_mngr.c ****             ret = VDM_TASK_SEND_MSG;
+ 679:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 680:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 681:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_EVT_EVAL:
+ 682:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Check is current port date role DFP */
+ 683:..\src\app\alt_mode/vdm_task_mngr.c ****             if (gl_dpm_port_type[port] != PRT_TYPE_UFP)
+ 684:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 685:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* For attached target response */
+ 686:..\src\app\alt_mode/vdm_task_mngr.c ****                 if (msg_p->sop_type == (uint8_t)SOP)
+ 687:..\src\app\alt_mode/vdm_task_mngr.c ****                 {
+ 688:..\src\app\alt_mode/vdm_task_mngr.c **** #if VDM_RESP_QUERY_SUPPORTED
+ 689:..\src\app\alt_mode/vdm_task_mngr.c ****                     if (vdm_stat[port].svid_idx == 0)
+ARM GAS  e:\temp\ccdQoWUD.s 			page 24
+
+
+ 690:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 691:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Save the DISC_SVID response. */
+ 692:..\src\app\alt_mode/vdm_task_mngr.c ****                         vdm_disc_svid_resp[port][0] = msg_p->vdm_header.val;
+ 693:..\src\app\alt_mode/vdm_task_mngr.c ****                         memcpy ((uint8_t *)&vdm_disc_svid_resp[port][1], (uint8_t *)msg_p->vdo, msg
+ 694:..\src\app\alt_mode/vdm_task_mngr.c ****                         vdm_disc_svid_resp_len[port] = msg_p->vdo_numb + 1;
+ 695:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 696:..\src\app\alt_mode/vdm_task_mngr.c ****                     else
+ 697:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 698:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Save the incremental DISC_SVID response. */
+ 699:..\src\app\alt_mode/vdm_task_mngr.c ****                         tmp = GET_MIN (msg_p->vdo_numb, MAX_DISC_SVID_RESP_LEN - vdm_disc_svid_resp
+ 700:..\src\app\alt_mode/vdm_task_mngr.c ****                         memcpy ((uint8_t *)&vdm_disc_svid_resp[port][vdm_disc_svid_resp_len[port]],
+ 701:..\src\app\alt_mode/vdm_task_mngr.c ****                                 tmp * sizeof (uint32_t));
+ 702:..\src\app\alt_mode/vdm_task_mngr.c ****                         vdm_disc_svid_resp_len[port] += tmp;
+ 703:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 704:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* VDM_RESP_QUERY_SUPPORTED */
+ 705:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 706:..\src\app\alt_mode/vdm_task_mngr.c ****                     if (msg_p->vdo[0].val == NONE_VDO)
+ 707:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 708:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* No SVID supported */
+ 709:..\src\app\alt_mode/vdm_task_mngr.c ****                         break;
+ 710:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 711:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 712:..\src\app\alt_mode/vdm_task_mngr.c ****                     /* Save received SVIDs and check if a NULL SVID was received. */
+ 713:..\src\app\alt_mode/vdm_task_mngr.c ****                     if (save_svids (port, vdm_stat[port].atch_tgt.tgt_svid, MAX_SVID_VDO_SUPP) != f
+ 714:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 715:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* If cable was detected and supports alternate modes, send SOP' disc svid 
+ 716:..\src\app\alt_mode/vdm_task_mngr.c ****                         if ((dpm_stat->emca_present != false) &&
+ 717:..\src\app\alt_mode/vdm_task_mngr.c ****                                 (dpm_stat->cbl_mode_en != false))
+ 718:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 719:..\src\app\alt_mode/vdm_task_mngr.c ****                             if (
+ 720:..\src\app\alt_mode/vdm_task_mngr.c ****                                     (dpm_stat->vconn_logical)
+ 721:..\src\app\alt_mode/vdm_task_mngr.c ****                             #if VCONN_OCP_ENABLE
+ 722:..\src\app\alt_mode/vdm_task_mngr.c ****                                     && ((app_get_status(port)->fault_status & APP_PORT_VCONN_FAULT_
+ 723:..\src\app\alt_mode/vdm_task_mngr.c ****                             #endif /* VCONN_OCP_ENABLE */
+ 724:..\src\app\alt_mode/vdm_task_mngr.c ****                                )
+ 725:..\src\app\alt_mode/vdm_task_mngr.c ****                             {
+ 726:..\src\app\alt_mode/vdm_task_mngr.c ****                                 if (!vconn_is_present (port))
+ 727:..\src\app\alt_mode/vdm_task_mngr.c ****                                 {
+ 728:..\src\app\alt_mode/vdm_task_mngr.c ****                                     /*
+ 729:..\src\app\alt_mode/vdm_task_mngr.c ****                                      * We are VConn source and VConn is off. Enable and apply a del
+ 730:..\src\app\alt_mode/vdm_task_mngr.c ****                                      * the EMCA power up.
+ 731:..\src\app\alt_mode/vdm_task_mngr.c ****                                      */
+ 732:..\src\app\alt_mode/vdm_task_mngr.c ****                                     vconn_enable (port, dpm_stat->rev_pol);
+ 733:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 734:..\src\app\alt_mode/vdm_task_mngr.c ****                                     /* Start a timer to delay the retry attempt. */
+ 735:..\src\app\alt_mode/vdm_task_mngr.c ****                                     timer_start(port, APP_VDM_BUSY_TIMER, APP_CABLE_POWER_UP_DELAY,
+ 736:..\src\app\alt_mode/vdm_task_mngr.c ****                                 }
+ 737:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 738:..\src\app\alt_mode/vdm_task_mngr.c ****                                 vdm_stat[port].svid_idx  = 0;
+ 739:..\src\app\alt_mode/vdm_task_mngr.c ****                                 vdm_stat[port].dsvid_cnt = 0;
+ 740:..\src\app\alt_mode/vdm_task_mngr.c ****                                 set_disc_svid_param (port, SOP_PRIME);
+ 741:..\src\app\alt_mode/vdm_task_mngr.c ****                                 ret = VDM_TASK_SEND_MSG;
+ 742:..\src\app\alt_mode/vdm_task_mngr.c ****                             }
+ 743:..\src\app\alt_mode/vdm_task_mngr.c ****                             else
+ 744:..\src\app\alt_mode/vdm_task_mngr.c ****                             {
+ 745:..\src\app\alt_mode/vdm_task_mngr.c ****                                 /*
+ 746:..\src\app\alt_mode/vdm_task_mngr.c ****                                  * We are not VConn source. This should not happen as stack will en
+ARM GAS  e:\temp\ccdQoWUD.s 			page 25
+
+
+ 747:..\src\app\alt_mode/vdm_task_mngr.c ****                                  * we are VConn source. Skip SOP' checks in the unlikely case where
+ 748:..\src\app\alt_mode/vdm_task_mngr.c ****                                  * happens.
+ 749:..\src\app\alt_mode/vdm_task_mngr.c ****                                  */
+ 750:..\src\app\alt_mode/vdm_task_mngr.c ****                                 set_evt(port, VDM_EVT_RUN);
+ 751:..\src\app\alt_mode/vdm_task_mngr.c ****                                 ret = VDM_TASK_REG_ATCH_TGT_INFO;
+ 752:..\src\app\alt_mode/vdm_task_mngr.c ****                             }
+ 753:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 754:..\src\app\alt_mode/vdm_task_mngr.c ****                         else
+ 755:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 756:..\src\app\alt_mode/vdm_task_mngr.c ****                             /* Goto register info in alt modes mngr */
+ 757:..\src\app\alt_mode/vdm_task_mngr.c ****                             set_evt(port, VDM_EVT_RUN);
+ 758:..\src\app\alt_mode/vdm_task_mngr.c ****                             ret = VDM_TASK_REG_ATCH_TGT_INFO;
+ 759:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 760:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 761:..\src\app\alt_mode/vdm_task_mngr.c ****                     else
+ 762:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 763:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* If not all SVID received, ask for the next set of SVIDs. */
+ 764:..\src\app\alt_mode/vdm_task_mngr.c ****                         set_disc_svid_param (port, SOP);
+ 765:..\src\app\alt_mode/vdm_task_mngr.c ****                         ret = VDM_TASK_SEND_MSG;
+ 766:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 767:..\src\app\alt_mode/vdm_task_mngr.c ****                 }
+ 768:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* For cable response */
+ 769:..\src\app\alt_mode/vdm_task_mngr.c ****                 else
+ 770:..\src\app\alt_mode/vdm_task_mngr.c ****                 {
+ 771:..\src\app\alt_mode/vdm_task_mngr.c ****                     /* If the EMCA returned any DOs, save the content. */
+ 772:..\src\app\alt_mode/vdm_task_mngr.c ****                     if ((msg_p->vdo[VDO_START_IDX - 1].val != NONE_VDO) &&
+ 773:..\src\app\alt_mode/vdm_task_mngr.c ****                             (save_svids(port, vdm_stat[port].atch_tgt.cbl_svid, MAX_CABLE_SVID_SUPP
+ 774:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 775:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* If not all SVID received, ask for the next set of SVIDs. */
+ 776:..\src\app\alt_mode/vdm_task_mngr.c ****                         set_disc_svid_param (port, SOP_PRIME);
+ 777:..\src\app\alt_mode/vdm_task_mngr.c ****                         ret = VDM_TASK_SEND_MSG;
+ 778:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 779:..\src\app\alt_mode/vdm_task_mngr.c ****                     else
+ 780:..\src\app\alt_mode/vdm_task_mngr.c ****                     {
+ 781:..\src\app\alt_mode/vdm_task_mngr.c ****                         /*
+ 782:..\src\app\alt_mode/vdm_task_mngr.c ****                            If EMCA did not support any SVIDs of interest and does not require VConn
+ 783:..\src\app\alt_mode/vdm_task_mngr.c ****                            we can disable VConn.
+ 784:..\src\app\alt_mode/vdm_task_mngr.c ****                          */
+ 785:..\src\app\alt_mode/vdm_task_mngr.c ****                         if (vdm_stat[port].atch_tgt.cbl_svid[0] == NO_DATA)
+ 786:..\src\app\alt_mode/vdm_task_mngr.c ****                         {
+ 787:..\src\app\alt_mode/vdm_task_mngr.c ****                             if (
+ 788:..\src\app\alt_mode/vdm_task_mngr.c ****                                     (dpm_stat->vconn_retain == 0) &&
+ 789:..\src\app\alt_mode/vdm_task_mngr.c ****                                     (dpm_stat->cbl_vdo.std_cbl_vdo.cbl_term == CBL_TERM_BOTH_PAS_VC
+ 790:..\src\app\alt_mode/vdm_task_mngr.c ****                                )
+ 791:..\src\app\alt_mode/vdm_task_mngr.c ****                             {
+ 792:..\src\app\alt_mode/vdm_task_mngr.c ****                                 vconn_disable(port, dpm_stat->rev_pol);
+ 793:..\src\app\alt_mode/vdm_task_mngr.c ****                             }
+ 794:..\src\app\alt_mode/vdm_task_mngr.c ****                         }
+ 795:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 796:..\src\app\alt_mode/vdm_task_mngr.c ****                         /* Move to the next step. */
+ 797:..\src\app\alt_mode/vdm_task_mngr.c ****                         set_evt(port, VDM_EVT_RUN);
+ 798:..\src\app\alt_mode/vdm_task_mngr.c ****                         ret = VDM_TASK_REG_ATCH_TGT_INFO;
+ 799:..\src\app\alt_mode/vdm_task_mngr.c ****                     }
+ 800:..\src\app\alt_mode/vdm_task_mngr.c ****                 }
+ 801:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 802:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 803:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE))
+ARM GAS  e:\temp\ccdQoWUD.s 			page 26
+
+
+ 804:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Check is current port date role UFP */
+ 805:..\src\app\alt_mode/vdm_task_mngr.c ****             if (pd3_ufp)
+ 806:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 807:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Send Disc SVID cmd */
+ 808:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_evt(port, VDM_EVT_RUN);
+ 809:..\src\app\alt_mode/vdm_task_mngr.c ****                 ret = VDM_TASK_REG_ATCH_TGT_INFO;
+ 810:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 811:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE) */
+ 812:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 813:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 814:..\src\app\alt_mode/vdm_task_mngr.c ****         case VDM_EVT_FAIL:
+ 815:..\src\app\alt_mode/vdm_task_mngr.c ****             /* If cable SVID fails */
+ 816:..\src\app\alt_mode/vdm_task_mngr.c ****             if (msg_p->sop_type == (uint8_t)SOP_PRIME)
+ 817:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 818:..\src\app\alt_mode/vdm_task_mngr.c ****                 set_evt(port, VDM_EVT_RUN);
+ 819:..\src\app\alt_mode/vdm_task_mngr.c ****                 ret = VDM_TASK_REG_ATCH_TGT_INFO;
+ 820:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 821:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 822:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 823:..\src\app\alt_mode/vdm_task_mngr.c ****         default:
+ 824:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 825:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 826:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 827:..\src\app\alt_mode/vdm_task_mngr.c ****     return ret;
+ 828:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 829:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 830:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* ((DFP_ALT_MODE_SUPP) || (UFP_MODE_DISC_ENABLE)) */
+ 831:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 832:..\src\app\alt_mode/vdm_task_mngr.c **** static void reset_vdm_mngr(uint8_t port)
+ 833:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 834:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].rec_retry_cnt = NO_DATA;
+ 835:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].svid_idx      = NO_DATA;
+ 836:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].dsvid_cnt     = NO_DATA;
+ 837:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Clear arrays which hold SVIDs */
+ 838:..\src\app\alt_mode/vdm_task_mngr.c ****     memset(&vdm_stat[port].atch_tgt, NO_DATA, sizeof(atch_tgt_info_t));
+ 839:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Store the pointer to the cable VDO discovered by PD stack. */
+ 840:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].atch_tgt.cbl_vdo = &(dpm_get_info(port)->cbl_vdo);
+ 841:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Clear the SOP'' reset state. */
+ 842:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_emca_rst_state[port] = CABLE_DP_RESET_IDLE;
+ 843:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_emca_rst_count[port] = 0;
+ 844:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 845:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Stop the VDM task delay timer. */
+ 846:..\src\app\alt_mode/vdm_task_mngr.c ****     timer_stop(port, APP_VDM_BUSY_TIMER);
+ 847:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 848:..\src\app\alt_mode/vdm_task_mngr.c **** #if VDM_RESP_QUERY_SUPPORTED
+ 849:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_disc_id_resp_len[port] = 0;
+ 850:..\src\app\alt_mode/vdm_task_mngr.c ****     memset ((uint8_t *)&vdm_disc_id_resp[port], 0, MAX_NO_OF_DO * sizeof (uint32_t));
+ 851:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_disc_svid_resp_len[port] = 0;
+ 852:..\src\app\alt_mode/vdm_task_mngr.c ****     memset ((uint8_t *)&vdm_disc_svid_resp[port], 0, MAX_DISC_SVID_RESP_LEN * sizeof (uint32_t));
+ 853:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* VDM_RESP_QUERY_SUPPORTED */
+ 854:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 855:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 856:..\src\app\alt_mode/vdm_task_mngr.c **** void vdm_task_mngr_deinit(uint8_t port)
+ 857:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 858:..\src\app\alt_mode/vdm_task_mngr.c ****     /* CDT 247011 re-fix */
+ 859:..\src\app\alt_mode/vdm_task_mngr.c ****     app_get_status(port)->vdm_prcs_failed = false;
+ 860:..\src\app\alt_mode/vdm_task_mngr.c ****     /* If VDM task is not active, no need to go through the rest of the steps. */
+ARM GAS  e:\temp\ccdQoWUD.s 			page 27
+
+
+ 861:..\src\app\alt_mode/vdm_task_mngr.c ****     if (app_get_status(port)->vdm_task_en != false)
+ 862:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 863:..\src\app\alt_mode/vdm_task_mngr.c ****         reset_vdm_mngr(port);
+ 864:..\src\app\alt_mode/vdm_task_mngr.c ****         app_get_status(port)->vdm_task_en = false;
+ 865:..\src\app\alt_mode/vdm_task_mngr.c ****         app_get_status(port)->alt_mode_entered = false;
+ 866:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Exit from alt mode manager */
+ 867:..\src\app\alt_mode/vdm_task_mngr.c ****         vdm_task_mngr_alt_mode_process(port, VDM_EVT_EXIT);
+ 868:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Deinit App HW */
+ 869:..\src\app\alt_mode/vdm_task_mngr.c ****         alt_mode_hw_deinit(port);
+ 870:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 871:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 872:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 873:..\src\app\alt_mode/vdm_task_mngr.c **** static void sop_dp_soft_reset_cb(uint8_t port, resp_status_t resp, const pd_packet_t *pkt_ptr)
+ 874:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 875:..\src\app\alt_mode/vdm_task_mngr.c ****     switch (resp)
+ 876:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 877:..\src\app\alt_mode/vdm_task_mngr.c ****         case CMD_SENT:
+ 878:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Do nothing. */
+ 879:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 880:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 881:..\src\app\alt_mode/vdm_task_mngr.c ****         case RES_RCVD:
+ 882:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Proceed with rest of alternate mode state machine. */
+ 883:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_emca_rst_state[port] = CABLE_DP_RESET_DONE;
+ 884:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 885:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 886:..\src\app\alt_mode/vdm_task_mngr.c ****         default:
+ 887:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Retry the cable SOFT_RESET. */
+ 888:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_emca_rst_count[port]++;
+ 889:..\src\app\alt_mode/vdm_task_mngr.c ****             if (vdm_emca_rst_count[port] >= MAX_EMCA_DP_RESET_COUNT)
+ 890:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 891:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_emca_rst_state[port] = CABLE_DP_RESET_DONE;
+ 892:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 893:..\src\app\alt_mode/vdm_task_mngr.c ****             else
+ 894:..\src\app\alt_mode/vdm_task_mngr.c ****             {
+ 895:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_emca_rst_state[port] = CABLE_DP_RESET_RETRY;
+ 896:..\src\app\alt_mode/vdm_task_mngr.c ****             }
+ 897:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 898:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 899:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 900:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 901:..\src\app\alt_mode/vdm_task_mngr.c **** static void send_sop_dp_soft_reset(uint8_t port)
+ 902:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 903:..\src\app\alt_mode/vdm_task_mngr.c ****     dpm_pd_cmd_buf_t dpm_cmd_param;
+ 904:..\src\app\alt_mode/vdm_task_mngr.c ****     ccg_status_t     api_stat;
+ 905:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 906:..\src\app\alt_mode/vdm_task_mngr.c ****     dpm_cmd_param.cmd_sop      = SOP_DPRIME;
+ 907:..\src\app\alt_mode/vdm_task_mngr.c ****     dpm_cmd_param.no_of_cmd_do = 0;
+ 908:..\src\app\alt_mode/vdm_task_mngr.c ****     dpm_cmd_param.dat_ptr      = 0;
+ 909:..\src\app\alt_mode/vdm_task_mngr.c ****     dpm_cmd_param.timeout      = 15;
+ 910:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 911:..\src\app\alt_mode/vdm_task_mngr.c ****     api_stat = dpm_pd_command (port, DPM_CMD_SEND_SOFT_RESET_EMCA, &dpm_cmd_param, sop_dp_soft_rese
+ 912:..\src\app\alt_mode/vdm_task_mngr.c ****     switch (api_stat)
+ 913:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 914:..\src\app\alt_mode/vdm_task_mngr.c ****         case CCG_STAT_SUCCESS:
+ 915:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Wait for the cable SOFT_RESET response. */
+ 916:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_emca_rst_state[port] = CABLE_DP_RESET_WAIT;
+ 917:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ARM GAS  e:\temp\ccdQoWUD.s 			page 28
+
+
+ 918:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 919:..\src\app\alt_mode/vdm_task_mngr.c ****         case CCG_STAT_BUSY:
+ 920:..\src\app\alt_mode/vdm_task_mngr.c ****         case CCG_STAT_NOT_READY:
+ 921:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Need to retry the command. */
+ 922:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_emca_rst_state[port] = CABLE_DP_RESET_RETRY;
+ 923:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 924:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 925:..\src\app\alt_mode/vdm_task_mngr.c ****         default:
+ 926:..\src\app\alt_mode/vdm_task_mngr.c ****             /* Connection state changed. Abort the Cable SOFT_RESET process. */
+ 927:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_emca_rst_state[port] = CABLE_DP_RESET_DONE;
+ 928:..\src\app\alt_mode/vdm_task_mngr.c ****             break;
+ 929:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 930:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 931:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 932:..\src\app\alt_mode/vdm_task_mngr.c **** /* Fill DPM cmd buffer with properly VDM info */
+ 933:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t compose_vdm(uint8_t port)
+ 934:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 935:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t           idx;
+ 936:..\src\app\alt_mode/vdm_task_mngr.c ****     dpm_pd_cmd_buf_t  *vdm_buf = get_vdm_buff(port);
+ 937:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t    *msg_p   = get_msg(port);
+ 938:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 939:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_buf->cmd_sop                = msg_p->sop_type;
+ 940:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_buf->no_of_cmd_do           = msg_p->vdo_numb + VDO_START_IDX;
+ 941:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_buf->cmd_do[VDM_HEADER_IDX] = msg_p->vdm_header;
+ 942:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 943:..\src\app\alt_mode/vdm_task_mngr.c ****     if (msg_p->VDM_HDR.vdm_type == VDM_TYPE_STRUCTURED)
+ 944:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 945:..\src\app\alt_mode/vdm_task_mngr.c ****         msg_p->VDM_HDR.cmd_type    = CMD_TYPE_INITIATOR;
+ 946:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 947:..\src\app\alt_mode/vdm_task_mngr.c ****         if (vdm_buf->cmd_sop == SOP)
+ 948:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 949:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_buf->cmd_do[VDM_HEADER_IDX].std_vdm_hdr.st_ver = app_get_status(port)->vdm_version;
+ 950:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 951:..\src\app\alt_mode/vdm_task_mngr.c ****         else
+ 952:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 953:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_buf->cmd_do[VDM_HEADER_IDX].std_vdm_hdr.st_ver = dpm_get_info(port)->cbl_vdm_versio
+ 954:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 955:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 956:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Set exceptions for Enter/Exit mode cmd period */
+ 957:..\src\app\alt_mode/vdm_task_mngr.c ****         switch (msg_p->VDM_HDR.cmd)
+ 958:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 959:..\src\app\alt_mode/vdm_task_mngr.c ****             case VDM_CMD_ENTER_MODE:
+ 960:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_buf->timeout = PD_VDM_ENTER_MODE_RESPONSE_TIMER_PERIOD;
+ 961:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 962:..\src\app\alt_mode/vdm_task_mngr.c ****             case VDM_CMD_EXIT_MODE:
+ 963:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_buf->timeout = PD_VDM_EXIT_MODE_RESPONSE_TIMER_PERIOD;
+ 964:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 965:..\src\app\alt_mode/vdm_task_mngr.c ****             case VDM_CMD_ATTENTION:
+ 966:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* No timeout required for attention messages. */
+ 967:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_buf->timeout = NO_DATA;
+ 968:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 969:..\src\app\alt_mode/vdm_task_mngr.c ****             default:
+ 970:..\src\app\alt_mode/vdm_task_mngr.c ****                 vdm_buf->timeout = PD_VDM_RESPONSE_TIMER_PERIOD;
+ 971:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ 972:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 973:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 974:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Handle UVDM */
+ARM GAS  e:\temp\ccdQoWUD.s 			page 29
+
+
+ 975:..\src\app\alt_mode/vdm_task_mngr.c ****     else
+ 976:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 977:..\src\app\alt_mode/vdm_task_mngr.c ****         vdm_buf->timeout = PD_VDM_RESPONSE_TIMER_PERIOD;
+ 978:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 979:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 980:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Copy VDOs to send buffer */
+ 981:..\src\app\alt_mode/vdm_task_mngr.c ****     if (msg_p->vdo_numb > NO_DATA)
+ 982:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+ 983:..\src\app\alt_mode/vdm_task_mngr.c ****         for (idx = 0; idx < msg_p->vdo_numb; idx++)
+ 984:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+ 985:..\src\app\alt_mode/vdm_task_mngr.c ****             vdm_buf->cmd_do[idx + VDO_START_IDX].val = msg_p->vdo[idx].val;
+ 986:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+ 987:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+ 988:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 989:..\src\app\alt_mode/vdm_task_mngr.c ****     return true;
+ 990:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 991:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 992:..\src\app\alt_mode/vdm_task_mngr.c **** /* Parse received VDM and save info in  */
+ 993:..\src\app\alt_mode/vdm_task_mngr.c **** static uint8_t parse_vdm(uint8_t port, const pd_packet_t* rec_vdm)
+ 994:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 995:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t vdo_idx;
+ 996:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_msg_info_t *msg_p  = get_msg (port);
+ 997:..\src\app\alt_mode/vdm_task_mngr.c **** 
+ 998:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->vdm_header = rec_vdm->dat[VDM_HEADER_IDX];
+ 999:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->vdo_numb   = (rec_vdm->len - VDO_START_IDX);
+1000:..\src\app\alt_mode/vdm_task_mngr.c ****     msg_p->sop_type   = rec_vdm->sop;
+1001:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1002:..\src\app\alt_mode/vdm_task_mngr.c ****     /* If VDO is present in received VDM */
+1003:..\src\app\alt_mode/vdm_task_mngr.c ****     if (rec_vdm->len > VDO_START_IDX)
+1004:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+1005:..\src\app\alt_mode/vdm_task_mngr.c ****         for (vdo_idx = 0; vdo_idx < rec_vdm->len; vdo_idx++)
+1006:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+1007:..\src\app\alt_mode/vdm_task_mngr.c ****             msg_p->vdo[vdo_idx].val = rec_vdm->dat[vdo_idx + VDO_START_IDX].val;
+1008:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+1009:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+1010:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1011:..\src\app\alt_mode/vdm_task_mngr.c ****     return true;
+1012:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1013:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1014:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_task_t send_vdm(uint8_t port)
+1015:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1016:..\src\app\alt_mode/vdm_task_mngr.c ****     if ((gl_dpm_port_type[port] == PRT_TYPE_DFP) && (get_vdm_buff(port)->cmd_sop == SOP_DPRIME))
+1017:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+1018:..\src\app\alt_mode/vdm_task_mngr.c ****         switch (vdm_emca_rst_state[port])
+1019:..\src\app\alt_mode/vdm_task_mngr.c ****         {
+1020:..\src\app\alt_mode/vdm_task_mngr.c ****             /* If SOP'' SOFT RESET has not been done or a retry is pending, try to send it. */
+1021:..\src\app\alt_mode/vdm_task_mngr.c ****             case CABLE_DP_RESET_IDLE:
+1022:..\src\app\alt_mode/vdm_task_mngr.c ****             case CABLE_DP_RESET_RETRY:
+1023:..\src\app\alt_mode/vdm_task_mngr.c ****                 send_sop_dp_soft_reset(port);
+1024:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* Intentional fall-through. */
+1025:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1026:..\src\app\alt_mode/vdm_task_mngr.c ****             case CABLE_DP_RESET_WAIT:
+1027:..\src\app\alt_mode/vdm_task_mngr.c ****                 return VDM_TASK_SEND_MSG;
+1028:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1029:..\src\app\alt_mode/vdm_task_mngr.c ****             default:
+1030:..\src\app\alt_mode/vdm_task_mngr.c ****                 /* EMCA SOFT_RESET done. We can proceed. */
+1031:..\src\app\alt_mode/vdm_task_mngr.c ****                 break;
+ARM GAS  e:\temp\ccdQoWUD.s 			page 30
+
+
+1032:..\src\app\alt_mode/vdm_task_mngr.c ****         }
+1033:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+1034:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1035:..\src\app\alt_mode/vdm_task_mngr.c ****     app_get_status(port)->vdm_retry_pending = (vdm_stat[port].rec_retry_cnt != MAX_RETRY_CNT);
+1036:..\src\app\alt_mode/vdm_task_mngr.c ****     if (dpm_pd_command (port, DPM_CMD_SEND_VDM, get_vdm_buff(port), vdm_rec_cbk) == CCG_STAT_SUCCES
+1037:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+1038:..\src\app\alt_mode/vdm_task_mngr.c ****         return VDM_TASK_WAIT;
+1039:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+1040:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1041:..\src\app\alt_mode/vdm_task_mngr.c ****     /* If fails - try to send VDM again */
+1042:..\src\app\alt_mode/vdm_task_mngr.c ****     return VDM_TASK_SEND_MSG;
+1043:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1044:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1045:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE))
+1046:..\src\app\alt_mode/vdm_task_mngr.c **** bool is_ufp_disc_started(uint8_t port)
+1047:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1048:..\src\app\alt_mode/vdm_task_mngr.c ****     if (is_vdm_task_idle(port) == true)
+1049:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+1050:..\src\app\alt_mode/vdm_task_mngr.c ****         /* Set VDM Task to send DISC ID VDM */
+1051:..\src\app\alt_mode/vdm_task_mngr.c ****         set_task(port, VDM_TASK_DISC_ID);
+1052:..\src\app\alt_mode/vdm_task_mngr.c ****         set_evt(port, VDM_EVT_RUN);
+1053:..\src\app\alt_mode/vdm_task_mngr.c ****         return true;
+1054:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+1055:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1056:..\src\app\alt_mode/vdm_task_mngr.c ****     return false;
+1057:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1058:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (CCG_PD_REV3_ENABLE) && (UFP_ALT_MODE_SUPP) && (UFP_MODE_DISC_ENABLE) */
+1059:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1060:..\src\app\alt_mode/vdm_task_mngr.c **** bool is_vdm_mngr_enabled(uint8_t port)
+1061:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1062:..\src\app\alt_mode/vdm_task_mngr.c ****     return (bool)app_get_status(port)->vdm_task_en;
+1063:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1064:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1065:..\src\app\alt_mode/vdm_task_mngr.c **** vdm_evt_t get_evt(uint8_t port)
+1066:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1067:..\src\app\alt_mode/vdm_task_mngr.c ****     return vdm_stat[port].vdm_evt;
+1068:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1069:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1070:..\src\app\alt_mode/vdm_task_mngr.c **** vdm_task_t get_task(uint8_t port)
+1071:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1072:..\src\app\alt_mode/vdm_task_mngr.c ****     return vdm_stat[port].vdm_task;
+1073:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1074:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1075:..\src\app\alt_mode/vdm_task_mngr.c **** void set_task(uint8_t port, vdm_task_t task)
+1076:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1077:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].vdm_task = task;
+1078:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1079:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1080:..\src\app\alt_mode/vdm_task_mngr.c **** void set_evt(uint8_t port, vdm_evt_t evt)
+1081:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1082:..\src\app\alt_mode/vdm_task_mngr.c ****     vdm_stat[port].vdm_evt = evt;
+1083:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1084:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1085:..\src\app\alt_mode/vdm_task_mngr.c **** static vdm_msg_info_t* get_msg(uint8_t port)
+1086:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1087:..\src\app\alt_mode/vdm_task_mngr.c ****     return &vdm_stat[port].vdm_msg;
+1088:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ARM GAS  e:\temp\ccdQoWUD.s 			page 31
+
+
+1089:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* (DFP_ALT_MODE_SUPP) || (UFP_ALT_MODE_SUPP) */
+1090:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1091:..\src\app\alt_mode/vdm_task_mngr.c **** uint8_t *vdm_get_disc_id_resp(uint8_t port, uint8_t *resp_len_p)
+1092:..\src\app\alt_mode/vdm_task_mngr.c **** {
+1093:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t *ptr = NULL;
+1094:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1095:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Check for bad pointer argument. */
+1096:..\src\app\alt_mode/vdm_task_mngr.c ****     if (resp_len_p == NULL)
+1097:..\src\app\alt_mode/vdm_task_mngr.c ****         return NULL;
+1098:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1099:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Set response length to zero by default. */
+1100:..\src\app\alt_mode/vdm_task_mngr.c ****     *resp_len_p = 0;
+1101:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1102:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) && (VDM_RESP_QUERY_SUPPORTED))
+1103:..\src\app\alt_mode/vdm_task_mngr.c ****     if ((port < NO_OF_TYPEC_PORTS) && (gl_dpm_port_type[port] == PRT_TYPE_DFP))
+1104:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+1105:..\src\app\alt_mode/vdm_task_mngr.c ****         *resp_len_p = vdm_disc_id_resp_len[port];
+1106:..\src\app\alt_mode/vdm_task_mngr.c ****         ptr         = (uint8_t *)vdm_disc_id_resp[port];
+1107:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+1108:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* ((DFP_ALT_MODE_SUPP) && (VDM_RESP_QUERY_SUPPORTED)) */
+1109:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1110:..\src\app\alt_mode/vdm_task_mngr.c ****     return (ptr);
+1111:..\src\app\alt_mode/vdm_task_mngr.c **** }
+1112:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1113:..\src\app\alt_mode/vdm_task_mngr.c **** uint8_t *vdm_get_disc_svid_resp(uint8_t port, uint8_t *resp_len_p)
+1114:..\src\app\alt_mode/vdm_task_mngr.c **** {
+ 202              		.loc 1 1114 0
+ 203              		.cfi_startproc
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206              		@ link register save eliminated.
+ 207              	.LVL0:
+1115:..\src\app\alt_mode/vdm_task_mngr.c ****     uint8_t *ptr = NULL;
+1116:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1117:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Check for bad pointer argument. */
+1118:..\src\app\alt_mode/vdm_task_mngr.c ****     if (resp_len_p == NULL)
+ 208              		.loc 1 1118 0
+ 209 0000 0029     		cmp	r1, #0
+ 210 0002 01D0     		beq	.L8
+1119:..\src\app\alt_mode/vdm_task_mngr.c ****         return NULL;
+1120:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1121:..\src\app\alt_mode/vdm_task_mngr.c ****     /* Set response length to zero by default. */
+1122:..\src\app\alt_mode/vdm_task_mngr.c ****     *resp_len_p = 0;
+ 211              		.loc 1 1122 0
+ 212 0004 0023     		movs	r3, #0
+ 213 0006 0B70     		strb	r3, [r1]
+ 214              	.L8:
+1123:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1124:..\src\app\alt_mode/vdm_task_mngr.c **** #if ((DFP_ALT_MODE_SUPP) && (VDM_RESP_QUERY_SUPPORTED))
+1125:..\src\app\alt_mode/vdm_task_mngr.c ****     if ((port < NO_OF_TYPEC_PORTS) && (gl_dpm_port_type[port] == PRT_TYPE_DFP))
+1126:..\src\app\alt_mode/vdm_task_mngr.c ****     {
+1127:..\src\app\alt_mode/vdm_task_mngr.c ****         *resp_len_p = vdm_disc_svid_resp_len[port];
+1128:..\src\app\alt_mode/vdm_task_mngr.c ****         ptr         = (uint8_t *)vdm_disc_svid_resp[port];
+1129:..\src\app\alt_mode/vdm_task_mngr.c ****     }
+1130:..\src\app\alt_mode/vdm_task_mngr.c **** #endif /* ((DFP_ALT_MODE_SUPP) && (VDM_RESP_QUERY_SUPPORTED)) */
+1131:..\src\app\alt_mode/vdm_task_mngr.c **** 
+1132:..\src\app\alt_mode/vdm_task_mngr.c ****     return (ptr);
+ARM GAS  e:\temp\ccdQoWUD.s 			page 32
+
+
+1133:..\src\app\alt_mode/vdm_task_mngr.c **** }
+ 215              		.loc 1 1133 0
+ 216 0008 0020     		movs	r0, #0
+ 217              	.LVL1:
+ 218              		@ sp needed
+ 219 000a 7047     		bx	lr
+ 220              		.cfi_endproc
+ 221              	.LFE33:
+ 222              		.size	vdm_get_disc_svid_resp, .-vdm_get_disc_svid_resp
+ 223              		.text
+ 224              	.Letext0:
+ 225              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 226              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 227              		.section	.debug_info,"",%progbits
+ 228              	.Ldebug_info0:
+ 229 0000 0A010000 		.4byte	0x10a
+ 230 0004 0400     		.2byte	0x4
+ 231 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 232 000a 04       		.byte	0x4
+ 233 000b 01       		.uleb128 0x1
+ 234 000c 4E000000 		.4byte	.LASF19
+ 235 0010 0C       		.byte	0xc
+ 236 0011 F1010000 		.4byte	.LASF20
+ 237 0015 1A010000 		.4byte	.LASF21
+ 238 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 239 001d 00000000 		.4byte	0
+ 240 0021 00000000 		.4byte	.Ldebug_line0
+ 241 0025 02       		.uleb128 0x2
+ 242 0026 01       		.byte	0x1
+ 243 0027 06       		.byte	0x6
+ 244 0028 E5010000 		.4byte	.LASF0
+ 245 002c 03       		.uleb128 0x3
+ 246 002d 44000000 		.4byte	.LASF9
+ 247 0031 02       		.byte	0x2
+ 248 0032 1D       		.byte	0x1d
+ 249 0033 37000000 		.4byte	0x37
+ 250 0037 02       		.uleb128 0x2
+ 251 0038 01       		.byte	0x1
+ 252 0039 08       		.byte	0x8
+ 253 003a 9D010000 		.4byte	.LASF1
+ 254 003e 02       		.uleb128 0x2
+ 255 003f 02       		.byte	0x2
+ 256 0040 05       		.byte	0x5
+ 257 0041 32020000 		.4byte	.LASF2
+ 258 0045 02       		.uleb128 0x2
+ 259 0046 02       		.byte	0x2
+ 260 0047 07       		.byte	0x7
+ 261 0048 D2010000 		.4byte	.LASF3
+ 262 004c 02       		.uleb128 0x2
+ 263 004d 04       		.byte	0x4
+ 264 004e 05       		.byte	0x5
+ 265 004f B7010000 		.4byte	.LASF4
+ 266 0053 02       		.uleb128 0x2
+ 267 0054 04       		.byte	0x4
+ 268 0055 07       		.byte	0x7
+ 269 0056 1B000000 		.4byte	.LASF5
+ 270 005a 02       		.uleb128 0x2
+ARM GAS  e:\temp\ccdQoWUD.s 			page 33
+
+
+ 271 005b 08       		.byte	0x8
+ 272 005c 05       		.byte	0x5
+ 273 005d 00000000 		.4byte	.LASF6
+ 274 0061 02       		.uleb128 0x2
+ 275 0062 08       		.byte	0x8
+ 276 0063 07       		.byte	0x7
+ 277 0064 2D000000 		.4byte	.LASF7
+ 278 0068 04       		.uleb128 0x4
+ 279 0069 04       		.byte	0x4
+ 280 006a 05       		.byte	0x5
+ 281 006b 696E7400 		.ascii	"int\000"
+ 282 006f 02       		.uleb128 0x2
+ 283 0070 04       		.byte	0x4
+ 284 0071 07       		.byte	0x7
+ 285 0072 0E000000 		.4byte	.LASF8
+ 286 0076 03       		.uleb128 0x3
+ 287 0077 95010000 		.4byte	.LASF10
+ 288 007b 03       		.byte	0x3
+ 289 007c 18       		.byte	0x18
+ 290 007d 2C000000 		.4byte	0x2c
+ 291 0081 02       		.uleb128 0x2
+ 292 0082 04       		.byte	0x4
+ 293 0083 04       		.byte	0x4
+ 294 0084 15020000 		.4byte	.LASF11
+ 295 0088 02       		.uleb128 0x2
+ 296 0089 08       		.byte	0x8
+ 297 008a 04       		.byte	0x4
+ 298 008b B0010000 		.4byte	.LASF12
+ 299 008f 02       		.uleb128 0x2
+ 300 0090 01       		.byte	0x1
+ 301 0091 08       		.byte	0x8
+ 302 0092 AB010000 		.4byte	.LASF13
+ 303 0096 02       		.uleb128 0x2
+ 304 0097 08       		.byte	0x8
+ 305 0098 04       		.byte	0x4
+ 306 0099 C0010000 		.4byte	.LASF14
+ 307 009d 02       		.uleb128 0x2
+ 308 009e 04       		.byte	0x4
+ 309 009f 07       		.byte	0x7
+ 310 00a0 3C020000 		.4byte	.LASF15
+ 311 00a4 05       		.uleb128 0x5
+ 312 00a5 04       		.byte	0x4
+ 313 00a6 76000000 		.4byte	0x76
+ 314 00aa 02       		.uleb128 0x2
+ 315 00ab 01       		.byte	0x1
+ 316 00ac 02       		.byte	0x2
+ 317 00ad CC010000 		.4byte	.LASF16
+ 318 00b1 06       		.uleb128 0x6
+ 319 00b2 1B020000 		.4byte	.LASF22
+ 320 00b6 01       		.byte	0x1
+ 321 00b7 5904     		.2byte	0x459
+ 322 00b9 A4000000 		.4byte	0xa4
+ 323 00bd 01       		.byte	0x1
+ 324 00be E7000000 		.4byte	0xe7
+ 325 00c2 07       		.uleb128 0x7
+ 326 00c3 0A010000 		.4byte	.LASF17
+ 327 00c7 01       		.byte	0x1
+ARM GAS  e:\temp\ccdQoWUD.s 			page 34
+
+
+ 328 00c8 5904     		.2byte	0x459
+ 329 00ca 76000000 		.4byte	0x76
+ 330 00ce 07       		.uleb128 0x7
+ 331 00cf 0F010000 		.4byte	.LASF18
+ 332 00d3 01       		.byte	0x1
+ 333 00d4 5904     		.2byte	0x459
+ 334 00d6 A4000000 		.4byte	0xa4
+ 335 00da 08       		.uleb128 0x8
+ 336 00db 70747200 		.ascii	"ptr\000"
+ 337 00df 01       		.byte	0x1
+ 338 00e0 5B04     		.2byte	0x45b
+ 339 00e2 A4000000 		.4byte	0xa4
+ 340 00e6 00       		.byte	0
+ 341 00e7 09       		.uleb128 0x9
+ 342 00e8 B1000000 		.4byte	0xb1
+ 343 00ec 00000000 		.4byte	.LFB33
+ 344 00f0 0C000000 		.4byte	.LFE33-.LFB33
+ 345 00f4 01       		.uleb128 0x1
+ 346 00f5 9C       		.byte	0x9c
+ 347 00f6 0A       		.uleb128 0xa
+ 348 00f7 C2000000 		.4byte	0xc2
+ 349 00fb 00000000 		.4byte	.LLST0
+ 350 00ff 0B       		.uleb128 0xb
+ 351 0100 CE000000 		.4byte	0xce
+ 352 0104 01       		.uleb128 0x1
+ 353 0105 51       		.byte	0x51
+ 354 0106 0C       		.uleb128 0xc
+ 355 0107 DA000000 		.4byte	0xda
+ 356 010b 00       		.byte	0
+ 357 010c 00       		.byte	0
+ 358 010d 00       		.byte	0
+ 359              		.section	.debug_abbrev,"",%progbits
+ 360              	.Ldebug_abbrev0:
+ 361 0000 01       		.uleb128 0x1
+ 362 0001 11       		.uleb128 0x11
+ 363 0002 01       		.byte	0x1
+ 364 0003 25       		.uleb128 0x25
+ 365 0004 0E       		.uleb128 0xe
+ 366 0005 13       		.uleb128 0x13
+ 367 0006 0B       		.uleb128 0xb
+ 368 0007 03       		.uleb128 0x3
+ 369 0008 0E       		.uleb128 0xe
+ 370 0009 1B       		.uleb128 0x1b
+ 371 000a 0E       		.uleb128 0xe
+ 372 000b 55       		.uleb128 0x55
+ 373 000c 17       		.uleb128 0x17
+ 374 000d 11       		.uleb128 0x11
+ 375 000e 01       		.uleb128 0x1
+ 376 000f 10       		.uleb128 0x10
+ 377 0010 17       		.uleb128 0x17
+ 378 0011 00       		.byte	0
+ 379 0012 00       		.byte	0
+ 380 0013 02       		.uleb128 0x2
+ 381 0014 24       		.uleb128 0x24
+ 382 0015 00       		.byte	0
+ 383 0016 0B       		.uleb128 0xb
+ 384 0017 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccdQoWUD.s 			page 35
+
+
+ 385 0018 3E       		.uleb128 0x3e
+ 386 0019 0B       		.uleb128 0xb
+ 387 001a 03       		.uleb128 0x3
+ 388 001b 0E       		.uleb128 0xe
+ 389 001c 00       		.byte	0
+ 390 001d 00       		.byte	0
+ 391 001e 03       		.uleb128 0x3
+ 392 001f 16       		.uleb128 0x16
+ 393 0020 00       		.byte	0
+ 394 0021 03       		.uleb128 0x3
+ 395 0022 0E       		.uleb128 0xe
+ 396 0023 3A       		.uleb128 0x3a
+ 397 0024 0B       		.uleb128 0xb
+ 398 0025 3B       		.uleb128 0x3b
+ 399 0026 0B       		.uleb128 0xb
+ 400 0027 49       		.uleb128 0x49
+ 401 0028 13       		.uleb128 0x13
+ 402 0029 00       		.byte	0
+ 403 002a 00       		.byte	0
+ 404 002b 04       		.uleb128 0x4
+ 405 002c 24       		.uleb128 0x24
+ 406 002d 00       		.byte	0
+ 407 002e 0B       		.uleb128 0xb
+ 408 002f 0B       		.uleb128 0xb
+ 409 0030 3E       		.uleb128 0x3e
+ 410 0031 0B       		.uleb128 0xb
+ 411 0032 03       		.uleb128 0x3
+ 412 0033 08       		.uleb128 0x8
+ 413 0034 00       		.byte	0
+ 414 0035 00       		.byte	0
+ 415 0036 05       		.uleb128 0x5
+ 416 0037 0F       		.uleb128 0xf
+ 417 0038 00       		.byte	0
+ 418 0039 0B       		.uleb128 0xb
+ 419 003a 0B       		.uleb128 0xb
+ 420 003b 49       		.uleb128 0x49
+ 421 003c 13       		.uleb128 0x13
+ 422 003d 00       		.byte	0
+ 423 003e 00       		.byte	0
+ 424 003f 06       		.uleb128 0x6
+ 425 0040 2E       		.uleb128 0x2e
+ 426 0041 01       		.byte	0x1
+ 427 0042 3F       		.uleb128 0x3f
+ 428 0043 19       		.uleb128 0x19
+ 429 0044 03       		.uleb128 0x3
+ 430 0045 0E       		.uleb128 0xe
+ 431 0046 3A       		.uleb128 0x3a
+ 432 0047 0B       		.uleb128 0xb
+ 433 0048 3B       		.uleb128 0x3b
+ 434 0049 05       		.uleb128 0x5
+ 435 004a 27       		.uleb128 0x27
+ 436 004b 19       		.uleb128 0x19
+ 437 004c 49       		.uleb128 0x49
+ 438 004d 13       		.uleb128 0x13
+ 439 004e 20       		.uleb128 0x20
+ 440 004f 0B       		.uleb128 0xb
+ 441 0050 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccdQoWUD.s 			page 36
+
+
+ 442 0051 13       		.uleb128 0x13
+ 443 0052 00       		.byte	0
+ 444 0053 00       		.byte	0
+ 445 0054 07       		.uleb128 0x7
+ 446 0055 05       		.uleb128 0x5
+ 447 0056 00       		.byte	0
+ 448 0057 03       		.uleb128 0x3
+ 449 0058 0E       		.uleb128 0xe
+ 450 0059 3A       		.uleb128 0x3a
+ 451 005a 0B       		.uleb128 0xb
+ 452 005b 3B       		.uleb128 0x3b
+ 453 005c 05       		.uleb128 0x5
+ 454 005d 49       		.uleb128 0x49
+ 455 005e 13       		.uleb128 0x13
+ 456 005f 00       		.byte	0
+ 457 0060 00       		.byte	0
+ 458 0061 08       		.uleb128 0x8
+ 459 0062 34       		.uleb128 0x34
+ 460 0063 00       		.byte	0
+ 461 0064 03       		.uleb128 0x3
+ 462 0065 08       		.uleb128 0x8
+ 463 0066 3A       		.uleb128 0x3a
+ 464 0067 0B       		.uleb128 0xb
+ 465 0068 3B       		.uleb128 0x3b
+ 466 0069 05       		.uleb128 0x5
+ 467 006a 49       		.uleb128 0x49
+ 468 006b 13       		.uleb128 0x13
+ 469 006c 00       		.byte	0
+ 470 006d 00       		.byte	0
+ 471 006e 09       		.uleb128 0x9
+ 472 006f 2E       		.uleb128 0x2e
+ 473 0070 01       		.byte	0x1
+ 474 0071 31       		.uleb128 0x31
+ 475 0072 13       		.uleb128 0x13
+ 476 0073 11       		.uleb128 0x11
+ 477 0074 01       		.uleb128 0x1
+ 478 0075 12       		.uleb128 0x12
+ 479 0076 06       		.uleb128 0x6
+ 480 0077 40       		.uleb128 0x40
+ 481 0078 18       		.uleb128 0x18
+ 482 0079 9742     		.uleb128 0x2117
+ 483 007b 19       		.uleb128 0x19
+ 484 007c 00       		.byte	0
+ 485 007d 00       		.byte	0
+ 486 007e 0A       		.uleb128 0xa
+ 487 007f 05       		.uleb128 0x5
+ 488 0080 00       		.byte	0
+ 489 0081 31       		.uleb128 0x31
+ 490 0082 13       		.uleb128 0x13
+ 491 0083 02       		.uleb128 0x2
+ 492 0084 17       		.uleb128 0x17
+ 493 0085 00       		.byte	0
+ 494 0086 00       		.byte	0
+ 495 0087 0B       		.uleb128 0xb
+ 496 0088 05       		.uleb128 0x5
+ 497 0089 00       		.byte	0
+ 498 008a 31       		.uleb128 0x31
+ARM GAS  e:\temp\ccdQoWUD.s 			page 37
+
+
+ 499 008b 13       		.uleb128 0x13
+ 500 008c 02       		.uleb128 0x2
+ 501 008d 18       		.uleb128 0x18
+ 502 008e 00       		.byte	0
+ 503 008f 00       		.byte	0
+ 504 0090 0C       		.uleb128 0xc
+ 505 0091 34       		.uleb128 0x34
+ 506 0092 00       		.byte	0
+ 507 0093 31       		.uleb128 0x31
+ 508 0094 13       		.uleb128 0x13
+ 509 0095 1C       		.uleb128 0x1c
+ 510 0096 0B       		.uleb128 0xb
+ 511 0097 00       		.byte	0
+ 512 0098 00       		.byte	0
+ 513 0099 00       		.byte	0
+ 514              		.section	.debug_loc,"",%progbits
+ 515              	.Ldebug_loc0:
+ 516              	.LLST0:
+ 517 0000 00000000 		.4byte	.LVL0
+ 518 0004 0A000000 		.4byte	.LVL1
+ 519 0008 0100     		.2byte	0x1
+ 520 000a 50       		.byte	0x50
+ 521 000b 0A000000 		.4byte	.LVL1
+ 522 000f 0C000000 		.4byte	.LFE33
+ 523 0013 0400     		.2byte	0x4
+ 524 0015 F3       		.byte	0xf3
+ 525 0016 01       		.uleb128 0x1
+ 526 0017 50       		.byte	0x50
+ 527 0018 9F       		.byte	0x9f
+ 528 0019 00000000 		.4byte	0
+ 529 001d 00000000 		.4byte	0
+ 530              		.section	.debug_aranges,"",%progbits
+ 531 0000 1C000000 		.4byte	0x1c
+ 532 0004 0200     		.2byte	0x2
+ 533 0006 00000000 		.4byte	.Ldebug_info0
+ 534 000a 04       		.byte	0x4
+ 535 000b 00       		.byte	0
+ 536 000c 0000     		.2byte	0
+ 537 000e 0000     		.2byte	0
+ 538 0010 00000000 		.4byte	.LFB33
+ 539 0014 0C000000 		.4byte	.LFE33-.LFB33
+ 540 0018 00000000 		.4byte	0
+ 541 001c 00000000 		.4byte	0
+ 542              		.section	.debug_ranges,"",%progbits
+ 543              	.Ldebug_ranges0:
+ 544 0000 00000000 		.4byte	.LFB33
+ 545 0004 0C000000 		.4byte	.LFE33
+ 546 0008 00000000 		.4byte	0
+ 547 000c 00000000 		.4byte	0
+ 548              		.section	.debug_line,"",%progbits
+ 549              	.Ldebug_line0:
+ 550 0000 2A010000 		.section	.debug_str,"MS",%progbits,1
+ 550      02000F01 
+ 550      00000201 
+ 550      FB0E0D00 
+ 550      01010101 
+ 551              	.LASF6:
+ARM GAS  e:\temp\ccdQoWUD.s 			page 38
+
+
+ 552 0000 6C6F6E67 		.ascii	"long long int\000"
+ 552      206C6F6E 
+ 552      6720696E 
+ 552      7400
+ 553              	.LASF8:
+ 554 000e 756E7369 		.ascii	"unsigned int\000"
+ 554      676E6564 
+ 554      20696E74 
+ 554      00
+ 555              	.LASF5:
+ 556 001b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 556      20756E73 
+ 556      69676E65 
+ 556      6420696E 
+ 556      7400
+ 557              	.LASF7:
+ 558 002d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 558      206C6F6E 
+ 558      6720756E 
+ 558      7369676E 
+ 558      65642069 
+ 559              	.LASF9:
+ 560 0044 5F5F7569 		.ascii	"__uint8_t\000"
+ 560      6E74385F 
+ 560      7400
+ 561              	.LASF19:
+ 562 004e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 562      43313120 
+ 562      352E342E 
+ 562      31203230 
+ 562      31363036 
+ 563 0081 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 563      20726576 
+ 563      6973696F 
+ 563      6E203233 
+ 563      37373135 
+ 564 00b4 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects -finline-fu"
+ 564      66756E63 
+ 564      74696F6E 
+ 564      2D736563 
+ 564      74696F6E 
+ 565 00e7 6E637469 		.ascii	"nctions -flto -fno-strict-aliasing\000"
+ 565      6F6E7320 
+ 565      2D666C74 
+ 565      6F202D66 
+ 565      6E6F2D73 
+ 566              	.LASF17:
+ 567 010a 706F7274 		.ascii	"port\000"
+ 567      00
+ 568              	.LASF18:
+ 569 010f 72657370 		.ascii	"resp_len_p\000"
+ 569      5F6C656E 
+ 569      5F7000
+ 570              	.LASF21:
+ 571 011a 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 571      73657273 
+ 571      5C41646D 
+ARM GAS  e:\temp\ccdQoWUD.s 			page 39
+
+
+ 571      696E5C44 
+ 571      65736B74 
+ 572 0147 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 572      355C4359 
+ 572      50443532 
+ 572      32352D39 
+ 572      36425A58 
+ 573 0178 7465626F 		.ascii	"tebook.cydsn\\backup_fw.cydsn\000"
+ 573      6F6B2E63 
+ 573      7964736E 
+ 573      5C626163 
+ 573      6B75705F 
+ 574              	.LASF10:
+ 575 0195 75696E74 		.ascii	"uint8_t\000"
+ 575      385F7400 
+ 576              	.LASF1:
+ 577 019d 756E7369 		.ascii	"unsigned char\000"
+ 577      676E6564 
+ 577      20636861 
+ 577      7200
+ 578              	.LASF13:
+ 579 01ab 63686172 		.ascii	"char\000"
+ 579      00
+ 580              	.LASF12:
+ 581 01b0 646F7562 		.ascii	"double\000"
+ 581      6C6500
+ 582              	.LASF4:
+ 583 01b7 6C6F6E67 		.ascii	"long int\000"
+ 583      20696E74 
+ 583      00
+ 584              	.LASF14:
+ 585 01c0 6C6F6E67 		.ascii	"long double\000"
+ 585      20646F75 
+ 585      626C6500 
+ 586              	.LASF16:
+ 587 01cc 5F426F6F 		.ascii	"_Bool\000"
+ 587      6C00
+ 588              	.LASF3:
+ 589 01d2 73686F72 		.ascii	"short unsigned int\000"
+ 589      7420756E 
+ 589      7369676E 
+ 589      65642069 
+ 589      6E7400
+ 590              	.LASF0:
+ 591 01e5 7369676E 		.ascii	"signed char\000"
+ 591      65642063 
+ 591      68617200 
+ 592              	.LASF20:
+ 593 01f1 2E2E5C73 		.ascii	"..\\src\\app\\alt_mode\\vdm_task_mngr.c\000"
+ 593      72635C61 
+ 593      70705C61 
+ 593      6C745F6D 
+ 593      6F64655C 
+ 594              	.LASF11:
+ 595 0215 666C6F61 		.ascii	"float\000"
+ 595      7400
+ 596              	.LASF22:
+ARM GAS  e:\temp\ccdQoWUD.s 			page 40
+
+
+ 597 021b 76646D5F 		.ascii	"vdm_get_disc_svid_resp\000"
+ 597      6765745F 
+ 597      64697363 
+ 597      5F737669 
+ 597      645F7265 
+ 598              	.LASF2:
+ 599 0232 73686F72 		.ascii	"short int\000"
+ 599      7420696E 
+ 599      7400
+ 600              	.LASF15:
+ 601 023c 73697A65 		.ascii	"sizetype\000"
+ 601      74797065 
+ 601      00
+ 602              		.comm	__gnu_lto_v1,1,1
+ 603              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

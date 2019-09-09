@@ -1,0 +1,47 @@
+net ClockBlock_HFCLK
+	term   ":m0s8clockblockcell.hfclk"
+	switch ":m0s8clockblockcell.hfclk==>:interrupt_10.clock"
+	term   ":interrupt_10.clock"
+	switch ":m0s8clockblockcell.hfclk==>:interrupt_11.clock"
+	term   ":interrupt_11.clock"
+end ClockBlock_HFCLK
+net Net_2198
+	term   ":m0s8scbcell_0.interrupt"
+	switch ":m0s8scbcell_0.interrupt==>:interrupt_idmux_10.in_0"
+	switch ":interrupt_idmux_10.interrupt_idmux_10__out==>:interrupt_10.interrupt"
+	term   ":interrupt_10.interrupt"
+end Net_2198
+net Net_2265
+	term   ":m0s8scbcell_1.interrupt"
+	switch ":m0s8scbcell_1.interrupt==>:interrupt_idmux_11.in_0"
+	switch ":interrupt_idmux_11.interrupt_idmux_11__out==>:interrupt_11.interrupt"
+	term   ":interrupt_11.interrupt"
+end Net_2265
+net Net_2291
+	term   ":ioport5:pin1.fb"
+	switch ":ioport5:pin1.fb==>:ioport5:hsiom_in1.hsiom1_in"
+	switch ":ioport5:hsiom_in1.fixed_DPSLP_3==>:m0s8scbcell_0__i2c_scl__hsiom_permute.ioport5__fixed_out_p1_DPSLP_3"
+	switch ":m0s8scbcell_0__i2c_scl__hsiom_permute.m0s8scbcell_0__i2c_scl==>:m0s8scbcell_0.i2c_scl"
+	term   ":m0s8scbcell_0.i2c_scl"
+end Net_2291
+net Net_2292
+	term   ":ioport5:pin0.fb"
+	switch ":ioport5:pin0.fb==>:ioport5:hsiom_in0.hsiom0_in"
+	switch ":ioport5:hsiom_in0.fixed_DPSLP_3==>:m0s8scbcell_0__i2c_sda__hsiom_permute.ioport5__fixed_out_p0_DPSLP_3"
+	switch ":m0s8scbcell_0__i2c_sda__hsiom_permute.m0s8scbcell_0__i2c_sda==>:m0s8scbcell_0.i2c_sda"
+	term   ":m0s8scbcell_0.i2c_sda"
+end Net_2292
+net Net_2296
+	term   ":ioport1:pin2.fb"
+	switch ":ioport1:pin2.fb==>:ioport1:hsiom_in2.hsiom2_in"
+	switch ":ioport1:hsiom_in2.fixed_DPSLP_3==>:m0s8scbcell_1__i2c_scl__hsiom_permute.ioport1__fixed_out_p2_DPSLP_3"
+	switch ":m0s8scbcell_1__i2c_scl__hsiom_permute.m0s8scbcell_1__i2c_scl==>:m0s8scbcell_1.i2c_scl"
+	term   ":m0s8scbcell_1.i2c_scl"
+end Net_2296
+net Net_2297
+	term   ":ioport1:pin1.fb"
+	switch ":ioport1:pin1.fb==>:ioport1:hsiom_in1.hsiom1_in"
+	switch ":ioport1:hsiom_in1.fixed_DPSLP_3==>:m0s8scbcell_1__i2c_sda__hsiom_permute.ioport1__fixed_out_p1_DPSLP_3"
+	switch ":m0s8scbcell_1__i2c_sda__hsiom_permute.m0s8scbcell_1__i2c_sda==>:m0s8scbcell_1.i2c_sda"
+	term   ":m0s8scbcell_1.i2c_sda"
+end Net_2297

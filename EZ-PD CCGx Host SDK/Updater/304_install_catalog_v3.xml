@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="catalogschema.xsd">
+  <CatalogVersion CurrentVersion="21.111.304.3" Format="0" MinimumVersion="21.111.304.3"/>
+<PrerequisiteInfo>
+    <Prerequisite PrerequisiteID="0" DisplayName= "PSoC Programmer 3.27.1" MinimumVersion="21.106.0.104" MininmumReleaseID="3.27.1.3121" CyInstallerPrerequisite="true" Mandatory="true"/>
+    <Prerequisite PrerequisiteID="278" DisplayName= "PSoC Creator 4.2" MinimumVersion="21.108.278.8" MininmumReleaseID="4.2.0.641" CyInstallerPrerequisite="true" Mandatory="true"/>
+    <Prerequisite PrerequisiteID="276" DisplayName= "Peripheral Driver Library 3.0.1" MinimumVersion="21.107.276.5" MininmumReleaseID="3.0.1.1508" CyInstallerPrerequisite="true" Mandatory="true"/>
+    <Prerequisite PrerequisiteID="245" DisplayName= "EZ-PD Configuration Utility 1.1" MinimumVersion="21.101.245.8" MininmumReleaseID="1.1.0.188" CyInstallerPrerequisite="true" Mandatory="true"/>
+</PrerequisiteInfo>
+    <VenderInfo Name="Cypress">
+      <Description>
+	The EZ-PD CCGx device family provides a complete solution for passive Electronically Marked Cable Assembly (EMCA) cables, active EMCA cables, USB Type-C Notebooks, Power Adapters, Monitors, Docks and Cable Adapters (dongles).
+	The CCGx Host Software Development Kit (SDK) provides a USB-PD and Type-C specification compliant firmware stack and reference firmware that implements PD port controller applications for Notebook or Mobile platforms using each of the CCGx devices. The SDK includes firmware libraries and reference application sources, documentation and configuration/firmware upgrade tools.&lt;P&gt;	
+     </Description>
+    </VenderInfo>
+  <ProductInfo Name="EZ-PD CCGx Host SDK">{6A3D5E69-23CE-47DD-AEA9-61CBD5EECE13}</ProductInfo>
+    <Licenses>
+      <License Name="eula_CCGX" URL="eula_CCGX.htm"/>
+    </Licenses>
+  <Releases>
+    <Release Name="EZ-PD CCGx Host SDK 3.2.1" date="2018-06-27T14:52:01" ID="5" URL="CCGx_Host_SDK_ReleaseNotes.pdf"/>
+  </Releases>
+  <Package Name="EZ-PD CCGx Host SDK" Typical="true" PackageID="0" Mandatory="true">
+    <Description>
+	The EZ-PD CCGx Host SDK includes firmware libraries, code examples, user guides and configuration utility to enable users to make use of EZ-PD™ CCGx PD Controller in Notebook designs.&lt;P&gt;
+	&lt;P&gt;
+    </Description>
+    <LicenseRequirement Name="eula_CCGX" />
+    <Version Name="EZ-PD CCGx Host SDK 3.2.1" Number="3.2.1.5" URL="5/EZ-PD_CCGx_Host_SDK.msi" Size="32747008">
+      <ChangeLog>Version 3.2.1 Build 5 &lt;P&gt;Built on Wed Jun 27 14:52:01 2018</ChangeLog>
+      <release>5</release>
+    </Version>
+  </Package>
+</Catalog>

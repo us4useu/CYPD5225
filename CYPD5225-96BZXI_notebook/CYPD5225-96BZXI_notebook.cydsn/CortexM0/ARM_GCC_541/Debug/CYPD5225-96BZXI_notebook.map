@@ -1,0 +1,2148 @@
+Archive member included to satisfy reference by file (symbol)
+
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(I2C_CFG.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (symbol from plugin) (I2C_CFG_SetDriveMode)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(NCP81239_EN_P1.o)
+                              .\CortexM0\ARM_GCC_541\Debug\solution.o (symbol from plugin) (NCP81239_EN_P1_Write)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(NCP81239_EN_P2.o)
+                              .\CortexM0\ARM_GCC_541\Debug\solution.o (symbol from plugin) (NCP81239_EN_P2_Write)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyLib.o)
+                              .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o (symbol from plugin) (CySysClkWriteImoFreq)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(cyPm.o)
+                              .\CortexM0\ARM_GCC_541\Debug\app.o (symbol from plugin) (CySysPmDeepSleep)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyLFClk.o)
+                              .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o (symbol from plugin) (CySysWdtDisable)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (symbol from plugin) (CyDelayCycles)
+.\lib\ccg5_dualport\libccgx_hpi.a(hpi.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (symbol from plugin) (hpi_is_ec_ready)
+.\lib\ccg5_dualport\libccgx_hpi.a(i2c.o)
+                              hpi.o (symbol from plugin) (i2c_slave_ack_ctrl)
+.\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                              .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o (symbol from plugin) (typec_gen_entry_event)
+.\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                              .\CortexM0\ARM_GCC_541\Debug\main.o (symbol from plugin) (dpm_init)
+.\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                              .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o) (pe_init)
+.\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                              .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o) (pd_prot_init)
+.\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(EC_INT.o)
+                              hpi.o (symbol from plugin) (EC_INT_Write)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uqi.o)
+                              .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o) (__gnu_thumb1_case_uqi)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uhi.o)
+                              .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o) (__gnu_thumb1_case_uhi)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o)
+                              .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o) (__aeabi_idiv)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+                              e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o) (__aeabi_idiv0)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+                              .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o (symbol from plugin) (__errno)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+                              e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o (exit)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                              e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o) (_global_impure_ptr)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                              e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o (__libc_init_array)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+                              .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o) (memcpy)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                              e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o (memset)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+                              e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o) (_exit)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_sqi.o)
+                              e:\temp\ccCdUMCd.ltrans3.ltrans.o (__gnu_thumb1_case_sqi)
+e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+                              e:\temp\ccCdUMCd.ltrans2.ltrans.o (__aeabi_uidiv)
+
+Allocating common symbols
+Common symbol       size              file
+
+gl_dpm_status       0x318             .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ridge               0x30              .\CortexM0\ARM_GCC_541\Debug\intel_ridge.o (symbol from plugin)
+gl_sbu2_state       0x2               .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o (symbol from plugin)
+gl_aux1_config      0x2               .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o (symbol from plugin)
+gl_aux2_config      0x2               .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o (symbol from plugin)
+get_bat_status      0x8               .\CortexM0\ARM_GCC_541\Debug\app.o (symbol from plugin)
+gl_sbu1_state       0x2               .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o (symbol from plugin)
+gl_img_status       0x1               .\CortexM0\ARM_GCC_541\Debug\boot.o (symbol from plugin)
+gl_dpm_port_type    0x2               .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+
+Discarded input sections
+
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .data          0x00000000        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .text          0x00000000       0x78 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.extab     0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.exidx     0x00000000        0x8 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\boot.o (symbol from plugin)
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .text._exit    0x00000000        0x4 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .text.Delay_Reset_cb.lto_priv.50
+                0x00000000        0xa e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .bss           0x00000000        0x0 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .bss           0x00000000        0x0 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text.i2c_scb_3_intr_handler.lto_priv.146
+                0x00000000        0xa e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text.i2c_scb_2_intr_handler.lto_priv.145
+                0x00000000        0xa e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text.i2c_scb_1_intr_handler.lto_priv.144
+                0x00000000        0xa e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .data          0x00000000        0x2 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .text          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .data          0x00000000        0x0 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\flash.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\gpio.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\system.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\timer.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\utils.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\main.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\config.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\solution.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\instrumentation.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\alt_mode_hw.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\alt_modes_mngr.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\dp_sid.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\vdm_task_mngr.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\intel_ridge.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\intel_vid.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\app.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\pdo.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\psink.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\psource.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\swap.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\vdm.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\hal_ccgx.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cybootloader.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\cymetadata.o (symbol from plugin)
+ .text          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o (symbol from plugin)
+ .text          0x00000000        0x0 I2C_CFG.o (symbol from plugin)
+ .text          0x00000000        0x0 NCP81239_EN_P1.o (symbol from plugin)
+ .text          0x00000000        0x0 NCP81239_EN_P2.o (symbol from plugin)
+ .text          0x00000000        0x0 CyLib.o (symbol from plugin)
+ .text          0x00000000        0x0 cyPm.o (symbol from plugin)
+ .text          0x00000000        0x0 CyLFClk.o (symbol from plugin)
+ .data          0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .bss           0x00000000        0x0 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .text          0x00000000        0x0 hpi.o (symbol from plugin)
+ .text          0x00000000        0x0 i2c.o (symbol from plugin)
+ .text          0x00000000        0x0 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text          0x00000000        0x0 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_stop
+                0x00000000       0x40 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_disable
+                0x00000000       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_sleep
+                0x00000000       0x68 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_update_def_cable_cap
+                0x00000000        0xc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_get_def_cable_cap
+                0x00000000        0xc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_update_snk_wait_cap_period
+                0x00000000        0xc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_prot_reset
+                0x00000000        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text.dpm_set_cf
+                0x00000000       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .text          0x00000000        0x0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .data          0x00000000        0x0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.get_spec_rev_determined
+                0x00000000       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text          0x00000000        0x0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .data          0x00000000        0x0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .text.pd_prot_set_avoid_retry
+                0x00000000       0x24 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .text          0x00000000        0x0 EC_INT.o (symbol from plugin)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uqi.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uqi.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uhi.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uhi.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .text.exit     0x00000000       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .rodata._global_impure_ptr
+                0x00000000        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .text          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+ .text._exit    0x00000000        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_sqi.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_sqi.o)
+ .data          0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+ .bss           0x00000000        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+rom              0x00000000         0x00020000         xr
+ram              0x20000000         0x00003000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+START GROUP
+LOAD .\CortexM0\ARM_GCC_541\Debug\boot.o
+LOAD e:\temp\ccCdUMCd.ltrans0.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans1.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans2.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans3.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans4.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans5.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans6.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans7.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans8.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans9.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans10.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans11.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans12.ltrans.o
+LOAD e:\temp\ccCdUMCd.ltrans13.ltrans.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\flash.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\gpio.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\system.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\timer.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\utils.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\main.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\config.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\solution.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\instrumentation.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\alt_mode_hw.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\alt_modes_mngr.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\dp_sid.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\vdm_task_mngr.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\intel_ridge.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\intel_vid.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\app.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\pdo.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\psink.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\psource.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\swap.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\vdm.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\hal_ccgx.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\pdss_mx_hal.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\cybootloader.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o
+LOAD .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a
+LOAD .\lib\ccg5_dualport\libccgx_hpi.a
+LOAD .\lib\ccg5_dualport\libccgx_pd3.a
+END GROUP
+START GROUP
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc_nano.a
+END GROUP
+START GROUP
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc_nano.a
+END GROUP
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+START GROUP
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libc.a
+LOAD e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a
+END GROUP
+                0x0000e000                CY_APPL_ORIGIN = 0xe000
+                0x00000100                CY_FLASH_ROW_SIZE = 0x100
+                0x00000001                CY_APPL_NUM = 0x1
+                0x00000001                CY_APPL_MAX = 0x1
+                0x00000040                CY_METADATA_SIZE = 0x40
+                0x00000001                CY_APPL_LOADABLE = 0x1
+                0x00000000                CY_CHECKSUM_EXCLUDE_SIZE = ALIGN (0x0, CY_FLASH_ROW_SIZE)
+                0x00000000                CY_APP_FOR_STACK_AND_COPIER = 0x0
+                [!provide]                PROVIDE (__cy_heap_start, _end)
+                0x00000001                PROVIDE (__cy_region_num, ((__cy_regions_end - __cy_regions) / 0x10))
+                0x20003000                PROVIDE (__cy_stack, (ORIGIN (ram) + LENGTH (ram)))
+                [!provide]                PROVIDE (__cy_heap_end, (__cy_stack - 0x800))
+
+.cybootloader   0x00000000     0x1200
+ *(.cybootloader)
+ .cybootloader  0x00000000     0x1200 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00000000                cy_bootloader
+                0x0000e000                appl1_start = CY_APPL_ORIGIN?CY_APPL_ORIGIN:ALIGN (CY_FLASH_ROW_SIZE)
+                0x00016f00                appl2_start = (appl1_start + ALIGN ((((LENGTH (rom) - appl1_start) - (0x2 * CY_FLASH_ROW_SIZE)) / 0x2), CY_FLASH_ROW_SIZE))
+                0x0000e000                appl_start = (CY_APPL_NUM == 0x1)?appl1_start:appl2_start
+                0x00000000                cy_project_type_bootloader = (appl_start == 0x0)?0x1:0x0
+                0x00000000                cy_project_type_app_for_stack_and_copier = (CY_APP_FOR_STACK_AND_COPIER == 0x1)?0x1:0x0
+
+.text           0x0000e000    0x10540
+ CREATE_OBJECT_SYMBOLS
+                0x00000000                PROVIDE (__cy_interrupt_vector, RomVectors)
+ *(.romvectors)
+ .romvectors    0x0000e000       0x10 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00000001                ASSERT ((. != __cy_interrupt_vector), No interrupt vector)
+                0x00000001                ASSERT (CY_APPL_ORIGIN?(SIZEOF (.cybootloader) <= CY_APPL_ORIGIN):0x1, Wrong image location)
+                0x000000c0                . = 0xc0
+ *fill*         0x0000e010       0xb0 
+ *(.customer_region)
+ .customer_region
+                0x0000e0c0       0x20 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0000e0c0                customer_info
+ *(.base_version)
+ .base_version  0x0000e0e0        0x4 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+                0x0000e0e0                base_version
+ *(.app_version)
+ .app_version   0x0000e0e4        0x4 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0000e0e4                app_version
+ *(.dev_siliconid)
+ .dev_siliconid
+                0x0000e0e8        0x4 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0000e0e8                ccg_silicon_id
+ *(.fw_reserved)
+ .fw_reserved   0x0000e0ec       0x14 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0000e0ec                reserved_buf
+ *(.configSection)
+ .configSection
+                0x0000e100      0x400 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x0000e100                gl_config_table
+                0x0000e500                PROVIDE (__cy_reset, Reset)
+ *(.text.Reset)
+ .text.Reset    0x0000e500       0x20 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x0000e500                Reset
+                0x00000001                ASSERT ((. != __cy_reset), No reset code)
+ *(.psocinit)
+ *(.text .text.* .gnu.linkonce.t.*)
+ .text          0x0000e520       0x60 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .text.startup.main
+                0x0000e580     0x106c e:\temp\ccCdUMCd.ltrans0.ltrans.o
+                0x0000e580                main
+ .text.hpi_task.part.5.lto_priv.151
+                0x0000f5ec      0xe4c e:\temp\ccCdUMCd.ltrans1.ltrans.o
+                0x0000f5ec                hpi_task.part.5.lto_priv.151
+ .text.vconn_ocp_timer_cb
+                0x00010438       0x1c e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .text.IntDefaultHandler
+                0x00010454       0x24 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010454                IntDefaultHandler
+ .text.pd_fet_automode_disable.lto_priv.92
+                0x00010478       0x58 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010478                pd_fet_automode_disable.lto_priv.92
+ .text.pd_reset_edge_det
+                0x000104d0       0x24 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x000104d0                pd_reset_edge_det
+ .text.ocp_handler_wrapper
+                0x000104f4       0x24 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .text.pd_frs_tx_disable
+                0x00010518        0x4 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010518                pd_frs_tx_disable
+ .text.pd_frs_tx_enable
+                0x0001051c        0x4 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x0001051c                pd_frs_tx_enable
+ .text.pd_frs_rx_disable
+                0x00010520      0x124 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010520                pd_frs_rx_disable
+ .text.pd_get_vbus_adc_level
+                0x00010644       0x3a e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010644                pd_get_vbus_adc_level
+ *fill*         0x0001067e        0x2 
+ .text.hpd_deinit
+                0x00010680       0xa0 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010680                hpd_deinit
+ .text.pd_is_vconn_present
+                0x00010720       0x20 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010720                pd_is_vconn_present
+ .text.pd_typec_set_polarity
+                0x00010740       0x24 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010740                pd_typec_set_polarity
+ .text.pd_typec_dis_rd
+                0x00010764       0x38 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010764                pd_typec_dis_rd
+ .text.pd_typec_en_rd
+                0x0001079c       0x2c e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x0001079c                pd_typec_en_rd
+ .text.pd_typec_dis_dpslp_rp
+                0x000107c8       0x20 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x000107c8                pd_typec_dis_dpslp_rp
+ .text.pd_typec_dis_rp
+                0x000107e8       0x28 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x000107e8                pd_typec_dis_rp
+ .text.pd_typec_en_rp
+                0x00010810       0x7c e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010810                pd_typec_en_rp
+ .text.pd_typec_snk_update_trim
+                0x0001088c       0x40 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x0001088c                pd_typec_snk_update_trim
+ .text.pd_typec_stop
+                0x000108cc       0x98 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x000108cc                pd_typec_stop
+ .text.Start_c  0x00010964       0x48 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010964                Start_c
+ .text.pd_adc_restore_intr.isra.1.lto_priv.49
+                0x000109ac       0x58 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x000109ac                pd_adc_restore_intr.isra.1.lto_priv.49
+ .text.pd_frs_rx_enable
+                0x00010a04      0x12c e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010a04                pd_frs_rx_enable
+ .text.pd_typec_get_rp_rd_status
+                0x00010b30       0xf8 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .text.pd_typec_get_cc_status
+                0x00010c28      0x13c e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010c28                pd_typec_get_cc_status
+ .text.pd_internal_vbus_discharge_off
+                0x00010d64       0x38 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010d64                pd_internal_vbus_discharge_off
+ .text.pd_internal_vbus_discharge_on
+                0x00010d9c       0x6c e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010d9c                pd_internal_vbus_discharge_on
+ .text.pd_discharge_monitor_cb
+                0x00010e08       0xe0 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .text.pdss_intr1_handler
+                0x00010ee8      0x370 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x00010ee8                pdss_intr1_handler
+ .text.set_disc_mode_params
+                0x00011258       0x44 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .text.send_sln_app_evt
+                0x0001129c       0x50 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .text.dp_src_hpd_cbk.lto_priv.97
+                0x000112ec       0x40 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x000112ec                dp_src_hpd_cbk.lto_priv.97
+ .text.eval_alt_modes.lto_priv.103
+                0x0001132c      0x198 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x0001132c                eval_alt_modes.lto_priv.103
+ .text.run_disc_mode.lto_priv.98
+                0x000114c4       0xc8 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x000114c4                run_disc_mode.lto_priv.98
+ .text.handle_cbl_disc_mode
+                0x0001158c       0xc4 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .text.disc_mode_fail.lto_priv.100
+                0x00011650       0x34 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x00011650                disc_mode_fail.lto_priv.100
+ .text.eval_disc_mode.lto_priv.99
+                0x00011684      0x124 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x00011684                eval_disc_mode.lto_priv.99
+ .text.sln_psrc_disable
+                0x000117a8        0x8 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x000117a8                sln_psrc_disable
+ .text.eval_hpd_cmd
+                0x000117b0      0x140 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x000117b0                eval_hpd_cmd
+ .text.watchdog_timer_cb
+                0x000118f0       0x40 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x000118f0                watchdog_timer_cb
+ .text.sln_psrc_enable
+                0x00011930      0x1e8 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x00011930                sln_psrc_enable
+ .text.mux_ctrl_set_cfg
+                0x00011b18      0x1b4 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x00011b18                mux_ctrl_set_cfg
+ .text.set_mux  0x00011ccc       0x4c e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x00011ccc                set_mux
+ .text.monitor_alt_modes.lto_priv.102
+                0x00011d18      0x170 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x00011d18                monitor_alt_modes.lto_priv.102
+ .text.hpi_i2c_cmd_callback.lto_priv.140
+                0x00011e88      0x42c e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00011e88                hpi_i2c_cmd_callback.lto_priv.140
+ .text.unlikely.hpi_reg_clear_msg_queue.lto_priv.58
+                0x000122b4       0x38 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x000122b4                hpi_reg_clear_msg_queue.lto_priv.58
+ .text.hpi_reg_handle_queue.lto_priv.48
+                0x000122ec       0x98 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x000122ec                hpi_reg_handle_queue.lto_priv.48
+ .text.hpi_reg_handle_intr_write.lto_priv.56
+                0x00012384       0x84 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012384                hpi_reg_handle_intr_write.lto_priv.56
+ .text.hpi_reg_enqueue_event
+                0x00012408       0xb4 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012408                hpi_reg_enqueue_event
+ .text.hpi_dpm_cb
+                0x000124bc       0x4c e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .text.hpi_pd_event_handler
+                0x00012508      0x3cc e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012508                hpi_pd_event_handler
+ .text.hpi_typec_cmd_cb.lto_priv.53
+                0x000128d4       0x2c e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x000128d4                hpi_typec_cmd_cb.lto_priv.53
+ .text.hpi_pd_port_disable_cb.lto_priv.51
+                0x00012900       0x4c e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012900                hpi_pd_port_disable_cb.lto_priv.51
+ .text.CyDelayUs
+                0x0001294c        0xc e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x0001294c                CyDelayUs
+ .text.CySoftwareReset
+                0x00012958       0x18 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012958                CySoftwareReset
+ .text.hpi_reset_dev.lto_priv.57
+                0x00012970       0x7c e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012970                hpi_reset_dev.lto_priv.57
+ .text.startup.initialize_psoc
+                0x000129ec      0x1f0 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .text.hpi_initiate_dpm_command.isra.2.lto_priv.60
+                0x00012bdc       0x44 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x00012bdc                hpi_initiate_dpm_command.isra.2.lto_priv.60
+ .text.eval_fr_swap
+                0x00012c20       0x1c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00012c20                eval_fr_swap
+ .text.psrc_set_current
+                0x00012c3c        0x2 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00012c3c                psrc_set_current
+ .text.ovp_pwr_ready_cbk
+                0x00012c3e        0x2 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.call_psrc_ready_cbk
+                0x00012c40       0x1c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.eval_vdm
+                0x00012c5c      0x2d4 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00012c5c                eval_vdm
+ .text.get_response
+                0x00012f30       0x28 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.eval_vconn_swap
+                0x00012f58       0x58 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00012f58                eval_vconn_swap
+ .text.eval_pr_swap
+                0x00012fb0       0x78 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00012fb0                eval_pr_swap
+ .text.eval_dr_swap
+                0x00013028       0x44 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00013028                eval_dr_swap
+ .text.psrc_en_ovp
+                0x0001306c       0x34 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.psrc_select_voltage
+                0x000130a0       0x98 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.vbus_discharge_off
+                0x00013138       0x10 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00013138                vbus_discharge_off
+ .text.vbus_discharge_on
+                0x00013148       0x10 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00013148                vbus_discharge_on
+ .text.pd_hal_config_auto_toggle
+                0x00013158       0x20 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00013158                pd_hal_config_auto_toggle
+ .text.psrc_dis_ocp
+                0x00013178       0x9c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.psrc_shutdown
+                0x00013214       0x40 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.app_psrc_vbus_ocp_cbk
+                0x00013254       0x30 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00013254                app_psrc_vbus_ocp_cbk
+ .text.psrc_set_voltage
+                0x00013284       0x4c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x00013284                psrc_set_voltage
+ .text.app_psrc_tmr_cbk
+                0x000132d0      0x124 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x000132d0                app_psrc_tmr_cbk
+ .text.psnk_disable
+                0x000133f4       0x84 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x000133f4                psnk_disable
+ .text.app_psnk_tmr_cbk
+                0x00013478       0x64 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.psrc_disable
+                0x000134dc       0x9c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x000134dc                psrc_disable
+ .text.app_psrc_vbus_ovp_cbk
+                0x00013578       0x4c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .text.src_disable_cbk.lto_priv.52
+                0x000135c4        0x2 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x000135c4                src_disable_cbk.lto_priv.52
+ *fill*         0x000135c6        0x2 
+ .text.parse_vdm
+                0x000135c8       0x4c e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .text.sop_dp_soft_reset_cb.lto_priv.123
+                0x00013614       0x28 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x00013614                sop_dp_soft_reset_cb.lto_priv.123
+ .text.extd_msg_cb
+                0x0001363c       0x2c e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .text.pd_get_ptr_ocp_tbl
+                0x00013668       0x1c e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x00013668                pd_get_ptr_ocp_tbl
+ .text.set_disc_svid_param.lto_priv.153
+                0x00013684       0x40 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x00013684                set_disc_svid_param.lto_priv.153
+ .text.dp_exit.lto_priv.111
+                0x000136c4       0x30 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x000136c4                dp_exit.lto_priv.111
+ .text.dp_assign_vdo.lto_priv.110
+                0x000136f4       0x48 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x000136f4                dp_assign_vdo.lto_priv.110
+ .text.dp_eval_app_cmd.lto_priv.109
+                0x0001373c       0xb0 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x0001373c                dp_eval_app_cmd.lto_priv.109
+ .text.reset_vdm_mngr.lto_priv.152
+                0x000137ec       0x80 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x000137ec                reset_vdm_mngr.lto_priv.152
+ .text.vdm_task_mngr_deinit
+                0x0001386c       0x9c e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x0001386c                vdm_task_mngr_deinit
+ .text.app_handle_fault
+                0x00013908       0xa8 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .text.app_event_handler
+                0x000139b0      0x48c e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x000139b0                app_event_handler
+ .text.app_port_disable_cb.lto_priv.120
+                0x00013e3c       0x48 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x00013e3c                app_port_disable_cb.lto_priv.120
+ .text.vdm_rec_cbk.lto_priv.122
+                0x00013e84      0x214 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x00013e84                vdm_rec_cbk.lto_priv.122
+ .text.fault_recovery_timer_cb
+                0x00014098       0x74 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .text.psnk_set_current
+                0x0001410c       0x10 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x0001410c                psnk_set_current
+ .text.form_rdo
+                0x0001411c       0x98 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .text.eval_src_cap
+                0x000141b4      0x444 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x000141b4                eval_src_cap
+ .text.psnk_enable
+                0x000145f8       0x42 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x000145f8                psnk_enable
+ .text.app_cc_sbu_fault_handler.lto_priv.126
+                0x0001463a       0x10 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x0001463a                app_cc_sbu_fault_handler.lto_priv.126
+ *fill*         0x0001464a        0x2 
+ .text.eval_rdo
+                0x0001464c       0x30 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x0001464c                eval_rdo
+ .text.vbus_get_value
+                0x0001467c       0x14 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x0001467c                vbus_get_value
+ .text.vconn_is_present
+                0x00014690       0x14 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x00014690                vconn_is_present
+ .text.sink_fet_off
+                0x000146a4       0x10 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x000146a4                sink_fet_off
+ .text.app_psnk_vbus_ovp_cbk
+                0x000146b4       0x1e e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ *fill*         0x000146d2        0x2 
+ .text.app_ovp_disable
+                0x000146d4      0x110 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x000146d4                app_ovp_disable
+ .text.app_ovp_enable.part.5.lto_priv.86
+                0x000147e4      0x230 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x000147e4                app_ovp_enable.part.5.lto_priv.86
+ .text.psnk_set_voltage
+                0x00014a14       0x40 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x00014a14                psnk_set_voltage
+ .text.vbus_is_present
+                0x00014a54       0x54 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x00014a54                vbus_is_present
+ .text.vconn_disable
+                0x00014aa8       0xb0 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x00014aa8                vconn_disable
+ .text.app_vconn_ocp_cbk
+                0x00014b58       0x1e e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ *fill*         0x00014b76        0x2 
+ .text.vconn_enable
+                0x00014b78      0x12c e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                0x00014b78                vconn_enable
+ .text.dp_dfp_dequeue_hpd
+                0x00014ca4       0x28 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .text.dp_src_hpd_resp_cbk
+                0x00014ccc       0x30 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .text.dp_dfp_enqueue_hpd
+                0x00014cfc       0x8c e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .text.analyse_status_update_vdo
+                0x00014d88      0x148 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .text.alt_mode_mngr_deinit.lto_priv.101
+                0x00014ed0       0x74 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x00014ed0                alt_mode_mngr_deinit.lto_priv.101
+ .text.fail_alt_modes.lto_priv.104
+                0x00014f44       0xd0 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x00014f44                fail_alt_modes.lto_priv.104
+ .text.reset_dp_var.lto_priv.107
+                0x00015014       0x48 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x00015014                reset_dp_var.lto_priv.107
+ .text.is_prtnr_ccg_consistent.lto_priv.106
+                0x0001505c       0x24 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x0001505c                is_prtnr_ccg_consistent.lto_priv.106
+ .text.send_cmd.lto_priv.105
+                0x00015080       0x68 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x00015080                send_cmd.lto_priv.105
+ .text.dp_dfp_run
+                0x000150e8      0x218 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .text.reg_dp_modes
+                0x00015300      0x23c e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x00015300                reg_dp_modes
+ .text.eval_rec_vdm
+                0x0001553c      0x1b8 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x0001553c                eval_rec_vdm
+ .text.get_alt_mode_tbl_idx.lto_priv.118
+                0x000156f4       0x54 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x000156f4                get_alt_mode_tbl_idx.lto_priv.118
+ .text.move_to_vdm_info.lto_priv.116
+                0x00015748       0x9c e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x00015748                move_to_vdm_info.lto_priv.116
+ .text.get_next_alt_mode.lto_priv.117
+                0x000157e4       0x64 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                0x000157e4                get_next_alt_mode.lto_priv.117
+ .text.pd_phy_vbus_detach_cbk
+                0x00015848        0x2 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .text.pdss_port0_intr0_handler
+                0x0001584a        0xa e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .text.pdss_port1_intr0_handler
+                0x00015854        0xa e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .text.pdss_port0_intr1_handler
+                0x0001585e        0xa e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .text.pdss_port1_intr1_handler
+                0x00015868        0xa e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ *fill*         0x00015872        0x2 
+ .text.pd_hal_abort_auto_toggle
+                0x00015874       0x50 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x00015874                pd_hal_abort_auto_toggle
+ .text.pd_hal_is_auto_toggle_active
+                0x000158c4       0x28 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x000158c4                pd_hal_is_auto_toggle_active
+ .text.pd_phy_wake_port.lto_priv.80
+                0x000158ec      0x1ec e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x000158ec                pd_phy_wake_port.lto_priv.80
+ .text.pd_phy_detect_cc_rise
+                0x00015ad8       0xa4 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .text.ccg5_pump_enable.lto_priv.75
+                0x00015b7c       0x38 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x00015b7c                ccg5_pump_enable.lto_priv.75
+ .text.ccg5_pump_disable.lto_priv.76
+                0x00015bb4       0x28 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x00015bb4                ccg5_pump_disable.lto_priv.76
+ .text.pd_hal_init
+                0x00015bdc      0x2c8 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x00015bdc                pd_hal_init
+ .text.pd_phy_deepsleep
+                0x00015ea4      0x3e0 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x00015ea4                pd_phy_deepsleep
+ .text.pd_phy_read_data_from_mem
+                0x00016284       0x8c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .text.pd_phy_load_data_in_mem
+                0x00016310       0x8c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .text.pd_typec_rd_enable
+                0x0001639c       0x50 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x0001639c                pd_typec_rd_enable
+ .text.pd_typec_init
+                0x000163ec       0x58 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x000163ec                pd_typec_init
+ .text.pd_phy_is_busy
+                0x00016444       0x28 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016444                pd_phy_is_busy
+ .text.pd_phy_get_rx_packet
+                0x0001646c       0x14 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x0001646c                pd_phy_get_rx_packet
+ .text.pd_phy_abort_tx_msg
+                0x00016480       0x40 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016480                pd_phy_abort_tx_msg
+ .text.pd_phy_abort_bist_cm2
+                0x000164c0       0x28 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x000164c0                pd_phy_abort_bist_cm2
+ .text.pd_prot_rx_dis
+                0x000164e8       0x84 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x000164e8                pd_prot_rx_dis
+ .text.pd_prot_rx_en
+                0x0001656c       0x64 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x0001656c                pd_prot_rx_en
+ .text.pd_prot_stop
+                0x000165d0       0x34 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x000165d0                pd_prot_stop
+ .text.pd_phy_send_msg
+                0x00016604      0x12c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016604                pd_phy_send_msg
+ .text.pd_phy_load_msg
+                0x00016730       0x6c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016730                pd_phy_load_msg
+ .text.pd_phy_dis_unchunked_tx
+                0x0001679c       0x14 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x0001679c                pd_phy_dis_unchunked_tx
+ .text.pd_phy_refresh_roles
+                0x000167b0       0xe0 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x000167b0                pd_phy_refresh_roles
+ .text.pd_phy_init
+                0x00016890       0x84 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016890                pd_phy_init
+ .text.pd_phy_wakeup
+                0x00016914       0x12 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016914                pd_phy_wakeup
+ *fill*         0x00016926        0x2 
+ .text.pd_hal_typec_sm_restart
+                0x00016928       0x20 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016928                pd_hal_typec_sm_restart
+ .text.pd_typec_start
+                0x00016948      0x12c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016948                pd_typec_start
+ .text.pd_phy_send_bist_cm2
+                0x00016a74       0x2c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016a74                pd_phy_send_bist_cm2
+ .text.pd_phy_reset_rx_tx_sm
+                0x00016aa0       0x2c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .text.pd_phy_send_reset
+                0x00016acc       0x7c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016acc                pd_phy_send_reset
+ .text.pdss_intr0_handler
+                0x00016b48      0x52c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                0x00016b48                pdss_intr0_handler
+ .text.i2c_scb_read
+                0x00017074       0x74 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text.hpi_queue_pd_msg.constprop.36
+                0x000170e8       0xd0 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x000170e8                hpi_queue_pd_msg.constprop.36
+ .text.save_svids.constprop.23
+                0x000171b8       0xe4 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x000171b8                save_svids.constprop.23
+ .text.pd_internal_cfet_off.constprop.14
+                0x0001729c       0x30 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x0001729c                pd_internal_cfet_off.constprop.14
+ .text.pd_internal_pfet_on.constprop.13
+                0x000172cc       0x34 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x000172cc                pd_internal_pfet_on.constprop.13
+ .text.pd_internal_pfet_off.constprop.9
+                0x00017300       0x30 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x00017300                pd_internal_pfet_off.constprop.9
+ .text.pd_internal_cfet_on.constprop.3
+                0x00017330       0x58 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x00017330                pd_internal_cfet_on.constprop.3
+ .text.CyDelay.constprop.2
+                0x00017388       0x10 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x00017388                CyDelay.constprop.2
+ .text.i2c_reset
+                0x00017398       0x60 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x00017398                i2c_reset
+ .text.i2c_timer_cb
+                0x000173f8       0x24 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text.pd_adc_sample.constprop.15
+                0x0001741c       0x6c e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x0001741c                pd_adc_sample.constprop.15
+ .text.i2c_scb_intr_handler
+                0x00017488      0x310 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .text.i2c_scb_0_intr_handler.lto_priv.143
+                0x00017798        0xa e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x00017798                i2c_scb_0_intr_handler.lto_priv.143
+ *fill*         0x000177a2        0x2 
+ .text.timer_stop_internal
+                0x000177a4       0x54 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .text.mem_copy_word
+                0x000177f8       0x14 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x000177f8                mem_copy_word
+ .text.timer_stop_range.part.3.lto_priv.87
+                0x0001780c       0x4c e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0001780c                timer_stop_range.part.3.lto_priv.87
+ .text.timer_is_running
+                0x00017858       0x34 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017858                timer_is_running
+ .text.timer_stop_range
+                0x0001788c       0x10 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0001788c                timer_stop_range
+ .text.timer_stop
+                0x0001789c       0x48 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0001789c                timer_stop
+ .text.hsiom_set_config
+                0x000178e4       0x24 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x000178e4                hsiom_set_config
+ .text.flash_trig_row_write_in_place.lto_priv.59
+                0x00017908       0x7c e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017908                flash_trig_row_write_in_place.lto_priv.59
+ .text.flash_row_clear
+                0x00017984       0x34 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017984                flash_row_clear
+ .text.boot_validate_configtable
+                0x000179b8       0x5c e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x000179b8                boot_validate_configtable
+ .text.boot_validate_fw
+                0x00017a14       0x8c e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017a14                boot_validate_fw
+ .text.hw_timer_load_period
+                0x00017aa0       0x28 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .text.wdt_interrupt_handler.lto_priv.148
+                0x00017ac8      0x14c e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017ac8                wdt_interrupt_handler.lto_priv.148
+ .text.timer_start
+                0x00017c14      0x168 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017c14                timer_start
+ .text.timer_start_wocb
+                0x00017d7c        0xa e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x00017d7c                timer_start_wocb
+ *fill*         0x00017d86        0x2 
+ .text.mux_xfer_timer_cb
+                0x00017d88        0xc e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .text.get_pd_port_config
+                0x00017d94       0x10 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+                0x00017d94                get_pd_port_config
+ .text.get_pd_config
+                0x00017da4        0x8 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+                0x00017da4                get_pd_config
+ .text.I2C_Write
+                0x00017dac       0xf0 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+                0x00017dac                I2C_Write
+ *fill*         0x00017e9c        0x4 
+ .text          0x00017ea0       0x20 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+                0x00017ea0                CyDelayCycles
+                0x00017eb2                CyEnterCriticalSection
+                0x00017eba                CyExitCriticalSection
+ .text.typec_src_disable_done_cbk
+                0x00017ec0       0x14 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__disabled
+                0x00017ed4        0x2 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm_dpm_resp
+                0x00017ed6       0x2c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_is_connection_detected
+                0x00017f02       0x66 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_pwr_ready_cbk
+                0x00017f68        0xa .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ *fill*         0x00017f72        0x2 
+ .text.typec_tmr_cbk
+                0x00017f74       0x2c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_gn_fsm_attach
+                0x00017fa0       0x34 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_timer_start
+                0x00017fd4       0x10 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_debounce_reset
+                0x00017fe4       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.cc_debounce
+                0x0001802c      0x138 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_gen_entry_event
+                0x00018164       0x30 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018164                typec_gen_entry_event
+ .text.typec_gn_fsm_snk_src_detach
+                0x00018194       0x3c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm_attached_src_snk
+                0x000181d0      0x214 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm_attach_evt
+                0x000183e4       0xf4 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__attach_wait
+                0x000184d8       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.trans_next_state
+                0x000184f0       0x54 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_init
+                0x00018544       0x10 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018544                typec_init
+ .text.typec_start
+                0x00018554       0x88 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018554                typec_start
+ .text.typec_is_busy
+                0x000185dc       0x88 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x000185dc                typec_is_busy
+ .text.typec_sync_toggle
+                0x00018664       0x84 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018664                typec_sync_toggle
+ .text.typec_deepsleep
+                0x000186e8        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x000186e8                typec_deepsleep
+ .text.typec_wakeup
+                0x000186f0        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x000186f0                typec_wakeup
+ .text.typec_change_rp
+                0x000186f8       0x44 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x000186f8                typec_change_rp
+ .text.typec_fsm_accessory
+                0x0001873c       0x7c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_apply_rp
+                0x000187b8       0x36 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x000187b8                typec_apply_rp
+ .text.typec_assert_rp
+                0x000187ee       0x16 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x000187ee                typec_assert_rp
+ .text.typec_assert_rd
+                0x00018804       0x2c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018804                typec_assert_rd
+ .text.typec_reset
+                0x00018830       0x8c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_unattached
+                0x000188bc       0xc4 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__unattached_src
+                0x00018980       0x1a .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__unattached_snk
+                0x0001899a       0x1a .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__try_snk
+                0x000189b4       0x60 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__try_wait_snk
+                0x00018a14       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__try_src
+                0x00018a2c       0x3a .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__try_wait_src
+                0x00018a66        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.dpm_typec_deassert_rp_rd
+                0x00018a6e       0x1e .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018a6e                dpm_typec_deassert_rp_rd
+ .text.typec_disable
+                0x00018a8c       0x7c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_fsm__err_recov
+                0x00018b08       0xd4 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .text.typec_stop
+                0x00018bdc       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018bdc                typec_stop
+ .text.typec_fsm
+                0x00018bf4      0x430 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x00018bf4                typec_fsm
+ .text.dpm_init
+                0x00019024       0xb0 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019024                dpm_init
+ .text.dpm_start
+                0x000190d4       0x40 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000190d4                dpm_start
+ .text.dpm_deepsleep
+                0x00019114       0x78 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019114                dpm_deepsleep
+ .text.dpm_wakeup
+                0x0001918c        0xa .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x0001918c                dpm_wakeup
+ *fill*         0x00019196        0x2 
+ .text.dpm_task
+                0x00019198       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019198                dpm_task
+ .text.dpm_get_info
+                0x000191e0       0x10 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000191e0                dpm_get_info
+ .text.dpm_get_snk_wait_cap_period
+                0x000191f0        0xc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000191f0                dpm_get_snk_wait_cap_period
+ .text.dpm_update_mux_enable_wait_period
+                0x000191fc        0xc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000191fc                dpm_update_mux_enable_wait_period
+ .text.dpm_get_mux_enable_wait_period
+                0x00019208        0xc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019208                dpm_get_mux_enable_wait_period
+ .text.dpm_update_swap_response
+                0x00019214       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019214                dpm_update_swap_response
+ .text.dpm_update_src_cap
+                0x00019230       0x44 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019230                dpm_update_src_cap
+ .text.dpm_update_src_cap_mask
+                0x00019274       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019274                dpm_update_src_cap_mask
+ .text.dpm_update_snk_cap
+                0x00019290       0x44 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019290                dpm_update_snk_cap
+ .text.dpm_update_snk_cap_mask
+                0x000192d4       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000192d4                dpm_update_snk_cap_mask
+ .text.dpm_update_snk_max_min
+                0x000192f0       0x34 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000192f0                dpm_update_snk_max_min
+ .text.dpm_update_port_config
+                0x00019324       0x4c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019324                dpm_update_port_config
+ .text.dpm_is_rdo_valid
+                0x00019370       0x6c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019370                dpm_is_rdo_valid
+ .text.dpm_get_polarity
+                0x000193dc       0x14 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000193dc                dpm_get_polarity
+ .text.dpm_get_status
+                0x000193f0       0x10 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000193f0                dpm_get_status
+ .text.dpm_refresh_src_cap
+                0x00019400      0x1ec .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019400                dpm_refresh_src_cap
+ .text.dpm_refresh_snk_cap
+                0x000195ec       0xbc .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000195ec                dpm_refresh_snk_cap
+ .text.dpm_is_prev_contract_valid
+                0x000196a8       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000196a8                dpm_is_prev_contract_valid
+ .text.dpm_get_evtno_n_clear
+                0x000196c4       0x3a .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000196c4                dpm_get_evtno_n_clear
+ *fill*         0x000196fe        0x2 
+ .text.dpm_get_sink_detach_voltage
+                0x00019700       0x30 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019700                dpm_get_sink_detach_voltage
+ .text.dpm_get_sink_detach_margin
+                0x00019730       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019730                dpm_get_sink_detach_margin
+ .text.dpm_set_pe_evt
+                0x0001974c       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x0001974c                dpm_set_pe_evt
+ .text.dpm_pd_command_ec
+                0x00019774      0x104 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019774                dpm_pd_command_ec
+ .text.dpm_pd_command
+                0x00019878       0x2c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019878                dpm_pd_command
+ .text.dpm_clear_pe_evt
+                0x000198a4       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000198a4                dpm_clear_pe_evt
+ .text.dpm_set_typec_evt
+                0x000198cc       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000198cc                dpm_set_typec_evt
+ .text.dpm_typec_command
+                0x000198f4       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000198f4                dpm_typec_command
+ .text.dpm_clear_typec_evt
+                0x0001993c       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x0001993c                dpm_clear_typec_evt
+ .text.dpm_get_default_pd_rev
+                0x00019964        0x4 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019964                dpm_get_default_pd_rev
+ .text.dpm_is_frs_rx_supported
+                0x00019968       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019968                dpm_is_frs_rx_supported
+ .text.dpm_is_frs_tx_supported
+                0x00019980       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019980                dpm_is_frs_tx_supported
+ .text.dpm_update_port_status
+                0x00019998       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019998                dpm_update_port_status
+ .text.dpm_get_pd_port_status
+                0x000199c0      0x110 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x000199c0                dpm_get_pd_port_status
+ .text.dpm_update_frs_enable
+                0x00019ad0       0x50 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019ad0                dpm_update_frs_enable
+ .text.dpm_update_ext_src_cap
+                0x00019b20       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019b20                dpm_update_ext_src_cap
+ .text.dpm_prot_reset_rx
+                0x00019b3c        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019b3c                dpm_prot_reset_rx
+ .text.dpm_pe_stop
+                0x00019b44       0x12 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019b44                dpm_pe_stop
+ *fill*         0x00019b56        0x2 
+ .text.dpm_set_alert
+                0x00019b58       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019b58                dpm_set_alert
+ .text.dpm_clear_hard_reset_count
+                0x00019b78       0x12 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019b78                dpm_clear_hard_reset_count
+ *fill*         0x00019b8a        0x2 
+ .text.dpm_set_fault_active
+                0x00019b8c       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019b8c                dpm_set_fault_active
+ .text.dpm_clear_fault_active
+                0x00019bac       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019bac                dpm_clear_fault_active
+ .text.dpm_set_chunk_transfer_running
+                0x00019bcc       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019bcc                dpm_set_chunk_transfer_running
+ .text.dpm_notify_app
+                0x00019bec       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019bec                dpm_notify_app
+ .text.dpm_notify_app_wdata
+                0x00019c08       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019c08                dpm_notify_app_wdata
+ .text.dpm_send_hard_reset
+                0x00019c24        0xe .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x00019c24                dpm_send_hard_reset
+ .text.pe_fsm_off
+                0x00019c32        0x2 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_tmr_cbk
+                0x00019c34       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_pwr_ready_cbk
+                0x00019c50        0xa .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_dpm_cmd_clear
+                0x00019c5a       0x14 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x00019c6e        0x2 
+ .text.check_vconn_swap_required
+                0x00019c70       0xc8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_clr_timeout_gen_entry_event
+                0x00019d38       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_wait_new_cap
+                0x00019d80        0xe .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x00019d8e        0x2 
+ .text.pe_reset_spec_rev
+                0x00019d90       0x3c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_reset_flags
+                0x00019dcc       0xfc .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_update_cbl_rev
+                0x00019ec8       0x38 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_dpm_cmd_response
+                0x00019f00       0x64 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_dpm_resp
+                0x00019f64        0xa .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x00019f6e        0x2 
+ .text.pe_send_sr
+                0x00019f70       0x40 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.sr_ams_exit
+                0x00019fb0       0x26 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_send_hr
+                0x00019fd6       0x3e .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_vdm_resp_cbk
+                0x0001a014       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_app_resp_cbk
+                0x0001a03c       0x28 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_prs_complete
+                0x0001a064       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_drs_change_role
+                0x0001a0ac       0x70 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_hr_rcvd
+                0x0001a11c       0x3e .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x0001a15a        0x2 
+ .text.pe_fsm_snk_eval_cap
+                0x0001a15c       0xd0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_timer_start
+                0x0001a22c       0x10 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_trans_supply
+                0x0001a23c      0x154 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.vs_cbk   0x0001a390       0x9c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_swap_accepted
+                0x0001a42c       0xc0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_swap_eval
+                0x0001a4ec      0x200 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_vconn_swap_complete
+                0x0001a6ec       0x44 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_vrs_vconn_on
+                0x0001a730       0x76 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x0001a7a6        0x2 
+ .text.pe_src_snk_contract_done
+                0x0001a7a8       0xb4 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_check_rev
+                0x0001a85c       0xb0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_neg_cap
+                0x0001a90c       0xf8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_src_snk_startup
+                0x0001aa04       0x7c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_bist_cm2
+                0x0001aa80       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_bist_test_data
+                0x0001aac8        0xc .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_hr_reset_flags
+                0x0001aad4       0xb8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_hr_reset
+                0x0001ab8c       0x40 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.snk_discovery_cbk
+                0x0001abcc       0x64 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pd_cbk   0x0001ac30       0x34 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_sr_rcvd
+                0x0001ac64       0x38 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_hr_complete
+                0x0001ac9c       0x74 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_hr_snk_wait_vbus_on
+                0x0001ad10       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_hr_src_recover
+                0x0001ad58       0x1e .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x0001ad76        0x2 
+ .text.pe_fsm_src_startup
+                0x0001ad78       0x7c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_snk_startup
+                0x0001adf4       0x16 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x0001ae0a        0x2 
+ .text.pe_fsm_hr_snk_trans_dflt
+                0x0001ae0c       0x5c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_jump_send_extd_msg_wor
+                0x0001ae68       0x78 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_jump_send_ctrl_msg_wr
+                0x0001aee0       0x78 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_jump_send_data_msg_wor
+                0x0001af58       0x78 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_jump_send_ctrl_msg_wor
+                0x0001afd0       0x78 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_send_reject
+                0x0001b048       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_handle_extd_msg
+                0x0001b064       0xc0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_init  0x0001b124       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001b124                pe_init
+ .text.pe_start
+                0x0001b144       0x32 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001b144                pe_start
+ .text.pe_stop  0x0001b176       0x12 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001b176                pe_stop
+ .text.pe_is_busy
+                0x0001b188       0x68 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001b188                pe_is_busy
+ .text.pd_is_msg
+                0x0001b1f0       0x74 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001b1f0                pd_is_msg
+ .text.pe_is_sop_ctrl_msg
+                0x0001b264       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_vrs_vconn_off
+                0x0001b284       0x68 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_sr_send
+                0x0001b2ec       0xa4 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_snk_trans
+                0x0001b390      0x24c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_snk_sel_cap
+                0x0001b5dc       0xb8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_send_cap
+                0x0001b694      0x134 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.validate_n_store_cbl_vdo
+                0x0001b7c8       0xa0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_send_cbl_dscid
+                0x0001b868       0xc4 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.cbl_cbk  0x0001b92c      0x110 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_send_cbl_sr
+                0x0001ba3c       0x64 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_snk_wait_for_cap
+                0x0001baa0       0x80 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_pkt_rcvd
+                0x0001bb20      0x33c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_ready
+                0x0001be5c      0x53c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_send_msg
+                0x0001c398      0x3d0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_clear_hard_reset_count
+                0x0001c768       0x1c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001c768                pe_clear_hard_reset_count
+ .text.pe_disabled
+                0x0001c784       0x46 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001c784                pe_disabled
+ *fill*         0x0001c7ca        0x2 
+ .text.pe_fsm_src_discovery
+                0x0001c7cc       0xa4 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_err_recovery
+                0x0001c870       0x36 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x0001c8a6        0x2 
+ .text.pe_fsm_frs_src_snk_cc_signal
+                0x0001c8a8       0x64 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_frs_check_rp
+                0x0001c90c       0x70 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_prs_snk_src_vbus_on
+                0x0001c97c       0xe8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_prs_snk_src_wait_ps_rdy
+                0x0001ca64       0x90 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_prs_src_snk_wait_ps_rdy
+                0x0001caf4       0x68 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_prs_src_snk_vbus_off
+                0x0001cb5c       0xf8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_prs_src_snk_trans
+                0x0001cc54       0x26 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x0001cc7a        0x2 
+ .text.pe_fsm_swap_send
+                0x0001cc7c      0x148 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_src_send_ps_rdy
+                0x0001cdc4      0x12c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_hr_snk_wait_vbus_off
+                0x0001cef0       0x88 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_hr_src_vbus_on
+                0x0001cf78       0x64 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm_hr_src_trans_dflt
+                0x0001cfdc       0x84 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.pe_fsm   0x0001d060      0x4c8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                0x0001d060                pe_fsm
+ .text.pe_fsm_hr_send
+                0x0001d528      0x104 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .text.analyze_rx
+                0x0001d62c      0x160 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .text.pd_prot_init
+                0x0001d78c       0x2c .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d78c                pd_prot_init
+ .text.pd_prot_start
+                0x0001d7b8       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d7b8                pd_prot_start
+ .text.pd_prot_refresh_roles
+                0x0001d7d8       0x12 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d7d8                pd_prot_refresh_roles
+ *fill*         0x0001d7ea        0x2 
+ .text.pd_prot_reset
+                0x0001d7ec       0x30 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d7ec                pd_prot_reset
+ .text.pd_prot_reset_all
+                0x0001d81c       0x4c .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d81c                pd_prot_reset_all
+ .text.pd_prot_reset_rx
+                0x0001d868       0x24 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d868                pd_prot_reset_rx
+ .text.pd_prot_is_busy
+                0x0001d88c       0x48 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d88c                pd_prot_is_busy
+ .text.tx_msg_over
+                0x0001d8d4       0x6c .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d8d4                tx_msg_over
+ .text.check_collision
+                0x0001d940       0x3c .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001d940                check_collision
+ .text.phy_cbk  0x0001d97c      0x238 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .text.prl_tmr_cbk
+                0x0001dbb4       0x70 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .text.pd_send_msg
+                0x0001dc24      0x278 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001dc24                pd_send_msg
+ .text.pd_register_msg
+                0x0001de9c       0xe0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001de9c                pd_register_msg
+ .text.pd_prot_send_ctrl_msg
+                0x0001df7c       0x14 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001df7c                pd_prot_send_ctrl_msg
+ .text.pd_prot_send_data_msg
+                0x0001df90       0x1a .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001df90                pd_prot_send_data_msg
+ .text.pd_prot_send_extd__msg
+                0x0001dfaa       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001dfaa                pd_prot_send_extd__msg
+ *fill*         0x0001dfc2        0x2 
+ .text.pd_prot_send_hard_reset
+                0x0001dfc4       0x7c .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001dfc4                pd_prot_send_hard_reset
+ .text.pd_prot_send_cable_reset
+                0x0001e040       0x54 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e040                pd_prot_send_cable_reset
+ .text.pd_prot_en_bist_cm2
+                0x0001e094        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e094                pd_prot_en_bist_cm2
+ .text.pd_prot_dis_bist_cm2
+                0x0001e09c        0x8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e09c                pd_prot_dis_bist_cm2
+ .text.pd_prot_en_bist_test_data
+                0x0001e0a4       0x24 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e0a4                pd_prot_en_bist_test_data
+ .text.pd_prot_dis_bist_test_data
+                0x0001e0c8       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e0c8                pd_prot_dis_bist_test_data
+ .text.pd_prot_get_rx_packet
+                0x0001e0e8       0x14 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e0e8                pd_prot_get_rx_packet
+ .text.pd_prot_frs_rx_enable
+                0x0001e0fc       0x30 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e0fc                pd_prot_frs_rx_enable
+ .text.pd_prot_frs_rx_disable
+                0x0001e12c       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e12c                pd_prot_frs_rx_disable
+ .text.pd_prot_frs_tx_enable
+                0x0001e14c       0x30 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e14c                pd_prot_frs_tx_enable
+ .text.pd_prot_frs_tx_disable
+                0x0001e17c       0x20 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                0x0001e17c                pd_prot_frs_tx_disable
+ .text          0x0001e19c       0x14 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uqi.o)
+                0x0001e19c                __gnu_thumb1_case_uqi
+ .text          0x0001e1b0       0x14 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uhi.o)
+                0x0001e1b0                __gnu_thumb1_case_uhi
+ .text          0x0001e1c4      0x1d4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o)
+                0x0001e1c4                __divsi3
+                0x0001e1c4                __aeabi_idiv
+                0x0001e390                __aeabi_idivmod
+ .text          0x0001e398        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+                0x0001e398                __aeabi_idiv0
+                0x0001e398                __aeabi_ldiv0
+ .text.__errno  0x0001e39c        0xc e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+                0x0001e39c                __errno
+ .text.__libc_init_array
+                0x0001e3a8       0x4c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+                0x0001e3a8                __libc_init_array
+ .text.memcpy   0x0001e3f4       0x12 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+                0x0001e3f4                memcpy
+ .text.memset   0x0001e406       0x10 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+                0x0001e406                memset
+ *fill*         0x0001e416        0x2 
+ .text          0x0001e418       0x14 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_sqi.o)
+                0x0001e418                __gnu_thumb1_case_sqi
+ .text          0x0001e42c      0x114 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+                0x0001e42c                __aeabi_uidiv
+                0x0001e42c                __udivsi3
+                0x0001e538                __aeabi_uidivmod
+ *(.plt)
+ *(.gnu.warning)
+ *(.glue_7t)
+ .glue_7t       0x0001e540        0x0 linker stubs
+ *(.glue_7)
+ .glue_7        0x0001e540        0x0 linker stubs
+ *(.vfp11_veneer)
+ .vfp11_veneer  0x0001e540        0x0 linker stubs
+ *(.bootloader)
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+ *(.gcc_except_table)
+
+.v4_bx          0x0001e540        0x0
+ .v4_bx         0x0001e540        0x0 linker stubs
+
+.iplt           0x0001e540        0x0
+ .iplt          0x0001e540        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x0001e540        0x4
+ *(.eh_frame)
+ .eh_frame      0x0001e540        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .eh_frame      0x0001e540        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+                [!provide]                PROVIDE (__exidx_start, .)
+
+.ARM.exidx
+ *(.ARM.exidx* .gnu.linkonce.armexidx.*)
+                0x0001e544                __exidx_end = .
+
+.rodata         0x0001e544      0x40c
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x0001e544       0x62 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ *fill*         0x0001e5a6        0x2 
+ .rodata        0x0001e5a8       0x48 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+                0x0001e5ec                gl_img2_fw_metadata
+ .rodata        0x0001e5f0       0x30 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x0001e5f0                thresholds
+                0x0001e600                GPIO
+                0x0001e618                pd_vbus_mon_divider.lto_priv.88
+                0x0001e61c                gl_ccg_supply_changed_cb
+ .rodata        0x0001e620       0x9e e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ *fill*         0x0001e6be        0x2 
+ .rodata        0x0001e6c0       0xe8 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .rodata        0x0001e7a8        0x4 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .rodata        0x0001e7ac       0x20 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x0001e7ac                alt_mode_ams_table.lto_priv.124
+ .rodata        0x0001e7cc        0x3 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ *fill*         0x0001e7cf        0x1 
+ .rodata        0x0001e7d0       0x1c e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .rodata        0x0001e7ec       0x1c e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x0001e7ec                SCB_PRT
+                0x0001e7fc                gl_pdss.lto_priv.74
+                0x0001e804                dfp_compatibility_mode_table
+ .rodata        0x0001e808       0x18 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .rodata        0x0001e820       0x38 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                0x0001e820                typec_dpmcmd_rp_map
+                0x0001e824                typec_fsm_table
+ .rodata        0x0001e858        0xa .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x0001e858                CUR_TABLE
+ *fill*         0x0001e862        0x2 
+ .rodata        0x0001e864       0xb4 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .rodata.str1.1
+                0x0001e918        0x2 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                0x0001e91c                . = ALIGN (0x4)
+ *fill*         0x0001e91a        0x2 
+ *(.init)
+ .init          0x0001e91c        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+                0x0001e91c                _init
+ .init          0x0001e920        0x8 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+                0x0001e928                . = ALIGN (0x4)
+                0x0001e928                __preinit_array_start = .
+ *(.preinit_array)
+                0x0001e928                __preinit_array_end = .
+                0x0001e928                . = ALIGN (0x4)
+                0x0001e928                __init_array_start = .
+ *(SORT(.init_array.*))
+ *(.init_array)
+ .init_array    0x0001e928        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .init_array    0x0001e92c        0x4 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x0001e930                __init_array_end = .
+                0x0001e930                . = ALIGN (0x4)
+ *(.fini)
+ .fini          0x0001e930        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+                0x0001e930                _fini
+ .fini          0x0001e934        0x8 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+                0x0001e93c                . = ALIGN (0x4)
+                0x0001e93c                __fini_array_start = .
+ *(.fini_array)
+ .fini_array    0x0001e93c        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ *(SORT(.fini_array.*))
+                0x0001e940                __fini_array_end = .
+                0x0001e940                . = ALIGN (0x4)
+ *crtbegin.o(.ctors)
+ *(EXCLUDE_FILE(*crtend.o) .ctors)
+ *(SORT(.ctors.*))
+ *crtend.o(.ctors)
+                0x0001e940                . = ALIGN (0x4)
+ *crtbegin.o(.dtors)
+ *(EXCLUDE_FILE(*crtend.o) .dtors)
+ *(SORT(.dtors.*))
+ *crtend.o(.dtors)
+                0x0001e940                . = ALIGN (0x4)
+                0x0001e940                __cy_regions = .
+                0x0001e940        0x4 LONG 0x1e950 __cy_region_init_ram
+                0x0001e944        0x4 LONG 0x20000098 __cy_region_start_data
+                0x0001e948        0x4 LONG 0xa8 __cy_region_init_size_ram
+                0x0001e94c        0x4 LONG 0x1f48 __cy_region_zero_size_ram
+                0x0001e950                __cy_regions_end = .
+                0x0001e950                . = ALIGN (0x8)
+                0x0001e950                _etext = .
+
+.ramvectors     0x20000000       0x8c
+                0x20000000                __cy_region_start_ram = .
+ *(.ramvectors)
+ .ramvectors    0x20000000       0x8c e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x20000000                CyRamVectors
+
+.btldr_run      0x20000090        0x4
+ *(.bootloaderruntype)
+ .bootloaderruntype
+                0x20000090        0x4 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+
+.noinit
+ *(.noinit)
+
+.data           0x20000098       0xa8 load address 0x0001e950
+                0x20000098                __cy_region_start_data = .
+ *(.jcr)
+ .jcr           0x20000098        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .jcr           0x20000098        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ *(.got.plt)
+ *(.got)
+ *(.shdata)
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x2000009c        0x6 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ *fill*         0x200000a2        0x2 
+ .data          0x200000a4       0x16 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+                0x200000a4                gl_active_fw
+                0x200000a8                gl_hpi_flash_size.lto_priv.147
+                0x200000ac                gl_hpi_flashrow_size.lto_priv.64
+                0x200000ae                gl_flash_access_first.lto_priv.133
+                0x200000b0                gl_flash_access_last.lto_priv.134
+                0x200000b2                gl_flash_metadata_row.lto_priv.135
+                0x200000b4                gl_flash_bl_last_row.lto_priv.136
+                0x200000b6                gl_hpi_dpm_cmd.lto_priv.61
+                0x200000b8                gl_hpi_typec_cmd.lto_priv.73
+ *fill*         0x200000ba        0x2 
+ .data          0x200000bc       0x10 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x200000bc                gRunTimeDataAddr
+                0x200000c0                pd_vbus_detach_adc_id.lto_priv.81
+                0x200000c4                pdss_rp_trim_db_0.lto_priv.83
+                0x200000c8                pdss_rp_trim_db_1.lto_priv.84
+ .data          0x200000cc        0x2 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ *fill*         0x200000ce        0x2 
+ .data          0x200000d0        0x4 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .data          0x200000d4        0x4 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .data.impure_data
+                0x200000d8       0x60 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .data._impure_ptr
+                0x20000138        0x4 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+                0x20000138                _impure_ptr
+                0x20000140                . = ALIGN (0x8)
+ *fill*         0x2000013c        0x4 
+ *(.ram)
+                0x20000140                _edata = .
+
+.igot.plt       0x20000140        0x0 load address 0x0001e9f8
+ .igot.plt      0x20000140        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+
+.bss            0x20000140     0x1f48 load address 0x0001e9f8
+                0x20000140                PROVIDE (__bss_start__, .)
+ *(.shbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x20000140       0x1c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .bss           0x2000015c      0x30e e:\temp\ccCdUMCd.ltrans0.ltrans.o
+                0x2000015c                gl_timer_handle.lto_priv.154
+                0x20000444                gl_num_active.lto_priv.155
+                0x20000446                gl_total_active.lto_priv.156
+                0x20000468                gl_match.lto_priv.157
+ *fill*         0x2000046a        0x2 
+ .bss           0x2000046c      0xa25 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+                0x2000046c                gl_hpi_buffer.lto_priv.63
+                0x2000058c                hpi_wr_count.lto_priv.68
+                0x2000058e                hpi_scb_idx.lto_priv.66
+                0x20000590                gl_flash_write_in_place.lto_priv.158
+                0x20000594                gl_hpi_reg_space.lto_priv.65
+                0x200009cc                gl_hpi_port_stop_pending.lto_priv.70
+                0x200009d0                app_status
+                0x20000a7c                gl_hpi_dpm_cmd_param.lto_priv.62
+                0x20000ad4                hpi_ec_ready.lto_priv.125
+                0x20000ad5                vdm_disc_id_resp_len.lto_priv.93
+                0x20000ad8                vdm_disc_id_resp.lto_priv.94
+                0x20000b10                vdm_disc_svid_resp_len.lto_priv.95
+                0x20000b14                vdm_disc_svid_resp.lto_priv.96
+                0x20000ba4                hpi_am_disc_count.lto_priv.72
+                0x20000ba8                hpi_am_disc_resp.lto_priv.71
+                0x20000da8                alt_mode
+                0x20000e90                hpi_cmd_pending.lto_priv.67
+ *fill*         0x20000e91        0x3 
+ .bss           0x20000e94      0x2bc e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                0x20000e94                gl_vconn_ocp_cb.lto_priv.90
+                0x20000e9c                gl_vbus_ocp_pgdo_type
+                0x20000ea0                vbus_ocp_cbk
+                0x20000ea8                gl_pdss_status.lto_priv.78
+                0x20001118                hpd_transmit_enable.lto_priv.114
+                0x2000111c                hpd_cbks.lto_priv.79
+                0x20001124                pdss_active_ports.lto_priv.77
+                0x20001128                pd_vbus_detach_adc_input.lto_priv.82
+                0x2000112f                ccg_si_revision
+                0x20001130                gl_vconn_channel.lto_priv.91
+                0x20001132                gl_vconn_ocp_debounce.lto_priv.89
+                0x20001134                gl_ccg_fault_cb
+                0x20001138                gl_vbus_ovp_filter_id
+                0x20001140                gl_vbus_ovp_pgdo_type
+                0x20001144                gl_ovp_cb
+                0x2000114c                gl_vbus_ocp_mode.lto_priv.85
+                0x2000114e                gl_ocp_sw_db_ms.lto_priv.115
+ .bss           0x20001150        0xc e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                0x20001158                gMainLoopDelay
+ .bss           0x2000115c      0x22d e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                0x2000115c                gl_hpi_reg_ptr.lto_priv.137
+                0x20001164                gl_hpi_pd_evt_queue.lto_priv.138
+                0x20001384                gl_hpi_snk_min_stat.lto_priv.141
+                0x20001386                gl_hpi_gotomin_rcvd.lto_priv.142
+                0x20001388                hpi_accessed.lto_priv.139
+ *fill*         0x20001389        0x3 
+ .bss           0x2000138c       0x24 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                0x2000138c                gl_vdm_id_vdo_cnt.lto_priv.127
+                0x20001390                gl_vdm_id_vdo_p.lto_priv.128
+                0x20001398                gl_vdm_svid_vdo_cnt.lto_priv.129
+                0x2000139c                gl_vdm_svid_vdo_p.lto_priv.130
+                0x200013a4                gl_vdm_mode_data_len.lto_priv.131
+                0x200013a8                gl_vdm_mode_data_p.lto_priv.132
+ .bss           0x200013b0       0xf8 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                0x200013b0                vdm_emca_rst_state.lto_priv.121
+                0x200013b6                gl_alt_mode_cmd_pending.lto_priv.112
+                0x200013b8                gl_hw_cmd_cbk.lto_priv.108
+                0x200013c0                dp
+                0x20001478                gl_alt_mode_hpd_state.lto_priv.113
+                0x2000148a                gl_app_fault_retry_limit.lto_priv.150
+ .bss           0x200014a8       0x22 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .bss           0x200014ca        0x2 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                0x200014ca                gl_multiplier.lto_priv.149
+ .bss           0x200014cc      0x11c e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                0x200014cc                gl_i2c_scb_config.lto_priv.119
+                0x2000152c                gl_hpi_event_queue.lto_priv.69
+                0x20001550                vdm_stat
+                0x200015e0                i2c_ack_disable.lto_priv.54
+                0x200015e4                i2c_ack_pending.lto_priv.55
+ .bss           0x200015e8        0xb e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .bss           0x200015f3        0x1 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .bss           0x200015f4       0x18 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .bss           0x2000160c        0x2 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ *fill*         0x2000160e        0x2 
+ .bss           0x20001610      0x4a2 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ *fill*         0x20001ab2        0x2 
+ .bss           0x20001ab4      0x2b8 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ *(COMMON)
+ COMMON         0x20001d6c      0x31a .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                0x20001d6c                gl_dpm_status
+                0x20002084                gl_dpm_port_type
+                0x20002088                . = ALIGN (0x8)
+ *fill*         0x20002086        0x2 
+ *(.ram.b)
+                0x20002088                _end = .
+                0x20002088                __end = .
+                0x20002088                PROVIDE (end, .)
+                0x20002088                PROVIDE (__bss_end__, .)
+                0x0001e950                __cy_region_init_ram = LOADADDR (.data)
+                0x000000a8                __cy_region_init_size_ram = (_edata - ADDR (.data))
+                0x00001f48                __cy_region_zero_size_ram = (_end - _edata)
+
+.heap           0x20002088        0x0 load address 0x0001e9f8
+                0x20002088                . = _end
+                0x20002088                __cy_heap_limit = .
+
+.stack          0x20002800      0x800
+                0x20002800                __cy_stack_limit = .
+                0x20003000                . = (. + 0x800)
+ *fill*         0x20002800      0x800 
+                0x00000001                ASSERT ((__cy_stack_limit >= __cy_heap_limit), region RAM overflowed with stack)
+
+.cy_checksum_exclude
+                0x0001ff00        0x0
+ *(.cy_checksum_exclude)
+                0x00000000                cy_checksum_exclude_size = (CY_APPL_LOADABLE == 0x1)?SIZEOF (.cy_checksum_exclude):0x0
+                0x00000001                ASSERT ((cy_checksum_exclude_size <= CY_CHECKSUM_EXCLUDE_SIZE), CY_BOOT: Section .cy_checksum_exclude size exceedes specified limit.)
+                0xf0000000                cyloadermeta_start = (cy_project_type_bootloader || cy_project_type_app_for_stack_and_copier)?(LENGTH (rom) - CY_METADATA_SIZE):0xf0000000
+
+.cyloadermeta   0xf0000000       0x40
+ *(.cyloadermeta)
+ .cyloadermeta  0xf0000000       0x40 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0xf0000000                cy_meta_loader
+                0x0001fec0                cyloadablemeta_start = cy_project_type_app_for_stack_and_copier?((LENGTH (rom) - CY_FLASH_ROW_SIZE) - CY_METADATA_SIZE):((LENGTH (rom) - CY_FLASH_ROW_SIZE) - CY_METADATA_SIZE)
+
+.cyloadablemeta
+                0x0001fec0       0x40
+ *(.cyloadablemeta)
+ .cyloadablemeta
+                0x0001fec0       0x40 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x0001fec0                cy_meta_loadable
+
+.cyflashprotect
+                0x90400000       0x40
+ *(.cyflashprotect)
+ .cyflashprotect
+                0x90400000       0x40 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x90400000                cy_meta_flashprotect
+
+.cymeta         0x90500000        0xc
+ *(.cymeta)
+ .cymeta        0x90500000        0xc e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x90500000                cy_metadata
+
+.cychipprotect  0x90600000        0x1
+ *(.cychipprotect)
+ .cychipprotect
+                0x90600000        0x1 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                0x90600000                cy_meta_chipprotect
+
+.rel.dyn        0x0001ff00        0x0 load address 0x90600004
+ .rel.iplt      0x0001ff00        0x0 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0xed0
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x20 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_aranges
+                0x00000020       0x20 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_aranges
+                0x00000040       0xf8 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_aranges
+                0x00000138       0x90 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_aranges
+                0x000001c8       0x98 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_aranges
+                0x00000260       0xc8 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_aranges
+                0x00000328       0x98 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_aranges
+                0x000003c0       0xa0 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_aranges
+                0x00000460       0x90 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_aranges
+                0x000004f0       0x80 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_aranges
+                0x00000570       0xd0 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_aranges
+                0x00000640       0x98 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_aranges
+                0x000006d8       0x90 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_aranges
+                0x00000768       0x38 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_aranges
+                0x000007a0       0x20 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .debug_aranges
+                0x000007c0      0x158 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_aranges
+                0x00000918      0x1d8 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_aranges
+                0x00000af0      0x2e0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_aranges
+                0x00000dd0      0x100 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x00000000    0x517fa
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x00000000     0x6fea e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_info    0x00006fea     0x5251 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_info    0x0000c23b     0x53b1 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_info    0x000115ec     0x5ddc e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_info    0x000173c8     0x44a1 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_info    0x0001b869     0x4e3c e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_info    0x000206a5     0x4cba e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_info    0x0002535f     0x525b e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_info    0x0002a5ba     0x335d e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_info    0x0002d917     0x40da e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_info    0x000319f1     0x4262 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_info    0x00035c53     0x3632 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_info    0x00039285     0x13d2 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_info    0x0003a657      0x6cc e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_info    0x0003ad23       0xb9 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .debug_info    0x0003addc     0x5172 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_info    0x0003ff4e     0x412f .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_info    0x0004407d     0x9663 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_info    0x0004d6e0     0x411a .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.debug_abbrev   0x00000000     0x4fe8
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x512 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_abbrev  0x00000512      0x4ce e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_abbrev  0x000009e0      0x5af e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_abbrev  0x00000f8f      0x593 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_abbrev  0x00001522      0x507 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_abbrev  0x00001a29      0x4b3 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_abbrev  0x00001edc      0x5ad e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_abbrev  0x00002489      0x54c e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_abbrev  0x000029d5      0x481 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_abbrev  0x00002e56      0x35e e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_abbrev  0x000031b4      0x337 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_abbrev  0x000034eb      0x3ed e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_abbrev  0x000038d8      0x4a2 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_abbrev  0x00003d7a      0x199 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_abbrev  0x00003f13       0x14 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .debug_abbrev  0x00003f27      0x49c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_abbrev  0x000043c3      0x3da .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_abbrev  0x0000479d      0x45e .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_abbrev  0x00004bfb      0x3ed .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.debug_line     0x00000000     0x8271
+ *(.debug_line)
+ .debug_line    0x00000000      0xa5f e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_line    0x00000a5f      0x69f e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_line    0x000010fe      0x7a7 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_line    0x000018a5      0x819 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_line    0x000020be      0x720 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_line    0x000027de      0x605 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_line    0x00002de3      0x6c2 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_line    0x000034a5      0x6da e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_line    0x00003b7f      0x624 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_line    0x000041a3      0x4f5 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_line    0x00004698      0x5a6 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_line    0x00004c3e      0x558 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_line    0x00005196      0x4db e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_line    0x00005671      0x1c0 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_line    0x00005831       0x68 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .debug_line    0x00005899      0x8ed .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_line    0x00006186      0x81f .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_line    0x000069a5     0x12ee .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_line    0x00007c93      0x5de .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.debug_frame    0x00000000     0x2e24
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x30 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_frame   0x00000030       0x30 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_frame   0x00000060      0x2ec e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_frame   0x0000034c      0x1d4 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_frame   0x00000520      0x1d8 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_frame   0x000006f8      0x284 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_frame   0x0000097c      0x1c4 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_frame   0x00000b40      0x1f4 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_frame   0x00000d34      0x1cc e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_frame   0x00000f00      0x16c e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_frame   0x0000106c      0x268 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_frame   0x000012d4      0x1b8 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_frame   0x0000148c      0x1b0 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_frame   0x0000163c       0x60 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_frame   0x0000169c      0x44c .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_frame   0x00001ae8      0x540 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_frame   0x00002028      0x9ec .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_frame   0x00002a14      0x2f4 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .debug_frame   0x00002d08       0x20 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o)
+ .debug_frame   0x00002d28       0x20 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .debug_frame   0x00002d48       0x28 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .debug_frame   0x00002d70       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .debug_frame   0x00002d9c       0x28 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x00002dc4       0x20 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .debug_frame   0x00002de4       0x20 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+ .debug_frame   0x00002e04       0x20 e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+
+.debug_str      0x00000000     0xc27b
+ *(.debug_str)
+ .debug_str     0x00000000     0x2944 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+                               0x4ee8 (size before relaxing)
+ .debug_str     0x00002944     0x13b6 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+                               0x428a (size before relaxing)
+ .debug_str     0x00003cfa      0xb93 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+                               0x4034 (size before relaxing)
+ .debug_str     0x0000488d      0x721 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+                               0x446b (size before relaxing)
+ .debug_str     0x00004fae      0x642 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+                               0x394c (size before relaxing)
+ .debug_str     0x000055f0      0x385 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+                               0x34dc (size before relaxing)
+ .debug_str     0x00005975      0x789 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+                               0x37bc (size before relaxing)
+ .debug_str     0x000060fe      0x3a9 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+                               0x3995 (size before relaxing)
+ .debug_str     0x000064a7      0x348 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+                               0x2027 (size before relaxing)
+ .debug_str     0x000067ef      0x1f0 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+                               0x3111 (size before relaxing)
+ .debug_str     0x000069df       0xd3 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+                               0x31a4 (size before relaxing)
+ .debug_str     0x00006ab2      0x477 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+                               0x1f78 (size before relaxing)
+ .debug_str     0x00006f29      0x710 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+                               0x106c (size before relaxing)
+ .debug_str     0x00007639       0x2d e:\temp\ccCdUMCd.ltrans13.ltrans.o
+                                0x711 (size before relaxing)
+ .debug_str     0x00007666     0x2ca6 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                               0x2ff3 (size before relaxing)
+ .debug_str     0x0000a30c      0x6d7 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+                               0x2faa (size before relaxing)
+ .debug_str     0x0000a9e3     0x1487 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+                               0x3eea (size before relaxing)
+ .debug_str     0x0000be6a      0x411 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+                               0x2f94 (size before relaxing)
+
+.debug_loc      0x00000000    0x1494e
+ *(.debug_loc)
+ .debug_loc     0x00000000     0x14cd e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_loc     0x000014cd     0x11f4 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_loc     0x000026c1     0x100e e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_loc     0x000036cf     0x15f9 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_loc     0x00004cc8     0x11d8 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_loc     0x00005ea0      0xba2 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_loc     0x00006a42      0xdb9 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_loc     0x000077fb     0x1550 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_loc     0x00008d4b      0xdb3 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_loc     0x00009afe      0x78f e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_loc     0x0000a28d      0x9bb e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_loc     0x0000ac48      0x765 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_loc     0x0000b3ad      0xb80 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_loc     0x0000bf2d      0x10e e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_loc     0x0000c03b     0x1a04 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_loc     0x0000da3f     0x156d .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_loc     0x0000efac     0x4a3c .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_loc     0x000139e8      0xf66 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_ranges   0x00000000     0x2720
+ *(.debug_ranges)
+ .debug_ranges  0x00000000      0x7d0 e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .debug_ranges  0x000007d0      0x3e0 e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .debug_ranges  0x00000bb0      0x1b0 e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .debug_ranges  0x00000d60      0x270 e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .debug_ranges  0x00000fd0      0x1a8 e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .debug_ranges  0x00001178      0x1d0 e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .debug_ranges  0x00001348      0x1a0 e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .debug_ranges  0x000014e8      0x300 e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .debug_ranges  0x000017e8      0x190 e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .debug_ranges  0x00001978      0x170 e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .debug_ranges  0x00001ae8       0xd8 e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .debug_ranges  0x00001bc0       0xd0 e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .debug_ranges  0x00001c90      0x1c0 e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .debug_ranges  0x00001e50       0x28 e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .debug_ranges  0x00001e78      0x1b0 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .debug_ranges  0x00002028      0x1c8 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .debug_ranges  0x000021f0      0x440 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .debug_ranges  0x00002630       0xf0 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.comment        0x00000000       0x6e
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .comment       0x00000000       0x6f e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .comment       0x00000000       0x6e .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+                                 0x6f (size before relaxing)
+ .comment       0x0000006e       0x6f .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .comment       0x0000006e       0x6f .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .comment       0x0000006e       0x6f .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.note.gnu.arm.ident
+ *(.note.gnu.arm.ident)
+
+.ARM.attributes
+                0x00000000       0x28
+ *(.ARM.attributes)
+ .ARM.attributes
+                0x00000000       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crti.o
+ .ARM.attributes
+                0x0000001e       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtbegin.o
+ .ARM.attributes
+                0x0000004a       0x1b e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m/crt0.o
+ .ARM.attributes
+                0x00000065       0x2f e:\temp\ccCdUMCd.ltrans0.ltrans.o
+ .ARM.attributes
+                0x00000094       0x2f e:\temp\ccCdUMCd.ltrans1.ltrans.o
+ .ARM.attributes
+                0x000000c3       0x2f e:\temp\ccCdUMCd.ltrans2.ltrans.o
+ .ARM.attributes
+                0x000000f2       0x2f e:\temp\ccCdUMCd.ltrans3.ltrans.o
+ .ARM.attributes
+                0x00000121       0x2f e:\temp\ccCdUMCd.ltrans4.ltrans.o
+ .ARM.attributes
+                0x00000150       0x2f e:\temp\ccCdUMCd.ltrans5.ltrans.o
+ .ARM.attributes
+                0x0000017f       0x2f e:\temp\ccCdUMCd.ltrans6.ltrans.o
+ .ARM.attributes
+                0x000001ae       0x2f e:\temp\ccCdUMCd.ltrans7.ltrans.o
+ .ARM.attributes
+                0x000001dd       0x2f e:\temp\ccCdUMCd.ltrans8.ltrans.o
+ .ARM.attributes
+                0x0000020c       0x2f e:\temp\ccCdUMCd.ltrans9.ltrans.o
+ .ARM.attributes
+                0x0000023b       0x2f e:\temp\ccCdUMCd.ltrans10.ltrans.o
+ .ARM.attributes
+                0x0000026a       0x2f e:\temp\ccCdUMCd.ltrans11.ltrans.o
+ .ARM.attributes
+                0x00000299       0x2f e:\temp\ccCdUMCd.ltrans12.ltrans.o
+ .ARM.attributes
+                0x000002c8       0x2f e:\temp\ccCdUMCd.ltrans13.ltrans.o
+ .ARM.attributes
+                0x000002f7       0x21 .\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.a(CyBootAsmGnu.o)
+ .ARM.attributes
+                0x00000318       0x31 .\lib\ccg5_dualport\libccgx_pd3.a(typec_manager.o)
+ .ARM.attributes
+                0x00000349       0x31 .\lib\ccg5_dualport\libccgx_pd3.a(dpm.o)
+ .ARM.attributes
+                0x0000037a       0x31 .\lib\ccg5_dualport\libccgx_pd3.a(pd_policy_engine.o)
+ .ARM.attributes
+                0x000003ab       0x31 .\lib\ccg5_dualport\libccgx_pd3.a(pd_protocol.o)
+ .ARM.attributes
+                0x000003dc       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uqi.o)
+ .ARM.attributes
+                0x000003fa       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_uhi.o)
+ .ARM.attributes
+                0x00000418       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x00000436       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_dvmd_tls.o)
+ .ARM.attributes
+                0x00000454       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x00000480       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-exit.o)
+ .ARM.attributes
+                0x000004ac       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x000004d8       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x00000504       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memcpy-stub.o)
+ .ARM.attributes
+                0x00000530       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libg_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x0000055c       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtend.o
+ .ARM.attributes
+                0x00000588       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m/crtn.o
+ .ARM.attributes
+                0x000005a6       0x2c e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv6-m\libnosys.a(_exit.o)
+ .ARM.attributes
+                0x000005d2       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_thumb1_case_sqi.o)
+ .ARM.attributes
+                0x000005f0       0x1e e:/cypress/psoc creator/4.2/psoc creator/import/gnu/arm/5.4.1/bin/../lib/gcc/arm-none-eabi/5.4.1/armv6-m\libgcc.a(_udivsi3.o)
+
+/DISCARD/
+ *(.note.GNU-stack)
+OUTPUT(C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\CortexM0\ARM_GCC_541\Debug\CYPD5225-96BZXI_notebook.elf elf32-littlearm)

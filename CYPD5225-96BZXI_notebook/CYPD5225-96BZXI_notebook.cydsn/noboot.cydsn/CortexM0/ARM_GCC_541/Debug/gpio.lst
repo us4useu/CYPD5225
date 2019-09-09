@@ -1,0 +1,3498 @@
+ARM GAS  e:\temp\ccdyAbtO.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"gpio.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.gpio_set_value,"ax",%progbits
+  20              		.align	2
+  21              		.global	gpio_set_value
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	gpio_set_value, %function
+  25              	gpio_set_value:
+  26              	.LFB32:
+  27              		.file 1 "..\\src\\system\\gpio.c"
+   1:..\src\system/gpio.c **** /**
+   2:..\src\system/gpio.c ****  * @file gpio.c
+   3:..\src\system/gpio.c ****  *
+   4:..\src\system/gpio.c ****  * @brief @{GPIO and IO mapping control functions.@}
+   5:..\src\system/gpio.c ****  */
+   6:..\src\system/gpio.c **** 
+   7:..\src\system/gpio.c **** /*
+   8:..\src\system/gpio.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+   9:..\src\system/gpio.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  10:..\src\system/gpio.c ****  *
+  11:..\src\system/gpio.c ****  * This software, including source code, documentation and related materials
+  12:..\src\system/gpio.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  13:..\src\system/gpio.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  14:..\src\system/gpio.c ****  * protection (United States and foreign), United States copyright laws and
+  15:..\src\system/gpio.c ****  * international treaty provisions. Therefore, you may use this Software only
+  16:..\src\system/gpio.c ****  * as provided in the license agreement accompanying the software package from
+  17:..\src\system/gpio.c ****  * which you obtained this Software (“EULA”).
+  18:..\src\system/gpio.c ****  *
+  19:..\src\system/gpio.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  20:..\src\system/gpio.c ****  * non-transferable license to copy, modify, and compile the Software source
+  21:..\src\system/gpio.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  22:..\src\system/gpio.c ****  * products. Any reproduction, modification, translation, compilation, or
+  23:..\src\system/gpio.c ****  * representation of this Software except as specified above is prohibited
+  24:..\src\system/gpio.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  25:..\src\system/gpio.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  26:..\src\system/gpio.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  27:..\src\system/gpio.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  28:..\src\system/gpio.c ****  * right to make changes to the Software without notice. Cypress does not
+  29:..\src\system/gpio.c ****  * assume any liability arising out of the application or use of the Software
+  30:..\src\system/gpio.c ****  * or any product or circuit described in the Software. Cypress does not
+ARM GAS  e:\temp\ccdyAbtO.s 			page 2
+
+
+  31:..\src\system/gpio.c ****  * authorize its products for use in any products where a malfunction or
+  32:..\src\system/gpio.c ****  * failure of the Cypress product may reasonably be expected to result in
+  33:..\src\system/gpio.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  34:..\src\system/gpio.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  35:..\src\system/gpio.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  36:..\src\system/gpio.c ****  * indemnify Cypress against all liability.
+  37:..\src\system/gpio.c ****  */
+  38:..\src\system/gpio.c **** 
+  39:..\src\system/gpio.c **** #include "stdint.h"
+  40:..\src\system/gpio.c **** #include "stdbool.h"
+  41:..\src\system/gpio.c **** #include "ccgx_regs.h"
+  42:..\src\system/gpio.c **** #include "gpio.h"
+  43:..\src\system/gpio.c **** 
+  44:..\src\system/gpio.c **** /* GPIO block address array */
+  45:..\src\system/gpio.c **** const PGPIO_REGS_T GPIO[] =
+  46:..\src\system/gpio.c **** {
+  47:..\src\system/gpio.c ****     GPIO0,
+  48:..\src\system/gpio.c ****     GPIO1,
+  49:..\src\system/gpio.c ****     GPIO2,
+  50:..\src\system/gpio.c ****     GPIO3,
+  51:..\src\system/gpio.c **** #if (!defined(CCG3PA) && !defined(CCG3PA2))
+  52:..\src\system/gpio.c ****     GPIO4,
+  53:..\src\system/gpio.c **** #ifdef CCG5
+  54:..\src\system/gpio.c ****     GPIO5
+  55:..\src\system/gpio.c **** #endif /* CCG5 */
+  56:..\src\system/gpio.c **** #endif /* (!defined(CCG3PA) && !defined(CCG3PA2)) */
+  57:..\src\system/gpio.c **** };
+  58:..\src\system/gpio.c **** 
+  59:..\src\system/gpio.c **** /* HSIOM block address array */
+  60:..\src\system/gpio.c **** const PHSIOM_REGS_T HSIOM[] =
+  61:..\src\system/gpio.c **** {
+  62:..\src\system/gpio.c ****     HSIOM0,
+  63:..\src\system/gpio.c ****     HSIOM1,
+  64:..\src\system/gpio.c ****     HSIOM2,
+  65:..\src\system/gpio.c ****     HSIOM3,
+  66:..\src\system/gpio.c **** #if (!defined(CCG3PA) && !defined(CCG3PA2))
+  67:..\src\system/gpio.c ****     HSIOM4,
+  68:..\src\system/gpio.c **** #ifdef CCG5
+  69:..\src\system/gpio.c ****     HSIOM5
+  70:..\src\system/gpio.c **** #endif /* CCG5 */
+  71:..\src\system/gpio.c **** #endif /* (!defined(CCG3PA) && !defined(CCG3PA2)) */
+  72:..\src\system/gpio.c **** };
+  73:..\src\system/gpio.c **** 
+  74:..\src\system/gpio.c **** void gpio_set_value(gpio_port_pin_t port_pin, bool value)
+  75:..\src\system/gpio.c **** {
+  28              		.loc 1 75 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  76:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+  34              		.loc 1 76 0
+  35 0000 0309     		lsrs	r3, r0, #4
+  36              	.LVL1:
+  77:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+  37              		.loc 1 77 0
+ARM GAS  e:\temp\ccdyAbtO.s 			page 3
+
+
+  38 0002 0F22     		movs	r2, #15
+  39 0004 1040     		ands	r0, r2
+  40              	.LVL2:
+  78:..\src\system/gpio.c **** 
+  79:..\src\system/gpio.c ****     if (value)
+  41              		.loc 1 79 0
+  42 0006 0029     		cmp	r1, #0
+  43 0008 08D0     		beq	.L2
+  80:..\src\system/gpio.c ****     {
+  81:..\src\system/gpio.c ****         GPIO[(port)]->dr |= (1 << (pin));
+  44              		.loc 1 81 0
+  45 000a 9B00     		lsls	r3, r3, #2
+  46              	.LVL3:
+  47 000c 084A     		ldr	r2, .L4
+  48 000e 9958     		ldr	r1, [r3, r2]
+  49              	.LVL4:
+  50 0010 0A68     		ldr	r2, [r1]
+  51 0012 0123     		movs	r3, #1
+  52 0014 8340     		lsls	r3, r3, r0
+  53 0016 1343     		orrs	r3, r2
+  54 0018 0B60     		str	r3, [r1]
+  55 001a 07E0     		b	.L1
+  56              	.LVL5:
+  57              	.L2:
+  82:..\src\system/gpio.c ****     }
+  83:..\src\system/gpio.c ****     else
+  84:..\src\system/gpio.c ****     {
+  85:..\src\system/gpio.c ****         GPIO[(port)]->dr &= ~(1 << (pin));
+  58              		.loc 1 85 0
+  59 001c 9B00     		lsls	r3, r3, #2
+  60              	.LVL6:
+  61 001e 044A     		ldr	r2, .L4
+  62 0020 9958     		ldr	r1, [r3, r2]
+  63              	.LVL7:
+  64 0022 0B68     		ldr	r3, [r1]
+  65 0024 0122     		movs	r2, #1
+  66 0026 8240     		lsls	r2, r2, r0
+  67 0028 9343     		bics	r3, r2
+  68 002a 0B60     		str	r3, [r1]
+  69              	.L1:
+  86:..\src\system/gpio.c ****     }
+  87:..\src\system/gpio.c **** }
+  70              		.loc 1 87 0
+  71              		@ sp needed
+  72 002c 7047     		bx	lr
+  73              	.L5:
+  74 002e C046     		.align	2
+  75              	.L4:
+  76 0030 00000000 		.word	.LANCHOR0
+  77              		.cfi_endproc
+  78              	.LFE32:
+  79              		.size	gpio_set_value, .-gpio_set_value
+  80              		.section	.text.gpio_read_value,"ax",%progbits
+  81              		.align	2
+  82              		.global	gpio_read_value
+  83              		.code	16
+  84              		.thumb_func
+ARM GAS  e:\temp\ccdyAbtO.s 			page 4
+
+
+  85              		.type	gpio_read_value, %function
+  86              	gpio_read_value:
+  87              	.LFB33:
+  88:..\src\system/gpio.c **** 
+  89:..\src\system/gpio.c **** bool gpio_read_value(gpio_port_pin_t port_pin)
+  90:..\src\system/gpio.c **** {
+  88              		.loc 1 90 0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		@ link register save eliminated.
+  93              	.LVL8:
+  91:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+  94              		.loc 1 91 0
+  95 0000 0309     		lsrs	r3, r0, #4
+  96              	.LVL9:
+  92:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+  97              		.loc 1 92 0
+  98 0002 0F22     		movs	r2, #15
+  99 0004 0240     		ands	r2, r0
+ 100              	.LVL10:
+  93:..\src\system/gpio.c **** 
+  94:..\src\system/gpio.c ****     return (GPIO[(port)]->ps & (1 << (pin))) ? true : false;
+ 101              		.loc 1 94 0
+ 102 0006 9B00     		lsls	r3, r3, #2
+ 103              	.LVL11:
+ 104 0008 0549     		ldr	r1, .L7
+ 105 000a 5B58     		ldr	r3, [r3, r1]
+ 106 000c 5968     		ldr	r1, [r3, #4]
+ 107 000e 0123     		movs	r3, #1
+ 108 0010 9340     		lsls	r3, r3, r2
+ 109 0012 1800     		movs	r0, r3
+ 110              	.LVL12:
+ 111 0014 0840     		ands	r0, r1
+ 112 0016 431E     		subs	r3, r0, #1
+ 113 0018 9841     		sbcs	r0, r0, r3
+ 114 001a C0B2     		uxtb	r0, r0
+  95:..\src\system/gpio.c **** }
+ 115              		.loc 1 95 0
+ 116              		@ sp needed
+ 117 001c 7047     		bx	lr
+ 118              	.L8:
+ 119 001e C046     		.align	2
+ 120              	.L7:
+ 121 0020 00000000 		.word	.LANCHOR0
+ 122              		.cfi_endproc
+ 123              	.LFE33:
+ 124              		.size	gpio_read_value, .-gpio_read_value
+ 125              		.section	.text.gpio_set_drv_mode,"ax",%progbits
+ 126              		.align	2
+ 127              		.global	gpio_set_drv_mode
+ 128              		.code	16
+ 129              		.thumb_func
+ 130              		.type	gpio_set_drv_mode, %function
+ 131              	gpio_set_drv_mode:
+ 132              	.LFB34:
+  96:..\src\system/gpio.c **** 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 5
+
+
+  97:..\src\system/gpio.c **** void gpio_set_drv_mode(gpio_port_pin_t port_pin, gpio_dm_t drv_mode)
+  98:..\src\system/gpio.c **** {
+ 133              		.loc 1 98 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 0
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              	.LVL13:
+ 138 0000 10B5     		push	{r4, lr}
+ 139              		.cfi_def_cfa_offset 8
+ 140              		.cfi_offset 4, -8
+ 141              		.cfi_offset 14, -4
+  99:..\src\system/gpio.c ****     uint8_t pos;
+ 100:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+ 142              		.loc 1 100 0
+ 143 0002 0209     		lsrs	r2, r0, #4
+ 144              	.LVL14:
+ 101:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+ 145              		.loc 1 101 0
+ 146 0004 0F23     		movs	r3, #15
+ 147 0006 1840     		ands	r0, r3
+ 148              	.LVL15:
+ 102:..\src\system/gpio.c ****     uint32_t regVal;
+ 103:..\src\system/gpio.c **** 
+ 104:..\src\system/gpio.c ****     /* Multiply by three as pin uses 3 bits in the register. */
+ 105:..\src\system/gpio.c ****     pos = pin * GPIO_DM_FIELD_SIZE;
+ 149              		.loc 1 105 0
+ 150 0008 4300     		lsls	r3, r0, #1
+ 151 000a C018     		adds	r0, r0, r3
+ 152              	.LVL16:
+ 106:..\src\system/gpio.c **** 
+ 107:..\src\system/gpio.c ****     /* Need to mask all other bits. Just update
+ 108:..\src\system/gpio.c ****      * the three bits of the current pin.
+ 109:..\src\system/gpio.c ****      */
+ 110:..\src\system/gpio.c ****     regVal = (GPIO[port]->pc & ~(GPIO_DM_FIELD_MASK << pos));
+ 153              		.loc 1 110 0
+ 154 000c 9300     		lsls	r3, r2, #2
+ 155 000e 054A     		ldr	r2, .L10
+ 156              	.LVL17:
+ 157 0010 9C58     		ldr	r4, [r3, r2]
+ 158 0012 A368     		ldr	r3, [r4, #8]
+ 159 0014 0722     		movs	r2, #7
+ 160 0016 8240     		lsls	r2, r2, r0
+ 161 0018 9343     		bics	r3, r2
+ 162              	.LVL18:
+ 111:..\src\system/gpio.c ****     GPIO[port]->pc = (regVal | (drv_mode << pos));
+ 163              		.loc 1 111 0
+ 164 001a 8140     		lsls	r1, r1, r0
+ 165              	.LVL19:
+ 166 001c 1943     		orrs	r1, r3
+ 167 001e A160     		str	r1, [r4, #8]
+ 112:..\src\system/gpio.c **** }
+ 168              		.loc 1 112 0
+ 169              		@ sp needed
+ 170 0020 10BD     		pop	{r4, pc}
+ 171              	.L11:
+ 172 0022 C046     		.align	2
+ 173              	.L10:
+ARM GAS  e:\temp\ccdyAbtO.s 			page 6
+
+
+ 174 0024 00000000 		.word	.LANCHOR0
+ 175              		.cfi_endproc
+ 176              	.LFE34:
+ 177              		.size	gpio_set_drv_mode, .-gpio_set_drv_mode
+ 178              		.section	.text.gpio_int_set_config,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	gpio_int_set_config
+ 181              		.code	16
+ 182              		.thumb_func
+ 183              		.type	gpio_int_set_config, %function
+ 184              	gpio_int_set_config:
+ 185              	.LFB35:
+ 113:..\src\system/gpio.c **** 
+ 114:..\src\system/gpio.c **** void gpio_int_set_config(gpio_port_pin_t port_pin, uint8_t int_mode)
+ 115:..\src\system/gpio.c **** {
+ 186              		.loc 1 115 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ 190              	.LVL20:
+ 191 0000 10B5     		push	{r4, lr}
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 4, -8
+ 194              		.cfi_offset 14, -4
+ 116:..\src\system/gpio.c ****     uint8_t pos;
+ 117:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+ 195              		.loc 1 117 0
+ 196 0002 0309     		lsrs	r3, r0, #4
+ 197              	.LVL21:
+ 118:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+ 198              		.loc 1 118 0
+ 199 0004 0F22     		movs	r2, #15
+ 200 0006 1040     		ands	r0, r2
+ 201              	.LVL22:
+ 119:..\src\system/gpio.c ****     uint32_t regVal;
+ 120:..\src\system/gpio.c **** 
+ 121:..\src\system/gpio.c ****     pos = pin << 1;
+ 202              		.loc 1 121 0
+ 203 0008 4400     		lsls	r4, r0, #1
+ 204              	.LVL23:
+ 122:..\src\system/gpio.c **** 
+ 123:..\src\system/gpio.c ****     /* Make sure that the interrupt is cleared. */
+ 124:..\src\system/gpio.c ****     GPIO[port]->intr = (1 << pin);
+ 205              		.loc 1 124 0
+ 206 000a 9B00     		lsls	r3, r3, #2
+ 207              	.LVL24:
+ 208 000c 064A     		ldr	r2, .L13
+ 209 000e 9A58     		ldr	r2, [r3, r2]
+ 210 0010 0123     		movs	r3, #1
+ 211 0012 8340     		lsls	r3, r3, r0
+ 212 0014 1361     		str	r3, [r2, #16]
+ 125:..\src\system/gpio.c **** 
+ 126:..\src\system/gpio.c ****     /* Set the configuration. */
+ 127:..\src\system/gpio.c ****     regVal = (GPIO[port]->intr_cfg & ~(GPIO_INT_FIELD_MASK << pos));
+ 213              		.loc 1 127 0
+ 214 0016 D368     		ldr	r3, [r2, #12]
+ 215 0018 0320     		movs	r0, #3
+ARM GAS  e:\temp\ccdyAbtO.s 			page 7
+
+
+ 216              	.LVL25:
+ 217 001a A040     		lsls	r0, r0, r4
+ 218 001c 8343     		bics	r3, r0
+ 219              	.LVL26:
+ 128:..\src\system/gpio.c ****     GPIO[port]->intr_cfg = (regVal | (int_mode << pos));
+ 220              		.loc 1 128 0
+ 221 001e A140     		lsls	r1, r1, r4
+ 222              	.LVL27:
+ 223 0020 1943     		orrs	r1, r3
+ 224 0022 D160     		str	r1, [r2, #12]
+ 129:..\src\system/gpio.c **** }
+ 225              		.loc 1 129 0
+ 226              		@ sp needed
+ 227              	.LVL28:
+ 228 0024 10BD     		pop	{r4, pc}
+ 229              	.L14:
+ 230 0026 C046     		.align	2
+ 231              	.L13:
+ 232 0028 00000000 		.word	.LANCHOR0
+ 233              		.cfi_endproc
+ 234              	.LFE35:
+ 235              		.size	gpio_int_set_config, .-gpio_int_set_config
+ 236              		.section	.text.gpio_get_intr,"ax",%progbits
+ 237              		.align	2
+ 238              		.global	gpio_get_intr
+ 239              		.code	16
+ 240              		.thumb_func
+ 241              		.type	gpio_get_intr, %function
+ 242              	gpio_get_intr:
+ 243              	.LFB36:
+ 130:..\src\system/gpio.c **** 
+ 131:..\src\system/gpio.c **** bool gpio_get_intr(gpio_port_pin_t port_pin)
+ 132:..\src\system/gpio.c **** {
+ 244              		.loc 1 132 0
+ 245              		.cfi_startproc
+ 246              		@ args = 0, pretend = 0, frame = 0
+ 247              		@ frame_needed = 0, uses_anonymous_args = 0
+ 248              		@ link register save eliminated.
+ 249              	.LVL29:
+ 133:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+ 250              		.loc 1 133 0
+ 251 0000 0309     		lsrs	r3, r0, #4
+ 252              	.LVL30:
+ 134:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+ 253              		.loc 1 134 0
+ 254 0002 0F22     		movs	r2, #15
+ 255 0004 1040     		ands	r0, r2
+ 256              	.LVL31:
+ 135:..\src\system/gpio.c **** 
+ 136:..\src\system/gpio.c ****     /* Check if intr set */
+ 137:..\src\system/gpio.c ****     if( GPIO[port]->intr & (1 << pin))
+ 257              		.loc 1 137 0
+ 258 0006 9B00     		lsls	r3, r3, #2
+ 259              	.LVL32:
+ 260 0008 054A     		ldr	r2, .L18
+ 261 000a 9B58     		ldr	r3, [r3, r2]
+ 262 000c 1A69     		ldr	r2, [r3, #16]
+ARM GAS  e:\temp\ccdyAbtO.s 			page 8
+
+
+ 263 000e 0123     		movs	r3, #1
+ 264 0010 8340     		lsls	r3, r3, r0
+ 265 0012 1A42     		tst	r2, r3
+ 266 0014 01D0     		beq	.L17
+ 138:..\src\system/gpio.c ****     {
+ 139:..\src\system/gpio.c ****         return true;
+ 267              		.loc 1 139 0
+ 268 0016 0120     		movs	r0, #1
+ 269              	.LVL33:
+ 270 0018 00E0     		b	.L16
+ 271              	.LVL34:
+ 272              	.L17:
+ 140:..\src\system/gpio.c ****     }
+ 141:..\src\system/gpio.c **** 
+ 142:..\src\system/gpio.c ****     return false;
+ 273              		.loc 1 142 0
+ 274 001a 0020     		movs	r0, #0
+ 275              	.LVL35:
+ 276              	.L16:
+ 143:..\src\system/gpio.c **** }
+ 277              		.loc 1 143 0
+ 278              		@ sp needed
+ 279 001c 7047     		bx	lr
+ 280              	.L19:
+ 281 001e C046     		.align	2
+ 282              	.L18:
+ 283 0020 00000000 		.word	.LANCHOR0
+ 284              		.cfi_endproc
+ 285              	.LFE36:
+ 286              		.size	gpio_get_intr, .-gpio_get_intr
+ 287              		.section	.text.gpio_clear_intr,"ax",%progbits
+ 288              		.align	2
+ 289              		.global	gpio_clear_intr
+ 290              		.code	16
+ 291              		.thumb_func
+ 292              		.type	gpio_clear_intr, %function
+ 293              	gpio_clear_intr:
+ 294              	.LFB37:
+ 144:..\src\system/gpio.c **** 
+ 145:..\src\system/gpio.c **** void gpio_clear_intr(gpio_port_pin_t port_pin)
+ 146:..\src\system/gpio.c **** {
+ 295              		.loc 1 146 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 0
+ 298              		@ frame_needed = 0, uses_anonymous_args = 0
+ 299              		@ link register save eliminated.
+ 300              	.LVL36:
+ 147:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+ 301              		.loc 1 147 0
+ 302 0000 0309     		lsrs	r3, r0, #4
+ 303              	.LVL37:
+ 148:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+ 304              		.loc 1 148 0
+ 305 0002 0F22     		movs	r2, #15
+ 306 0004 1040     		ands	r0, r2
+ 307              	.LVL38:
+ 149:..\src\system/gpio.c **** 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 9
+
+
+ 150:..\src\system/gpio.c ****     /* Clear interrupt */
+ 151:..\src\system/gpio.c ****     GPIO[port]->intr = (1 << pin);
+ 308              		.loc 1 151 0
+ 309 0006 9B00     		lsls	r3, r3, #2
+ 310              	.LVL39:
+ 311 0008 024A     		ldr	r2, .L21
+ 312 000a 9A58     		ldr	r2, [r3, r2]
+ 313 000c 0123     		movs	r3, #1
+ 314 000e 8340     		lsls	r3, r3, r0
+ 315 0010 1361     		str	r3, [r2, #16]
+ 152:..\src\system/gpio.c **** }
+ 316              		.loc 1 152 0
+ 317              		@ sp needed
+ 318 0012 7047     		bx	lr
+ 319              	.L22:
+ 320              		.align	2
+ 321              	.L21:
+ 322 0014 00000000 		.word	.LANCHOR0
+ 323              		.cfi_endproc
+ 324              	.LFE37:
+ 325              		.size	gpio_clear_intr, .-gpio_clear_intr
+ 326              		.section	.text.hsiom_set_config,"ax",%progbits
+ 327              		.align	2
+ 328              		.global	hsiom_set_config
+ 329              		.code	16
+ 330              		.thumb_func
+ 331              		.type	hsiom_set_config, %function
+ 332              	hsiom_set_config:
+ 333              	.LFB38:
+ 153:..\src\system/gpio.c **** 
+ 154:..\src\system/gpio.c **** void hsiom_set_config(gpio_port_pin_t port_pin, hsiom_mode_t hsiom_mode)
+ 155:..\src\system/gpio.c **** {
+ 334              		.loc 1 155 0
+ 335              		.cfi_startproc
+ 336              		@ args = 0, pretend = 0, frame = 0
+ 337              		@ frame_needed = 0, uses_anonymous_args = 0
+ 338              	.LVL40:
+ 339 0000 10B5     		push	{r4, lr}
+ 340              		.cfi_def_cfa_offset 8
+ 341              		.cfi_offset 4, -8
+ 342              		.cfi_offset 14, -4
+ 156:..\src\system/gpio.c ****     uint8_t port = port_pin >> 4;
+ 343              		.loc 1 156 0
+ 344 0002 0309     		lsrs	r3, r0, #4
+ 345              	.LVL41:
+ 157:..\src\system/gpio.c ****     uint8_t pin = port_pin & 0x0F;
+ 346              		.loc 1 157 0
+ 347 0004 0F22     		movs	r2, #15
+ 348 0006 1040     		ands	r0, r2
+ 349              	.LVL42:
+ 158:..\src\system/gpio.c ****     uint32_t regVal;
+ 159:..\src\system/gpio.c **** 
+ 160:..\src\system/gpio.c ****     regVal = HSIOM[port]->port_sel;
+ 350              		.loc 1 160 0
+ 351 0008 9B00     		lsls	r3, r3, #2
+ 352              	.LVL43:
+ 353 000a 064A     		ldr	r2, .L24
+ARM GAS  e:\temp\ccdyAbtO.s 			page 10
+
+
+ 354 000c D318     		adds	r3, r2, r3
+ 355 000e 9C69     		ldr	r4, [r3, #24]
+ 356 0010 2368     		ldr	r3, [r4]
+ 357              	.LVL44:
+ 161:..\src\system/gpio.c **** 
+ 162:..\src\system/gpio.c ****     regVal &= ~(HSIOM_PORT_SEL_IO0_SEL_MASK << (pin << HSIOM_FIELD_SHIFT));
+ 358              		.loc 1 162 0
+ 359 0012 8000     		lsls	r0, r0, #2
+ 360              	.LVL45:
+ 361 0014 0F22     		movs	r2, #15
+ 362 0016 8240     		lsls	r2, r2, r0
+ 363 0018 9343     		bics	r3, r2
+ 364              	.LVL46:
+ 163:..\src\system/gpio.c ****     regVal |= (hsiom_mode << (pin << HSIOM_FIELD_SHIFT));
+ 365              		.loc 1 163 0
+ 366 001a 8140     		lsls	r1, r1, r0
+ 367              	.LVL47:
+ 368 001c 1943     		orrs	r1, r3
+ 369              	.LVL48:
+ 164:..\src\system/gpio.c **** 
+ 165:..\src\system/gpio.c ****     HSIOM[port]->port_sel = regVal;
+ 370              		.loc 1 165 0
+ 371 001e 2160     		str	r1, [r4]
+ 166:..\src\system/gpio.c **** }
+ 372              		.loc 1 166 0
+ 373              		@ sp needed
+ 374 0020 10BD     		pop	{r4, pc}
+ 375              	.L25:
+ 376 0022 C046     		.align	2
+ 377              	.L24:
+ 378 0024 00000000 		.word	.LANCHOR0
+ 379              		.cfi_endproc
+ 380              	.LFE38:
+ 381              		.size	hsiom_set_config, .-hsiom_set_config
+ 382              		.section	.text.gpio_hsiom_set_config,"ax",%progbits
+ 383              		.align	2
+ 384              		.global	gpio_hsiom_set_config
+ 385              		.code	16
+ 386              		.thumb_func
+ 387              		.type	gpio_hsiom_set_config, %function
+ 388              	gpio_hsiom_set_config:
+ 389              	.LFB39:
+ 167:..\src\system/gpio.c **** 
+ 168:..\src\system/gpio.c **** void gpio_hsiom_set_config(gpio_port_pin_t port_pin, hsiom_mode_t hsiom_mode,
+ 169:..\src\system/gpio.c ****     gpio_dm_t drv_mode, bool value)
+ 170:..\src\system/gpio.c **** {
+ 390              		.loc 1 170 0
+ 391              		.cfi_startproc
+ 392              		@ args = 0, pretend = 0, frame = 0
+ 393              		@ frame_needed = 0, uses_anonymous_args = 0
+ 394              	.LVL49:
+ 395 0000 70B5     		push	{r4, r5, r6, lr}
+ 396              		.cfi_def_cfa_offset 16
+ 397              		.cfi_offset 4, -16
+ 398              		.cfi_offset 5, -12
+ 399              		.cfi_offset 6, -8
+ 400              		.cfi_offset 14, -4
+ARM GAS  e:\temp\ccdyAbtO.s 			page 11
+
+
+ 401 0002 0400     		movs	r4, r0
+ 402 0004 0D00     		movs	r5, r1
+ 403 0006 1600     		movs	r6, r2
+ 171:..\src\system/gpio.c ****     /* Drive GPIO. */
+ 172:..\src\system/gpio.c ****     gpio_set_value(port_pin, value);
+ 404              		.loc 1 172 0
+ 405 0008 1900     		movs	r1, r3
+ 406              	.LVL50:
+ 407 000a FFF7FEFF 		bl	gpio_set_value
+ 408              	.LVL51:
+ 173:..\src\system/gpio.c ****     /* Set Drive Mode of GPIO. */
+ 174:..\src\system/gpio.c ****     gpio_set_drv_mode(port_pin, drv_mode);
+ 409              		.loc 1 174 0
+ 410 000e 3100     		movs	r1, r6
+ 411 0010 2000     		movs	r0, r4
+ 412 0012 FFF7FEFF 		bl	gpio_set_drv_mode
+ 413              	.LVL52:
+ 175:..\src\system/gpio.c ****     /* Set HSIOM Configuration. */
+ 176:..\src\system/gpio.c ****     hsiom_set_config(port_pin, hsiom_mode);
+ 414              		.loc 1 176 0
+ 415 0016 2900     		movs	r1, r5
+ 416 0018 2000     		movs	r0, r4
+ 417 001a FFF7FEFF 		bl	hsiom_set_config
+ 418              	.LVL53:
+ 177:..\src\system/gpio.c **** }
+ 419              		.loc 1 177 0
+ 420              		@ sp needed
+ 421 001e 70BD     		pop	{r4, r5, r6, pc}
+ 422              		.cfi_endproc
+ 423              	.LFE39:
+ 424              		.size	gpio_hsiom_set_config, .-gpio_hsiom_set_config
+ 425              		.section	.text.gpio_set_lvttl_mode,"ax",%progbits
+ 426              		.align	2
+ 427              		.global	gpio_set_lvttl_mode
+ 428              		.code	16
+ 429              		.thumb_func
+ 430              		.type	gpio_set_lvttl_mode, %function
+ 431              	gpio_set_lvttl_mode:
+ 432              	.LFB40:
+ 178:..\src\system/gpio.c **** 
+ 179:..\src\system/gpio.c **** void gpio_set_lvttl_mode(uint8_t port)
+ 180:..\src\system/gpio.c **** {
+ 433              		.loc 1 180 0
+ 434              		.cfi_startproc
+ 435              		@ args = 0, pretend = 0, frame = 0
+ 436              		@ frame_needed = 0, uses_anonymous_args = 0
+ 437              		@ link register save eliminated.
+ 438              	.LVL54:
+ 181:..\src\system/gpio.c ****     GPIO[port]->pc |= GPIO_PRT_PC_PORT_VTRIP_SEL;
+ 439              		.loc 1 181 0
+ 440 0000 8000     		lsls	r0, r0, #2
+ 441              	.LVL55:
+ 442 0002 044B     		ldr	r3, .L28
+ 443 0004 C258     		ldr	r2, [r0, r3]
+ 444 0006 9368     		ldr	r3, [r2, #8]
+ 445 0008 8021     		movs	r1, #128
+ 446 000a 4904     		lsls	r1, r1, #17
+ARM GAS  e:\temp\ccdyAbtO.s 			page 12
+
+
+ 447 000c 0B43     		orrs	r3, r1
+ 448 000e 9360     		str	r3, [r2, #8]
+ 182:..\src\system/gpio.c **** }
+ 449              		.loc 1 182 0
+ 450              		@ sp needed
+ 451 0010 7047     		bx	lr
+ 452              	.L29:
+ 453 0012 C046     		.align	2
+ 454              	.L28:
+ 455 0014 00000000 		.word	.LANCHOR0
+ 456              		.cfi_endproc
+ 457              	.LFE40:
+ 458              		.size	gpio_set_lvttl_mode, .-gpio_set_lvttl_mode
+ 459              		.global	HSIOM
+ 460              		.global	GPIO
+ 461              		.section	.rodata
+ 462              		.align	2
+ 463              		.set	.LANCHOR0,. + 0
+ 464              		.type	GPIO, %object
+ 465              		.size	GPIO, 24
+ 466              	GPIO:
+ 467 0000 00000440 		.word	1074003968
+ 468 0004 00010440 		.word	1074004224
+ 469 0008 00020440 		.word	1074004480
+ 470 000c 00030440 		.word	1074004736
+ 471 0010 00040440 		.word	1074004992
+ 472 0014 00050440 		.word	1074005248
+ 473              		.type	HSIOM, %object
+ 474              		.size	HSIOM, 24
+ 475              	HSIOM:
+ 476 0018 00000240 		.word	1073872896
+ 477 001c 00010240 		.word	1073873152
+ 478 0020 00020240 		.word	1073873408
+ 479 0024 00030240 		.word	1073873664
+ 480 0028 00040240 		.word	1073873920
+ 481 002c 00050240 		.word	1073874176
+ 482              		.text
+ 483              	.Letext0:
+ 484              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 485              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 486              		.file 4 "..\\src\\system\\ccg5_regs.h"
+ 487              		.file 5 "..\\src\\system\\gpio.h"
+ 488              		.section	.debug_info,"",%progbits
+ 489              	.Ldebug_info0:
+ 490 0000 0A080000 		.4byte	0x80a
+ 491 0004 0400     		.2byte	0x4
+ 492 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 493 000a 04       		.byte	0x4
+ 494 000b 01       		.uleb128 0x1
+ 495 000c D0060000 		.4byte	.LASF154
+ 496 0010 0C       		.byte	0xc
+ 497 0011 6F030000 		.4byte	.LASF155
+ 498 0015 F1020000 		.4byte	.LASF156
+ 499 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 500 001d 00000000 		.4byte	0
+ 501 0021 00000000 		.4byte	.Ldebug_line0
+ 502 0025 02       		.uleb128 0x2
+ARM GAS  e:\temp\ccdyAbtO.s 			page 13
+
+
+ 503 0026 01       		.byte	0x1
+ 504 0027 06       		.byte	0x6
+ 505 0028 FB000000 		.4byte	.LASF0
+ 506 002c 03       		.uleb128 0x3
+ 507 002d 55000000 		.4byte	.LASF5
+ 508 0031 02       		.byte	0x2
+ 509 0032 1D       		.byte	0x1d
+ 510 0033 37000000 		.4byte	0x37
+ 511 0037 02       		.uleb128 0x2
+ 512 0038 01       		.byte	0x1
+ 513 0039 08       		.byte	0x8
+ 514 003a 9C070000 		.4byte	.LASF1
+ 515 003e 02       		.uleb128 0x2
+ 516 003f 02       		.byte	0x2
+ 517 0040 05       		.byte	0x5
+ 518 0041 CC070000 		.4byte	.LASF2
+ 519 0045 02       		.uleb128 0x2
+ 520 0046 02       		.byte	0x2
+ 521 0047 07       		.byte	0x7
+ 522 0048 9E020000 		.4byte	.LASF3
+ 523 004c 02       		.uleb128 0x2
+ 524 004d 04       		.byte	0x4
+ 525 004e 05       		.byte	0x5
+ 526 004f 87000000 		.4byte	.LASF4
+ 527 0053 03       		.uleb128 0x3
+ 528 0054 CC020000 		.4byte	.LASF6
+ 529 0058 02       		.byte	0x2
+ 530 0059 41       		.byte	0x41
+ 531 005a 5E000000 		.4byte	0x5e
+ 532 005e 02       		.uleb128 0x2
+ 533 005f 04       		.byte	0x4
+ 534 0060 07       		.byte	0x7
+ 535 0061 90040000 		.4byte	.LASF7
+ 536 0065 02       		.uleb128 0x2
+ 537 0066 08       		.byte	0x8
+ 538 0067 05       		.byte	0x5
+ 539 0068 ED000000 		.4byte	.LASF8
+ 540 006c 02       		.uleb128 0x2
+ 541 006d 08       		.byte	0x8
+ 542 006e 07       		.byte	0x7
+ 543 006f B3000000 		.4byte	.LASF9
+ 544 0073 04       		.uleb128 0x4
+ 545 0074 04       		.byte	0x4
+ 546 0075 05       		.byte	0x5
+ 547 0076 696E7400 		.ascii	"int\000"
+ 548 007a 02       		.uleb128 0x2
+ 549 007b 04       		.byte	0x4
+ 550 007c 07       		.byte	0x7
+ 551 007d 8E090000 		.4byte	.LASF10
+ 552 0081 03       		.uleb128 0x3
+ 553 0082 BC0A0000 		.4byte	.LASF11
+ 554 0086 03       		.byte	0x3
+ 555 0087 18       		.byte	0x18
+ 556 0088 2C000000 		.4byte	0x2c
+ 557 008c 03       		.uleb128 0x3
+ 558 008d 940A0000 		.4byte	.LASF12
+ 559 0091 03       		.byte	0x3
+ARM GAS  e:\temp\ccdyAbtO.s 			page 14
+
+
+ 560 0092 30       		.byte	0x30
+ 561 0093 53000000 		.4byte	0x53
+ 562 0097 02       		.uleb128 0x2
+ 563 0098 04       		.byte	0x4
+ 564 0099 04       		.byte	0x4
+ 565 009a 9E060000 		.4byte	.LASF13
+ 566 009e 02       		.uleb128 0x2
+ 567 009f 08       		.byte	0x8
+ 568 00a0 04       		.byte	0x4
+ 569 00a1 7F020000 		.4byte	.LASF14
+ 570 00a5 02       		.uleb128 0x2
+ 571 00a6 01       		.byte	0x1
+ 572 00a7 08       		.byte	0x8
+ 573 00a8 89090000 		.4byte	.LASF15
+ 574 00ac 02       		.uleb128 0x2
+ 575 00ad 08       		.byte	0x8
+ 576 00ae 04       		.byte	0x4
+ 577 00af 7D090000 		.4byte	.LASF16
+ 578 00b3 02       		.uleb128 0x2
+ 579 00b4 04       		.byte	0x4
+ 580 00b5 07       		.byte	0x7
+ 581 00b6 EB050000 		.4byte	.LASF17
+ 582 00ba 05       		.uleb128 0x5
+ 583 00bb 8C000000 		.4byte	0x8c
+ 584 00bf 06       		.uleb128 0x6
+ 585 00c0 BA000000 		.4byte	0xba
+ 586 00c4 CF000000 		.4byte	0xcf
+ 587 00c8 07       		.uleb128 0x7
+ 588 00c9 B3000000 		.4byte	0xb3
+ 589 00cd 02       		.byte	0x2
+ 590 00ce 00       		.byte	0
+ 591 00cf 08       		.uleb128 0x8
+ 592 00d0 04       		.byte	0x4
+ 593 00d1 04       		.byte	0x4
+ 594 00d2 87       		.byte	0x87
+ 595 00d3 E4000000 		.4byte	0xe4
+ 596 00d7 09       		.uleb128 0x9
+ 597 00d8 5D0A0000 		.4byte	.LASF19
+ 598 00dc 04       		.byte	0x4
+ 599 00dd 88       		.byte	0x88
+ 600 00de BA000000 		.4byte	0xba
+ 601 00e2 00       		.byte	0
+ 602 00e3 00       		.byte	0
+ 603 00e4 03       		.uleb128 0x3
+ 604 00e5 15050000 		.4byte	.LASF18
+ 605 00e9 04       		.byte	0x4
+ 606 00ea 89       		.byte	0x89
+ 607 00eb EF000000 		.4byte	0xef
+ 608 00ef 0A       		.uleb128 0xa
+ 609 00f0 04       		.byte	0x4
+ 610 00f1 CF000000 		.4byte	0xcf
+ 611 00f5 0B       		.uleb128 0xb
+ 612 00f6 1410     		.2byte	0x1014
+ 613 00f8 04       		.byte	0x4
+ 614 00f9 CB       		.byte	0xcb
+ 615 00fa B3010000 		.4byte	0x1b3
+ 616 00fe 0C       		.uleb128 0xc
+ARM GAS  e:\temp\ccdyAbtO.s 			page 15
+
+
+ 617 00ff 647200   		.ascii	"dr\000"
+ 618 0102 04       		.byte	0x4
+ 619 0103 CC       		.byte	0xcc
+ 620 0104 BA000000 		.4byte	0xba
+ 621 0108 00       		.byte	0
+ 622 0109 0C       		.uleb128 0xc
+ 623 010a 707300   		.ascii	"ps\000"
+ 624 010d 04       		.byte	0x4
+ 625 010e CD       		.byte	0xcd
+ 626 010f BA000000 		.4byte	0xba
+ 627 0113 04       		.byte	0x4
+ 628 0114 0C       		.uleb128 0xc
+ 629 0115 706300   		.ascii	"pc\000"
+ 630 0118 04       		.byte	0x4
+ 631 0119 CE       		.byte	0xce
+ 632 011a BA000000 		.4byte	0xba
+ 633 011e 08       		.byte	0x8
+ 634 011f 09       		.uleb128 0x9
+ 635 0120 B8060000 		.4byte	.LASF20
+ 636 0124 04       		.byte	0x4
+ 637 0125 CF       		.byte	0xcf
+ 638 0126 BA000000 		.4byte	0xba
+ 639 012a 0C       		.byte	0xc
+ 640 012b 09       		.uleb128 0x9
+ 641 012c FD050000 		.4byte	.LASF21
+ 642 0130 04       		.byte	0x4
+ 643 0131 D0       		.byte	0xd0
+ 644 0132 BA000000 		.4byte	0xba
+ 645 0136 10       		.byte	0x10
+ 646 0137 09       		.uleb128 0x9
+ 647 0138 02060000 		.4byte	.LASF22
+ 648 013c 04       		.byte	0x4
+ 649 013d D1       		.byte	0xd1
+ 650 013e BA000000 		.4byte	0xba
+ 651 0142 14       		.byte	0x14
+ 652 0143 0C       		.uleb128 0xc
+ 653 0144 70633200 		.ascii	"pc2\000"
+ 654 0148 04       		.byte	0x4
+ 655 0149 D2       		.byte	0xd2
+ 656 014a BA000000 		.4byte	0xba
+ 657 014e 18       		.byte	0x18
+ 658 014f 09       		.uleb128 0x9
+ 659 0150 09060000 		.4byte	.LASF23
+ 660 0154 04       		.byte	0x4
+ 661 0155 D3       		.byte	0xd3
+ 662 0156 C3010000 		.4byte	0x1c3
+ 663 015a 1C       		.byte	0x1c
+ 664 015b 09       		.uleb128 0x9
+ 665 015c 6F060000 		.4byte	.LASF24
+ 666 0160 04       		.byte	0x4
+ 667 0161 D4       		.byte	0xd4
+ 668 0162 BA000000 		.4byte	0xba
+ 669 0166 40       		.byte	0x40
+ 670 0167 09       		.uleb128 0x9
+ 671 0168 F0040000 		.4byte	.LASF25
+ 672 016c 04       		.byte	0x4
+ 673 016d D5       		.byte	0xd5
+ARM GAS  e:\temp\ccdyAbtO.s 			page 16
+
+
+ 674 016e BA000000 		.4byte	0xba
+ 675 0172 44       		.byte	0x44
+ 676 0173 09       		.uleb128 0x9
+ 677 0174 C5020000 		.4byte	.LASF26
+ 678 0178 04       		.byte	0x4
+ 679 0179 D6       		.byte	0xd6
+ 680 017a BA000000 		.4byte	0xba
+ 681 017e 48       		.byte	0x48
+ 682 017f 09       		.uleb128 0x9
+ 683 0180 10060000 		.4byte	.LASF27
+ 684 0184 04       		.byte	0x4
+ 685 0185 D7       		.byte	0xd7
+ 686 0186 D9010000 		.4byte	0x1d9
+ 687 018a 4C       		.byte	0x4c
+ 688 018b 0D       		.uleb128 0xd
+ 689 018c B10A0000 		.4byte	.LASF28
+ 690 0190 04       		.byte	0x4
+ 691 0191 D8       		.byte	0xd8
+ 692 0192 BA000000 		.4byte	0xba
+ 693 0196 0010     		.2byte	0x1000
+ 694 0198 0D       		.uleb128 0xd
+ 695 0199 17060000 		.4byte	.LASF29
+ 696 019d 04       		.byte	0x4
+ 697 019e D9       		.byte	0xd9
+ 698 019f DE010000 		.4byte	0x1de
+ 699 01a3 0410     		.2byte	0x1004
+ 700 01a5 0D       		.uleb128 0xd
+ 701 01a6 3D040000 		.4byte	.LASF30
+ 702 01aa 04       		.byte	0x4
+ 703 01ab DA       		.byte	0xda
+ 704 01ac BA000000 		.4byte	0xba
+ 705 01b0 1010     		.2byte	0x1010
+ 706 01b2 00       		.byte	0
+ 707 01b3 06       		.uleb128 0x6
+ 708 01b4 BA000000 		.4byte	0xba
+ 709 01b8 C3010000 		.4byte	0x1c3
+ 710 01bc 07       		.uleb128 0x7
+ 711 01bd B3000000 		.4byte	0xb3
+ 712 01c1 08       		.byte	0x8
+ 713 01c2 00       		.byte	0
+ 714 01c3 05       		.uleb128 0x5
+ 715 01c4 B3010000 		.4byte	0x1b3
+ 716 01c8 06       		.uleb128 0x6
+ 717 01c9 BA000000 		.4byte	0xba
+ 718 01cd D9010000 		.4byte	0x1d9
+ 719 01d1 0E       		.uleb128 0xe
+ 720 01d2 B3000000 		.4byte	0xb3
+ 721 01d6 EC03     		.2byte	0x3ec
+ 722 01d8 00       		.byte	0
+ 723 01d9 05       		.uleb128 0x5
+ 724 01da C8010000 		.4byte	0x1c8
+ 725 01de 05       		.uleb128 0x5
+ 726 01df BF000000 		.4byte	0xbf
+ 727 01e3 03       		.uleb128 0x3
+ 728 01e4 98050000 		.4byte	.LASF31
+ 729 01e8 04       		.byte	0x4
+ 730 01e9 DB       		.byte	0xdb
+ARM GAS  e:\temp\ccdyAbtO.s 			page 17
+
+
+ 731 01ea EE010000 		.4byte	0x1ee
+ 732 01ee 0A       		.uleb128 0xa
+ 733 01ef 04       		.byte	0x4
+ 734 01f0 F5000000 		.4byte	0xf5
+ 735 01f4 0F       		.uleb128 0xf
+ 736 01f5 01       		.byte	0x1
+ 737 01f6 37000000 		.4byte	0x37
+ 738 01fa 05       		.byte	0x5
+ 739 01fb 61       		.byte	0x61
+ 740 01fc 2D030000 		.4byte	0x32d
+ 741 0200 10       		.uleb128 0x10
+ 742 0201 84030000 		.4byte	.LASF32
+ 743 0205 00       		.byte	0
+ 744 0206 10       		.uleb128 0x10
+ 745 0207 96030000 		.4byte	.LASF33
+ 746 020b 01       		.byte	0x1
+ 747 020c 10       		.uleb128 0x10
+ 748 020d A8030000 		.4byte	.LASF34
+ 749 0211 02       		.byte	0x2
+ 750 0212 10       		.uleb128 0x10
+ 751 0213 8C060000 		.4byte	.LASF35
+ 752 0217 03       		.byte	0x3
+ 753 0218 10       		.uleb128 0x10
+ 754 0219 CC030000 		.4byte	.LASF36
+ 755 021d 04       		.byte	0x4
+ 756 021e 10       		.uleb128 0x10
+ 757 021f DE030000 		.4byte	.LASF37
+ 758 0223 05       		.byte	0x5
+ 759 0224 10       		.uleb128 0x10
+ 760 0225 F0030000 		.4byte	.LASF38
+ 761 0229 06       		.byte	0x6
+ 762 022a 10       		.uleb128 0x10
+ 763 022b 02040000 		.4byte	.LASF39
+ 764 022f 07       		.byte	0x7
+ 765 0230 10       		.uleb128 0x10
+ 766 0231 F1090000 		.4byte	.LASF40
+ 767 0235 10       		.byte	0x10
+ 768 0236 10       		.uleb128 0x10
+ 769 0237 030A0000 		.4byte	.LASF41
+ 770 023b 11       		.byte	0x11
+ 771 023c 10       		.uleb128 0x10
+ 772 023d 150A0000 		.4byte	.LASF42
+ 773 0241 12       		.byte	0x12
+ 774 0242 10       		.uleb128 0x10
+ 775 0243 270A0000 		.4byte	.LASF43
+ 776 0247 13       		.byte	0x13
+ 777 0248 10       		.uleb128 0x10
+ 778 0249 390A0000 		.4byte	.LASF44
+ 779 024d 14       		.byte	0x14
+ 780 024e 10       		.uleb128 0x10
+ 781 024f 4B0A0000 		.4byte	.LASF45
+ 782 0253 15       		.byte	0x15
+ 783 0254 10       		.uleb128 0x10
+ 784 0255 97010000 		.4byte	.LASF46
+ 785 0259 16       		.byte	0x16
+ 786 025a 10       		.uleb128 0x10
+ 787 025b 660A0000 		.4byte	.LASF47
+ARM GAS  e:\temp\ccdyAbtO.s 			page 18
+
+
+ 788 025f 17       		.byte	0x17
+ 789 0260 10       		.uleb128 0x10
+ 790 0261 49040000 		.4byte	.LASF48
+ 791 0265 20       		.byte	0x20
+ 792 0266 10       		.uleb128 0x10
+ 793 0267 5B040000 		.4byte	.LASF49
+ 794 026b 21       		.byte	0x21
+ 795 026c 10       		.uleb128 0x10
+ 796 026d 6D040000 		.4byte	.LASF50
+ 797 0271 22       		.byte	0x22
+ 798 0272 10       		.uleb128 0x10
+ 799 0273 27090000 		.4byte	.LASF51
+ 800 0277 23       		.byte	0x23
+ 801 0278 10       		.uleb128 0x10
+ 802 0279 39090000 		.4byte	.LASF52
+ 803 027d 24       		.byte	0x24
+ 804 027e 10       		.uleb128 0x10
+ 805 027f A2040000 		.4byte	.LASF53
+ 806 0283 25       		.byte	0x25
+ 807 0284 10       		.uleb128 0x10
+ 808 0285 B4040000 		.4byte	.LASF54
+ 809 0289 26       		.byte	0x26
+ 810 028a 10       		.uleb128 0x10
+ 811 028b C6040000 		.4byte	.LASF55
+ 812 028f 27       		.byte	0x27
+ 813 0290 10       		.uleb128 0x10
+ 814 0291 07010000 		.4byte	.LASF56
+ 815 0295 30       		.byte	0x30
+ 816 0296 10       		.uleb128 0x10
+ 817 0297 19010000 		.4byte	.LASF57
+ 818 029b 31       		.byte	0x31
+ 819 029c 10       		.uleb128 0x10
+ 820 029d 2B010000 		.4byte	.LASF58
+ 821 02a1 32       		.byte	0x32
+ 822 02a2 10       		.uleb128 0x10
+ 823 02a3 3D010000 		.4byte	.LASF59
+ 824 02a7 33       		.byte	0x33
+ 825 02a8 10       		.uleb128 0x10
+ 826 02a9 4F010000 		.4byte	.LASF60
+ 827 02ad 34       		.byte	0x34
+ 828 02ae 10       		.uleb128 0x10
+ 829 02af 61010000 		.4byte	.LASF61
+ 830 02b3 35       		.byte	0x35
+ 831 02b4 10       		.uleb128 0x10
+ 832 02b5 73010000 		.4byte	.LASF62
+ 833 02b9 36       		.byte	0x36
+ 834 02ba 10       		.uleb128 0x10
+ 835 02bb 85010000 		.4byte	.LASF63
+ 836 02bf 37       		.byte	0x37
+ 837 02c0 10       		.uleb128 0x10
+ 838 02c1 03080000 		.4byte	.LASF64
+ 839 02c5 40       		.byte	0x40
+ 840 02c6 10       		.uleb128 0x10
+ 841 02c7 15080000 		.4byte	.LASF65
+ 842 02cb 41       		.byte	0x41
+ 843 02cc 10       		.uleb128 0x10
+ 844 02cd 27080000 		.4byte	.LASF66
+ARM GAS  e:\temp\ccdyAbtO.s 			page 19
+
+
+ 845 02d1 42       		.byte	0x42
+ 846 02d2 10       		.uleb128 0x10
+ 847 02d3 39080000 		.4byte	.LASF67
+ 848 02d7 43       		.byte	0x43
+ 849 02d8 10       		.uleb128 0x10
+ 850 02d9 4B080000 		.4byte	.LASF68
+ 851 02dd 44       		.byte	0x44
+ 852 02de 10       		.uleb128 0x10
+ 853 02df 5D080000 		.4byte	.LASF69
+ 854 02e3 45       		.byte	0x45
+ 855 02e4 10       		.uleb128 0x10
+ 856 02e5 6F080000 		.4byte	.LASF70
+ 857 02e9 46       		.byte	0x46
+ 858 02ea 10       		.uleb128 0x10
+ 859 02eb BA030000 		.4byte	.LASF71
+ 860 02ef 47       		.byte	0x47
+ 861 02f0 10       		.uleb128 0x10
+ 862 02f1 A9010000 		.4byte	.LASF72
+ 863 02f5 50       		.byte	0x50
+ 864 02f6 10       		.uleb128 0x10
+ 865 02f7 BB010000 		.4byte	.LASF73
+ 866 02fb 51       		.byte	0x51
+ 867 02fc 10       		.uleb128 0x10
+ 868 02fd CD010000 		.4byte	.LASF74
+ 869 0301 52       		.byte	0x52
+ 870 0302 10       		.uleb128 0x10
+ 871 0303 DF010000 		.4byte	.LASF75
+ 872 0307 53       		.byte	0x53
+ 873 0308 10       		.uleb128 0x10
+ 874 0309 F1010000 		.4byte	.LASF76
+ 875 030d 54       		.byte	0x54
+ 876 030e 10       		.uleb128 0x10
+ 877 030f 03020000 		.4byte	.LASF77
+ 878 0313 55       		.byte	0x55
+ 879 0314 10       		.uleb128 0x10
+ 880 0315 15020000 		.4byte	.LASF78
+ 881 0319 56       		.byte	0x56
+ 882 031a 10       		.uleb128 0x10
+ 883 031b 27020000 		.4byte	.LASF79
+ 884 031f 57       		.byte	0x57
+ 885 0320 10       		.uleb128 0x10
+ 886 0321 9A080000 		.4byte	.LASF80
+ 887 0325 60       		.byte	0x60
+ 888 0326 10       		.uleb128 0x10
+ 889 0327 AC080000 		.4byte	.LASF81
+ 890 032b 61       		.byte	0x61
+ 891 032c 00       		.byte	0
+ 892 032d 03       		.uleb128 0x3
+ 893 032e DD000000 		.4byte	.LASF82
+ 894 0332 05       		.byte	0x5
+ 895 0333 A1       		.byte	0xa1
+ 896 0334 F4010000 		.4byte	0x1f4
+ 897 0338 11       		.uleb128 0x11
+ 898 0339 780A0000 		.4byte	.LASF91
+ 899 033d 01       		.byte	0x1
+ 900 033e 37000000 		.4byte	0x37
+ 901 0342 05       		.byte	0x5
+ARM GAS  e:\temp\ccdyAbtO.s 			page 20
+
+
+ 902 0343 AC       		.byte	0xac
+ 903 0344 79030000 		.4byte	0x379
+ 904 0348 10       		.uleb128 0x10
+ 905 0349 85050000 		.4byte	.LASF83
+ 906 034d 00       		.byte	0
+ 907 034e 10       		.uleb128 0x10
+ 908 034f B1020000 		.4byte	.LASF84
+ 909 0353 01       		.byte	0x1
+ 910 0354 10       		.uleb128 0x10
+ 911 0355 46000000 		.4byte	.LASF85
+ 912 0359 02       		.byte	0x2
+ 913 035a 10       		.uleb128 0x10
+ 914 035b 86070000 		.4byte	.LASF86
+ 915 035f 03       		.byte	0x3
+ 916 0360 10       		.uleb128 0x10
+ 917 0361 C1060000 		.4byte	.LASF87
+ 918 0365 04       		.byte	0x4
+ 919 0366 10       		.uleb128 0x10
+ 920 0367 0B000000 		.4byte	.LASF88
+ 921 036b 05       		.byte	0x5
+ 922 036c 10       		.uleb128 0x10
+ 923 036d C8050000 		.4byte	.LASF89
+ 924 0371 06       		.byte	0x6
+ 925 0372 10       		.uleb128 0x10
+ 926 0373 CA000000 		.4byte	.LASF90
+ 927 0377 07       		.byte	0x7
+ 928 0378 00       		.byte	0
+ 929 0379 03       		.uleb128 0x3
+ 930 037a 780A0000 		.4byte	.LASF91
+ 931 037e 05       		.byte	0x5
+ 932 037f B6       		.byte	0xb6
+ 933 0380 38030000 		.4byte	0x338
+ 934 0384 11       		.uleb128 0x11
+ 935 0385 E9080000 		.4byte	.LASF92
+ 936 0389 01       		.byte	0x1
+ 937 038a 37000000 		.4byte	0x37
+ 938 038e 05       		.byte	0x5
+ 939 038f D3       		.byte	0xd3
+ 940 0390 91040000 		.4byte	0x491
+ 941 0394 10       		.uleb128 0x10
+ 942 0395 E1090000 		.4byte	.LASF93
+ 943 0399 00       		.byte	0
+ 944 039a 10       		.uleb128 0x10
+ 945 039b AA070000 		.4byte	.LASF94
+ 946 039f 06       		.byte	0x6
+ 947 03a0 10       		.uleb128 0x10
+ 948 03a1 BB070000 		.4byte	.LASF95
+ 949 03a5 07       		.byte	0x7
+ 950 03a6 10       		.uleb128 0x10
+ 951 03a7 CA0A0000 		.4byte	.LASF96
+ 952 03ab 08       		.byte	0x8
+ 953 03ac 10       		.uleb128 0x10
+ 954 03ad 86020000 		.4byte	.LASF97
+ 955 03b1 08       		.byte	0x8
+ 956 03b2 10       		.uleb128 0x10
+ 957 03b3 54050000 		.4byte	.LASF98
+ 958 03b7 09       		.byte	0x9
+ARM GAS  e:\temp\ccdyAbtO.s 			page 21
+
+
+ 959 03b8 10       		.uleb128 0x10
+ 960 03b9 14040000 		.4byte	.LASF99
+ 961 03bd 0A       		.byte	0xa
+ 962 03be 10       		.uleb128 0x10
+ 963 03bf 100B0000 		.4byte	.LASF100
+ 964 03c3 0A       		.byte	0xa
+ 965 03c4 10       		.uleb128 0x10
+ 966 03c5 B3050000 		.4byte	.LASF101
+ 967 03c9 0A       		.byte	0xa
+ 968 03ca 10       		.uleb128 0x10
+ 969 03cb 250B0000 		.4byte	.LASF102
+ 970 03cf 0A       		.byte	0xa
+ 971 03d0 10       		.uleb128 0x10
+ 972 03d1 F50A0000 		.4byte	.LASF103
+ 973 03d5 0B       		.byte	0xb
+ 974 03d6 10       		.uleb128 0x10
+ 975 03d7 D8040000 		.4byte	.LASF104
+ 976 03db 0C       		.byte	0xc
+ 977 03dc 10       		.uleb128 0x10
+ 978 03dd 23050000 		.4byte	.LASF105
+ 979 03e1 0C       		.byte	0xc
+ 980 03e2 10       		.uleb128 0x10
+ 981 03e3 1B000000 		.4byte	.LASF106
+ 982 03e7 0C       		.byte	0xc
+ 983 03e8 10       		.uleb128 0x10
+ 984 03e9 76060000 		.4byte	.LASF107
+ 985 03ed 0C       		.byte	0xc
+ 986 03ee 10       		.uleb128 0x10
+ 987 03ef F7040000 		.4byte	.LASF108
+ 988 03f3 0C       		.byte	0xc
+ 989 03f4 10       		.uleb128 0x10
+ 990 03f5 5F000000 		.4byte	.LASF109
+ 991 03f9 0C       		.byte	0xc
+ 992 03fa 10       		.uleb128 0x10
+ 993 03fb 73000000 		.4byte	.LASF110
+ 994 03ff 0C       		.byte	0xc
+ 995 0400 10       		.uleb128 0x10
+ 996 0401 2E060000 		.4byte	.LASF111
+ 997 0405 0C       		.byte	0xc
+ 998 0406 10       		.uleb128 0x10
+ 999 0407 42060000 		.4byte	.LASF112
+ 1000 040b 0C       		.byte	0xc
+ 1001 040c 10       		.uleb128 0x10
+ 1002 040d 0D090000 		.4byte	.LASF113
+ 1003 0411 0C       		.byte	0xc
+ 1004 0412 10       		.uleb128 0x10
+ 1005 0413 D7020000 		.4byte	.LASF114
+ 1006 0417 0C       		.byte	0xc
+ 1007 0418 10       		.uleb128 0x10
+ 1008 0419 AF090000 		.4byte	.LASF115
+ 1009 041d 0C       		.byte	0xc
+ 1010 041e 10       		.uleb128 0x10
+ 1011 041f C8090000 		.4byte	.LASF116
+ 1012 0423 0C       		.byte	0xc
+ 1013 0424 10       		.uleb128 0x10
+ 1014 0425 F6080000 		.4byte	.LASF117
+ 1015 0429 0C       		.byte	0xc
+ARM GAS  e:\temp\ccdyAbtO.s 			page 22
+
+
+ 1016 042a 10       		.uleb128 0x10
+ 1017 042b 4B090000 		.4byte	.LASF118
+ 1018 042f 0C       		.byte	0xc
+ 1019 0430 10       		.uleb128 0x10
+ 1020 0431 64090000 		.4byte	.LASF119
+ 1021 0435 0C       		.byte	0xc
+ 1022 0436 10       		.uleb128 0x10
+ 1023 0437 D2080000 		.4byte	.LASF120
+ 1024 043b 0C       		.byte	0xc
+ 1025 043c 10       		.uleb128 0x10
+ 1026 043d 34000000 		.4byte	.LASF121
+ 1027 0441 0C       		.byte	0xc
+ 1028 0442 10       		.uleb128 0x10
+ 1029 0443 E30A0000 		.4byte	.LASF122
+ 1030 0447 0C       		.byte	0xc
+ 1031 0448 10       		.uleb128 0x10
+ 1032 0449 39020000 		.4byte	.LASF123
+ 1033 044d 0C       		.byte	0xc
+ 1034 044e 10       		.uleb128 0x10
+ 1035 044f 52020000 		.4byte	.LASF124
+ 1036 0453 0C       		.byte	0xc
+ 1037 0454 10       		.uleb128 0x10
+ 1038 0455 D6070000 		.4byte	.LASF125
+ 1039 0459 0C       		.byte	0xc
+ 1040 045a 10       		.uleb128 0x10
+ 1041 045b 56060000 		.4byte	.LASF126
+ 1042 045f 0C       		.byte	0xc
+ 1043 0460 10       		.uleb128 0x10
+ 1044 0461 A4060000 		.4byte	.LASF127
+ 1045 0465 0D       		.byte	0xd
+ 1046 0466 10       		.uleb128 0x10
+ 1047 0467 6B020000 		.4byte	.LASF128
+ 1048 046b 0E       		.byte	0xe
+ 1049 046c 10       		.uleb128 0x10
+ 1050 046d 9D0A0000 		.4byte	.LASF129
+ 1051 0471 0E       		.byte	0xe
+ 1052 0472 10       		.uleb128 0x10
+ 1053 0473 D7050000 		.4byte	.LASF130
+ 1054 0477 0E       		.byte	0xe
+ 1055 0478 10       		.uleb128 0x10
+ 1056 0479 40050000 		.4byte	.LASF131
+ 1057 047d 0F       		.byte	0xf
+ 1058 047e 10       		.uleb128 0x10
+ 1059 047f 9F000000 		.4byte	.LASF132
+ 1060 0483 0F       		.byte	0xf
+ 1061 0484 10       		.uleb128 0x10
+ 1062 0485 BE080000 		.4byte	.LASF133
+ 1063 0489 0F       		.byte	0xf
+ 1064 048a 10       		.uleb128 0x10
+ 1065 048b 29040000 		.4byte	.LASF134
+ 1066 048f 0F       		.byte	0xf
+ 1067 0490 00       		.byte	0
+ 1068 0491 12       		.uleb128 0x12
+ 1069 0492 E9080000 		.4byte	.LASF92
+ 1070 0496 05       		.byte	0x5
+ 1071 0497 8101     		.2byte	0x181
+ 1072 0499 84030000 		.4byte	0x384
+ARM GAS  e:\temp\ccdyAbtO.s 			page 23
+
+
+ 1073 049d 13       		.uleb128 0x13
+ 1074 049e 90000000 		.4byte	.LASF139
+ 1075 04a2 01       		.byte	0x1
+ 1076 04a3 4A       		.byte	0x4a
+ 1077 04a4 00000000 		.4byte	.LFB32
+ 1078 04a8 34000000 		.4byte	.LFE32-.LFB32
+ 1079 04ac 01       		.uleb128 0x1
+ 1080 04ad 9C       		.byte	0x9c
+ 1081 04ae ED040000 		.4byte	0x4ed
+ 1082 04b2 14       		.uleb128 0x14
+ 1083 04b3 E7040000 		.4byte	.LASF135
+ 1084 04b7 01       		.byte	0x1
+ 1085 04b8 4A       		.byte	0x4a
+ 1086 04b9 2D030000 		.4byte	0x32d
+ 1087 04bd 00000000 		.4byte	.LLST0
+ 1088 04c1 14       		.uleb128 0x14
+ 1089 04c2 69030000 		.4byte	.LASF136
+ 1090 04c6 01       		.byte	0x1
+ 1091 04c7 4A       		.byte	0x4a
+ 1092 04c8 ED040000 		.4byte	0x4ed
+ 1093 04cc 21000000 		.4byte	.LLST1
+ 1094 04d0 15       		.uleb128 0x15
+ 1095 04d1 10050000 		.4byte	.LASF137
+ 1096 04d5 01       		.byte	0x1
+ 1097 04d6 4C       		.byte	0x4c
+ 1098 04d7 81000000 		.4byte	0x81
+ 1099 04db 5B000000 		.4byte	.LLST2
+ 1100 04df 16       		.uleb128 0x16
+ 1101 04e0 70696E00 		.ascii	"pin\000"
+ 1102 04e4 01       		.byte	0x1
+ 1103 04e5 4D       		.byte	0x4d
+ 1104 04e6 81000000 		.4byte	0x81
+ 1105 04ea 01       		.uleb128 0x1
+ 1106 04eb 50       		.byte	0x50
+ 1107 04ec 00       		.byte	0
+ 1108 04ed 02       		.uleb128 0x2
+ 1109 04ee 01       		.byte	0x1
+ 1110 04ef 02       		.byte	0x2
+ 1111 04f0 96070000 		.4byte	.LASF138
+ 1112 04f4 17       		.uleb128 0x17
+ 1113 04f5 1E060000 		.4byte	.LASF145
+ 1114 04f9 01       		.byte	0x1
+ 1115 04fa 59       		.byte	0x59
+ 1116 04fb ED040000 		.4byte	0x4ed
+ 1117 04ff 00000000 		.4byte	.LFB33
+ 1118 0503 24000000 		.4byte	.LFE33-.LFB33
+ 1119 0507 01       		.uleb128 0x1
+ 1120 0508 9C       		.byte	0x9c
+ 1121 0509 39050000 		.4byte	0x539
+ 1122 050d 14       		.uleb128 0x14
+ 1123 050e E7040000 		.4byte	.LASF135
+ 1124 0512 01       		.byte	0x1
+ 1125 0513 59       		.byte	0x59
+ 1126 0514 2D030000 		.4byte	0x32d
+ 1127 0518 79000000 		.4byte	.LLST3
+ 1128 051c 15       		.uleb128 0x15
+ 1129 051d 10050000 		.4byte	.LASF137
+ARM GAS  e:\temp\ccdyAbtO.s 			page 24
+
+
+ 1130 0521 01       		.byte	0x1
+ 1131 0522 5B       		.byte	0x5b
+ 1132 0523 81000000 		.4byte	0x81
+ 1133 0527 9A000000 		.4byte	.LLST4
+ 1134 052b 16       		.uleb128 0x16
+ 1135 052c 70696E00 		.ascii	"pin\000"
+ 1136 0530 01       		.byte	0x1
+ 1137 0531 5C       		.byte	0x5c
+ 1138 0532 81000000 		.4byte	0x81
+ 1139 0536 01       		.uleb128 0x1
+ 1140 0537 52       		.byte	0x52
+ 1141 0538 00       		.byte	0
+ 1142 0539 13       		.uleb128 0x13
+ 1143 053a 820A0000 		.4byte	.LASF140
+ 1144 053e 01       		.byte	0x1
+ 1145 053f 61       		.byte	0x61
+ 1146 0540 00000000 		.4byte	.LFB34
+ 1147 0544 28000000 		.4byte	.LFE34-.LFB34
+ 1148 0548 01       		.uleb128 0x1
+ 1149 0549 9C       		.byte	0x9c
+ 1150 054a A5050000 		.4byte	0x5a5
+ 1151 054e 14       		.uleb128 0x14
+ 1152 054f E7040000 		.4byte	.LASF135
+ 1153 0553 01       		.byte	0x1
+ 1154 0554 61       		.byte	0x61
+ 1155 0555 2D030000 		.4byte	0x32d
+ 1156 0559 BC000000 		.4byte	.LLST5
+ 1157 055d 14       		.uleb128 0x14
+ 1158 055e F4050000 		.4byte	.LASF141
+ 1159 0562 01       		.byte	0x1
+ 1160 0563 61       		.byte	0x61
+ 1161 0564 79030000 		.4byte	0x379
+ 1162 0568 DD000000 		.4byte	.LLST6
+ 1163 056c 16       		.uleb128 0x16
+ 1164 056d 706F7300 		.ascii	"pos\000"
+ 1165 0571 01       		.byte	0x1
+ 1166 0572 63       		.byte	0x63
+ 1167 0573 81000000 		.4byte	0x81
+ 1168 0577 01       		.uleb128 0x1
+ 1169 0578 50       		.byte	0x50
+ 1170 0579 15       		.uleb128 0x15
+ 1171 057a 10050000 		.4byte	.LASF137
+ 1172 057e 01       		.byte	0x1
+ 1173 057f 64       		.byte	0x64
+ 1174 0580 81000000 		.4byte	0x81
+ 1175 0584 FE000000 		.4byte	.LLST7
+ 1176 0588 18       		.uleb128 0x18
+ 1177 0589 70696E00 		.ascii	"pin\000"
+ 1178 058d 01       		.byte	0x1
+ 1179 058e 65       		.byte	0x65
+ 1180 058f 81000000 		.4byte	0x81
+ 1181 0593 11010000 		.4byte	.LLST8
+ 1182 0597 19       		.uleb128 0x19
+ 1183 0598 39050000 		.4byte	.LASF142
+ 1184 059c 01       		.byte	0x1
+ 1185 059d 66       		.byte	0x66
+ 1186 059e 8C000000 		.4byte	0x8c
+ARM GAS  e:\temp\ccdyAbtO.s 			page 25
+
+
+ 1187 05a2 01       		.uleb128 0x1
+ 1188 05a3 53       		.byte	0x53
+ 1189 05a4 00       		.byte	0
+ 1190 05a5 13       		.uleb128 0x13
+ 1191 05a6 EF070000 		.4byte	.LASF143
+ 1192 05aa 01       		.byte	0x1
+ 1193 05ab 72       		.byte	0x72
+ 1194 05ac 00000000 		.4byte	.LFB35
+ 1195 05b0 2C000000 		.4byte	.LFE35-.LFB35
+ 1196 05b4 01       		.uleb128 0x1
+ 1197 05b5 9C       		.byte	0x9c
+ 1198 05b6 13060000 		.4byte	0x613
+ 1199 05ba 14       		.uleb128 0x14
+ 1200 05bb E7040000 		.4byte	.LASF135
+ 1201 05bf 01       		.byte	0x1
+ 1202 05c0 72       		.byte	0x72
+ 1203 05c1 2D030000 		.4byte	0x32d
+ 1204 05c5 24010000 		.4byte	.LLST9
+ 1205 05c9 14       		.uleb128 0x14
+ 1206 05ca 81080000 		.4byte	.LASF144
+ 1207 05ce 01       		.byte	0x1
+ 1208 05cf 72       		.byte	0x72
+ 1209 05d0 81000000 		.4byte	0x81
+ 1210 05d4 45010000 		.4byte	.LLST10
+ 1211 05d8 18       		.uleb128 0x18
+ 1212 05d9 706F7300 		.ascii	"pos\000"
+ 1213 05dd 01       		.byte	0x1
+ 1214 05de 74       		.byte	0x74
+ 1215 05df 81000000 		.4byte	0x81
+ 1216 05e3 66010000 		.4byte	.LLST11
+ 1217 05e7 15       		.uleb128 0x15
+ 1218 05e8 10050000 		.4byte	.LASF137
+ 1219 05ec 01       		.byte	0x1
+ 1220 05ed 75       		.byte	0x75
+ 1221 05ee 81000000 		.4byte	0x81
+ 1222 05f2 79010000 		.4byte	.LLST12
+ 1223 05f6 18       		.uleb128 0x18
+ 1224 05f7 70696E00 		.ascii	"pin\000"
+ 1225 05fb 01       		.byte	0x1
+ 1226 05fc 76       		.byte	0x76
+ 1227 05fd 81000000 		.4byte	0x81
+ 1228 0601 8C010000 		.4byte	.LLST13
+ 1229 0605 19       		.uleb128 0x19
+ 1230 0606 39050000 		.4byte	.LASF142
+ 1231 060a 01       		.byte	0x1
+ 1232 060b 77       		.byte	0x77
+ 1233 060c 8C000000 		.4byte	0x8c
+ 1234 0610 01       		.uleb128 0x1
+ 1235 0611 53       		.byte	0x53
+ 1236 0612 00       		.byte	0
+ 1237 0613 17       		.uleb128 0x17
+ 1238 0614 A5050000 		.4byte	.LASF146
+ 1239 0618 01       		.byte	0x1
+ 1240 0619 83       		.byte	0x83
+ 1241 061a ED040000 		.4byte	0x4ed
+ 1242 061e 00000000 		.4byte	.LFB36
+ 1243 0622 24000000 		.4byte	.LFE36-.LFB36
+ARM GAS  e:\temp\ccdyAbtO.s 			page 26
+
+
+ 1244 0626 01       		.uleb128 0x1
+ 1245 0627 9C       		.byte	0x9c
+ 1246 0628 5A060000 		.4byte	0x65a
+ 1247 062c 14       		.uleb128 0x14
+ 1248 062d E7040000 		.4byte	.LASF135
+ 1249 0631 01       		.byte	0x1
+ 1250 0632 83       		.byte	0x83
+ 1251 0633 2D030000 		.4byte	0x32d
+ 1252 0637 9F010000 		.4byte	.LLST14
+ 1253 063b 15       		.uleb128 0x15
+ 1254 063c 10050000 		.4byte	.LASF137
+ 1255 0640 01       		.byte	0x1
+ 1256 0641 85       		.byte	0x85
+ 1257 0642 81000000 		.4byte	0x81
+ 1258 0646 C0010000 		.4byte	.LLST15
+ 1259 064a 18       		.uleb128 0x18
+ 1260 064b 70696E00 		.ascii	"pin\000"
+ 1261 064f 01       		.byte	0x1
+ 1262 0650 86       		.byte	0x86
+ 1263 0651 81000000 		.4byte	0x81
+ 1264 0655 D3010000 		.4byte	.LLST16
+ 1265 0659 00       		.byte	0
+ 1266 065a 13       		.uleb128 0x13
+ 1267 065b 8A080000 		.4byte	.LASF147
+ 1268 065f 01       		.byte	0x1
+ 1269 0660 91       		.byte	0x91
+ 1270 0661 00000000 		.4byte	.LFB37
+ 1271 0665 18000000 		.4byte	.LFE37-.LFB37
+ 1272 0669 01       		.uleb128 0x1
+ 1273 066a 9C       		.byte	0x9c
+ 1274 066b 9B060000 		.4byte	0x69b
+ 1275 066f 14       		.uleb128 0x14
+ 1276 0670 E7040000 		.4byte	.LASF135
+ 1277 0674 01       		.byte	0x1
+ 1278 0675 91       		.byte	0x91
+ 1279 0676 2D030000 		.4byte	0x32d
+ 1280 067a F1010000 		.4byte	.LLST17
+ 1281 067e 15       		.uleb128 0x15
+ 1282 067f 10050000 		.4byte	.LASF137
+ 1283 0683 01       		.byte	0x1
+ 1284 0684 93       		.byte	0x93
+ 1285 0685 81000000 		.4byte	0x81
+ 1286 0689 12020000 		.4byte	.LLST18
+ 1287 068d 16       		.uleb128 0x16
+ 1288 068e 70696E00 		.ascii	"pin\000"
+ 1289 0692 01       		.byte	0x1
+ 1290 0693 94       		.byte	0x94
+ 1291 0694 81000000 		.4byte	0x81
+ 1292 0698 01       		.uleb128 0x1
+ 1293 0699 50       		.byte	0x50
+ 1294 069a 00       		.byte	0
+ 1295 069b 13       		.uleb128 0x13
+ 1296 069c 7F040000 		.4byte	.LASF148
+ 1297 06a0 01       		.byte	0x1
+ 1298 06a1 9A       		.byte	0x9a
+ 1299 06a2 00000000 		.4byte	.LFB38
+ 1300 06a6 28000000 		.4byte	.LFE38-.LFB38
+ARM GAS  e:\temp\ccdyAbtO.s 			page 27
+
+
+ 1301 06aa 01       		.uleb128 0x1
+ 1302 06ab 9C       		.byte	0x9c
+ 1303 06ac FC060000 		.4byte	0x6fc
+ 1304 06b0 14       		.uleb128 0x14
+ 1305 06b1 E7040000 		.4byte	.LASF135
+ 1306 06b5 01       		.byte	0x1
+ 1307 06b6 9A       		.byte	0x9a
+ 1308 06b7 2D030000 		.4byte	0x32d
+ 1309 06bb 25020000 		.4byte	.LLST19
+ 1310 06bf 14       		.uleb128 0x14
+ 1311 06c0 00000000 		.4byte	.LASF149
+ 1312 06c4 01       		.byte	0x1
+ 1313 06c5 9A       		.byte	0x9a
+ 1314 06c6 91040000 		.4byte	0x491
+ 1315 06ca 46020000 		.4byte	.LLST20
+ 1316 06ce 15       		.uleb128 0x15
+ 1317 06cf 10050000 		.4byte	.LASF137
+ 1318 06d3 01       		.byte	0x1
+ 1319 06d4 9C       		.byte	0x9c
+ 1320 06d5 81000000 		.4byte	0x81
+ 1321 06d9 67020000 		.4byte	.LLST21
+ 1322 06dd 18       		.uleb128 0x18
+ 1323 06de 70696E00 		.ascii	"pin\000"
+ 1324 06e2 01       		.byte	0x1
+ 1325 06e3 9D       		.byte	0x9d
+ 1326 06e4 81000000 		.4byte	0x81
+ 1327 06e8 7A020000 		.4byte	.LLST22
+ 1328 06ec 15       		.uleb128 0x15
+ 1329 06ed 39050000 		.4byte	.LASF142
+ 1330 06f1 01       		.byte	0x1
+ 1331 06f2 9E       		.byte	0x9e
+ 1332 06f3 8C000000 		.4byte	0x8c
+ 1333 06f7 8D020000 		.4byte	.LLST23
+ 1334 06fb 00       		.byte	0
+ 1335 06fc 13       		.uleb128 0x13
+ 1336 06fd 6F050000 		.4byte	.LASF150
+ 1337 0701 01       		.byte	0x1
+ 1338 0702 A8       		.byte	0xa8
+ 1339 0703 00000000 		.4byte	.LFB39
+ 1340 0707 20000000 		.4byte	.LFE39-.LFB39
+ 1341 070b 01       		.uleb128 0x1
+ 1342 070c 9C       		.byte	0x9c
+ 1343 070d 92070000 		.4byte	0x792
+ 1344 0711 14       		.uleb128 0x14
+ 1345 0712 E7040000 		.4byte	.LASF135
+ 1346 0716 01       		.byte	0x1
+ 1347 0717 A8       		.byte	0xa8
+ 1348 0718 2D030000 		.4byte	0x32d
+ 1349 071c AB020000 		.4byte	.LLST24
+ 1350 0720 14       		.uleb128 0x14
+ 1351 0721 00000000 		.4byte	.LASF149
+ 1352 0725 01       		.byte	0x1
+ 1353 0726 A8       		.byte	0xa8
+ 1354 0727 91040000 		.4byte	0x491
+ 1355 072b CC020000 		.4byte	.LLST25
+ 1356 072f 14       		.uleb128 0x14
+ 1357 0730 F4050000 		.4byte	.LASF141
+ARM GAS  e:\temp\ccdyAbtO.s 			page 28
+
+
+ 1358 0734 01       		.byte	0x1
+ 1359 0735 A9       		.byte	0xa9
+ 1360 0736 79030000 		.4byte	0x379
+ 1361 073a ED020000 		.4byte	.LLST26
+ 1362 073e 14       		.uleb128 0x14
+ 1363 073f 69030000 		.4byte	.LASF136
+ 1364 0743 01       		.byte	0x1
+ 1365 0744 A9       		.byte	0xa9
+ 1366 0745 ED040000 		.4byte	0x4ed
+ 1367 0749 0E030000 		.4byte	.LLST27
+ 1368 074d 1A       		.uleb128 0x1a
+ 1369 074e 0E000000 		.4byte	.LVL51
+ 1370 0752 9D040000 		.4byte	0x49d
+ 1371 0756 61070000 		.4byte	0x761
+ 1372 075a 1B       		.uleb128 0x1b
+ 1373 075b 01       		.uleb128 0x1
+ 1374 075c 50       		.byte	0x50
+ 1375 075d 02       		.uleb128 0x2
+ 1376 075e 74       		.byte	0x74
+ 1377 075f 00       		.sleb128 0
+ 1378 0760 00       		.byte	0
+ 1379 0761 1A       		.uleb128 0x1a
+ 1380 0762 16000000 		.4byte	.LVL52
+ 1381 0766 39050000 		.4byte	0x539
+ 1382 076a 7B070000 		.4byte	0x77b
+ 1383 076e 1B       		.uleb128 0x1b
+ 1384 076f 01       		.uleb128 0x1
+ 1385 0770 50       		.byte	0x50
+ 1386 0771 02       		.uleb128 0x2
+ 1387 0772 74       		.byte	0x74
+ 1388 0773 00       		.sleb128 0
+ 1389 0774 1B       		.uleb128 0x1b
+ 1390 0775 01       		.uleb128 0x1
+ 1391 0776 51       		.byte	0x51
+ 1392 0777 02       		.uleb128 0x2
+ 1393 0778 76       		.byte	0x76
+ 1394 0779 00       		.sleb128 0
+ 1395 077a 00       		.byte	0
+ 1396 077b 1C       		.uleb128 0x1c
+ 1397 077c 1E000000 		.4byte	.LVL53
+ 1398 0780 9B060000 		.4byte	0x69b
+ 1399 0784 1B       		.uleb128 0x1b
+ 1400 0785 01       		.uleb128 0x1
+ 1401 0786 50       		.byte	0x50
+ 1402 0787 02       		.uleb128 0x2
+ 1403 0788 74       		.byte	0x74
+ 1404 0789 00       		.sleb128 0
+ 1405 078a 1B       		.uleb128 0x1b
+ 1406 078b 01       		.uleb128 0x1
+ 1407 078c 51       		.byte	0x51
+ 1408 078d 02       		.uleb128 0x2
+ 1409 078e 75       		.byte	0x75
+ 1410 078f 00       		.sleb128 0
+ 1411 0790 00       		.byte	0
+ 1412 0791 00       		.byte	0
+ 1413 0792 13       		.uleb128 0x13
+ 1414 0793 9B090000 		.4byte	.LASF151
+ARM GAS  e:\temp\ccdyAbtO.s 			page 29
+
+
+ 1415 0797 01       		.byte	0x1
+ 1416 0798 B3       		.byte	0xb3
+ 1417 0799 00000000 		.4byte	.LFB40
+ 1418 079d 18000000 		.4byte	.LFE40-.LFB40
+ 1419 07a1 01       		.uleb128 0x1
+ 1420 07a2 9C       		.byte	0x9c
+ 1421 07a3 B7070000 		.4byte	0x7b7
+ 1422 07a7 14       		.uleb128 0x14
+ 1423 07a8 10050000 		.4byte	.LASF137
+ 1424 07ac 01       		.byte	0x1
+ 1425 07ad B3       		.byte	0xb3
+ 1426 07ae 81000000 		.4byte	0x81
+ 1427 07b2 2F030000 		.4byte	.LLST28
+ 1428 07b6 00       		.byte	0
+ 1429 07b7 06       		.uleb128 0x6
+ 1430 07b8 C7070000 		.4byte	0x7c7
+ 1431 07bc C7070000 		.4byte	0x7c7
+ 1432 07c0 07       		.uleb128 0x7
+ 1433 07c1 B3000000 		.4byte	0xb3
+ 1434 07c5 05       		.byte	0x5
+ 1435 07c6 00       		.byte	0
+ 1436 07c7 1D       		.uleb128 0x1d
+ 1437 07c8 E4000000 		.4byte	0xe4
+ 1438 07cc 1E       		.uleb128 0x1e
+ 1439 07cd C40A0000 		.4byte	.LASF152
+ 1440 07d1 01       		.byte	0x1
+ 1441 07d2 3C       		.byte	0x3c
+ 1442 07d3 DD070000 		.4byte	0x7dd
+ 1443 07d7 05       		.uleb128 0x5
+ 1444 07d8 03       		.byte	0x3
+ 1445 07d9 00000000 		.4byte	HSIOM
+ 1446 07dd 1D       		.uleb128 0x1d
+ 1447 07de B7070000 		.4byte	0x7b7
+ 1448 07e2 06       		.uleb128 0x6
+ 1449 07e3 F2070000 		.4byte	0x7f2
+ 1450 07e7 F2070000 		.4byte	0x7f2
+ 1451 07eb 07       		.uleb128 0x7
+ 1452 07ec B3000000 		.4byte	0xb3
+ 1453 07f0 05       		.byte	0x5
+ 1454 07f1 00       		.byte	0
+ 1455 07f2 1D       		.uleb128 0x1d
+ 1456 07f3 E3010000 		.4byte	0x1e3
+ 1457 07f7 1E       		.uleb128 0x1e
+ 1458 07f8 DE0A0000 		.4byte	.LASF153
+ 1459 07fc 01       		.byte	0x1
+ 1460 07fd 2D       		.byte	0x2d
+ 1461 07fe 08080000 		.4byte	0x808
+ 1462 0802 05       		.uleb128 0x5
+ 1463 0803 03       		.byte	0x3
+ 1464 0804 00000000 		.4byte	GPIO
+ 1465 0808 1D       		.uleb128 0x1d
+ 1466 0809 E2070000 		.4byte	0x7e2
+ 1467 080d 00       		.byte	0
+ 1468              		.section	.debug_abbrev,"",%progbits
+ 1469              	.Ldebug_abbrev0:
+ 1470 0000 01       		.uleb128 0x1
+ 1471 0001 11       		.uleb128 0x11
+ARM GAS  e:\temp\ccdyAbtO.s 			page 30
+
+
+ 1472 0002 01       		.byte	0x1
+ 1473 0003 25       		.uleb128 0x25
+ 1474 0004 0E       		.uleb128 0xe
+ 1475 0005 13       		.uleb128 0x13
+ 1476 0006 0B       		.uleb128 0xb
+ 1477 0007 03       		.uleb128 0x3
+ 1478 0008 0E       		.uleb128 0xe
+ 1479 0009 1B       		.uleb128 0x1b
+ 1480 000a 0E       		.uleb128 0xe
+ 1481 000b 55       		.uleb128 0x55
+ 1482 000c 17       		.uleb128 0x17
+ 1483 000d 11       		.uleb128 0x11
+ 1484 000e 01       		.uleb128 0x1
+ 1485 000f 10       		.uleb128 0x10
+ 1486 0010 17       		.uleb128 0x17
+ 1487 0011 00       		.byte	0
+ 1488 0012 00       		.byte	0
+ 1489 0013 02       		.uleb128 0x2
+ 1490 0014 24       		.uleb128 0x24
+ 1491 0015 00       		.byte	0
+ 1492 0016 0B       		.uleb128 0xb
+ 1493 0017 0B       		.uleb128 0xb
+ 1494 0018 3E       		.uleb128 0x3e
+ 1495 0019 0B       		.uleb128 0xb
+ 1496 001a 03       		.uleb128 0x3
+ 1497 001b 0E       		.uleb128 0xe
+ 1498 001c 00       		.byte	0
+ 1499 001d 00       		.byte	0
+ 1500 001e 03       		.uleb128 0x3
+ 1501 001f 16       		.uleb128 0x16
+ 1502 0020 00       		.byte	0
+ 1503 0021 03       		.uleb128 0x3
+ 1504 0022 0E       		.uleb128 0xe
+ 1505 0023 3A       		.uleb128 0x3a
+ 1506 0024 0B       		.uleb128 0xb
+ 1507 0025 3B       		.uleb128 0x3b
+ 1508 0026 0B       		.uleb128 0xb
+ 1509 0027 49       		.uleb128 0x49
+ 1510 0028 13       		.uleb128 0x13
+ 1511 0029 00       		.byte	0
+ 1512 002a 00       		.byte	0
+ 1513 002b 04       		.uleb128 0x4
+ 1514 002c 24       		.uleb128 0x24
+ 1515 002d 00       		.byte	0
+ 1516 002e 0B       		.uleb128 0xb
+ 1517 002f 0B       		.uleb128 0xb
+ 1518 0030 3E       		.uleb128 0x3e
+ 1519 0031 0B       		.uleb128 0xb
+ 1520 0032 03       		.uleb128 0x3
+ 1521 0033 08       		.uleb128 0x8
+ 1522 0034 00       		.byte	0
+ 1523 0035 00       		.byte	0
+ 1524 0036 05       		.uleb128 0x5
+ 1525 0037 35       		.uleb128 0x35
+ 1526 0038 00       		.byte	0
+ 1527 0039 49       		.uleb128 0x49
+ 1528 003a 13       		.uleb128 0x13
+ARM GAS  e:\temp\ccdyAbtO.s 			page 31
+
+
+ 1529 003b 00       		.byte	0
+ 1530 003c 00       		.byte	0
+ 1531 003d 06       		.uleb128 0x6
+ 1532 003e 01       		.uleb128 0x1
+ 1533 003f 01       		.byte	0x1
+ 1534 0040 49       		.uleb128 0x49
+ 1535 0041 13       		.uleb128 0x13
+ 1536 0042 01       		.uleb128 0x1
+ 1537 0043 13       		.uleb128 0x13
+ 1538 0044 00       		.byte	0
+ 1539 0045 00       		.byte	0
+ 1540 0046 07       		.uleb128 0x7
+ 1541 0047 21       		.uleb128 0x21
+ 1542 0048 00       		.byte	0
+ 1543 0049 49       		.uleb128 0x49
+ 1544 004a 13       		.uleb128 0x13
+ 1545 004b 2F       		.uleb128 0x2f
+ 1546 004c 0B       		.uleb128 0xb
+ 1547 004d 00       		.byte	0
+ 1548 004e 00       		.byte	0
+ 1549 004f 08       		.uleb128 0x8
+ 1550 0050 13       		.uleb128 0x13
+ 1551 0051 01       		.byte	0x1
+ 1552 0052 0B       		.uleb128 0xb
+ 1553 0053 0B       		.uleb128 0xb
+ 1554 0054 3A       		.uleb128 0x3a
+ 1555 0055 0B       		.uleb128 0xb
+ 1556 0056 3B       		.uleb128 0x3b
+ 1557 0057 0B       		.uleb128 0xb
+ 1558 0058 01       		.uleb128 0x1
+ 1559 0059 13       		.uleb128 0x13
+ 1560 005a 00       		.byte	0
+ 1561 005b 00       		.byte	0
+ 1562 005c 09       		.uleb128 0x9
+ 1563 005d 0D       		.uleb128 0xd
+ 1564 005e 00       		.byte	0
+ 1565 005f 03       		.uleb128 0x3
+ 1566 0060 0E       		.uleb128 0xe
+ 1567 0061 3A       		.uleb128 0x3a
+ 1568 0062 0B       		.uleb128 0xb
+ 1569 0063 3B       		.uleb128 0x3b
+ 1570 0064 0B       		.uleb128 0xb
+ 1571 0065 49       		.uleb128 0x49
+ 1572 0066 13       		.uleb128 0x13
+ 1573 0067 38       		.uleb128 0x38
+ 1574 0068 0B       		.uleb128 0xb
+ 1575 0069 00       		.byte	0
+ 1576 006a 00       		.byte	0
+ 1577 006b 0A       		.uleb128 0xa
+ 1578 006c 0F       		.uleb128 0xf
+ 1579 006d 00       		.byte	0
+ 1580 006e 0B       		.uleb128 0xb
+ 1581 006f 0B       		.uleb128 0xb
+ 1582 0070 49       		.uleb128 0x49
+ 1583 0071 13       		.uleb128 0x13
+ 1584 0072 00       		.byte	0
+ 1585 0073 00       		.byte	0
+ARM GAS  e:\temp\ccdyAbtO.s 			page 32
+
+
+ 1586 0074 0B       		.uleb128 0xb
+ 1587 0075 13       		.uleb128 0x13
+ 1588 0076 01       		.byte	0x1
+ 1589 0077 0B       		.uleb128 0xb
+ 1590 0078 05       		.uleb128 0x5
+ 1591 0079 3A       		.uleb128 0x3a
+ 1592 007a 0B       		.uleb128 0xb
+ 1593 007b 3B       		.uleb128 0x3b
+ 1594 007c 0B       		.uleb128 0xb
+ 1595 007d 01       		.uleb128 0x1
+ 1596 007e 13       		.uleb128 0x13
+ 1597 007f 00       		.byte	0
+ 1598 0080 00       		.byte	0
+ 1599 0081 0C       		.uleb128 0xc
+ 1600 0082 0D       		.uleb128 0xd
+ 1601 0083 00       		.byte	0
+ 1602 0084 03       		.uleb128 0x3
+ 1603 0085 08       		.uleb128 0x8
+ 1604 0086 3A       		.uleb128 0x3a
+ 1605 0087 0B       		.uleb128 0xb
+ 1606 0088 3B       		.uleb128 0x3b
+ 1607 0089 0B       		.uleb128 0xb
+ 1608 008a 49       		.uleb128 0x49
+ 1609 008b 13       		.uleb128 0x13
+ 1610 008c 38       		.uleb128 0x38
+ 1611 008d 0B       		.uleb128 0xb
+ 1612 008e 00       		.byte	0
+ 1613 008f 00       		.byte	0
+ 1614 0090 0D       		.uleb128 0xd
+ 1615 0091 0D       		.uleb128 0xd
+ 1616 0092 00       		.byte	0
+ 1617 0093 03       		.uleb128 0x3
+ 1618 0094 0E       		.uleb128 0xe
+ 1619 0095 3A       		.uleb128 0x3a
+ 1620 0096 0B       		.uleb128 0xb
+ 1621 0097 3B       		.uleb128 0x3b
+ 1622 0098 0B       		.uleb128 0xb
+ 1623 0099 49       		.uleb128 0x49
+ 1624 009a 13       		.uleb128 0x13
+ 1625 009b 38       		.uleb128 0x38
+ 1626 009c 05       		.uleb128 0x5
+ 1627 009d 00       		.byte	0
+ 1628 009e 00       		.byte	0
+ 1629 009f 0E       		.uleb128 0xe
+ 1630 00a0 21       		.uleb128 0x21
+ 1631 00a1 00       		.byte	0
+ 1632 00a2 49       		.uleb128 0x49
+ 1633 00a3 13       		.uleb128 0x13
+ 1634 00a4 2F       		.uleb128 0x2f
+ 1635 00a5 05       		.uleb128 0x5
+ 1636 00a6 00       		.byte	0
+ 1637 00a7 00       		.byte	0
+ 1638 00a8 0F       		.uleb128 0xf
+ 1639 00a9 04       		.uleb128 0x4
+ 1640 00aa 01       		.byte	0x1
+ 1641 00ab 0B       		.uleb128 0xb
+ 1642 00ac 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccdyAbtO.s 			page 33
+
+
+ 1643 00ad 49       		.uleb128 0x49
+ 1644 00ae 13       		.uleb128 0x13
+ 1645 00af 3A       		.uleb128 0x3a
+ 1646 00b0 0B       		.uleb128 0xb
+ 1647 00b1 3B       		.uleb128 0x3b
+ 1648 00b2 0B       		.uleb128 0xb
+ 1649 00b3 01       		.uleb128 0x1
+ 1650 00b4 13       		.uleb128 0x13
+ 1651 00b5 00       		.byte	0
+ 1652 00b6 00       		.byte	0
+ 1653 00b7 10       		.uleb128 0x10
+ 1654 00b8 28       		.uleb128 0x28
+ 1655 00b9 00       		.byte	0
+ 1656 00ba 03       		.uleb128 0x3
+ 1657 00bb 0E       		.uleb128 0xe
+ 1658 00bc 1C       		.uleb128 0x1c
+ 1659 00bd 0B       		.uleb128 0xb
+ 1660 00be 00       		.byte	0
+ 1661 00bf 00       		.byte	0
+ 1662 00c0 11       		.uleb128 0x11
+ 1663 00c1 04       		.uleb128 0x4
+ 1664 00c2 01       		.byte	0x1
+ 1665 00c3 03       		.uleb128 0x3
+ 1666 00c4 0E       		.uleb128 0xe
+ 1667 00c5 0B       		.uleb128 0xb
+ 1668 00c6 0B       		.uleb128 0xb
+ 1669 00c7 49       		.uleb128 0x49
+ 1670 00c8 13       		.uleb128 0x13
+ 1671 00c9 3A       		.uleb128 0x3a
+ 1672 00ca 0B       		.uleb128 0xb
+ 1673 00cb 3B       		.uleb128 0x3b
+ 1674 00cc 0B       		.uleb128 0xb
+ 1675 00cd 01       		.uleb128 0x1
+ 1676 00ce 13       		.uleb128 0x13
+ 1677 00cf 00       		.byte	0
+ 1678 00d0 00       		.byte	0
+ 1679 00d1 12       		.uleb128 0x12
+ 1680 00d2 16       		.uleb128 0x16
+ 1681 00d3 00       		.byte	0
+ 1682 00d4 03       		.uleb128 0x3
+ 1683 00d5 0E       		.uleb128 0xe
+ 1684 00d6 3A       		.uleb128 0x3a
+ 1685 00d7 0B       		.uleb128 0xb
+ 1686 00d8 3B       		.uleb128 0x3b
+ 1687 00d9 05       		.uleb128 0x5
+ 1688 00da 49       		.uleb128 0x49
+ 1689 00db 13       		.uleb128 0x13
+ 1690 00dc 00       		.byte	0
+ 1691 00dd 00       		.byte	0
+ 1692 00de 13       		.uleb128 0x13
+ 1693 00df 2E       		.uleb128 0x2e
+ 1694 00e0 01       		.byte	0x1
+ 1695 00e1 3F       		.uleb128 0x3f
+ 1696 00e2 19       		.uleb128 0x19
+ 1697 00e3 03       		.uleb128 0x3
+ 1698 00e4 0E       		.uleb128 0xe
+ 1699 00e5 3A       		.uleb128 0x3a
+ARM GAS  e:\temp\ccdyAbtO.s 			page 34
+
+
+ 1700 00e6 0B       		.uleb128 0xb
+ 1701 00e7 3B       		.uleb128 0x3b
+ 1702 00e8 0B       		.uleb128 0xb
+ 1703 00e9 27       		.uleb128 0x27
+ 1704 00ea 19       		.uleb128 0x19
+ 1705 00eb 11       		.uleb128 0x11
+ 1706 00ec 01       		.uleb128 0x1
+ 1707 00ed 12       		.uleb128 0x12
+ 1708 00ee 06       		.uleb128 0x6
+ 1709 00ef 40       		.uleb128 0x40
+ 1710 00f0 18       		.uleb128 0x18
+ 1711 00f1 9742     		.uleb128 0x2117
+ 1712 00f3 19       		.uleb128 0x19
+ 1713 00f4 01       		.uleb128 0x1
+ 1714 00f5 13       		.uleb128 0x13
+ 1715 00f6 00       		.byte	0
+ 1716 00f7 00       		.byte	0
+ 1717 00f8 14       		.uleb128 0x14
+ 1718 00f9 05       		.uleb128 0x5
+ 1719 00fa 00       		.byte	0
+ 1720 00fb 03       		.uleb128 0x3
+ 1721 00fc 0E       		.uleb128 0xe
+ 1722 00fd 3A       		.uleb128 0x3a
+ 1723 00fe 0B       		.uleb128 0xb
+ 1724 00ff 3B       		.uleb128 0x3b
+ 1725 0100 0B       		.uleb128 0xb
+ 1726 0101 49       		.uleb128 0x49
+ 1727 0102 13       		.uleb128 0x13
+ 1728 0103 02       		.uleb128 0x2
+ 1729 0104 17       		.uleb128 0x17
+ 1730 0105 00       		.byte	0
+ 1731 0106 00       		.byte	0
+ 1732 0107 15       		.uleb128 0x15
+ 1733 0108 34       		.uleb128 0x34
+ 1734 0109 00       		.byte	0
+ 1735 010a 03       		.uleb128 0x3
+ 1736 010b 0E       		.uleb128 0xe
+ 1737 010c 3A       		.uleb128 0x3a
+ 1738 010d 0B       		.uleb128 0xb
+ 1739 010e 3B       		.uleb128 0x3b
+ 1740 010f 0B       		.uleb128 0xb
+ 1741 0110 49       		.uleb128 0x49
+ 1742 0111 13       		.uleb128 0x13
+ 1743 0112 02       		.uleb128 0x2
+ 1744 0113 17       		.uleb128 0x17
+ 1745 0114 00       		.byte	0
+ 1746 0115 00       		.byte	0
+ 1747 0116 16       		.uleb128 0x16
+ 1748 0117 34       		.uleb128 0x34
+ 1749 0118 00       		.byte	0
+ 1750 0119 03       		.uleb128 0x3
+ 1751 011a 08       		.uleb128 0x8
+ 1752 011b 3A       		.uleb128 0x3a
+ 1753 011c 0B       		.uleb128 0xb
+ 1754 011d 3B       		.uleb128 0x3b
+ 1755 011e 0B       		.uleb128 0xb
+ 1756 011f 49       		.uleb128 0x49
+ARM GAS  e:\temp\ccdyAbtO.s 			page 35
+
+
+ 1757 0120 13       		.uleb128 0x13
+ 1758 0121 02       		.uleb128 0x2
+ 1759 0122 18       		.uleb128 0x18
+ 1760 0123 00       		.byte	0
+ 1761 0124 00       		.byte	0
+ 1762 0125 17       		.uleb128 0x17
+ 1763 0126 2E       		.uleb128 0x2e
+ 1764 0127 01       		.byte	0x1
+ 1765 0128 3F       		.uleb128 0x3f
+ 1766 0129 19       		.uleb128 0x19
+ 1767 012a 03       		.uleb128 0x3
+ 1768 012b 0E       		.uleb128 0xe
+ 1769 012c 3A       		.uleb128 0x3a
+ 1770 012d 0B       		.uleb128 0xb
+ 1771 012e 3B       		.uleb128 0x3b
+ 1772 012f 0B       		.uleb128 0xb
+ 1773 0130 27       		.uleb128 0x27
+ 1774 0131 19       		.uleb128 0x19
+ 1775 0132 49       		.uleb128 0x49
+ 1776 0133 13       		.uleb128 0x13
+ 1777 0134 11       		.uleb128 0x11
+ 1778 0135 01       		.uleb128 0x1
+ 1779 0136 12       		.uleb128 0x12
+ 1780 0137 06       		.uleb128 0x6
+ 1781 0138 40       		.uleb128 0x40
+ 1782 0139 18       		.uleb128 0x18
+ 1783 013a 9742     		.uleb128 0x2117
+ 1784 013c 19       		.uleb128 0x19
+ 1785 013d 01       		.uleb128 0x1
+ 1786 013e 13       		.uleb128 0x13
+ 1787 013f 00       		.byte	0
+ 1788 0140 00       		.byte	0
+ 1789 0141 18       		.uleb128 0x18
+ 1790 0142 34       		.uleb128 0x34
+ 1791 0143 00       		.byte	0
+ 1792 0144 03       		.uleb128 0x3
+ 1793 0145 08       		.uleb128 0x8
+ 1794 0146 3A       		.uleb128 0x3a
+ 1795 0147 0B       		.uleb128 0xb
+ 1796 0148 3B       		.uleb128 0x3b
+ 1797 0149 0B       		.uleb128 0xb
+ 1798 014a 49       		.uleb128 0x49
+ 1799 014b 13       		.uleb128 0x13
+ 1800 014c 02       		.uleb128 0x2
+ 1801 014d 17       		.uleb128 0x17
+ 1802 014e 00       		.byte	0
+ 1803 014f 00       		.byte	0
+ 1804 0150 19       		.uleb128 0x19
+ 1805 0151 34       		.uleb128 0x34
+ 1806 0152 00       		.byte	0
+ 1807 0153 03       		.uleb128 0x3
+ 1808 0154 0E       		.uleb128 0xe
+ 1809 0155 3A       		.uleb128 0x3a
+ 1810 0156 0B       		.uleb128 0xb
+ 1811 0157 3B       		.uleb128 0x3b
+ 1812 0158 0B       		.uleb128 0xb
+ 1813 0159 49       		.uleb128 0x49
+ARM GAS  e:\temp\ccdyAbtO.s 			page 36
+
+
+ 1814 015a 13       		.uleb128 0x13
+ 1815 015b 02       		.uleb128 0x2
+ 1816 015c 18       		.uleb128 0x18
+ 1817 015d 00       		.byte	0
+ 1818 015e 00       		.byte	0
+ 1819 015f 1A       		.uleb128 0x1a
+ 1820 0160 898201   		.uleb128 0x4109
+ 1821 0163 01       		.byte	0x1
+ 1822 0164 11       		.uleb128 0x11
+ 1823 0165 01       		.uleb128 0x1
+ 1824 0166 31       		.uleb128 0x31
+ 1825 0167 13       		.uleb128 0x13
+ 1826 0168 01       		.uleb128 0x1
+ 1827 0169 13       		.uleb128 0x13
+ 1828 016a 00       		.byte	0
+ 1829 016b 00       		.byte	0
+ 1830 016c 1B       		.uleb128 0x1b
+ 1831 016d 8A8201   		.uleb128 0x410a
+ 1832 0170 00       		.byte	0
+ 1833 0171 02       		.uleb128 0x2
+ 1834 0172 18       		.uleb128 0x18
+ 1835 0173 9142     		.uleb128 0x2111
+ 1836 0175 18       		.uleb128 0x18
+ 1837 0176 00       		.byte	0
+ 1838 0177 00       		.byte	0
+ 1839 0178 1C       		.uleb128 0x1c
+ 1840 0179 898201   		.uleb128 0x4109
+ 1841 017c 01       		.byte	0x1
+ 1842 017d 11       		.uleb128 0x11
+ 1843 017e 01       		.uleb128 0x1
+ 1844 017f 31       		.uleb128 0x31
+ 1845 0180 13       		.uleb128 0x13
+ 1846 0181 00       		.byte	0
+ 1847 0182 00       		.byte	0
+ 1848 0183 1D       		.uleb128 0x1d
+ 1849 0184 26       		.uleb128 0x26
+ 1850 0185 00       		.byte	0
+ 1851 0186 49       		.uleb128 0x49
+ 1852 0187 13       		.uleb128 0x13
+ 1853 0188 00       		.byte	0
+ 1854 0189 00       		.byte	0
+ 1855 018a 1E       		.uleb128 0x1e
+ 1856 018b 34       		.uleb128 0x34
+ 1857 018c 00       		.byte	0
+ 1858 018d 03       		.uleb128 0x3
+ 1859 018e 0E       		.uleb128 0xe
+ 1860 018f 3A       		.uleb128 0x3a
+ 1861 0190 0B       		.uleb128 0xb
+ 1862 0191 3B       		.uleb128 0x3b
+ 1863 0192 0B       		.uleb128 0xb
+ 1864 0193 49       		.uleb128 0x49
+ 1865 0194 13       		.uleb128 0x13
+ 1866 0195 3F       		.uleb128 0x3f
+ 1867 0196 19       		.uleb128 0x19
+ 1868 0197 02       		.uleb128 0x2
+ 1869 0198 18       		.uleb128 0x18
+ 1870 0199 00       		.byte	0
+ARM GAS  e:\temp\ccdyAbtO.s 			page 37
+
+
+ 1871 019a 00       		.byte	0
+ 1872 019b 00       		.byte	0
+ 1873              		.section	.debug_loc,"",%progbits
+ 1874              	.Ldebug_loc0:
+ 1875              	.LLST0:
+ 1876 0000 00000000 		.4byte	.LVL0
+ 1877 0004 06000000 		.4byte	.LVL2
+ 1878 0008 0100     		.2byte	0x1
+ 1879 000a 50       		.byte	0x50
+ 1880 000b 06000000 		.4byte	.LVL2
+ 1881 000f 34000000 		.4byte	.LFE32
+ 1882 0013 0400     		.2byte	0x4
+ 1883 0015 F3       		.byte	0xf3
+ 1884 0016 01       		.uleb128 0x1
+ 1885 0017 50       		.byte	0x50
+ 1886 0018 9F       		.byte	0x9f
+ 1887 0019 00000000 		.4byte	0
+ 1888 001d 00000000 		.4byte	0
+ 1889              	.LLST1:
+ 1890 0021 00000000 		.4byte	.LVL0
+ 1891 0025 10000000 		.4byte	.LVL4
+ 1892 0029 0100     		.2byte	0x1
+ 1893 002b 51       		.byte	0x51
+ 1894 002c 10000000 		.4byte	.LVL4
+ 1895 0030 1C000000 		.4byte	.LVL5
+ 1896 0034 0400     		.2byte	0x4
+ 1897 0036 F3       		.byte	0xf3
+ 1898 0037 01       		.uleb128 0x1
+ 1899 0038 51       		.byte	0x51
+ 1900 0039 9F       		.byte	0x9f
+ 1901 003a 1C000000 		.4byte	.LVL5
+ 1902 003e 22000000 		.4byte	.LVL7
+ 1903 0042 0100     		.2byte	0x1
+ 1904 0044 51       		.byte	0x51
+ 1905 0045 22000000 		.4byte	.LVL7
+ 1906 0049 34000000 		.4byte	.LFE32
+ 1907 004d 0400     		.2byte	0x4
+ 1908 004f F3       		.byte	0xf3
+ 1909 0050 01       		.uleb128 0x1
+ 1910 0051 51       		.byte	0x51
+ 1911 0052 9F       		.byte	0x9f
+ 1912 0053 00000000 		.4byte	0
+ 1913 0057 00000000 		.4byte	0
+ 1914              	.LLST2:
+ 1915 005b 02000000 		.4byte	.LVL1
+ 1916 005f 0C000000 		.4byte	.LVL3
+ 1917 0063 0100     		.2byte	0x1
+ 1918 0065 53       		.byte	0x53
+ 1919 0066 1C000000 		.4byte	.LVL5
+ 1920 006a 1E000000 		.4byte	.LVL6
+ 1921 006e 0100     		.2byte	0x1
+ 1922 0070 53       		.byte	0x53
+ 1923 0071 00000000 		.4byte	0
+ 1924 0075 00000000 		.4byte	0
+ 1925              	.LLST3:
+ 1926 0079 00000000 		.4byte	.LVL8
+ 1927 007d 14000000 		.4byte	.LVL12
+ARM GAS  e:\temp\ccdyAbtO.s 			page 38
+
+
+ 1928 0081 0100     		.2byte	0x1
+ 1929 0083 50       		.byte	0x50
+ 1930 0084 14000000 		.4byte	.LVL12
+ 1931 0088 24000000 		.4byte	.LFE33
+ 1932 008c 0400     		.2byte	0x4
+ 1933 008e F3       		.byte	0xf3
+ 1934 008f 01       		.uleb128 0x1
+ 1935 0090 50       		.byte	0x50
+ 1936 0091 9F       		.byte	0x9f
+ 1937 0092 00000000 		.4byte	0
+ 1938 0096 00000000 		.4byte	0
+ 1939              	.LLST4:
+ 1940 009a 02000000 		.4byte	.LVL9
+ 1941 009e 08000000 		.4byte	.LVL11
+ 1942 00a2 0100     		.2byte	0x1
+ 1943 00a4 53       		.byte	0x53
+ 1944 00a5 08000000 		.4byte	.LVL11
+ 1945 00a9 14000000 		.4byte	.LVL12
+ 1946 00ad 0500     		.2byte	0x5
+ 1947 00af 70       		.byte	0x70
+ 1948 00b0 00       		.sleb128 0
+ 1949 00b1 34       		.byte	0x34
+ 1950 00b2 25       		.byte	0x25
+ 1951 00b3 9F       		.byte	0x9f
+ 1952 00b4 00000000 		.4byte	0
+ 1953 00b8 00000000 		.4byte	0
+ 1954              	.LLST5:
+ 1955 00bc 00000000 		.4byte	.LVL13
+ 1956 00c0 08000000 		.4byte	.LVL15
+ 1957 00c4 0100     		.2byte	0x1
+ 1958 00c6 50       		.byte	0x50
+ 1959 00c7 08000000 		.4byte	.LVL15
+ 1960 00cb 28000000 		.4byte	.LFE34
+ 1961 00cf 0400     		.2byte	0x4
+ 1962 00d1 F3       		.byte	0xf3
+ 1963 00d2 01       		.uleb128 0x1
+ 1964 00d3 50       		.byte	0x50
+ 1965 00d4 9F       		.byte	0x9f
+ 1966 00d5 00000000 		.4byte	0
+ 1967 00d9 00000000 		.4byte	0
+ 1968              	.LLST6:
+ 1969 00dd 00000000 		.4byte	.LVL13
+ 1970 00e1 1C000000 		.4byte	.LVL19
+ 1971 00e5 0100     		.2byte	0x1
+ 1972 00e7 51       		.byte	0x51
+ 1973 00e8 1C000000 		.4byte	.LVL19
+ 1974 00ec 28000000 		.4byte	.LFE34
+ 1975 00f0 0400     		.2byte	0x4
+ 1976 00f2 F3       		.byte	0xf3
+ 1977 00f3 01       		.uleb128 0x1
+ 1978 00f4 51       		.byte	0x51
+ 1979 00f5 9F       		.byte	0x9f
+ 1980 00f6 00000000 		.4byte	0
+ 1981 00fa 00000000 		.4byte	0
+ 1982              	.LLST7:
+ 1983 00fe 04000000 		.4byte	.LVL14
+ 1984 0102 10000000 		.4byte	.LVL17
+ARM GAS  e:\temp\ccdyAbtO.s 			page 39
+
+
+ 1985 0106 0100     		.2byte	0x1
+ 1986 0108 52       		.byte	0x52
+ 1987 0109 00000000 		.4byte	0
+ 1988 010d 00000000 		.4byte	0
+ 1989              	.LLST8:
+ 1990 0111 08000000 		.4byte	.LVL15
+ 1991 0115 0C000000 		.4byte	.LVL16
+ 1992 0119 0100     		.2byte	0x1
+ 1993 011b 50       		.byte	0x50
+ 1994 011c 00000000 		.4byte	0
+ 1995 0120 00000000 		.4byte	0
+ 1996              	.LLST9:
+ 1997 0124 00000000 		.4byte	.LVL20
+ 1998 0128 08000000 		.4byte	.LVL22
+ 1999 012c 0100     		.2byte	0x1
+ 2000 012e 50       		.byte	0x50
+ 2001 012f 08000000 		.4byte	.LVL22
+ 2002 0133 2C000000 		.4byte	.LFE35
+ 2003 0137 0400     		.2byte	0x4
+ 2004 0139 F3       		.byte	0xf3
+ 2005 013a 01       		.uleb128 0x1
+ 2006 013b 50       		.byte	0x50
+ 2007 013c 9F       		.byte	0x9f
+ 2008 013d 00000000 		.4byte	0
+ 2009 0141 00000000 		.4byte	0
+ 2010              	.LLST10:
+ 2011 0145 00000000 		.4byte	.LVL20
+ 2012 0149 20000000 		.4byte	.LVL27
+ 2013 014d 0100     		.2byte	0x1
+ 2014 014f 51       		.byte	0x51
+ 2015 0150 20000000 		.4byte	.LVL27
+ 2016 0154 2C000000 		.4byte	.LFE35
+ 2017 0158 0400     		.2byte	0x4
+ 2018 015a F3       		.byte	0xf3
+ 2019 015b 01       		.uleb128 0x1
+ 2020 015c 51       		.byte	0x51
+ 2021 015d 9F       		.byte	0x9f
+ 2022 015e 00000000 		.4byte	0
+ 2023 0162 00000000 		.4byte	0
+ 2024              	.LLST11:
+ 2025 0166 0A000000 		.4byte	.LVL23
+ 2026 016a 24000000 		.4byte	.LVL28
+ 2027 016e 0100     		.2byte	0x1
+ 2028 0170 54       		.byte	0x54
+ 2029 0171 00000000 		.4byte	0
+ 2030 0175 00000000 		.4byte	0
+ 2031              	.LLST12:
+ 2032 0179 04000000 		.4byte	.LVL21
+ 2033 017d 0C000000 		.4byte	.LVL24
+ 2034 0181 0100     		.2byte	0x1
+ 2035 0183 53       		.byte	0x53
+ 2036 0184 00000000 		.4byte	0
+ 2037 0188 00000000 		.4byte	0
+ 2038              	.LLST13:
+ 2039 018c 08000000 		.4byte	.LVL22
+ 2040 0190 1A000000 		.4byte	.LVL25
+ 2041 0194 0100     		.2byte	0x1
+ARM GAS  e:\temp\ccdyAbtO.s 			page 40
+
+
+ 2042 0196 50       		.byte	0x50
+ 2043 0197 00000000 		.4byte	0
+ 2044 019b 00000000 		.4byte	0
+ 2045              	.LLST14:
+ 2046 019f 00000000 		.4byte	.LVL29
+ 2047 01a3 06000000 		.4byte	.LVL31
+ 2048 01a7 0100     		.2byte	0x1
+ 2049 01a9 50       		.byte	0x50
+ 2050 01aa 06000000 		.4byte	.LVL31
+ 2051 01ae 24000000 		.4byte	.LFE36
+ 2052 01b2 0400     		.2byte	0x4
+ 2053 01b4 F3       		.byte	0xf3
+ 2054 01b5 01       		.uleb128 0x1
+ 2055 01b6 50       		.byte	0x50
+ 2056 01b7 9F       		.byte	0x9f
+ 2057 01b8 00000000 		.4byte	0
+ 2058 01bc 00000000 		.4byte	0
+ 2059              	.LLST15:
+ 2060 01c0 02000000 		.4byte	.LVL30
+ 2061 01c4 08000000 		.4byte	.LVL32
+ 2062 01c8 0100     		.2byte	0x1
+ 2063 01ca 53       		.byte	0x53
+ 2064 01cb 00000000 		.4byte	0
+ 2065 01cf 00000000 		.4byte	0
+ 2066              	.LLST16:
+ 2067 01d3 06000000 		.4byte	.LVL31
+ 2068 01d7 18000000 		.4byte	.LVL33
+ 2069 01db 0100     		.2byte	0x1
+ 2070 01dd 50       		.byte	0x50
+ 2071 01de 1A000000 		.4byte	.LVL34
+ 2072 01e2 1C000000 		.4byte	.LVL35
+ 2073 01e6 0100     		.2byte	0x1
+ 2074 01e8 50       		.byte	0x50
+ 2075 01e9 00000000 		.4byte	0
+ 2076 01ed 00000000 		.4byte	0
+ 2077              	.LLST17:
+ 2078 01f1 00000000 		.4byte	.LVL36
+ 2079 01f5 06000000 		.4byte	.LVL38
+ 2080 01f9 0100     		.2byte	0x1
+ 2081 01fb 50       		.byte	0x50
+ 2082 01fc 06000000 		.4byte	.LVL38
+ 2083 0200 18000000 		.4byte	.LFE37
+ 2084 0204 0400     		.2byte	0x4
+ 2085 0206 F3       		.byte	0xf3
+ 2086 0207 01       		.uleb128 0x1
+ 2087 0208 50       		.byte	0x50
+ 2088 0209 9F       		.byte	0x9f
+ 2089 020a 00000000 		.4byte	0
+ 2090 020e 00000000 		.4byte	0
+ 2091              	.LLST18:
+ 2092 0212 02000000 		.4byte	.LVL37
+ 2093 0216 08000000 		.4byte	.LVL39
+ 2094 021a 0100     		.2byte	0x1
+ 2095 021c 53       		.byte	0x53
+ 2096 021d 00000000 		.4byte	0
+ 2097 0221 00000000 		.4byte	0
+ 2098              	.LLST19:
+ARM GAS  e:\temp\ccdyAbtO.s 			page 41
+
+
+ 2099 0225 00000000 		.4byte	.LVL40
+ 2100 0229 08000000 		.4byte	.LVL42
+ 2101 022d 0100     		.2byte	0x1
+ 2102 022f 50       		.byte	0x50
+ 2103 0230 08000000 		.4byte	.LVL42
+ 2104 0234 28000000 		.4byte	.LFE38
+ 2105 0238 0400     		.2byte	0x4
+ 2106 023a F3       		.byte	0xf3
+ 2107 023b 01       		.uleb128 0x1
+ 2108 023c 50       		.byte	0x50
+ 2109 023d 9F       		.byte	0x9f
+ 2110 023e 00000000 		.4byte	0
+ 2111 0242 00000000 		.4byte	0
+ 2112              	.LLST20:
+ 2113 0246 00000000 		.4byte	.LVL40
+ 2114 024a 1C000000 		.4byte	.LVL47
+ 2115 024e 0100     		.2byte	0x1
+ 2116 0250 51       		.byte	0x51
+ 2117 0251 1C000000 		.4byte	.LVL47
+ 2118 0255 28000000 		.4byte	.LFE38
+ 2119 0259 0400     		.2byte	0x4
+ 2120 025b F3       		.byte	0xf3
+ 2121 025c 01       		.uleb128 0x1
+ 2122 025d 51       		.byte	0x51
+ 2123 025e 9F       		.byte	0x9f
+ 2124 025f 00000000 		.4byte	0
+ 2125 0263 00000000 		.4byte	0
+ 2126              	.LLST21:
+ 2127 0267 04000000 		.4byte	.LVL41
+ 2128 026b 0A000000 		.4byte	.LVL43
+ 2129 026f 0100     		.2byte	0x1
+ 2130 0271 53       		.byte	0x53
+ 2131 0272 00000000 		.4byte	0
+ 2132 0276 00000000 		.4byte	0
+ 2133              	.LLST22:
+ 2134 027a 08000000 		.4byte	.LVL42
+ 2135 027e 14000000 		.4byte	.LVL45
+ 2136 0282 0100     		.2byte	0x1
+ 2137 0284 50       		.byte	0x50
+ 2138 0285 00000000 		.4byte	0
+ 2139 0289 00000000 		.4byte	0
+ 2140              	.LLST23:
+ 2141 028d 12000000 		.4byte	.LVL44
+ 2142 0291 1E000000 		.4byte	.LVL48
+ 2143 0295 0100     		.2byte	0x1
+ 2144 0297 53       		.byte	0x53
+ 2145 0298 1E000000 		.4byte	.LVL48
+ 2146 029c 28000000 		.4byte	.LFE38
+ 2147 02a0 0100     		.2byte	0x1
+ 2148 02a2 51       		.byte	0x51
+ 2149 02a3 00000000 		.4byte	0
+ 2150 02a7 00000000 		.4byte	0
+ 2151              	.LLST24:
+ 2152 02ab 00000000 		.4byte	.LVL49
+ 2153 02af 0D000000 		.4byte	.LVL51-1
+ 2154 02b3 0100     		.2byte	0x1
+ 2155 02b5 50       		.byte	0x50
+ARM GAS  e:\temp\ccdyAbtO.s 			page 42
+
+
+ 2156 02b6 0D000000 		.4byte	.LVL51-1
+ 2157 02ba 20000000 		.4byte	.LFE39
+ 2158 02be 0400     		.2byte	0x4
+ 2159 02c0 F3       		.byte	0xf3
+ 2160 02c1 01       		.uleb128 0x1
+ 2161 02c2 50       		.byte	0x50
+ 2162 02c3 9F       		.byte	0x9f
+ 2163 02c4 00000000 		.4byte	0
+ 2164 02c8 00000000 		.4byte	0
+ 2165              	.LLST25:
+ 2166 02cc 00000000 		.4byte	.LVL49
+ 2167 02d0 0A000000 		.4byte	.LVL50
+ 2168 02d4 0100     		.2byte	0x1
+ 2169 02d6 51       		.byte	0x51
+ 2170 02d7 0A000000 		.4byte	.LVL50
+ 2171 02db 20000000 		.4byte	.LFE39
+ 2172 02df 0400     		.2byte	0x4
+ 2173 02e1 F3       		.byte	0xf3
+ 2174 02e2 01       		.uleb128 0x1
+ 2175 02e3 51       		.byte	0x51
+ 2176 02e4 9F       		.byte	0x9f
+ 2177 02e5 00000000 		.4byte	0
+ 2178 02e9 00000000 		.4byte	0
+ 2179              	.LLST26:
+ 2180 02ed 00000000 		.4byte	.LVL49
+ 2181 02f1 0D000000 		.4byte	.LVL51-1
+ 2182 02f5 0100     		.2byte	0x1
+ 2183 02f7 52       		.byte	0x52
+ 2184 02f8 0D000000 		.4byte	.LVL51-1
+ 2185 02fc 20000000 		.4byte	.LFE39
+ 2186 0300 0400     		.2byte	0x4
+ 2187 0302 F3       		.byte	0xf3
+ 2188 0303 01       		.uleb128 0x1
+ 2189 0304 52       		.byte	0x52
+ 2190 0305 9F       		.byte	0x9f
+ 2191 0306 00000000 		.4byte	0
+ 2192 030a 00000000 		.4byte	0
+ 2193              	.LLST27:
+ 2194 030e 00000000 		.4byte	.LVL49
+ 2195 0312 0D000000 		.4byte	.LVL51-1
+ 2196 0316 0100     		.2byte	0x1
+ 2197 0318 53       		.byte	0x53
+ 2198 0319 0D000000 		.4byte	.LVL51-1
+ 2199 031d 20000000 		.4byte	.LFE39
+ 2200 0321 0400     		.2byte	0x4
+ 2201 0323 F3       		.byte	0xf3
+ 2202 0324 01       		.uleb128 0x1
+ 2203 0325 53       		.byte	0x53
+ 2204 0326 9F       		.byte	0x9f
+ 2205 0327 00000000 		.4byte	0
+ 2206 032b 00000000 		.4byte	0
+ 2207              	.LLST28:
+ 2208 032f 00000000 		.4byte	.LVL54
+ 2209 0333 02000000 		.4byte	.LVL55
+ 2210 0337 0100     		.2byte	0x1
+ 2211 0339 50       		.byte	0x50
+ 2212 033a 02000000 		.4byte	.LVL55
+ARM GAS  e:\temp\ccdyAbtO.s 			page 43
+
+
+ 2213 033e 18000000 		.4byte	.LFE40
+ 2214 0342 0400     		.2byte	0x4
+ 2215 0344 F3       		.byte	0xf3
+ 2216 0345 01       		.uleb128 0x1
+ 2217 0346 50       		.byte	0x50
+ 2218 0347 9F       		.byte	0x9f
+ 2219 0348 00000000 		.4byte	0
+ 2220 034c 00000000 		.4byte	0
+ 2221              		.section	.debug_aranges,"",%progbits
+ 2222 0000 5C000000 		.4byte	0x5c
+ 2223 0004 0200     		.2byte	0x2
+ 2224 0006 00000000 		.4byte	.Ldebug_info0
+ 2225 000a 04       		.byte	0x4
+ 2226 000b 00       		.byte	0
+ 2227 000c 0000     		.2byte	0
+ 2228 000e 0000     		.2byte	0
+ 2229 0010 00000000 		.4byte	.LFB32
+ 2230 0014 34000000 		.4byte	.LFE32-.LFB32
+ 2231 0018 00000000 		.4byte	.LFB33
+ 2232 001c 24000000 		.4byte	.LFE33-.LFB33
+ 2233 0020 00000000 		.4byte	.LFB34
+ 2234 0024 28000000 		.4byte	.LFE34-.LFB34
+ 2235 0028 00000000 		.4byte	.LFB35
+ 2236 002c 2C000000 		.4byte	.LFE35-.LFB35
+ 2237 0030 00000000 		.4byte	.LFB36
+ 2238 0034 24000000 		.4byte	.LFE36-.LFB36
+ 2239 0038 00000000 		.4byte	.LFB37
+ 2240 003c 18000000 		.4byte	.LFE37-.LFB37
+ 2241 0040 00000000 		.4byte	.LFB38
+ 2242 0044 28000000 		.4byte	.LFE38-.LFB38
+ 2243 0048 00000000 		.4byte	.LFB39
+ 2244 004c 20000000 		.4byte	.LFE39-.LFB39
+ 2245 0050 00000000 		.4byte	.LFB40
+ 2246 0054 18000000 		.4byte	.LFE40-.LFB40
+ 2247 0058 00000000 		.4byte	0
+ 2248 005c 00000000 		.4byte	0
+ 2249              		.section	.debug_ranges,"",%progbits
+ 2250              	.Ldebug_ranges0:
+ 2251 0000 00000000 		.4byte	.LFB32
+ 2252 0004 34000000 		.4byte	.LFE32
+ 2253 0008 00000000 		.4byte	.LFB33
+ 2254 000c 24000000 		.4byte	.LFE33
+ 2255 0010 00000000 		.4byte	.LFB34
+ 2256 0014 28000000 		.4byte	.LFE34
+ 2257 0018 00000000 		.4byte	.LFB35
+ 2258 001c 2C000000 		.4byte	.LFE35
+ 2259 0020 00000000 		.4byte	.LFB36
+ 2260 0024 24000000 		.4byte	.LFE36
+ 2261 0028 00000000 		.4byte	.LFB37
+ 2262 002c 18000000 		.4byte	.LFE37
+ 2263 0030 00000000 		.4byte	.LFB38
+ 2264 0034 28000000 		.4byte	.LFE38
+ 2265 0038 00000000 		.4byte	.LFB39
+ 2266 003c 20000000 		.4byte	.LFE39
+ 2267 0040 00000000 		.4byte	.LFB40
+ 2268 0044 18000000 		.4byte	.LFE40
+ 2269 0048 00000000 		.4byte	0
+ARM GAS  e:\temp\ccdyAbtO.s 			page 44
+
+
+ 2270 004c 00000000 		.4byte	0
+ 2271              		.section	.debug_line,"",%progbits
+ 2272              	.Ldebug_line0:
+ 2273 0000 DD010000 		.section	.debug_str,"MS",%progbits,1
+ 2273      02001901 
+ 2273      00000201 
+ 2273      FB0E0D00 
+ 2273      01010101 
+ 2274              	.LASF149:
+ 2275 0000 6873696F 		.ascii	"hsiom_mode\000"
+ 2275      6D5F6D6F 
+ 2275      646500
+ 2276              	.LASF88:
+ 2277 000b 4750494F 		.ascii	"GPIO_DM_OD_HIGH\000"
+ 2277      5F444D5F 
+ 2277      4F445F48 
+ 2277      49474800 
+ 2278              	.LASF106:
+ 2279 001b 4853494F 		.ascii	"HSIOM_MODE_P0_TX_DATA_EN\000"
+ 2279      4D5F4D4F 
+ 2279      44455F50 
+ 2279      305F5458 
+ 2279      5F444154 
+ 2280              	.LASF121:
+ 2281 0034 4853494F 		.ascii	"HSIOM_MODE_P0_HPD\000"
+ 2281      4D5F4D4F 
+ 2281      44455F50 
+ 2281      305F4850 
+ 2281      4400
+ 2282              	.LASF85:
+ 2283 0046 4750494F 		.ascii	"GPIO_DM_RES_UP\000"
+ 2283      5F444D5F 
+ 2283      5245535F 
+ 2283      555000
+ 2284              	.LASF5:
+ 2285 0055 5F5F7569 		.ascii	"__uint8_t\000"
+ 2285      6E74385F 
+ 2285      7400
+ 2286              	.LASF109:
+ 2287 005f 4853494F 		.ascii	"HSIOM_MODE_P0_DDFT0\000"
+ 2287      4D5F4D4F 
+ 2287      44455F50 
+ 2287      305F4444 
+ 2287      46543000 
+ 2288              	.LASF110:
+ 2289 0073 4853494F 		.ascii	"HSIOM_MODE_P0_DDFT1\000"
+ 2289      4D5F4D4F 
+ 2289      44455F50 
+ 2289      305F4444 
+ 2289      46543100 
+ 2290              	.LASF4:
+ 2291 0087 6C6F6E67 		.ascii	"long int\000"
+ 2291      20696E74 
+ 2291      00
+ 2292              	.LASF139:
+ 2293 0090 6770696F 		.ascii	"gpio_set_value\000"
+ 2293      5F736574 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 45
+
+
+ 2293      5F76616C 
+ 2293      756500
+ 2294              	.LASF132:
+ 2295 009f 4853494F 		.ascii	"HSIOM_MODE_SCB1_I2C\000"
+ 2295      4D5F4D4F 
+ 2295      44455F53 
+ 2295      4342315F 
+ 2295      49324300 
+ 2296              	.LASF9:
+ 2297 00b3 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2297      206C6F6E 
+ 2297      6720756E 
+ 2297      7369676E 
+ 2297      65642069 
+ 2298              	.LASF90:
+ 2299 00ca 4750494F 		.ascii	"GPIO_DM_RES_UPDOWN\000"
+ 2299      5F444D5F 
+ 2299      5245535F 
+ 2299      5550444F 
+ 2299      574E00
+ 2300              	.LASF82:
+ 2301 00dd 6770696F 		.ascii	"gpio_port_pin_t\000"
+ 2301      5F706F72 
+ 2301      745F7069 
+ 2301      6E5F7400 
+ 2302              	.LASF8:
+ 2303 00ed 6C6F6E67 		.ascii	"long long int\000"
+ 2303      206C6F6E 
+ 2303      6720696E 
+ 2303      7400
+ 2304              	.LASF0:
+ 2305 00fb 7369676E 		.ascii	"signed char\000"
+ 2305      65642063 
+ 2305      68617200 
+ 2306              	.LASF56:
+ 2307 0107 4750494F 		.ascii	"GPIO_PORT_3_PIN_0\000"
+ 2307      5F504F52 
+ 2307      545F335F 
+ 2307      50494E5F 
+ 2307      3000
+ 2308              	.LASF57:
+ 2309 0119 4750494F 		.ascii	"GPIO_PORT_3_PIN_1\000"
+ 2309      5F504F52 
+ 2309      545F335F 
+ 2309      50494E5F 
+ 2309      3100
+ 2310              	.LASF58:
+ 2311 012b 4750494F 		.ascii	"GPIO_PORT_3_PIN_2\000"
+ 2311      5F504F52 
+ 2311      545F335F 
+ 2311      50494E5F 
+ 2311      3200
+ 2312              	.LASF59:
+ 2313 013d 4750494F 		.ascii	"GPIO_PORT_3_PIN_3\000"
+ 2313      5F504F52 
+ 2313      545F335F 
+ 2313      50494E5F 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 46
+
+
+ 2313      3300
+ 2314              	.LASF60:
+ 2315 014f 4750494F 		.ascii	"GPIO_PORT_3_PIN_4\000"
+ 2315      5F504F52 
+ 2315      545F335F 
+ 2315      50494E5F 
+ 2315      3400
+ 2316              	.LASF61:
+ 2317 0161 4750494F 		.ascii	"GPIO_PORT_3_PIN_5\000"
+ 2317      5F504F52 
+ 2317      545F335F 
+ 2317      50494E5F 
+ 2317      3500
+ 2318              	.LASF62:
+ 2319 0173 4750494F 		.ascii	"GPIO_PORT_3_PIN_6\000"
+ 2319      5F504F52 
+ 2319      545F335F 
+ 2319      50494E5F 
+ 2319      3600
+ 2320              	.LASF63:
+ 2321 0185 4750494F 		.ascii	"GPIO_PORT_3_PIN_7\000"
+ 2321      5F504F52 
+ 2321      545F335F 
+ 2321      50494E5F 
+ 2321      3700
+ 2322              	.LASF46:
+ 2323 0197 4750494F 		.ascii	"GPIO_PORT_1_PIN_6\000"
+ 2323      5F504F52 
+ 2323      545F315F 
+ 2323      50494E5F 
+ 2323      3600
+ 2324              	.LASF72:
+ 2325 01a9 4750494F 		.ascii	"GPIO_PORT_5_PIN_0\000"
+ 2325      5F504F52 
+ 2325      545F355F 
+ 2325      50494E5F 
+ 2325      3000
+ 2326              	.LASF73:
+ 2327 01bb 4750494F 		.ascii	"GPIO_PORT_5_PIN_1\000"
+ 2327      5F504F52 
+ 2327      545F355F 
+ 2327      50494E5F 
+ 2327      3100
+ 2328              	.LASF74:
+ 2329 01cd 4750494F 		.ascii	"GPIO_PORT_5_PIN_2\000"
+ 2329      5F504F52 
+ 2329      545F355F 
+ 2329      50494E5F 
+ 2329      3200
+ 2330              	.LASF75:
+ 2331 01df 4750494F 		.ascii	"GPIO_PORT_5_PIN_3\000"
+ 2331      5F504F52 
+ 2331      545F355F 
+ 2331      50494E5F 
+ 2331      3300
+ 2332              	.LASF76:
+ 2333 01f1 4750494F 		.ascii	"GPIO_PORT_5_PIN_4\000"
+ARM GAS  e:\temp\ccdyAbtO.s 			page 47
+
+
+ 2333      5F504F52 
+ 2333      545F355F 
+ 2333      50494E5F 
+ 2333      3400
+ 2334              	.LASF77:
+ 2335 0203 4750494F 		.ascii	"GPIO_PORT_5_PIN_5\000"
+ 2335      5F504F52 
+ 2335      545F355F 
+ 2335      50494E5F 
+ 2335      3500
+ 2336              	.LASF78:
+ 2337 0215 4750494F 		.ascii	"GPIO_PORT_5_PIN_6\000"
+ 2337      5F504F52 
+ 2337      545F355F 
+ 2337      50494E5F 
+ 2337      3600
+ 2338              	.LASF79:
+ 2339 0227 4750494F 		.ascii	"GPIO_PORT_5_PIN_7\000"
+ 2339      5F504F52 
+ 2339      545F355F 
+ 2339      50494E5F 
+ 2339      3700
+ 2340              	.LASF123:
+ 2341 0239 4853494F 		.ascii	"HSIOM_MODE_P0_FAULT_OUT0\000"
+ 2341      4D5F4D4F 
+ 2341      44455F50 
+ 2341      305F4641 
+ 2341      554C545F 
+ 2342              	.LASF124:
+ 2343 0252 4853494F 		.ascii	"HSIOM_MODE_P0_FAULT_OUT1\000"
+ 2343      4D5F4D4F 
+ 2343      44455F50 
+ 2343      305F4641 
+ 2343      554C545F 
+ 2344              	.LASF128:
+ 2345 026b 4853494F 		.ascii	"HSIOM_MODE_SCB1_SPI\000"
+ 2345      4D5F4D4F 
+ 2345      44455F53 
+ 2345      4342315F 
+ 2345      53504900 
+ 2346              	.LASF14:
+ 2347 027f 646F7562 		.ascii	"double\000"
+ 2347      6C6500
+ 2348              	.LASF97:
+ 2349 0286 4853494F 		.ascii	"HSIOM_MODE_SRSS_EXT_CLK\000"
+ 2349      4D5F4D4F 
+ 2349      44455F53 
+ 2349      5253535F 
+ 2349      4558545F 
+ 2350              	.LASF3:
+ 2351 029e 73686F72 		.ascii	"short unsigned int\000"
+ 2351      7420756E 
+ 2351      7369676E 
+ 2351      65642069 
+ 2351      6E7400
+ 2352              	.LASF84:
+ 2353 02b1 4750494F 		.ascii	"GPIO_DM_HIZ_DIGITAL\000"
+ARM GAS  e:\temp\ccdyAbtO.s 			page 48
+
+
+ 2353      5F444D5F 
+ 2353      48495A5F 
+ 2353      44494749 
+ 2353      54414C00 
+ 2354              	.LASF26:
+ 2355 02c5 64725F69 		.ascii	"dr_inv\000"
+ 2355      6E7600
+ 2356              	.LASF6:
+ 2357 02cc 5F5F7569 		.ascii	"__uint32_t\000"
+ 2357      6E743332 
+ 2357      5F7400
+ 2358              	.LASF114:
+ 2359 02d7 4853494F 		.ascii	"HSIOM_MODE_P1_ADC_CMP_OUT\000"
+ 2359      4D5F4D4F 
+ 2359      44455F50 
+ 2359      315F4144 
+ 2359      435F434D 
+ 2360              	.LASF156:
+ 2361 02f1 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 2361      73657273 
+ 2361      5C41646D 
+ 2361      696E5C44 
+ 2361      65736B74 
+ 2362 031e 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 2362      355C4359 
+ 2362      50443532 
+ 2362      32352D39 
+ 2362      36425A58 
+ 2363 034f 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 2363      6F6B2E63 
+ 2363      7964736E 
+ 2363      5C6E6F62 
+ 2363      6F6F742E 
+ 2364              	.LASF136:
+ 2365 0369 76616C75 		.ascii	"value\000"
+ 2365      6500
+ 2366              	.LASF155:
+ 2367 036f 2E2E5C73 		.ascii	"..\\src\\system\\gpio.c\000"
+ 2367      72635C73 
+ 2367      79737465 
+ 2367      6D5C6770 
+ 2367      696F2E63 
+ 2368              	.LASF32:
+ 2369 0384 4750494F 		.ascii	"GPIO_PORT_0_PIN_0\000"
+ 2369      5F504F52 
+ 2369      545F305F 
+ 2369      50494E5F 
+ 2369      3000
+ 2370              	.LASF33:
+ 2371 0396 4750494F 		.ascii	"GPIO_PORT_0_PIN_1\000"
+ 2371      5F504F52 
+ 2371      545F305F 
+ 2371      50494E5F 
+ 2371      3100
+ 2372              	.LASF34:
+ 2373 03a8 4750494F 		.ascii	"GPIO_PORT_0_PIN_2\000"
+ 2373      5F504F52 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 49
+
+
+ 2373      545F305F 
+ 2373      50494E5F 
+ 2373      3200
+ 2374              	.LASF71:
+ 2375 03ba 4750494F 		.ascii	"GPIO_PORT_4_PIN_7\000"
+ 2375      5F504F52 
+ 2375      545F345F 
+ 2375      50494E5F 
+ 2375      3700
+ 2376              	.LASF36:
+ 2377 03cc 4750494F 		.ascii	"GPIO_PORT_0_PIN_4\000"
+ 2377      5F504F52 
+ 2377      545F305F 
+ 2377      50494E5F 
+ 2377      3400
+ 2378              	.LASF37:
+ 2379 03de 4750494F 		.ascii	"GPIO_PORT_0_PIN_5\000"
+ 2379      5F504F52 
+ 2379      545F305F 
+ 2379      50494E5F 
+ 2379      3500
+ 2380              	.LASF38:
+ 2381 03f0 4750494F 		.ascii	"GPIO_PORT_0_PIN_6\000"
+ 2381      5F504F52 
+ 2381      545F305F 
+ 2381      50494E5F 
+ 2381      3600
+ 2382              	.LASF39:
+ 2383 0402 4750494F 		.ascii	"GPIO_PORT_0_PIN_7\000"
+ 2383      5F504F52 
+ 2383      545F305F 
+ 2383      50494E5F 
+ 2383      3700
+ 2384              	.LASF99:
+ 2385 0414 4853494F 		.ascii	"HSIOM_MODE_SCB0_UART\000"
+ 2385      4D5F4D4F 
+ 2385      44455F53 
+ 2385      4342305F 
+ 2385      55415254 
+ 2386              	.LASF134:
+ 2387 0429 4853494F 		.ascii	"HSIOM_MODE_SCB3_I2C\000"
+ 2387      4D5F4D4F 
+ 2387      44455F53 
+ 2387      4342335F 
+ 2387      49324300 
+ 2388              	.LASF30:
+ 2389 043d 6466745F 		.ascii	"dft_io_test\000"
+ 2389      696F5F74 
+ 2389      65737400 
+ 2390              	.LASF48:
+ 2391 0449 4750494F 		.ascii	"GPIO_PORT_2_PIN_0\000"
+ 2391      5F504F52 
+ 2391      545F325F 
+ 2391      50494E5F 
+ 2391      3000
+ 2392              	.LASF49:
+ 2393 045b 4750494F 		.ascii	"GPIO_PORT_2_PIN_1\000"
+ARM GAS  e:\temp\ccdyAbtO.s 			page 50
+
+
+ 2393      5F504F52 
+ 2393      545F325F 
+ 2393      50494E5F 
+ 2393      3100
+ 2394              	.LASF50:
+ 2395 046d 4750494F 		.ascii	"GPIO_PORT_2_PIN_2\000"
+ 2395      5F504F52 
+ 2395      545F325F 
+ 2395      50494E5F 
+ 2395      3200
+ 2396              	.LASF148:
+ 2397 047f 6873696F 		.ascii	"hsiom_set_config\000"
+ 2397      6D5F7365 
+ 2397      745F636F 
+ 2397      6E666967 
+ 2397      00
+ 2398              	.LASF7:
+ 2399 0490 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2399      20756E73 
+ 2399      69676E65 
+ 2399      6420696E 
+ 2399      7400
+ 2400              	.LASF53:
+ 2401 04a2 4750494F 		.ascii	"GPIO_PORT_2_PIN_5\000"
+ 2401      5F504F52 
+ 2401      545F325F 
+ 2401      50494E5F 
+ 2401      3500
+ 2402              	.LASF54:
+ 2403 04b4 4750494F 		.ascii	"GPIO_PORT_2_PIN_6\000"
+ 2403      5F504F52 
+ 2403      545F325F 
+ 2403      50494E5F 
+ 2403      3600
+ 2404              	.LASF55:
+ 2405 04c6 4750494F 		.ascii	"GPIO_PORT_2_PIN_7\000"
+ 2405      5F504F52 
+ 2405      545F325F 
+ 2405      50494E5F 
+ 2405      3700
+ 2406              	.LASF104:
+ 2407 04d8 4853494F 		.ascii	"HSIOM_MODE_SWD\000"
+ 2407      4D5F4D4F 
+ 2407      44455F53 
+ 2407      574400
+ 2408              	.LASF135:
+ 2409 04e7 706F7274 		.ascii	"port_pin\000"
+ 2409      5F70696E 
+ 2409      00
+ 2410              	.LASF25:
+ 2411 04f0 64725F63 		.ascii	"dr_clr\000"
+ 2411      6C7200
+ 2412              	.LASF108:
+ 2413 04f7 4853494F 		.ascii	"HSIOM_MODE_P1_TX_DATA_EN\000"
+ 2413      4D5F4D4F 
+ 2413      44455F50 
+ 2413      315F5458 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 51
+
+
+ 2413      5F444154 
+ 2414              	.LASF137:
+ 2415 0510 706F7274 		.ascii	"port\000"
+ 2415      00
+ 2416              	.LASF18:
+ 2417 0515 50485349 		.ascii	"PHSIOM_REGS_T\000"
+ 2417      4F4D5F52 
+ 2417      4547535F 
+ 2417      5400
+ 2418              	.LASF105:
+ 2419 0523 4853494F 		.ascii	"HSIOM_MODE_P0_TX_DATA\000"
+ 2419      4D5F4D4F 
+ 2419      44455F50 
+ 2419      305F5458 
+ 2419      5F444154 
+ 2420              	.LASF142:
+ 2421 0539 72656756 		.ascii	"regVal\000"
+ 2421      616C00
+ 2422              	.LASF131:
+ 2423 0540 4853494F 		.ascii	"HSIOM_MODE_SCB0_I2C\000"
+ 2423      4D5F4D4F 
+ 2423      44455F53 
+ 2423      4342305F 
+ 2423      49324300 
+ 2424              	.LASF98:
+ 2425 0554 4853494F 		.ascii	"HSIOM_MODE_TCPWM_CMP_MATCH\000"
+ 2425      4D5F4D4F 
+ 2425      44455F54 
+ 2425      4350574D 
+ 2425      5F434D50 
+ 2426              	.LASF150:
+ 2427 056f 6770696F 		.ascii	"gpio_hsiom_set_config\000"
+ 2427      5F687369 
+ 2427      6F6D5F73 
+ 2427      65745F63 
+ 2427      6F6E6669 
+ 2428              	.LASF83:
+ 2429 0585 4750494F 		.ascii	"GPIO_DM_HIZ_ANALOG\000"
+ 2429      5F444D5F 
+ 2429      48495A5F 
+ 2429      414E414C 
+ 2429      4F4700
+ 2430              	.LASF31:
+ 2431 0598 50475049 		.ascii	"PGPIO_REGS_T\000"
+ 2431      4F5F5245 
+ 2431      47535F54 
+ 2431      00
+ 2432              	.LASF146:
+ 2433 05a5 6770696F 		.ascii	"gpio_get_intr\000"
+ 2433      5F676574 
+ 2433      5F696E74 
+ 2433      7200
+ 2434              	.LASF101:
+ 2435 05b3 4853494F 		.ascii	"HSIOM_MODE_SCB2_UART\000"
+ 2435      4D5F4D4F 
+ 2435      44455F53 
+ 2435      4342325F 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 52
+
+
+ 2435      55415254 
+ 2436              	.LASF89:
+ 2437 05c8 4750494F 		.ascii	"GPIO_DM_STRONG\000"
+ 2437      5F444D5F 
+ 2437      5354524F 
+ 2437      4E4700
+ 2438              	.LASF130:
+ 2439 05d7 4853494F 		.ascii	"HSIOM_MODE_SCB3_SPI\000"
+ 2439      4D5F4D4F 
+ 2439      44455F53 
+ 2439      4342335F 
+ 2439      53504900 
+ 2440              	.LASF17:
+ 2441 05eb 73697A65 		.ascii	"sizetype\000"
+ 2441      74797065 
+ 2441      00
+ 2442              	.LASF141:
+ 2443 05f4 6472765F 		.ascii	"drv_mode\000"
+ 2443      6D6F6465 
+ 2443      00
+ 2444              	.LASF21:
+ 2445 05fd 696E7472 		.ascii	"intr\000"
+ 2445      00
+ 2446              	.LASF22:
+ 2447 0602 72737276 		.ascii	"rsrvd0\000"
+ 2447      643000
+ 2448              	.LASF23:
+ 2449 0609 72737276 		.ascii	"rsrvd1\000"
+ 2449      643100
+ 2450              	.LASF27:
+ 2451 0610 72737276 		.ascii	"rsrvd2\000"
+ 2451      643200
+ 2452              	.LASF29:
+ 2453 0617 72737276 		.ascii	"rsrvd3\000"
+ 2453      643300
+ 2454              	.LASF145:
+ 2455 061e 6770696F 		.ascii	"gpio_read_value\000"
+ 2455      5F726561 
+ 2455      645F7661 
+ 2455      6C756500 
+ 2456              	.LASF111:
+ 2457 062e 4853494F 		.ascii	"HSIOM_MODE_P1_DDFT0\000"
+ 2457      4D5F4D4F 
+ 2457      44455F50 
+ 2457      315F4444 
+ 2457      46543000 
+ 2458              	.LASF112:
+ 2459 0642 4853494F 		.ascii	"HSIOM_MODE_P1_DDFT1\000"
+ 2459      4D5F4D4F 
+ 2459      44455F50 
+ 2459      315F4444 
+ 2459      46543100 
+ 2460              	.LASF126:
+ 2461 0656 4853494F 		.ascii	"HSIOM_MODE_P1_FAULT_OUT1\000"
+ 2461      4D5F4D4F 
+ 2461      44455F50 
+ 2461      315F4641 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 53
+
+
+ 2461      554C545F 
+ 2462              	.LASF24:
+ 2463 066f 64725F73 		.ascii	"dr_set\000"
+ 2463      657400
+ 2464              	.LASF107:
+ 2465 0676 4853494F 		.ascii	"HSIOM_MODE_P1_TX_DATA\000"
+ 2465      4D5F4D4F 
+ 2465      44455F50 
+ 2465      315F5458 
+ 2465      5F444154 
+ 2466              	.LASF35:
+ 2467 068c 4750494F 		.ascii	"GPIO_PORT_0_PIN_3\000"
+ 2467      5F504F52 
+ 2467      545F305F 
+ 2467      50494E5F 
+ 2467      3300
+ 2468              	.LASF13:
+ 2469 069e 666C6F61 		.ascii	"float\000"
+ 2469      7400
+ 2470              	.LASF127:
+ 2471 06a4 4853494F 		.ascii	"HSIOM_MODE_SCB0_SPI\000"
+ 2471      4D5F4D4F 
+ 2471      44455F53 
+ 2471      4342305F 
+ 2471      53504900 
+ 2472              	.LASF20:
+ 2473 06b8 696E7472 		.ascii	"intr_cfg\000"
+ 2473      5F636667 
+ 2473      00
+ 2474              	.LASF87:
+ 2475 06c1 4750494F 		.ascii	"GPIO_DM_OD_LOW\000"
+ 2475      5F444D5F 
+ 2475      4F445F4C 
+ 2475      4F5700
+ 2476              	.LASF154:
+ 2477 06d0 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2477      43313120 
+ 2477      352E342E 
+ 2477      31203230 
+ 2477      31363036 
+ 2478 0703 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 2478      20726576 
+ 2478      6973696F 
+ 2478      6E203233 
+ 2478      37373135 
+ 2479 0736 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 2479      66756E63 
+ 2479      74696F6E 
+ 2479      2D736563 
+ 2479      74696F6E 
+ 2480 0769 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 2480      6F6E7320 
+ 2480      2D666E6F 
+ 2480      2D737472 
+ 2480      6963742D 
+ 2481              	.LASF86:
+ 2482 0786 4750494F 		.ascii	"GPIO_DM_RES_DWN\000"
+ARM GAS  e:\temp\ccdyAbtO.s 			page 54
+
+
+ 2482      5F444D5F 
+ 2482      5245535F 
+ 2482      44574E00 
+ 2483              	.LASF138:
+ 2484 0796 5F426F6F 		.ascii	"_Bool\000"
+ 2484      6C00
+ 2485              	.LASF1:
+ 2486 079c 756E7369 		.ascii	"unsigned char\000"
+ 2486      676E6564 
+ 2486      20636861 
+ 2486      7200
+ 2487              	.LASF94:
+ 2488 07aa 4853494F 		.ascii	"HSIOM_MODE_AMUXA\000"
+ 2488      4D5F4D4F 
+ 2488      44455F41 
+ 2488      4D555841 
+ 2488      00
+ 2489              	.LASF95:
+ 2490 07bb 4853494F 		.ascii	"HSIOM_MODE_AMUXB\000"
+ 2490      4D5F4D4F 
+ 2490      44455F41 
+ 2490      4D555842 
+ 2490      00
+ 2491              	.LASF2:
+ 2492 07cc 73686F72 		.ascii	"short int\000"
+ 2492      7420696E 
+ 2492      7400
+ 2493              	.LASF125:
+ 2494 07d6 4853494F 		.ascii	"HSIOM_MODE_P1_FAULT_OUT0\000"
+ 2494      4D5F4D4F 
+ 2494      44455F50 
+ 2494      315F4641 
+ 2494      554C545F 
+ 2495              	.LASF143:
+ 2496 07ef 6770696F 		.ascii	"gpio_int_set_config\000"
+ 2496      5F696E74 
+ 2496      5F736574 
+ 2496      5F636F6E 
+ 2496      66696700 
+ 2497              	.LASF64:
+ 2498 0803 4750494F 		.ascii	"GPIO_PORT_4_PIN_0\000"
+ 2498      5F504F52 
+ 2498      545F345F 
+ 2498      50494E5F 
+ 2498      3000
+ 2499              	.LASF65:
+ 2500 0815 4750494F 		.ascii	"GPIO_PORT_4_PIN_1\000"
+ 2500      5F504F52 
+ 2500      545F345F 
+ 2500      50494E5F 
+ 2500      3100
+ 2501              	.LASF66:
+ 2502 0827 4750494F 		.ascii	"GPIO_PORT_4_PIN_2\000"
+ 2502      5F504F52 
+ 2502      545F345F 
+ 2502      50494E5F 
+ 2502      3200
+ARM GAS  e:\temp\ccdyAbtO.s 			page 55
+
+
+ 2503              	.LASF67:
+ 2504 0839 4750494F 		.ascii	"GPIO_PORT_4_PIN_3\000"
+ 2504      5F504F52 
+ 2504      545F345F 
+ 2504      50494E5F 
+ 2504      3300
+ 2505              	.LASF68:
+ 2506 084b 4750494F 		.ascii	"GPIO_PORT_4_PIN_4\000"
+ 2506      5F504F52 
+ 2506      545F345F 
+ 2506      50494E5F 
+ 2506      3400
+ 2507              	.LASF69:
+ 2508 085d 4750494F 		.ascii	"GPIO_PORT_4_PIN_5\000"
+ 2508      5F504F52 
+ 2508      545F345F 
+ 2508      50494E5F 
+ 2508      3500
+ 2509              	.LASF70:
+ 2510 086f 4750494F 		.ascii	"GPIO_PORT_4_PIN_6\000"
+ 2510      5F504F52 
+ 2510      545F345F 
+ 2510      50494E5F 
+ 2510      3600
+ 2511              	.LASF144:
+ 2512 0881 696E745F 		.ascii	"int_mode\000"
+ 2512      6D6F6465 
+ 2512      00
+ 2513              	.LASF147:
+ 2514 088a 6770696F 		.ascii	"gpio_clear_intr\000"
+ 2514      5F636C65 
+ 2514      61725F69 
+ 2514      6E747200 
+ 2515              	.LASF80:
+ 2516 089a 4750494F 		.ascii	"GPIO_PORT_6_PIN_0\000"
+ 2516      5F504F52 
+ 2516      545F365F 
+ 2516      50494E5F 
+ 2516      3000
+ 2517              	.LASF81:
+ 2518 08ac 4750494F 		.ascii	"GPIO_PORT_6_PIN_1\000"
+ 2518      5F504F52 
+ 2518      545F365F 
+ 2518      50494E5F 
+ 2518      3100
+ 2519              	.LASF133:
+ 2520 08be 4853494F 		.ascii	"HSIOM_MODE_SCB2_I2C\000"
+ 2520      4D5F4D4F 
+ 2520      44455F53 
+ 2520      4342325F 
+ 2520      49324300 
+ 2521              	.LASF120:
+ 2522 08d2 4853494F 		.ascii	"HSIOM_MODE_P0_SWAPT_IN\000"
+ 2522      4D5F4D4F 
+ 2522      44455F50 
+ 2522      305F5357 
+ 2522      4150545F 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 56
+
+
+ 2523              	.LASF92:
+ 2524 08e9 6873696F 		.ascii	"hsiom_mode_t\000"
+ 2524      6D5F6D6F 
+ 2524      64655F74 
+ 2524      00
+ 2525              	.LASF117:
+ 2526 08f6 4853494F 		.ascii	"HSIOM_MODE_P1_SWAPT_IN\000"
+ 2526      4D5F4D4F 
+ 2526      44455F50 
+ 2526      315F5357 
+ 2526      4150545F 
+ 2527              	.LASF113:
+ 2528 090d 4853494F 		.ascii	"HSIOM_MODE_P0_ADC_CMP_OUT\000"
+ 2528      4D5F4D4F 
+ 2528      44455F50 
+ 2528      305F4144 
+ 2528      435F434D 
+ 2529              	.LASF51:
+ 2530 0927 4750494F 		.ascii	"GPIO_PORT_2_PIN_3\000"
+ 2530      5F504F52 
+ 2530      545F325F 
+ 2530      50494E5F 
+ 2530      3300
+ 2531              	.LASF52:
+ 2532 0939 4750494F 		.ascii	"GPIO_PORT_2_PIN_4\000"
+ 2532      5F504F52 
+ 2532      545F325F 
+ 2532      50494E5F 
+ 2532      3400
+ 2533              	.LASF118:
+ 2534 094b 4853494F 		.ascii	"HSIOM_MODE_P0_SWAPT_OUT0\000"
+ 2534      4D5F4D4F 
+ 2534      44455F50 
+ 2534      305F5357 
+ 2534      4150545F 
+ 2535              	.LASF119:
+ 2536 0964 4853494F 		.ascii	"HSIOM_MODE_P0_SWAPT_OUT1\000"
+ 2536      4D5F4D4F 
+ 2536      44455F50 
+ 2536      305F5357 
+ 2536      4150545F 
+ 2537              	.LASF16:
+ 2538 097d 6C6F6E67 		.ascii	"long double\000"
+ 2538      20646F75 
+ 2538      626C6500 
+ 2539              	.LASF15:
+ 2540 0989 63686172 		.ascii	"char\000"
+ 2540      00
+ 2541              	.LASF10:
+ 2542 098e 756E7369 		.ascii	"unsigned int\000"
+ 2542      676E6564 
+ 2542      20696E74 
+ 2542      00
+ 2543              	.LASF151:
+ 2544 099b 6770696F 		.ascii	"gpio_set_lvttl_mode\000"
+ 2544      5F736574 
+ 2544      5F6C7674 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 57
+
+
+ 2544      746C5F6D 
+ 2544      6F646500 
+ 2545              	.LASF115:
+ 2546 09af 4853494F 		.ascii	"HSIOM_MODE_P1_SWAPT_OUT0\000"
+ 2546      4D5F4D4F 
+ 2546      44455F50 
+ 2546      315F5357 
+ 2546      4150545F 
+ 2547              	.LASF116:
+ 2548 09c8 4853494F 		.ascii	"HSIOM_MODE_P1_SWAPT_OUT1\000"
+ 2548      4D5F4D4F 
+ 2548      44455F50 
+ 2548      315F5357 
+ 2548      4150545F 
+ 2549              	.LASF93:
+ 2550 09e1 4853494F 		.ascii	"HSIOM_MODE_GPIO\000"
+ 2550      4D5F4D4F 
+ 2550      44455F47 
+ 2550      50494F00 
+ 2551              	.LASF40:
+ 2552 09f1 4750494F 		.ascii	"GPIO_PORT_1_PIN_0\000"
+ 2552      5F504F52 
+ 2552      545F315F 
+ 2552      50494E5F 
+ 2552      3000
+ 2553              	.LASF41:
+ 2554 0a03 4750494F 		.ascii	"GPIO_PORT_1_PIN_1\000"
+ 2554      5F504F52 
+ 2554      545F315F 
+ 2554      50494E5F 
+ 2554      3100
+ 2555              	.LASF42:
+ 2556 0a15 4750494F 		.ascii	"GPIO_PORT_1_PIN_2\000"
+ 2556      5F504F52 
+ 2556      545F315F 
+ 2556      50494E5F 
+ 2556      3200
+ 2557              	.LASF43:
+ 2558 0a27 4750494F 		.ascii	"GPIO_PORT_1_PIN_3\000"
+ 2558      5F504F52 
+ 2558      545F315F 
+ 2558      50494E5F 
+ 2558      3300
+ 2559              	.LASF44:
+ 2560 0a39 4750494F 		.ascii	"GPIO_PORT_1_PIN_4\000"
+ 2560      5F504F52 
+ 2560      545F315F 
+ 2560      50494E5F 
+ 2560      3400
+ 2561              	.LASF45:
+ 2562 0a4b 4750494F 		.ascii	"GPIO_PORT_1_PIN_5\000"
+ 2562      5F504F52 
+ 2562      545F315F 
+ 2562      50494E5F 
+ 2562      3500
+ 2563              	.LASF19:
+ 2564 0a5d 706F7274 		.ascii	"port_sel\000"
+ARM GAS  e:\temp\ccdyAbtO.s 			page 58
+
+
+ 2564      5F73656C 
+ 2564      00
+ 2565              	.LASF47:
+ 2566 0a66 4750494F 		.ascii	"GPIO_PORT_1_PIN_7\000"
+ 2566      5F504F52 
+ 2566      545F315F 
+ 2566      50494E5F 
+ 2566      3700
+ 2567              	.LASF91:
+ 2568 0a78 6770696F 		.ascii	"gpio_dm_t\000"
+ 2568      5F646D5F 
+ 2568      7400
+ 2569              	.LASF140:
+ 2570 0a82 6770696F 		.ascii	"gpio_set_drv_mode\000"
+ 2570      5F736574 
+ 2570      5F647276 
+ 2570      5F6D6F64 
+ 2570      6500
+ 2571              	.LASF12:
+ 2572 0a94 75696E74 		.ascii	"uint32_t\000"
+ 2572      33325F74 
+ 2572      00
+ 2573              	.LASF129:
+ 2574 0a9d 4853494F 		.ascii	"HSIOM_MODE_SCB2_SPI\000"
+ 2574      4D5F4D4F 
+ 2574      44455F53 
+ 2574      4342325F 
+ 2574      53504900 
+ 2575              	.LASF28:
+ 2576 0ab1 696E7472 		.ascii	"intr_cause\000"
+ 2576      5F636175 
+ 2576      736500
+ 2577              	.LASF11:
+ 2578 0abc 75696E74 		.ascii	"uint8_t\000"
+ 2578      385F7400 
+ 2579              	.LASF152:
+ 2580 0ac4 4853494F 		.ascii	"HSIOM\000"
+ 2580      4D00
+ 2581              	.LASF96:
+ 2582 0aca 4853494F 		.ascii	"HSIOM_MODE_TCPWM_IO\000"
+ 2582      4D5F4D4F 
+ 2582      44455F54 
+ 2582      4350574D 
+ 2582      5F494F00 
+ 2583              	.LASF153:
+ 2584 0ade 4750494F 		.ascii	"GPIO\000"
+ 2584      00
+ 2585              	.LASF122:
+ 2586 0ae3 4853494F 		.ascii	"HSIOM_MODE_P1_HPD\000"
+ 2586      4D5F4D4F 
+ 2586      44455F50 
+ 2586      315F4850 
+ 2586      4400
+ 2587              	.LASF103:
+ 2588 0af5 4853494F 		.ascii	"HSIOM_MODE_SCB_TCPWM_OFLOW\000"
+ 2588      4D5F4D4F 
+ 2588      44455F53 
+ARM GAS  e:\temp\ccdyAbtO.s 			page 59
+
+
+ 2588      43425F54 
+ 2588      4350574D 
+ 2589              	.LASF100:
+ 2590 0b10 4853494F 		.ascii	"HSIOM_MODE_SCB1_UART\000"
+ 2590      4D5F4D4F 
+ 2590      44455F53 
+ 2590      4342315F 
+ 2590      55415254 
+ 2591              	.LASF102:
+ 2592 0b25 4853494F 		.ascii	"HSIOM_MODE_SCB3_UART\000"
+ 2592      4D5F4D4F 
+ 2592      44455F53 
+ 2592      4342335F 
+ 2592      55415254 
+ 2593              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

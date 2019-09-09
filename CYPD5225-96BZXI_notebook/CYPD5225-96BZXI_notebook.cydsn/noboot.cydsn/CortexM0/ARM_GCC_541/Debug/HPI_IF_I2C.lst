@@ -1,0 +1,1219 @@
+ARM GAS  e:\temp\cczESMha.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"HPI_IF_I2C.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.HPI_IF_I2CInit,"ax",%progbits
+  20              		.align	2
+  21              		.global	HPI_IF_I2CInit
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	HPI_IF_I2CInit, %function
+  25              	HPI_IF_I2CInit:
+  26              	.LFB0:
+  27              		.file 1 "Generated_Source\\PSoC4\\HPI_IF_I2C.c"
+   1:Generated_Source\PSoC4/HPI_IF_I2C.c **** /***************************************************************************//**
+   2:Generated_Source\PSoC4/HPI_IF_I2C.c **** * \file HPI_IF_I2C.c
+   3:Generated_Source\PSoC4/HPI_IF_I2C.c **** * \version 4.0
+   4:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+   5:Generated_Source\PSoC4/HPI_IF_I2C.c **** * \brief
+   6:Generated_Source\PSoC4/HPI_IF_I2C.c **** *  This file provides the source code to the API for the SCB Component in
+   7:Generated_Source\PSoC4/HPI_IF_I2C.c **** *  I2C mode.
+   8:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+   9:Generated_Source\PSoC4/HPI_IF_I2C.c **** * Note:
+  10:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+  11:Generated_Source\PSoC4/HPI_IF_I2C.c **** *******************************************************************************
+  12:Generated_Source\PSoC4/HPI_IF_I2C.c **** * \copyright
+  13:Generated_Source\PSoC4/HPI_IF_I2C.c **** * Copyright 2013-2017, Cypress Semiconductor Corporation.  All rights reserved.
+  14:Generated_Source\PSoC4/HPI_IF_I2C.c **** * You may use this file only in accordance with the license, terms, conditions,
+  15:Generated_Source\PSoC4/HPI_IF_I2C.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  16:Generated_Source\PSoC4/HPI_IF_I2C.c **** * the software package with which this file was provided.
+  17:Generated_Source\PSoC4/HPI_IF_I2C.c **** *******************************************************************************/
+  18:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  19:Generated_Source\PSoC4/HPI_IF_I2C.c **** #include "HPI_IF_PVT.h"
+  20:Generated_Source\PSoC4/HPI_IF_I2C.c **** #include "HPI_IF_I2C_PVT.h"
+  21:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  22:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  23:Generated_Source\PSoC4/HPI_IF_I2C.c **** /***************************************
+  24:Generated_Source\PSoC4/HPI_IF_I2C.c **** *      I2C Private Vars
+  25:Generated_Source\PSoC4/HPI_IF_I2C.c **** ***************************************/
+  26:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  27:Generated_Source\PSoC4/HPI_IF_I2C.c **** volatile uint8 HPI_IF_state;  /* Current state of I2C FSM */
+  28:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  29:Generated_Source\PSoC4/HPI_IF_I2C.c **** #if(HPI_IF_SCB_MODE_UNCONFIG_CONST_CFG)
+  30:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ARM GAS  e:\temp\cczESMha.s 			page 2
+
+
+  31:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /***************************************
+  32:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  Configuration Structure Initialization
+  33:Generated_Source\PSoC4/HPI_IF_I2C.c ****     ***************************************/
+  34:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  35:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Constant configuration of I2C */
+  36:Generated_Source\PSoC4/HPI_IF_I2C.c ****     const HPI_IF_I2C_INIT_STRUCT HPI_IF_configI2C =
+  37:Generated_Source\PSoC4/HPI_IF_I2C.c ****     {
+  38:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_MODE,
+  39:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_OVS_FACTOR_LOW,
+  40:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_OVS_FACTOR_HIGH,
+  41:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_MEDIAN_FILTER_ENABLE,
+  42:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_SLAVE_ADDRESS,
+  43:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_SLAVE_ADDRESS_MASK,
+  44:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_ACCEPT_ADDRESS,
+  45:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_WAKE_ENABLE,
+  46:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_BYTE_MODE_ENABLE,
+  47:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_DATA_RATE,
+  48:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_ACCEPT_GENERAL_CALL,
+  49:Generated_Source\PSoC4/HPI_IF_I2C.c ****     };
+  50:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  51:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /*******************************************************************************
+  52:Generated_Source\PSoC4/HPI_IF_I2C.c ****     * Function Name: HPI_IF_I2CInit
+  53:Generated_Source\PSoC4/HPI_IF_I2C.c ****     ****************************************************************************//**
+  54:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+  55:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+  56:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  Configures the HPI_IF for I2C operation.
+  57:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+  58:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  This function is intended specifically to be used when the HPI_IF 
+  59:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  configuration is set to “Unconfigured HPI_IF” in the customizer. 
+  60:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  After initializing the HPI_IF in I2C mode using this function, 
+  61:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  the component can be enabled using the HPI_IF_Start() or 
+  62:Generated_Source\PSoC4/HPI_IF_I2C.c ****     * HPI_IF_Enable() function.
+  63:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  This function uses a pointer to a structure that provides the configuration 
+  64:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  settings. This structure contains the same information that would otherwise 
+  65:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  be provided by the customizer settings.
+  66:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+  67:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  \param config: pointer to a structure that contains the following list of 
+  68:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *   fields. These fields match the selections available in the customizer. 
+  69:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *   Refer to the customizer for further description of the settings.
+  70:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+  71:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *******************************************************************************/
+  72:Generated_Source\PSoC4/HPI_IF_I2C.c ****     void HPI_IF_I2CInit(const HPI_IF_I2C_INIT_STRUCT *config)
+  73:Generated_Source\PSoC4/HPI_IF_I2C.c ****     {
+  74:Generated_Source\PSoC4/HPI_IF_I2C.c ****         uint32 medianFilter;
+  75:Generated_Source\PSoC4/HPI_IF_I2C.c ****         uint32 locEnableWake;
+  76:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  77:Generated_Source\PSoC4/HPI_IF_I2C.c ****         if(NULL == config)
+  78:Generated_Source\PSoC4/HPI_IF_I2C.c ****         {
+  79:Generated_Source\PSoC4/HPI_IF_I2C.c ****             CYASSERT(0u != 0u); /* Halt execution due to bad function parameter */
+  80:Generated_Source\PSoC4/HPI_IF_I2C.c ****         }
+  81:Generated_Source\PSoC4/HPI_IF_I2C.c ****         else
+  82:Generated_Source\PSoC4/HPI_IF_I2C.c ****         {
+  83:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure pins */
+  84:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_SetPins(HPI_IF_SCB_MODE_I2C, HPI_IF_DUMMY_PARAM,
+  85:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                      HPI_IF_DUMMY_PARAM);
+  86:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  87:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Store internal configuration */
+ARM GAS  e:\temp\cczESMha.s 			page 3
+
+
+  88:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_scbMode       = (uint8) HPI_IF_SCB_MODE_I2C;
+  89:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_scbEnableWake = (uint8) config->enableWake;
+  90:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_scbEnableIntr = (uint8) HPI_IF_SCB_IRQ_INTERNAL;
+  91:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  92:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_mode          = (uint8) config->mode;
+  93:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_acceptAddr    = (uint8) config->acceptAddr;
+  94:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+  95:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #if (HPI_IF_CY_SCBIP_V0)
+  96:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Adjust SDA filter settings. Ticket ID#150521 */
+  97:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_SET_I2C_CFG_SDA_FILT_TRIM(HPI_IF_EC_AM_I2C_CFG_SDA_FILT_TRIM);
+  98:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #endif /* (HPI_IF_CY_SCBIP_V0) */
+  99:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 100:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Adjust AF and DF filter settings. Ticket ID#176179 */
+ 101:Generated_Source\PSoC4/HPI_IF_I2C.c ****             if (((HPI_IF_I2C_MODE_SLAVE != config->mode) &&
+ 102:Generated_Source\PSoC4/HPI_IF_I2C.c ****                  (config->dataRate <= HPI_IF_I2C_DATA_RATE_FS_MODE_MAX)) ||
+ 103:Generated_Source\PSoC4/HPI_IF_I2C.c ****                  (HPI_IF_I2C_MODE_SLAVE == config->mode))
+ 104:Generated_Source\PSoC4/HPI_IF_I2C.c ****             {
+ 105:Generated_Source\PSoC4/HPI_IF_I2C.c ****                 /* AF = 1, DF = 0 */
+ 106:Generated_Source\PSoC4/HPI_IF_I2C.c ****                 HPI_IF_I2C_CFG_ANALOG_FITER_ENABLE;
+ 107:Generated_Source\PSoC4/HPI_IF_I2C.c ****                 medianFilter = HPI_IF_DIGITAL_FILTER_DISABLE;
+ 108:Generated_Source\PSoC4/HPI_IF_I2C.c ****             }
+ 109:Generated_Source\PSoC4/HPI_IF_I2C.c ****             else
+ 110:Generated_Source\PSoC4/HPI_IF_I2C.c ****             {
+ 111:Generated_Source\PSoC4/HPI_IF_I2C.c ****                 /* AF = 0, DF = 1 */
+ 112:Generated_Source\PSoC4/HPI_IF_I2C.c ****                 HPI_IF_I2C_CFG_ANALOG_FITER_DISABLE;
+ 113:Generated_Source\PSoC4/HPI_IF_I2C.c ****                 medianFilter = HPI_IF_DIGITAL_FILTER_ENABLE;
+ 114:Generated_Source\PSoC4/HPI_IF_I2C.c ****             }
+ 115:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 116:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #if (!HPI_IF_CY_SCBIP_V0)
+ 117:Generated_Source\PSoC4/HPI_IF_I2C.c ****             locEnableWake = (HPI_IF_I2C_MULTI_MASTER_SLAVE) ? (0u) : (config->enableWake);
+ 118:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #else
+ 119:Generated_Source\PSoC4/HPI_IF_I2C.c ****             locEnableWake = config->enableWake;
+ 120:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #endif /* (!HPI_IF_CY_SCBIP_V0) */
+ 121:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 122:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure I2C interface */
+ 123:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_CTRL_REG     = HPI_IF_GET_CTRL_BYTE_MODE  (config->enableByteMode) |
+ 124:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                             HPI_IF_GET_CTRL_ADDR_ACCEPT(config->acceptAddr)     |
+ 125:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                             HPI_IF_GET_CTRL_EC_AM_MODE (locEnableWake);
+ 126:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 127:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_I2C_CTRL_REG = HPI_IF_GET_I2C_CTRL_HIGH_PHASE_OVS(config->oversampleHigh) |
+ 128:Generated_Source\PSoC4/HPI_IF_I2C.c ****                     HPI_IF_GET_I2C_CTRL_LOW_PHASE_OVS (config->oversampleLow)                      
+ 129:Generated_Source\PSoC4/HPI_IF_I2C.c ****                     HPI_IF_GET_I2C_CTRL_S_GENERAL_IGNORE((uint32)(0u == config->acceptGeneralAddr))
+ 130:Generated_Source\PSoC4/HPI_IF_I2C.c ****                     HPI_IF_GET_I2C_CTRL_SL_MSTR_MODE  (config->mode);
+ 131:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 132:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure RX direction */
+ 133:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_RX_CTRL_REG      = HPI_IF_GET_RX_CTRL_MEDIAN(medianFilter) |
+ 134:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                                 HPI_IF_I2C_RX_CTRL;
+ 135:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_RX_FIFO_CTRL_REG = HPI_IF_CLEAR_REG;
+ 136:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 137:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Set default address and mask */
+ 138:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_RX_MATCH_REG    = ((HPI_IF_I2C_SLAVE) ?
+ 139:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                                 (HPI_IF_GET_I2C_8BIT_ADDRESS(config->slaveAddr) |
+ 140:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                                  HPI_IF_GET_RX_MATCH_MASK(config->slaveAddrMask)) :
+ 141:Generated_Source\PSoC4/HPI_IF_I2C.c ****                                                 (HPI_IF_CLEAR_REG));
+ 142:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 143:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 144:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure TX direction */
+ARM GAS  e:\temp\cczESMha.s 			page 4
+
+
+ 145:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_TX_CTRL_REG      = HPI_IF_I2C_TX_CTRL;
+ 146:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_TX_FIFO_CTRL_REG = HPI_IF_CLEAR_REG;
+ 147:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 148:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure interrupt with I2C handler but do not enable it */
+ 149:Generated_Source\PSoC4/HPI_IF_I2C.c ****             CyIntDisable    (HPI_IF_ISR_NUMBER);
+ 150:Generated_Source\PSoC4/HPI_IF_I2C.c ****             CyIntSetPriority(HPI_IF_ISR_NUMBER, HPI_IF_ISR_PRIORITY);
+ 151:Generated_Source\PSoC4/HPI_IF_I2C.c ****             (void) CyIntSetVector(HPI_IF_ISR_NUMBER, &HPI_IF_I2C_ISR);
+ 152:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 153:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure interrupt sources */
+ 154:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #if(!HPI_IF_CY_SCBIP_V1)
+ 155:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_INTR_SPI_EC_MASK_REG = HPI_IF_NO_INTR_SOURCES;
+ 156:Generated_Source\PSoC4/HPI_IF_I2C.c ****         #endif /* (!HPI_IF_CY_SCBIP_V1) */
+ 157:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 158:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_INTR_I2C_EC_MASK_REG = HPI_IF_NO_INTR_SOURCES;
+ 159:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_INTR_RX_MASK_REG     = HPI_IF_NO_INTR_SOURCES;
+ 160:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_INTR_TX_MASK_REG     = HPI_IF_NO_INTR_SOURCES;
+ 161:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 162:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_INTR_SLAVE_MASK_REG  = ((HPI_IF_I2C_SLAVE) ?
+ 163:Generated_Source\PSoC4/HPI_IF_I2C.c ****                             (HPI_IF_GET_INTR_SLAVE_I2C_GENERAL(config->acceptGeneralAddr) |
+ 164:Generated_Source\PSoC4/HPI_IF_I2C.c ****                              HPI_IF_I2C_INTR_SLAVE_MASK) : (HPI_IF_CLEAR_REG));
+ 165:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 166:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_INTR_MASTER_MASK_REG = HPI_IF_NO_INTR_SOURCES;
+ 167:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 168:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Configure global variables */
+ 169:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_state = HPI_IF_I2C_FSM_IDLE;
+ 170:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 171:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Internal slave variables */
+ 172:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_slStatus        = 0u;
+ 173:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_slRdBufIndex    = 0u;
+ 174:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_slWrBufIndex    = 0u;
+ 175:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_slOverFlowCount = 0u;
+ 176:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 177:Generated_Source\PSoC4/HPI_IF_I2C.c ****             /* Internal master variables */
+ 178:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_mstrStatus     = 0u;
+ 179:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_mstrRdBufIndex = 0u;
+ 180:Generated_Source\PSoC4/HPI_IF_I2C.c ****             HPI_IF_mstrWrBufIndex = 0u;
+ 181:Generated_Source\PSoC4/HPI_IF_I2C.c ****         }
+ 182:Generated_Source\PSoC4/HPI_IF_I2C.c ****     }
+ 183:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 184:Generated_Source\PSoC4/HPI_IF_I2C.c **** #else
+ 185:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 186:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /*******************************************************************************
+ 187:Generated_Source\PSoC4/HPI_IF_I2C.c ****     * Function Name: HPI_IF_I2CInit
+ 188:Generated_Source\PSoC4/HPI_IF_I2C.c ****     ****************************************************************************//**
+ 189:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+ 190:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *  Configures the SCB for the I2C operation.
+ 191:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *
+ 192:Generated_Source\PSoC4/HPI_IF_I2C.c ****     *******************************************************************************/
+ 193:Generated_Source\PSoC4/HPI_IF_I2C.c ****     void HPI_IF_I2CInit(void)
+ 194:Generated_Source\PSoC4/HPI_IF_I2C.c ****     {
+  28              		.loc 1 194 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+ARM GAS  e:\temp\cczESMha.s 			page 5
+
+
+  35              		.cfi_offset 14, -4
+ 195:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #if(HPI_IF_CY_SCBIP_V0)
+ 196:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Adjust SDA filter settings. Ticket ID#150521 */
+ 197:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_SET_I2C_CFG_SDA_FILT_TRIM(HPI_IF_EC_AM_I2C_CFG_SDA_FILT_TRIM);
+ 198:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #endif /* (HPI_IF_CY_SCBIP_V0) */
+ 199:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 200:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Adjust AF and DF filter settings. Ticket ID#176179 */
+ 201:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_CFG_ANALOG_FITER_ENABLE_ADJ;
+ 202:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 203:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Configure I2C interface */
+ 204:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_CTRL_REG     = HPI_IF_I2C_DEFAULT_CTRL;
+  36              		.loc 1 204 0
+  37 0002 0024     		movs	r4, #0
+  38 0004 1B4B     		ldr	r3, .L2
+  39 0006 1C60     		str	r4, [r3]
+ 205:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_I2C_CTRL_REG = HPI_IF_I2C_DEFAULT_I2C_CTRL;
+  40              		.loc 1 205 0
+  41 0008 1B4A     		ldr	r2, .L2+4
+  42 000a 1C4B     		ldr	r3, .L2+8
+  43 000c 1A60     		str	r2, [r3]
+ 206:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 207:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Configure RX direction */
+ 208:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_RX_CTRL_REG      = HPI_IF_I2C_DEFAULT_RX_CTRL;
+  44              		.loc 1 208 0
+  45 000e 1C4B     		ldr	r3, .L2+12
+  46 0010 1C4A     		ldr	r2, .L2+16
+  47 0012 1360     		str	r3, [r2]
+ 209:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_RX_FIFO_CTRL_REG = HPI_IF_I2C_DEFAULT_RX_FIFO_CTRL;
+  48              		.loc 1 209 0
+  49 0014 1C4A     		ldr	r2, .L2+20
+  50 0016 1460     		str	r4, [r2]
+ 210:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 211:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Set default address and mask */
+ 212:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_RX_MATCH_REG     = HPI_IF_I2C_DEFAULT_RX_MATCH;
+  51              		.loc 1 212 0
+  52 0018 1C49     		ldr	r1, .L2+24
+  53 001a 1D4A     		ldr	r2, .L2+28
+  54 001c 1160     		str	r1, [r2]
+ 213:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 214:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Configure TX direction */
+ 215:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_TX_CTRL_REG      = HPI_IF_I2C_DEFAULT_TX_CTRL;
+  55              		.loc 1 215 0
+  56 001e 1D4A     		ldr	r2, .L2+32
+  57 0020 1360     		str	r3, [r2]
+ 216:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_TX_FIFO_CTRL_REG = HPI_IF_I2C_DEFAULT_TX_FIFO_CTRL;
+  58              		.loc 1 216 0
+  59 0022 1D4B     		ldr	r3, .L2+36
+  60 0024 1C60     		str	r4, [r3]
+ 217:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 218:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Configure interrupt with I2C handler but do not enable it */
+ 219:Generated_Source\PSoC4/HPI_IF_I2C.c ****         CyIntDisable    (HPI_IF_ISR_NUMBER);
+  61              		.loc 1 219 0
+  62 0026 0A20     		movs	r0, #10
+  63 0028 FFF7FEFF 		bl	CyIntDisable
+  64              	.LVL0:
+ 220:Generated_Source\PSoC4/HPI_IF_I2C.c ****         CyIntSetPriority(HPI_IF_ISR_NUMBER, HPI_IF_ISR_PRIORITY);
+  65              		.loc 1 220 0
+ARM GAS  e:\temp\cczESMha.s 			page 6
+
+
+  66 002c 0321     		movs	r1, #3
+  67 002e 0A20     		movs	r0, #10
+  68 0030 FFF7FEFF 		bl	CyIntSetPriority
+  69              	.LVL1:
+ 221:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #if(!HPI_IF_I2C_EXTERN_INTR_HANDLER)
+ 222:Generated_Source\PSoC4/HPI_IF_I2C.c ****         (void) CyIntSetVector(HPI_IF_ISR_NUMBER, &HPI_IF_I2C_ISR);
+  70              		.loc 1 222 0
+  71 0034 1949     		ldr	r1, .L2+40
+  72 0036 0A20     		movs	r0, #10
+  73 0038 FFF7FEFF 		bl	CyIntSetVector
+  74              	.LVL2:
+ 223:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #endif /* (HPI_IF_I2C_EXTERN_INTR_HANDLER) */
+ 224:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 225:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Configure interrupt sources */
+ 226:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #if(!HPI_IF_CY_SCBIP_V1)
+ 227:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_INTR_SPI_EC_MASK_REG = HPI_IF_I2C_DEFAULT_INTR_SPI_EC_MASK;
+  75              		.loc 1 227 0
+  76 003c 184B     		ldr	r3, .L2+44
+  77 003e 1C60     		str	r4, [r3]
+ 228:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #endif /* (!HPI_IF_CY_SCBIP_V1) */
+ 229:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 230:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_INTR_I2C_EC_MASK_REG = HPI_IF_I2C_DEFAULT_INTR_I2C_EC_MASK;
+  78              		.loc 1 230 0
+  79 0040 184B     		ldr	r3, .L2+48
+  80 0042 1C60     		str	r4, [r3]
+ 231:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_INTR_SLAVE_MASK_REG  = HPI_IF_I2C_DEFAULT_INTR_SLAVE_MASK;
+  81              		.loc 1 231 0
+  82 0044 4C22     		movs	r2, #76
+  83 0046 FF32     		adds	r2, r2, #255
+  84 0048 174B     		ldr	r3, .L2+52
+  85 004a 1A60     		str	r2, [r3]
+ 232:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_INTR_MASTER_MASK_REG = HPI_IF_I2C_DEFAULT_INTR_MASTER_MASK;
+  86              		.loc 1 232 0
+  87 004c 174B     		ldr	r3, .L2+56
+  88 004e 1C60     		str	r4, [r3]
+ 233:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_INTR_RX_MASK_REG     = HPI_IF_I2C_DEFAULT_INTR_RX_MASK;
+  89              		.loc 1 233 0
+  90 0050 174B     		ldr	r3, .L2+60
+  91 0052 1C60     		str	r4, [r3]
+ 234:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_INTR_TX_MASK_REG     = HPI_IF_I2C_DEFAULT_INTR_TX_MASK;
+  92              		.loc 1 234 0
+  93 0054 174B     		ldr	r3, .L2+64
+  94 0056 1C60     		str	r4, [r3]
+ 235:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 236:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Configure global variables */
+ 237:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_state = HPI_IF_I2C_FSM_IDLE;
+  95              		.loc 1 237 0
+  96 0058 3C3A     		subs	r2, r2, #60
+  97 005a FF3A     		subs	r2, r2, #255
+  98 005c 164B     		ldr	r3, .L2+68
+  99 005e 1A70     		strb	r2, [r3]
+ 238:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 239:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #if(HPI_IF_I2C_SLAVE)
+ 240:Generated_Source\PSoC4/HPI_IF_I2C.c ****         /* Internal slave variable */
+ 241:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_slStatus        = 0u;
+ 100              		.loc 1 241 0
+ 101 0060 164B     		ldr	r3, .L2+72
+ARM GAS  e:\temp\cczESMha.s 			page 7
+
+
+ 102 0062 1C70     		strb	r4, [r3]
+ 242:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_slRdBufIndex    = 0u;
+ 103              		.loc 1 242 0
+ 104 0064 164B     		ldr	r3, .L2+76
+ 105 0066 1C60     		str	r4, [r3]
+ 243:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_slWrBufIndex    = 0u;
+ 106              		.loc 1 243 0
+ 107 0068 164B     		ldr	r3, .L2+80
+ 108 006a 1C60     		str	r4, [r3]
+ 244:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_slOverFlowCount = 0u;
+ 109              		.loc 1 244 0
+ 110 006c 164B     		ldr	r3, .L2+84
+ 111 006e 1C70     		strb	r4, [r3]
+ 245:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #endif /* (HPI_IF_I2C_SLAVE) */
+ 246:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 247:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #if(HPI_IF_I2C_MASTER)
+ 248:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Internal master variable */
+ 249:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_mstrStatus     = 0u;
+ 250:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_mstrRdBufIndex = 0u;
+ 251:Generated_Source\PSoC4/HPI_IF_I2C.c ****         HPI_IF_mstrWrBufIndex = 0u;
+ 252:Generated_Source\PSoC4/HPI_IF_I2C.c ****     #endif /* (HPI_IF_I2C_MASTER) */
+ 253:Generated_Source\PSoC4/HPI_IF_I2C.c ****     }
+ 112              		.loc 1 253 0
+ 113              		@ sp needed
+ 114 0070 10BD     		pop	{r4, pc}
+ 115              	.L3:
+ 116 0072 C046     		.align	2
+ 117              	.L2:
+ 118 0074 00000540 		.word	1074069504
+ 119 0078 E9080040 		.word	1073744105
+ 120 007c 60000540 		.word	1074069600
+ 121 0080 07010080 		.word	-2147483385
+ 122 0084 00030540 		.word	1074070272
+ 123 0088 04030540 		.word	1074070276
+ 124 008c 1000FE00 		.word	16646160
+ 125 0090 10030540 		.word	1074070288
+ 126 0094 00020540 		.word	1074070016
+ 127 0098 04020540 		.word	1074070020
+ 128 009c 00000000 		.word	HPI_IF_I2C_ISR
+ 129 00a0 C80E0540 		.word	1074073288
+ 130 00a4 880E0540 		.word	1074073224
+ 131 00a8 480F0540 		.word	1074073416
+ 132 00ac 080F0540 		.word	1074073352
+ 133 00b0 C80F0540 		.word	1074073544
+ 134 00b4 880F0540 		.word	1074073480
+ 135 00b8 00000000 		.word	HPI_IF_state
+ 136 00bc 00000000 		.word	HPI_IF_slStatus
+ 137 00c0 00000000 		.word	HPI_IF_slRdBufIndex
+ 138 00c4 00000000 		.word	HPI_IF_slWrBufIndex
+ 139 00c8 00000000 		.word	HPI_IF_slOverFlowCount
+ 140              		.cfi_endproc
+ 141              	.LFE0:
+ 142              		.size	HPI_IF_I2CInit, .-HPI_IF_I2CInit
+ 143              		.section	.text.HPI_IF_I2CStop,"ax",%progbits
+ 144              		.align	2
+ 145              		.global	HPI_IF_I2CStop
+ 146              		.code	16
+ARM GAS  e:\temp\cczESMha.s 			page 8
+
+
+ 147              		.thumb_func
+ 148              		.type	HPI_IF_I2CStop, %function
+ 149              	HPI_IF_I2CStop:
+ 150              	.LFB1:
+ 254:Generated_Source\PSoC4/HPI_IF_I2C.c **** #endif /* (HPI_IF_SCB_MODE_UNCONFIG_CONST_CFG) */
+ 255:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 256:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 257:Generated_Source\PSoC4/HPI_IF_I2C.c **** /*******************************************************************************
+ 258:Generated_Source\PSoC4/HPI_IF_I2C.c **** * Function Name: HPI_IF_I2CStop
+ 259:Generated_Source\PSoC4/HPI_IF_I2C.c **** ****************************************************************************//**
+ 260:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+ 261:Generated_Source\PSoC4/HPI_IF_I2C.c **** *  Resets the I2C FSM into the default state.
+ 262:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+ 263:Generated_Source\PSoC4/HPI_IF_I2C.c **** *******************************************************************************/
+ 264:Generated_Source\PSoC4/HPI_IF_I2C.c **** void HPI_IF_I2CStop(void)
+ 265:Generated_Source\PSoC4/HPI_IF_I2C.c **** {
+ 151              		.loc 1 265 0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 0
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              		@ link register save eliminated.
+ 266:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Clear command registers because they keep assigned value after IP block was disabled */
+ 267:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_I2C_MASTER_CMD_REG = 0u;
+ 156              		.loc 1 267 0
+ 157 0000 0023     		movs	r3, #0
+ 158 0002 044A     		ldr	r2, .L5
+ 159 0004 1360     		str	r3, [r2]
+ 268:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_I2C_SLAVE_CMD_REG  = 0u;
+ 160              		.loc 1 268 0
+ 161 0006 044A     		ldr	r2, .L5+4
+ 162 0008 1360     		str	r3, [r2]
+ 269:Generated_Source\PSoC4/HPI_IF_I2C.c ****     
+ 270:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_state = HPI_IF_I2C_FSM_IDLE;
+ 163              		.loc 1 270 0
+ 164 000a 1022     		movs	r2, #16
+ 165 000c 034B     		ldr	r3, .L5+8
+ 166 000e 1A70     		strb	r2, [r3]
+ 271:Generated_Source\PSoC4/HPI_IF_I2C.c **** }
+ 167              		.loc 1 271 0
+ 168              		@ sp needed
+ 169 0010 7047     		bx	lr
+ 170              	.L6:
+ 171 0012 C046     		.align	2
+ 172              	.L5:
+ 173 0014 68000540 		.word	1074069608
+ 174 0018 6C000540 		.word	1074069612
+ 175 001c 00000000 		.word	HPI_IF_state
+ 176              		.cfi_endproc
+ 177              	.LFE1:
+ 178              		.size	HPI_IF_I2CStop, .-HPI_IF_I2CStop
+ 179              		.section	.text.HPI_IF_I2CFwBlockReset,"ax",%progbits
+ 180              		.align	2
+ 181              		.global	HPI_IF_I2CFwBlockReset
+ 182              		.code	16
+ 183              		.thumb_func
+ 184              		.type	HPI_IF_I2CFwBlockReset, %function
+ 185              	HPI_IF_I2CFwBlockReset:
+ARM GAS  e:\temp\cczESMha.s 			page 9
+
+
+ 186              	.LFB2:
+ 272:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 273:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 274:Generated_Source\PSoC4/HPI_IF_I2C.c **** /*******************************************************************************
+ 275:Generated_Source\PSoC4/HPI_IF_I2C.c **** * Function Name: HPI_IF_I2CFwBlockReset
+ 276:Generated_Source\PSoC4/HPI_IF_I2C.c **** ****************************************************************************//**
+ 277:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+ 278:Generated_Source\PSoC4/HPI_IF_I2C.c **** * Resets the scb IP block and I2C into the known state.
+ 279:Generated_Source\PSoC4/HPI_IF_I2C.c **** *
+ 280:Generated_Source\PSoC4/HPI_IF_I2C.c **** *******************************************************************************/
+ 281:Generated_Source\PSoC4/HPI_IF_I2C.c **** void HPI_IF_I2CFwBlockReset(void)
+ 282:Generated_Source\PSoC4/HPI_IF_I2C.c **** {
+ 187              		.loc 1 282 0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 0
+ 190              		@ frame_needed = 0, uses_anonymous_args = 0
+ 191 0000 10B5     		push	{r4, lr}
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 4, -8
+ 194              		.cfi_offset 14, -4
+ 283:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Disable scb IP: stop respond to I2C traffic */
+ 284:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_CTRL_REG &= (uint32) ~HPI_IF_CTRL_ENABLED;
+ 195              		.loc 1 284 0
+ 196 0002 0E4A     		ldr	r2, .L8
+ 197 0004 1368     		ldr	r3, [r2]
+ 198 0006 5B00     		lsls	r3, r3, #1
+ 199 0008 5B08     		lsrs	r3, r3, #1
+ 200 000a 1360     		str	r3, [r2]
+ 285:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 286:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Clear command registers they are not cleared after scb IP is disabled */
+ 287:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_I2C_MASTER_CMD_REG = 0u;
+ 201              		.loc 1 287 0
+ 202 000c 0023     		movs	r3, #0
+ 203 000e 0C49     		ldr	r1, .L8+4
+ 204 0010 0B60     		str	r3, [r1]
+ 288:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_I2C_SLAVE_CMD_REG  = 0u;
+ 205              		.loc 1 288 0
+ 206 0012 0C49     		ldr	r1, .L8+8
+ 207 0014 0B60     		str	r3, [r1]
+ 289:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 290:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_DISABLE_AUTO_DATA;
+ 208              		.loc 1 290 0
+ 209 0016 0C48     		ldr	r0, .L8+12
+ 210 0018 0468     		ldr	r4, [r0]
+ 211 001a 0C49     		ldr	r1, .L8+16
+ 212 001c 2140     		ands	r1, r4
+ 213 001e 0160     		str	r1, [r0]
+ 291:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 292:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_SetTxInterruptMode(HPI_IF_NO_INTR_SOURCES);
+ 214              		.loc 1 292 0
+ 215 0020 0B49     		ldr	r1, .L8+20
+ 216 0022 0B60     		str	r3, [r1]
+ 293:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_SetRxInterruptMode(HPI_IF_NO_INTR_SOURCES);
+ 217              		.loc 1 293 0
+ 218 0024 0B49     		ldr	r1, .L8+24
+ 219 0026 0B60     		str	r3, [r1]
+ 294:Generated_Source\PSoC4/HPI_IF_I2C.c ****     
+ARM GAS  e:\temp\cczESMha.s 			page 10
+
+
+ 295:Generated_Source\PSoC4/HPI_IF_I2C.c **** #if(HPI_IF_CY_SCBIP_V0)
+ 296:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Clear interrupt sources as they are not cleared after scb IP is disabled */
+ 297:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_ClearTxInterruptSource    (HPI_IF_INTR_TX_ALL);
+ 298:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_ClearRxInterruptSource    (HPI_IF_INTR_RX_ALL);
+ 299:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_ClearSlaveInterruptSource (HPI_IF_INTR_SLAVE_ALL);
+ 300:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_ClearMasterInterruptSource(HPI_IF_INTR_MASTER_ALL);
+ 301:Generated_Source\PSoC4/HPI_IF_I2C.c **** #endif /* (HPI_IF_CY_SCBIP_V0) */
+ 302:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 303:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_state = HPI_IF_I2C_FSM_IDLE;
+ 220              		.loc 1 303 0
+ 221 0028 1021     		movs	r1, #16
+ 222 002a 0B4B     		ldr	r3, .L8+28
+ 223 002c 1970     		strb	r1, [r3]
+ 304:Generated_Source\PSoC4/HPI_IF_I2C.c **** 
+ 305:Generated_Source\PSoC4/HPI_IF_I2C.c ****     /* Enable scb IP: start respond to I2C traffic */
+ 306:Generated_Source\PSoC4/HPI_IF_I2C.c ****     HPI_IF_CTRL_REG |= (uint32) HPI_IF_CTRL_ENABLED;
+ 224              		.loc 1 306 0
+ 225 002e 1368     		ldr	r3, [r2]
+ 226 0030 8021     		movs	r1, #128
+ 227 0032 0906     		lsls	r1, r1, #24
+ 228 0034 0B43     		orrs	r3, r1
+ 229 0036 1360     		str	r3, [r2]
+ 307:Generated_Source\PSoC4/HPI_IF_I2C.c **** }
+ 230              		.loc 1 307 0
+ 231              		@ sp needed
+ 232 0038 10BD     		pop	{r4, pc}
+ 233              	.L9:
+ 234 003a C046     		.align	2
+ 235              	.L8:
+ 236 003c 00000540 		.word	1074069504
+ 237 0040 68000540 		.word	1074069608
+ 238 0044 6C000540 		.word	1074069612
+ 239 0048 60000540 		.word	1074069600
+ 240 004c FF5CFFFF 		.word	-41729
+ 241 0050 880F0540 		.word	1074073480
+ 242 0054 C80F0540 		.word	1074073544
+ 243 0058 00000000 		.word	HPI_IF_state
+ 244              		.cfi_endproc
+ 245              	.LFE2:
+ 246              		.size	HPI_IF_I2CFwBlockReset, .-HPI_IF_I2CFwBlockReset
+ 247              		.comm	HPI_IF_state,1,1
+ 248              		.text
+ 249              	.Letext0:
+ 250              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 251              		.file 3 "Generated_Source\\PSoC4\\HPI_IF_I2C_PVT.h"
+ 252              		.file 4 "Generated_Source\\PSoC4/CyLib.h"
+ 253              		.section	.debug_info,"",%progbits
+ 254              	.Ldebug_info0:
+ 255 0000 8B010000 		.4byte	0x18b
+ 256 0004 0400     		.2byte	0x4
+ 257 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 258 000a 04       		.byte	0x4
+ 259 000b 01       		.uleb128 0x1
+ 260 000c 18020000 		.4byte	.LASF27
+ 261 0010 0C       		.byte	0xc
+ 262 0011 92000000 		.4byte	.LASF28
+ 263 0015 44010000 		.4byte	.LASF29
+ARM GAS  e:\temp\cczESMha.s 			page 11
+
+
+ 264 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 265 001d 00000000 		.4byte	0
+ 266 0021 00000000 		.4byte	.Ldebug_line0
+ 267 0025 02       		.uleb128 0x2
+ 268 0026 01       		.byte	0x1
+ 269 0027 06       		.byte	0x6
+ 270 0028 0C020000 		.4byte	.LASF0
+ 271 002c 02       		.uleb128 0x2
+ 272 002d 01       		.byte	0x1
+ 273 002e 08       		.byte	0x8
+ 274 002f 3D000000 		.4byte	.LASF1
+ 275 0033 02       		.uleb128 0x2
+ 276 0034 02       		.byte	0x2
+ 277 0035 05       		.byte	0x5
+ 278 0036 C9010000 		.4byte	.LASF2
+ 279 003a 02       		.uleb128 0x2
+ 280 003b 02       		.byte	0x2
+ 281 003c 07       		.byte	0x7
+ 282 003d 24000000 		.4byte	.LASF3
+ 283 0041 02       		.uleb128 0x2
+ 284 0042 04       		.byte	0x4
+ 285 0043 05       		.byte	0x5
+ 286 0044 E0010000 		.4byte	.LASF4
+ 287 0048 02       		.uleb128 0x2
+ 288 0049 04       		.byte	0x4
+ 289 004a 07       		.byte	0x7
+ 290 004b 4B000000 		.4byte	.LASF5
+ 291 004f 02       		.uleb128 0x2
+ 292 0050 08       		.byte	0x8
+ 293 0051 05       		.byte	0x5
+ 294 0052 31010000 		.4byte	.LASF6
+ 295 0056 02       		.uleb128 0x2
+ 296 0057 08       		.byte	0x8
+ 297 0058 07       		.byte	0x7
+ 298 0059 E9000000 		.4byte	.LASF7
+ 299 005d 03       		.uleb128 0x3
+ 300 005e 04       		.byte	0x4
+ 301 005f 05       		.byte	0x5
+ 302 0060 696E7400 		.ascii	"int\000"
+ 303 0064 02       		.uleb128 0x2
+ 304 0065 04       		.byte	0x4
+ 305 0066 07       		.byte	0x7
+ 306 0067 CD000000 		.4byte	.LASF8
+ 307 006b 04       		.uleb128 0x4
+ 308 006c 5D000000 		.4byte	.LASF9
+ 309 0070 02       		.byte	0x2
+ 310 0071 E401     		.2byte	0x1e4
+ 311 0073 2C000000 		.4byte	0x2c
+ 312 0077 04       		.uleb128 0x4
+ 313 0078 C6000000 		.4byte	.LASF10
+ 314 007c 02       		.byte	0x2
+ 315 007d E601     		.2byte	0x1e6
+ 316 007f 48000000 		.4byte	0x48
+ 317 0083 02       		.uleb128 0x2
+ 318 0084 04       		.byte	0x4
+ 319 0085 04       		.byte	0x4
+ 320 0086 37000000 		.4byte	.LASF11
+ARM GAS  e:\temp\cczESMha.s 			page 12
+
+
+ 321 008a 02       		.uleb128 0x2
+ 322 008b 08       		.byte	0x8
+ 323 008c 04       		.byte	0x4
+ 324 008d 77000000 		.4byte	.LASF12
+ 325 0091 02       		.uleb128 0x2
+ 326 0092 01       		.byte	0x1
+ 327 0093 08       		.byte	0x8
+ 328 0094 3F010000 		.4byte	.LASF13
+ 329 0098 05       		.uleb128 0x5
+ 330 0099 6B000000 		.4byte	0x6b
+ 331 009d 04       		.uleb128 0x4
+ 332 009e 0F000000 		.4byte	.LASF14
+ 333 00a2 02       		.byte	0x2
+ 334 00a3 9002     		.2byte	0x290
+ 335 00a5 A9000000 		.4byte	0xa9
+ 336 00a9 05       		.uleb128 0x5
+ 337 00aa 77000000 		.4byte	0x77
+ 338 00ae 02       		.uleb128 0x2
+ 339 00af 08       		.byte	0x8
+ 340 00b0 04       		.byte	0x4
+ 341 00b1 00020000 		.4byte	.LASF15
+ 342 00b5 02       		.uleb128 0x2
+ 343 00b6 04       		.byte	0x4
+ 344 00b7 07       		.byte	0x7
+ 345 00b8 28010000 		.4byte	.LASF16
+ 346 00bc 06       		.uleb128 0x6
+ 347 00bd DA000000 		.4byte	.LASF30
+ 348 00c1 01       		.byte	0x1
+ 349 00c2 C1       		.byte	0xc1
+ 350 00c3 00000000 		.4byte	.LFB0
+ 351 00c7 CC000000 		.4byte	.LFE0-.LFB0
+ 352 00cb 01       		.uleb128 0x1
+ 353 00cc 9C       		.byte	0x9c
+ 354 00cd 0C010000 		.4byte	0x10c
+ 355 00d1 07       		.uleb128 0x7
+ 356 00d2 2C000000 		.4byte	.LVL0
+ 357 00d6 6D010000 		.4byte	0x16d
+ 358 00da E4000000 		.4byte	0xe4
+ 359 00de 08       		.uleb128 0x8
+ 360 00df 01       		.uleb128 0x1
+ 361 00e0 50       		.byte	0x50
+ 362 00e1 01       		.uleb128 0x1
+ 363 00e2 3A       		.byte	0x3a
+ 364 00e3 00       		.byte	0
+ 365 00e4 07       		.uleb128 0x7
+ 366 00e5 34000000 		.4byte	.LVL1
+ 367 00e9 78010000 		.4byte	0x178
+ 368 00ed FC000000 		.4byte	0xfc
+ 369 00f1 08       		.uleb128 0x8
+ 370 00f2 01       		.uleb128 0x1
+ 371 00f3 50       		.byte	0x50
+ 372 00f4 01       		.uleb128 0x1
+ 373 00f5 3A       		.byte	0x3a
+ 374 00f6 08       		.uleb128 0x8
+ 375 00f7 01       		.uleb128 0x1
+ 376 00f8 51       		.byte	0x51
+ 377 00f9 01       		.uleb128 0x1
+ARM GAS  e:\temp\cczESMha.s 			page 13
+
+
+ 378 00fa 33       		.byte	0x33
+ 379 00fb 00       		.byte	0
+ 380 00fc 09       		.uleb128 0x9
+ 381 00fd 3C000000 		.4byte	.LVL2
+ 382 0101 83010000 		.4byte	0x183
+ 383 0105 08       		.uleb128 0x8
+ 384 0106 01       		.uleb128 0x1
+ 385 0107 50       		.byte	0x50
+ 386 0108 01       		.uleb128 0x1
+ 387 0109 3A       		.byte	0x3a
+ 388 010a 00       		.byte	0
+ 389 010b 00       		.byte	0
+ 390 010c 0A       		.uleb128 0xa
+ 391 010d 00000000 		.4byte	.LASF17
+ 392 0111 01       		.byte	0x1
+ 393 0112 0801     		.2byte	0x108
+ 394 0114 00000000 		.4byte	.LFB1
+ 395 0118 20000000 		.4byte	.LFE1-.LFB1
+ 396 011c 01       		.uleb128 0x1
+ 397 011d 9C       		.byte	0x9c
+ 398 011e 0A       		.uleb128 0xa
+ 399 011f 11010000 		.4byte	.LASF18
+ 400 0123 01       		.byte	0x1
+ 401 0124 1901     		.2byte	0x119
+ 402 0126 00000000 		.4byte	.LFB2
+ 403 012a 5C000000 		.4byte	.LFE2-.LFB2
+ 404 012e 01       		.uleb128 0x1
+ 405 012f 9C       		.byte	0x9c
+ 406 0130 0B       		.uleb128 0xb
+ 407 0131 D3010000 		.4byte	.LASF19
+ 408 0135 01       		.byte	0x1
+ 409 0136 1B       		.byte	0x1b
+ 410 0137 98000000 		.4byte	0x98
+ 411 013b 05       		.uleb128 0x5
+ 412 013c 03       		.byte	0x3
+ 413 013d 00000000 		.4byte	HPI_IF_state
+ 414 0141 0C       		.uleb128 0xc
+ 415 0142 B6000000 		.4byte	.LASF20
+ 416 0146 03       		.byte	0x3
+ 417 0147 21       		.byte	0x21
+ 418 0148 98000000 		.4byte	0x98
+ 419 014c 0C       		.uleb128 0xc
+ 420 014d 7E000000 		.4byte	.LASF21
+ 421 0151 03       		.byte	0x3
+ 422 0152 26       		.byte	0x26
+ 423 0153 A9000000 		.4byte	0xa9
+ 424 0157 0C       		.uleb128 0xc
+ 425 0158 63000000 		.4byte	.LASF22
+ 426 015c 03       		.byte	0x3
+ 427 015d 2B       		.byte	0x2b
+ 428 015e A9000000 		.4byte	0xa9
+ 429 0162 0C       		.uleb128 0xc
+ 430 0163 E9010000 		.4byte	.LASF23
+ 431 0167 03       		.byte	0x3
+ 432 0168 2D       		.byte	0x2d
+ 433 0169 98000000 		.4byte	0x98
+ 434 016d 0D       		.uleb128 0xd
+ARM GAS  e:\temp\cczESMha.s 			page 14
+
+
+ 435 016e BC010000 		.4byte	.LASF24
+ 436 0172 BC010000 		.4byte	.LASF24
+ 437 0176 04       		.byte	0x4
+ 438 0177 C5       		.byte	0xc5
+ 439 0178 0D       		.uleb128 0xd
+ 440 0179 00010000 		.4byte	.LASF25
+ 441 017d 00010000 		.4byte	.LASF25
+ 442 0181 04       		.byte	0x4
+ 443 0182 C0       		.byte	0xc0
+ 444 0183 0D       		.uleb128 0xd
+ 445 0184 15000000 		.4byte	.LASF26
+ 446 0188 15000000 		.4byte	.LASF26
+ 447 018c 04       		.byte	0x4
+ 448 018d BD       		.byte	0xbd
+ 449 018e 00       		.byte	0
+ 450              		.section	.debug_abbrev,"",%progbits
+ 451              	.Ldebug_abbrev0:
+ 452 0000 01       		.uleb128 0x1
+ 453 0001 11       		.uleb128 0x11
+ 454 0002 01       		.byte	0x1
+ 455 0003 25       		.uleb128 0x25
+ 456 0004 0E       		.uleb128 0xe
+ 457 0005 13       		.uleb128 0x13
+ 458 0006 0B       		.uleb128 0xb
+ 459 0007 03       		.uleb128 0x3
+ 460 0008 0E       		.uleb128 0xe
+ 461 0009 1B       		.uleb128 0x1b
+ 462 000a 0E       		.uleb128 0xe
+ 463 000b 55       		.uleb128 0x55
+ 464 000c 17       		.uleb128 0x17
+ 465 000d 11       		.uleb128 0x11
+ 466 000e 01       		.uleb128 0x1
+ 467 000f 10       		.uleb128 0x10
+ 468 0010 17       		.uleb128 0x17
+ 469 0011 00       		.byte	0
+ 470 0012 00       		.byte	0
+ 471 0013 02       		.uleb128 0x2
+ 472 0014 24       		.uleb128 0x24
+ 473 0015 00       		.byte	0
+ 474 0016 0B       		.uleb128 0xb
+ 475 0017 0B       		.uleb128 0xb
+ 476 0018 3E       		.uleb128 0x3e
+ 477 0019 0B       		.uleb128 0xb
+ 478 001a 03       		.uleb128 0x3
+ 479 001b 0E       		.uleb128 0xe
+ 480 001c 00       		.byte	0
+ 481 001d 00       		.byte	0
+ 482 001e 03       		.uleb128 0x3
+ 483 001f 24       		.uleb128 0x24
+ 484 0020 00       		.byte	0
+ 485 0021 0B       		.uleb128 0xb
+ 486 0022 0B       		.uleb128 0xb
+ 487 0023 3E       		.uleb128 0x3e
+ 488 0024 0B       		.uleb128 0xb
+ 489 0025 03       		.uleb128 0x3
+ 490 0026 08       		.uleb128 0x8
+ 491 0027 00       		.byte	0
+ARM GAS  e:\temp\cczESMha.s 			page 15
+
+
+ 492 0028 00       		.byte	0
+ 493 0029 04       		.uleb128 0x4
+ 494 002a 16       		.uleb128 0x16
+ 495 002b 00       		.byte	0
+ 496 002c 03       		.uleb128 0x3
+ 497 002d 0E       		.uleb128 0xe
+ 498 002e 3A       		.uleb128 0x3a
+ 499 002f 0B       		.uleb128 0xb
+ 500 0030 3B       		.uleb128 0x3b
+ 501 0031 05       		.uleb128 0x5
+ 502 0032 49       		.uleb128 0x49
+ 503 0033 13       		.uleb128 0x13
+ 504 0034 00       		.byte	0
+ 505 0035 00       		.byte	0
+ 506 0036 05       		.uleb128 0x5
+ 507 0037 35       		.uleb128 0x35
+ 508 0038 00       		.byte	0
+ 509 0039 49       		.uleb128 0x49
+ 510 003a 13       		.uleb128 0x13
+ 511 003b 00       		.byte	0
+ 512 003c 00       		.byte	0
+ 513 003d 06       		.uleb128 0x6
+ 514 003e 2E       		.uleb128 0x2e
+ 515 003f 01       		.byte	0x1
+ 516 0040 3F       		.uleb128 0x3f
+ 517 0041 19       		.uleb128 0x19
+ 518 0042 03       		.uleb128 0x3
+ 519 0043 0E       		.uleb128 0xe
+ 520 0044 3A       		.uleb128 0x3a
+ 521 0045 0B       		.uleb128 0xb
+ 522 0046 3B       		.uleb128 0x3b
+ 523 0047 0B       		.uleb128 0xb
+ 524 0048 27       		.uleb128 0x27
+ 525 0049 19       		.uleb128 0x19
+ 526 004a 11       		.uleb128 0x11
+ 527 004b 01       		.uleb128 0x1
+ 528 004c 12       		.uleb128 0x12
+ 529 004d 06       		.uleb128 0x6
+ 530 004e 40       		.uleb128 0x40
+ 531 004f 18       		.uleb128 0x18
+ 532 0050 9742     		.uleb128 0x2117
+ 533 0052 19       		.uleb128 0x19
+ 534 0053 01       		.uleb128 0x1
+ 535 0054 13       		.uleb128 0x13
+ 536 0055 00       		.byte	0
+ 537 0056 00       		.byte	0
+ 538 0057 07       		.uleb128 0x7
+ 539 0058 898201   		.uleb128 0x4109
+ 540 005b 01       		.byte	0x1
+ 541 005c 11       		.uleb128 0x11
+ 542 005d 01       		.uleb128 0x1
+ 543 005e 31       		.uleb128 0x31
+ 544 005f 13       		.uleb128 0x13
+ 545 0060 01       		.uleb128 0x1
+ 546 0061 13       		.uleb128 0x13
+ 547 0062 00       		.byte	0
+ 548 0063 00       		.byte	0
+ARM GAS  e:\temp\cczESMha.s 			page 16
+
+
+ 549 0064 08       		.uleb128 0x8
+ 550 0065 8A8201   		.uleb128 0x410a
+ 551 0068 00       		.byte	0
+ 552 0069 02       		.uleb128 0x2
+ 553 006a 18       		.uleb128 0x18
+ 554 006b 9142     		.uleb128 0x2111
+ 555 006d 18       		.uleb128 0x18
+ 556 006e 00       		.byte	0
+ 557 006f 00       		.byte	0
+ 558 0070 09       		.uleb128 0x9
+ 559 0071 898201   		.uleb128 0x4109
+ 560 0074 01       		.byte	0x1
+ 561 0075 11       		.uleb128 0x11
+ 562 0076 01       		.uleb128 0x1
+ 563 0077 31       		.uleb128 0x31
+ 564 0078 13       		.uleb128 0x13
+ 565 0079 00       		.byte	0
+ 566 007a 00       		.byte	0
+ 567 007b 0A       		.uleb128 0xa
+ 568 007c 2E       		.uleb128 0x2e
+ 569 007d 00       		.byte	0
+ 570 007e 3F       		.uleb128 0x3f
+ 571 007f 19       		.uleb128 0x19
+ 572 0080 03       		.uleb128 0x3
+ 573 0081 0E       		.uleb128 0xe
+ 574 0082 3A       		.uleb128 0x3a
+ 575 0083 0B       		.uleb128 0xb
+ 576 0084 3B       		.uleb128 0x3b
+ 577 0085 05       		.uleb128 0x5
+ 578 0086 27       		.uleb128 0x27
+ 579 0087 19       		.uleb128 0x19
+ 580 0088 11       		.uleb128 0x11
+ 581 0089 01       		.uleb128 0x1
+ 582 008a 12       		.uleb128 0x12
+ 583 008b 06       		.uleb128 0x6
+ 584 008c 40       		.uleb128 0x40
+ 585 008d 18       		.uleb128 0x18
+ 586 008e 9742     		.uleb128 0x2117
+ 587 0090 19       		.uleb128 0x19
+ 588 0091 00       		.byte	0
+ 589 0092 00       		.byte	0
+ 590 0093 0B       		.uleb128 0xb
+ 591 0094 34       		.uleb128 0x34
+ 592 0095 00       		.byte	0
+ 593 0096 03       		.uleb128 0x3
+ 594 0097 0E       		.uleb128 0xe
+ 595 0098 3A       		.uleb128 0x3a
+ 596 0099 0B       		.uleb128 0xb
+ 597 009a 3B       		.uleb128 0x3b
+ 598 009b 0B       		.uleb128 0xb
+ 599 009c 49       		.uleb128 0x49
+ 600 009d 13       		.uleb128 0x13
+ 601 009e 3F       		.uleb128 0x3f
+ 602 009f 19       		.uleb128 0x19
+ 603 00a0 02       		.uleb128 0x2
+ 604 00a1 18       		.uleb128 0x18
+ 605 00a2 00       		.byte	0
+ARM GAS  e:\temp\cczESMha.s 			page 17
+
+
+ 606 00a3 00       		.byte	0
+ 607 00a4 0C       		.uleb128 0xc
+ 608 00a5 34       		.uleb128 0x34
+ 609 00a6 00       		.byte	0
+ 610 00a7 03       		.uleb128 0x3
+ 611 00a8 0E       		.uleb128 0xe
+ 612 00a9 3A       		.uleb128 0x3a
+ 613 00aa 0B       		.uleb128 0xb
+ 614 00ab 3B       		.uleb128 0x3b
+ 615 00ac 0B       		.uleb128 0xb
+ 616 00ad 49       		.uleb128 0x49
+ 617 00ae 13       		.uleb128 0x13
+ 618 00af 3F       		.uleb128 0x3f
+ 619 00b0 19       		.uleb128 0x19
+ 620 00b1 3C       		.uleb128 0x3c
+ 621 00b2 19       		.uleb128 0x19
+ 622 00b3 00       		.byte	0
+ 623 00b4 00       		.byte	0
+ 624 00b5 0D       		.uleb128 0xd
+ 625 00b6 2E       		.uleb128 0x2e
+ 626 00b7 00       		.byte	0
+ 627 00b8 3F       		.uleb128 0x3f
+ 628 00b9 19       		.uleb128 0x19
+ 629 00ba 3C       		.uleb128 0x3c
+ 630 00bb 19       		.uleb128 0x19
+ 631 00bc 6E       		.uleb128 0x6e
+ 632 00bd 0E       		.uleb128 0xe
+ 633 00be 03       		.uleb128 0x3
+ 634 00bf 0E       		.uleb128 0xe
+ 635 00c0 3A       		.uleb128 0x3a
+ 636 00c1 0B       		.uleb128 0xb
+ 637 00c2 3B       		.uleb128 0x3b
+ 638 00c3 0B       		.uleb128 0xb
+ 639 00c4 00       		.byte	0
+ 640 00c5 00       		.byte	0
+ 641 00c6 00       		.byte	0
+ 642              		.section	.debug_aranges,"",%progbits
+ 643 0000 2C000000 		.4byte	0x2c
+ 644 0004 0200     		.2byte	0x2
+ 645 0006 00000000 		.4byte	.Ldebug_info0
+ 646 000a 04       		.byte	0x4
+ 647 000b 00       		.byte	0
+ 648 000c 0000     		.2byte	0
+ 649 000e 0000     		.2byte	0
+ 650 0010 00000000 		.4byte	.LFB0
+ 651 0014 CC000000 		.4byte	.LFE0-.LFB0
+ 652 0018 00000000 		.4byte	.LFB1
+ 653 001c 20000000 		.4byte	.LFE1-.LFB1
+ 654 0020 00000000 		.4byte	.LFB2
+ 655 0024 5C000000 		.4byte	.LFE2-.LFB2
+ 656 0028 00000000 		.4byte	0
+ 657 002c 00000000 		.4byte	0
+ 658              		.section	.debug_ranges,"",%progbits
+ 659              	.Ldebug_ranges0:
+ 660 0000 00000000 		.4byte	.LFB0
+ 661 0004 CC000000 		.4byte	.LFE0
+ 662 0008 00000000 		.4byte	.LFB1
+ARM GAS  e:\temp\cczESMha.s 			page 18
+
+
+ 663 000c 20000000 		.4byte	.LFE1
+ 664 0010 00000000 		.4byte	.LFB2
+ 665 0014 5C000000 		.4byte	.LFE2
+ 666 0018 00000000 		.4byte	0
+ 667 001c 00000000 		.4byte	0
+ 668              		.section	.debug_line,"",%progbits
+ 669              	.Ldebug_line0:
+ 670 0000 C5000000 		.section	.debug_str,"MS",%progbits,1
+ 670      02006600 
+ 670      00000201 
+ 670      FB0E0D00 
+ 670      01010101 
+ 671              	.LASF17:
+ 672 0000 4850495F 		.ascii	"HPI_IF_I2CStop\000"
+ 672      49465F49 
+ 672      32435374 
+ 672      6F7000
+ 673              	.LASF14:
+ 674 000f 72656733 		.ascii	"reg32\000"
+ 674      3200
+ 675              	.LASF26:
+ 676 0015 4379496E 		.ascii	"CyIntSetVector\000"
+ 676      74536574 
+ 676      56656374 
+ 676      6F7200
+ 677              	.LASF3:
+ 678 0024 73686F72 		.ascii	"short unsigned int\000"
+ 678      7420756E 
+ 678      7369676E 
+ 678      65642069 
+ 678      6E7400
+ 679              	.LASF11:
+ 680 0037 666C6F61 		.ascii	"float\000"
+ 680      7400
+ 681              	.LASF1:
+ 682 003d 756E7369 		.ascii	"unsigned char\000"
+ 682      676E6564 
+ 682      20636861 
+ 682      7200
+ 683              	.LASF5:
+ 684 004b 6C6F6E67 		.ascii	"long unsigned int\000"
+ 684      20756E73 
+ 684      69676E65 
+ 684      6420696E 
+ 684      7400
+ 685              	.LASF9:
+ 686 005d 75696E74 		.ascii	"uint8\000"
+ 686      3800
+ 687              	.LASF22:
+ 688 0063 4850495F 		.ascii	"HPI_IF_slRdBufIndex\000"
+ 688      49465F73 
+ 688      6C526442 
+ 688      7566496E 
+ 688      64657800 
+ 689              	.LASF12:
+ 690 0077 646F7562 		.ascii	"double\000"
+ 690      6C6500
+ARM GAS  e:\temp\cczESMha.s 			page 19
+
+
+ 691              	.LASF21:
+ 692 007e 4850495F 		.ascii	"HPI_IF_slWrBufIndex\000"
+ 692      49465F73 
+ 692      6C577242 
+ 692      7566496E 
+ 692      64657800 
+ 693              	.LASF28:
+ 694 0092 47656E65 		.ascii	"Generated_Source\\PSoC4\\HPI_IF_I2C.c\000"
+ 694      72617465 
+ 694      645F536F 
+ 694      75726365 
+ 694      5C50536F 
+ 695              	.LASF20:
+ 696 00b6 4850495F 		.ascii	"HPI_IF_slStatus\000"
+ 696      49465F73 
+ 696      6C537461 
+ 696      74757300 
+ 697              	.LASF10:
+ 698 00c6 75696E74 		.ascii	"uint32\000"
+ 698      333200
+ 699              	.LASF8:
+ 700 00cd 756E7369 		.ascii	"unsigned int\000"
+ 700      676E6564 
+ 700      20696E74 
+ 700      00
+ 701              	.LASF30:
+ 702 00da 4850495F 		.ascii	"HPI_IF_I2CInit\000"
+ 702      49465F49 
+ 702      3243496E 
+ 702      697400
+ 703              	.LASF7:
+ 704 00e9 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 704      206C6F6E 
+ 704      6720756E 
+ 704      7369676E 
+ 704      65642069 
+ 705              	.LASF25:
+ 706 0100 4379496E 		.ascii	"CyIntSetPriority\000"
+ 706      74536574 
+ 706      5072696F 
+ 706      72697479 
+ 706      00
+ 707              	.LASF18:
+ 708 0111 4850495F 		.ascii	"HPI_IF_I2CFwBlockReset\000"
+ 708      49465F49 
+ 708      32434677 
+ 708      426C6F63 
+ 708      6B526573 
+ 709              	.LASF16:
+ 710 0128 73697A65 		.ascii	"sizetype\000"
+ 710      74797065 
+ 710      00
+ 711              	.LASF6:
+ 712 0131 6C6F6E67 		.ascii	"long long int\000"
+ 712      206C6F6E 
+ 712      6720696E 
+ 712      7400
+ARM GAS  e:\temp\cczESMha.s 			page 20
+
+
+ 713              	.LASF13:
+ 714 013f 63686172 		.ascii	"char\000"
+ 714      00
+ 715              	.LASF29:
+ 716 0144 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 716      73657273 
+ 716      5C41646D 
+ 716      696E5C44 
+ 716      65736B74 
+ 717 0171 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 717      355C4359 
+ 717      50443532 
+ 717      32352D39 
+ 717      36425A58 
+ 718 01a2 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 718      6F6B2E63 
+ 718      7964736E 
+ 718      5C6E6F62 
+ 718      6F6F742E 
+ 719              	.LASF24:
+ 720 01bc 4379496E 		.ascii	"CyIntDisable\000"
+ 720      74446973 
+ 720      61626C65 
+ 720      00
+ 721              	.LASF2:
+ 722 01c9 73686F72 		.ascii	"short int\000"
+ 722      7420696E 
+ 722      7400
+ 723              	.LASF19:
+ 724 01d3 4850495F 		.ascii	"HPI_IF_state\000"
+ 724      49465F73 
+ 724      74617465 
+ 724      00
+ 725              	.LASF4:
+ 726 01e0 6C6F6E67 		.ascii	"long int\000"
+ 726      20696E74 
+ 726      00
+ 727              	.LASF23:
+ 728 01e9 4850495F 		.ascii	"HPI_IF_slOverFlowCount\000"
+ 728      49465F73 
+ 728      6C4F7665 
+ 728      72466C6F 
+ 728      77436F75 
+ 729              	.LASF15:
+ 730 0200 6C6F6E67 		.ascii	"long double\000"
+ 730      20646F75 
+ 730      626C6500 
+ 731              	.LASF0:
+ 732 020c 7369676E 		.ascii	"signed char\000"
+ 732      65642063 
+ 732      68617200 
+ 733              	.LASF27:
+ 734 0218 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 734      43313120 
+ 734      352E342E 
+ 734      31203230 
+ 734      31363036 
+ARM GAS  e:\temp\cczESMha.s 			page 21
+
+
+ 735 024b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 735      20726576 
+ 735      6973696F 
+ 735      6E203233 
+ 735      37373135 
+ 736 027e 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 736      66756E63 
+ 736      74696F6E 
+ 736      2D736563 
+ 736      74696F6E 
+ 737 02b1 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 737      6F6E7320 
+ 737      2D666E6F 
+ 737      2D737472 
+ 737      6963742D 
+ 738              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

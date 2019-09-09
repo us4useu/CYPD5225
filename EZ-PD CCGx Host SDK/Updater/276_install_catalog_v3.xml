@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="catalogschema.xsd">
+  <CatalogVersion CurrentVersion="21.107.276.5" Format="0" MinimumVersion="21.107.276.5"/>
+<PrerequisiteInfo>
+</PrerequisiteInfo>
+    <VenderInfo Name="Cypress">
+      <Description>
+ The Cypress Peripheral Driver Library (PDL) is a software enablement product released in a single integrated package supporting Cypress PSoC and Flexible Microcontroller (FM) MCU device series. The PDL version 3.0.1 supports PSoC 6 device series only. It integrates device header files, startup code, platform drivers, peripheral drivers, middleware, RTOS, and a set of code examples. The platform and peripheral drivers abstract the hardware functions into a set of easy-to-use APIs. The integrated middleware and RTOS provides high-level software solutions. The code examples demonstrate the solution usage, serve as the evaluation platform, and can be used as a project starting point for customers to start product prototyping and development. The PDL is a Software Development Kit (SDK) for customers so that you can focus your efforts on application development to differentiate your own products, rather than spending energy creating a software development platform.&lt;P&gt;
+     </Description>
+    </VenderInfo>
+  <ProductInfo Name="PDL">{95B4523B-F680-43F5-8FC4-E27B6594A9AF}</ProductInfo>
+    <Licenses>
+      <License Name="eula" URL="eula.htm"/>
+    </Licenses>
+  <Releases>
+    <Release Name="Peripheral Driver Library 3.0.1" date="2018-02-16T14:48:11" ID="1508" URL=""/>
+  </Releases>
+  <Package Name="PDL 3.0.1" Typical="true" PackageID="0" Mandatory="true">
+    <Description>
+	The Cypress Peripheral Driver Library (PDL) is a software enablement product released in a single integrated package supporting Cypress PSoC and Flexible Microcontroller (FM) MCU device series. The PDL version 3.0.1 supports PSoC 6 device series only. It integrates device header files, startup code, platform drivers, peripheral drivers, middleware, RTOS, and a set of code examples. The platform and peripheral drivers abstract the hardware functions into a set of easy-to-use APIs. The integrated middleware and RTOS provides high-level software solutions. The code examples demonstrate the solution usage, serve as the evaluation platform, and can be used as a project starting point for customers to start product prototyping and development. The PDL is a Software Development Kit (SDK) for customers so that you can focus your efforts on application development to differentiate your own products, rather than spending energy creating a software development platform.&lt;P&gt;
+	&lt;P&gt;
+    </Description>
+    <LicenseRequirement Name="eula" />
+    <Version Name="PDL 3.0.1 (1508)" Number="3.0.1.1508" URL="PDL3.0.1.1508.msi" Size="35132720">
+      <ChangeLog>Version 3.0.1 Build 1508 &lt;P&gt;Built on Fri Feb 16 14:48:11 2018</ChangeLog>
+      <release>1508</release>
+    </Version>
+  </Package>
+</Catalog>

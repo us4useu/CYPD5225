@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Name="CYPD5225-96BZXI_notebook" WorkspaceName="CYPD5225-96BZXI_notebook.cywrk">
+  <Version>3.2.1</Version>
+  <Keyword>CCG5</Keyword>
+  <Keyword>Notebook</Keyword>
+  <Keyword Hidden="true">EZ-PD_CCGx_SDK</Keyword>
+  <Description>CCG5 dual port Type-C PD 3.0 Notebook reference application.</Description>
+  <DeviceFilter MpnDefault="CYPD5225-96BZXI">CCG5</DeviceFilter>
+  <MinToolVersion>4.2.0.641</MinToolVersion>
+</Project>

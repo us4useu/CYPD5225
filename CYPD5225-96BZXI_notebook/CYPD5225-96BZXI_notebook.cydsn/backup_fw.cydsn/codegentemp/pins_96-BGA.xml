@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pindata xsi:schemaLocation="http://cypress.com/xsd/cypindata_v2 ../../dtd/cypindata_v2.xsd" device="CYPD5225-96BZXI" package="96-BGA" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://cypress.com/xsd/cypindata_v2">
+  <capabilities>
+    <capability name="DIGITAL" value="0x0000000000000001" />
+    <capability name="ANALOG" value="0x0000000000000002" />
+    <capability name="ROUTABLE" value="0x0000000000000004" />
+    <capability name="GPIO" value="0x0000000000000010" />
+    <capability name="SIO" value="0x0000000000000020" />
+    <capability name="OVTIO" value="0x0000000000000040" />
+    <capability name="TRUETOUCH" value="0x0000000000000080" />
+    <capability name="DAC_HI_OUT" value="0x0000000000000100" />
+    <capability name="ABUF_POS" value="0x0000000000000200" />
+    <capability name="ABUF_OUT" value="0x0000000000000400" />
+    <capability name="ABUF_NEG" value="0x0000000000000800" />
+    <capability name="SWD" value="0x0000000000001000" />
+    <capability name="SWO" value="0x0000000000002000" />
+    <capability name="JTAG" value="0x0000000000004000" />
+    <capability name="JTAG_NTRST" value="0x0000000000008000" />
+    <capability name="XRES" value="0x0000000000010000" />
+    <capability name="TRACE" value="0x0000000000020000" />
+    <capability name="WAKEUP" value="0x0000000000040000" />
+    <capability name="I2CWKUP_SDA" value="0x0000000000100000" />
+    <capability name="I2CWKUP_SCL" value="0x0000000000200000" />
+    <capability name="USB_D_PLUS" value="0x0000000000400000" />
+    <capability name="USB_D_MINUS" value="0x0000000000800000" />
+    <capability name="ECO_MHZ_XO" value="0x0000000001000000" />
+    <capability name="ECO_MHZ_XI" value="0x0000000002000000" />
+    <capability name="ECO_32KHZ_XO" value="0x0000000004000000" />
+    <capability name="ECO_32KHZ_XI" value="0x0000000008000000" />
+    <capability name="DSM_EXT_PIN_ONE" value="0x0000000010000000" />
+    <capability name="DSM_EXT_PIN_TWO" value="0x0000000020000000" />
+    <capability name="SAR_EXT_PIN" value="0x0000000040000000" />
+    <capability name="EXTSYNC" value="0x0000000100000000" />
+    <capability name="EXTREJECT" value="0x0000000200000000" />
+    <capability name="EXTCLK" value="0x0000000400000000" />
+    <capability name="EXT_VREF" value="0x0000000800000000" />
+    <capability name="PORT_INTERRUPT" value="0x0000001000000000" />
+    <capability name="HOTSWAP" value="0x0000002000000000" />
+    <capability name="LCD_COM" value="0x0000004000000000" />
+    <capability name="LCD_SEG" value="0x0000008000000000" />
+    <capability name="CSD_SHIELD_TANK" value="0x0000010000000000" />
+    <capability name="CSD_CMOD" value="0x0000020000000000" />
+  </capabilities>
+  <pins>
+    <pin number="1" name="DPLUS_TOP_P1">
+      <pad name="DPLUS_TOP_0" number="88" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_dp_top" wire="0" />
+      </pad>
+    </pin>
+    <pin number="2" name="DMINUS_TOP_P1">
+      <pad name="DMINUS_TOP_0" number="86" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_dm_top" wire="0" />
+      </pad>
+    </pin>
+    <pin number="3" name="SBU1_P1">
+      <pad name="SBU1_0" number="107" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_sbu" wire="0" />
+      </pad>
+    </pin>
+    <pin number="4" name="SBU2_P1">
+      <pad name="SBU2_0" number="105" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_sbu" wire="1" />
+      </pad>
+    </pin>
+    <pin number="5" name="VSYS">
+      <pad name="VSYS" number="61" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_vsys" />
+      </pad>
+    </pin>
+    <pin number="6" name="DPLUS_SYS_P1">
+      <pad name="DPLUS_SYS_0" number="81" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_usbphy_dp" wire="0" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_dp_sys" wire="0" />
+      </pad>
+    </pin>
+    <pin number="7" name="DMINUS_SYS_P1">
+      <pad name="DMINUS_SYS_0" number="82" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_usbphy_dm" wire="0" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_dm_sys" wire="0" />
+      </pad>
+    </pin>
+    <pin number="8" name="UART_TX_P1">
+      <pad name="P4[0]" number="89" type="GPIO" portId="4" pinId="0" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="swapt_out" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="spi_mosi" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="mosi_m" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="mosi_s" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_uart_tx" wire="0" />
+      </pad>
+    </pin>
+    <pin number="9" name="UART_RX_P1">
+      <pad name="P4[1]" number="90" type="GPIO" portId="4" pinId="1" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="swapt_out" wire="1" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="spi_clk" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="sclk_m" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="sclk_s" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_uart_rx" wire="0" />
+      </pad>
+    </pin>
+    <pin number="10" name="LSTX_P1">
+      <pad name="LSTX_0" number="110" type="DEDICATED" ioSupplyPin="VDDIO" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="sbu20_lstx" />
+      </pad>
+    </pin>
+    <pin number="11" name="LSRX_P1">
+      <pad name="LSRX_0" number="111" type="DEDICATED" ioSupplyPin="VDDIO" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="sbu20_lsrx" />
+      </pad>
+    </pin>
+    <pin number="12" name="DPLUS_BOT_P1">
+      <pad name="DPLUS_BOT_0" number="85" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_dp_bottom" wire="0" />
+      </pad>
+    </pin>
+    <pin number="13" name="SWD_IO">
+      <pad name="P1[6]" number="11" type="GPIO" portId="1" pinId="6" ioSupplyPin="VDDIO" capabilities="0x0000001000001013">
+        <ffbterm ffbtype="TCPWM" ffbid="1" term="line" />
+        <ffbterm ffbtype="TCPWM" ffbid="1" term="tr_compare_match" />
+        <ffbterm ffbtype="CPUSS" ffbid="0" term="swd_data" />
+      </pad>
+    </pin>
+    <pin number="14" name="CSN_P1">
+      <pad name="CSP_INN_0" number="1" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_csa_inn" wire="0" />
+      </pad>
+    </pin>
+    <pin number="15" name="VBUS_P_CTRL_P2">
+      <pad name="VBUS_P_CTRL_1" number="114" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_pgdo_ctrl" wire="1" />
+      </pad>
+    </pin>
+    <pin number="16" name="VBUS_C_CTRL_P2">
+      <pad name="VBUS_C_CTRL_1" number="113" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_pgdo_ctrl" wire="0" />
+      </pad>
+    </pin>
+    <pin number="17" name="UV_OCP_TRIP_P1/GPIO1">
+      <pad name="P1[4]" number="8" type="GPIO" portId="1" pinId="4" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="fault_gpio0" />
+      </pad>
+    </pin>
+    <pin number="18" name="UV_OCP_TRIP_P2/GPIO2">
+      <pad name="P1[5]" number="10" type="GPIO" portId="1" pinId="5" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="fault_gpio0" />
+      </pad>
+    </pin>
+    <pin number="19" name="VCON_OCP_TRIP_P1/GPIO6">
+      <pad name="P3[5]" number="60" type="GPIO" portId="3" pinId="5" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="0" term="uart_cts" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="fault_gpio1" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="spi_select" wire="2" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="0" resource="spi_select_2" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="1" resource="spi_select_2" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="2" resource="spi_select_2" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="3" resource="spi_select_2" />
+      </pad>
+    </pin>
+    <pin number="20" name="VCON_OCP_TRIP_P2/GPIO4">
+      <pad name="P3[3]" number="58" type="GPIO" portId="3" pinId="3" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="3" term="uart_rx" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="fault_gpio1" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="spi_select" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="select_m" wire="0" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="select_m" wire="1" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="select_m" wire="2" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="select_m" wire="3" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="select_s" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="i2c_scl" />
+      </pad>
+    </pin>
+    <pin number="21" name="VCCD">
+      <pad name="VCCD" number="97" type="PWR" ioSupplyPin="VDDIO" powerPadNames="VCCD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="SRSS" ffbid="0" term="pad_vccd" />
+      </pad>
+    </pin>
+    <pin number="22" name="AUX_P_P1">
+      <pad name="AUX_P_0" number="108" type="DEDICATED" ioSupplyPin="VDDIO" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_auxp" />
+      </pad>
+    </pin>
+    <pin number="23" name="DMINUS_BOT_P1">
+      <pad name="DMINUS_BOT_0" number="83" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_dpdm_dm_bottom" wire="0" />
+      </pad>
+    </pin>
+    <pin number="24" name="SWD_CLK">
+      <pad name="P1[0]" number="4" type="GPIO" portId="1" pinId="0" ioSupplyPin="VDDIO" capabilities="0x0000001000001013">
+        <ffbterm ffbtype="SCB" ffbid="1" term="uart_rx" />
+        <ffbterm ffbtype="CPUSS" ffbid="0" term="swd_clk" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="spi_select" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="select_m" wire="0" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="select_m" wire="1" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="select_m" wire="2" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="select_m" wire="3" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="select_s" resource="spi_select_0" />
+      </pad>
+    </pin>
+    <pin number="32" name="VDDIO">
+      <pad name="VDDIO" number="96" type="PWR" ioSupplyPin="VDDIO" powerPadNames="VDDIO" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="SRSS" ffbid="0" term="pad_vccq_or_vddio" />
+      </pad>
+    </pin>
+    <pin number="33" name="AUX_N_P1">
+      <pad name="AUX_N_0" number="109" type="DEDICATED" ioSupplyPin="VDDIO" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_auxn" />
+      </pad>
+    </pin>
+    <pin number="34" name="VBUS_P1">
+      <pad name="VBUS_P1" number="65" type="PWR" ioSupplyPin="VDDIO" powerPadNames="VBUS_P1" capabilities="0x0000000000000000" />
+    </pin>
+    <pin number="35" name="I2C_SDA_SCB2_AR">
+      <pad name="P1[1]" number="5" type="GPIO" portId="1" pinId="1" ioSupplyPin="VDDIO" capabilities="0x0000001400000013">
+        <ffbterm ffbtype="SRSS" ffbid="0" term="ext_clk" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="uart_tx" />
+        <ffbterm ffbtype="TCPWM" ffbid="0" term="tr_overflow" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="spi_mosi" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="mosi_m" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="mosi_s" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="i2c_sda" />
+      </pad>
+    </pin>
+    <pin number="43" name="VDDD">
+      <pad name="VDDQ" number="94" type="PWR" ioSupplyPin="VDDD" powerPadNames="VDDQ" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="SRSS" ffbid="0" term="pad_vddq" />
+      </pad>
+      <pad name="VDDD" number="95" type="PWR" ioSupplyPin="VDDD" powerPadNames="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="SRSS" ffbid="0" term="pad_vddd" />
+      </pad>
+    </pin>
+    <pin number="44" name="AUX_P_P2">
+      <pad name="AUX_P_1" number="101" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_auxp" />
+      </pad>
+    </pin>
+    <pin number="45" name="SBU1_P2">
+      <pad name="SBU1_1" number="102" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_sbu" wire="0" />
+      </pad>
+    </pin>
+    <pin number="46" name="I2C_SCL_SCB2_AR">
+      <pad name="P1[2]" number="6" type="GPIO" portId="1" pinId="2" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="TCPWM" ffbid="0" term="line" />
+        <ffbterm ffbtype="TCPWM" ffbid="0" term="tr_compare_match" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="uart_cts" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="spi_miso" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="miso_m" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="miso_s" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="i2c_scl" />
+      </pad>
+    </pin>
+    <pin number="54" name="HPD_P2">
+      <pad name="P3[4]" number="59" type="GPIO" portId="3" pinId="4" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="3" term="uart_rts" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="hpd" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="spi_clk" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="sclk_m" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="sclk_s" />
+      </pad>
+    </pin>
+    <pin number="55" name="AUX_N_P2">
+      <pad name="AUX_N_1" number="100" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_auxn" />
+      </pad>
+    </pin>
+    <pin number="56" name="SBU2_P2">
+      <pad name="SBU2_1" number="104" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_sbu" wire="1" />
+      </pad>
+    </pin>
+    <pin number="57" name="I2C_INT_AR_P1">
+      <pad name="P1[3]" number="7" type="GPIO" portId="1" pinId="3" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="1" term="uart_rts" />
+        <ffbterm ffbtype="TCPWM" ffbid="1" term="tr_overflow" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="adc_cmp_out_gpio" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="spi_clk" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="sclk_m" />
+        <ffbterm ffbtype="SCB" ffbid="1" term="sclk_s" />
+      </pad>
+    </pin>
+    <pin number="65" name="SCL_4">
+      <pad name="P2[3]" number="37" type="GPIO" portId="2" pinId="3" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="gpio_ddft0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="i2c_scl" alternative="1" />
+      </pad>
+    </pin>
+    <pin number="66" name="DPLUS_SYS_P2">
+      <pad name="DPLUS_SYS_1" number="43" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_usbphy_dp" wire="0" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_dp_sys" wire="0" />
+      </pad>
+    </pin>
+    <pin number="67" name="DPLUS_TOP_P2">
+      <pad name="DPLUS_TOP_1" number="50" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_dp_top" wire="0" />
+      </pad>
+    </pin>
+    <pin number="68" name="I2C_INT_AR_P2">
+      <pad name="P2[1]" number="13" type="GPIO" portId="2" pinId="1" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="2" term="uart_cts" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="tx_data" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="spi_miso" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="miso_m" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="miso_s" />
+      </pad>
+    </pin>
+    <pin number="74" name="CC1_P2">
+      <pad name="RD1_1" number="69" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_vconn20_rd1" />
+      </pad>
+      <pad name="CC1_1_2" number="70" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc1_2" />
+      </pad>
+      <pad name="CC1_1_1" number="71" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc1_1" />
+      </pad>
+      <pad name="CC1_1_0" number="72" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc1_0" />
+      </pad>
+    </pin>
+    <pin number="76" name="SDA_4">
+      <pad name="P3[2]" number="57" type="GPIO" portId="3" pinId="2" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="3" term="uart_tx" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="swapt_in" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="spi_mosi" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="mosi_m" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="mosi_s" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="i2c_sda" />
+      </pad>
+    </pin>
+    <pin number="77" name="DMINUS_SYS_P2">
+      <pad name="DMINUS_SYS_1" number="44" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_usbphy_dm" wire="0" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_dm_sys" wire="0" />
+      </pad>
+    </pin>
+    <pin number="78" name="DMINUS_TOP_P2">
+      <pad name="DMINUS_TOP_1" number="48" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_dm_top" wire="0" />
+      </pad>
+    </pin>
+    <pin number="79" name="CC2_P1">
+      <pad name="RD2_0" number="17" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_vconn20_rd2" />
+      </pad>
+      <pad name="CC2_0_0" number="18" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc2_0" />
+      </pad>
+      <pad name="CC2_0_1" number="19" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc2_1" />
+      </pad>
+      <pad name="CC2_0_2" number="20" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc2_2" />
+      </pad>
+    </pin>
+    <pin number="81" name="CC2_P1">
+      <pad name="RD2_0" number="17" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_vconn20_rd2" />
+      </pad>
+      <pad name="CC2_0_0" number="18" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc2_0" />
+      </pad>
+      <pad name="CC2_0_1" number="19" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc2_1" />
+      </pad>
+      <pad name="CC2_0_2" number="20" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc2_2" />
+      </pad>
+    </pin>
+    <pin number="82" name="CC1_P1">
+      <pad name="CC1_0_0" number="24" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc1_0" />
+      </pad>
+      <pad name="CC1_0_1" number="25" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc1_1" />
+      </pad>
+      <pad name="CC1_0_2" number="26" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc1_2" />
+      </pad>
+      <pad name="RD1_0" number="27" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_vconn20_rd1" />
+      </pad>
+    </pin>
+    <pin number="83" name="XRES">
+      <pad name="XRES" number="15" type="DEDICATED" ioSupplyPin="VDDIO" capabilities="0x0000000000000000" />
+    </pin>
+    <pin number="85" name="CC2_P2">
+      <pad name="CC2_1_2" number="76" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc2_2" />
+      </pad>
+      <pad name="CC2_1_1" number="77" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc2_1" />
+      </pad>
+      <pad name="CC2_1_0" number="78" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc2_0" />
+      </pad>
+      <pad name="RD2_1" number="79" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_vconn20_rd2" />
+      </pad>
+    </pin>
+    <pin number="87" name="VSEL_2_P2">
+      <pad name="P2[0]" number="12" type="GPIO" portId="2" pinId="0" ioSupplyPin="VDDIO" capabilities="0x0000001400000013">
+        <ffbterm ffbtype="SRSS" ffbid="0" term="ext_clk" alternative="1" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="uart_tx" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="tx_data_en" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="spi_mosi" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="mosi_m" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="mosi_s" />
+      </pad>
+    </pin>
+    <pin number="88" name="UART_TX_P2">
+      <pad name="P0[1]" number="51" type="GPIO" portId="0" pinId="1" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="swapt_out" wire="0" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_uart_tx" wire="0" />
+      </pad>
+    </pin>
+    <pin number="89" name="CSP_P1">
+      <pad name="CSP_INP_0" number="2" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_csa_inp" wire="0" />
+      </pad>
+    </pin>
+    <pin number="90" name="V5V_P1">
+      <pad name="V5V_0_0" number="21" type="PWR" ioSupplyPin="V5V_0" powerPadNames="V5V_0_0" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_v5v_0" />
+      </pad>
+      <pad name="V5V_0_1" number="22" type="PWR" ioSupplyPin="V5V_0" powerPadNames="V5V_0_1" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_v5v_1" />
+      </pad>
+      <pad name="V5V_0_2" number="23" type="PWR" ioSupplyPin="V5V_0" powerPadNames="V5V_0_2" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_v5v_2" />
+      </pad>
+    </pin>
+    <pin number="98" name="VSEL_2_P1">
+      <pad name="P3[6]" number="62" type="GPIO" portId="3" pinId="6" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="0" term="uart_tx" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="tx_data_en" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="spi_select" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="0" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="1" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="2" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="3" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_s" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="i2c_sda" />
+      </pad>
+    </pin>
+    <pin number="99" name="UART_RX_P2">
+      <pad name="P0[2]" number="52" type="GPIO" portId="0" pinId="2" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="swapt_out" wire="1" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_uart_rx" wire="0" />
+      </pad>
+    </pin>
+    <pin number="100" name="DPLUS_BOT_P2">
+      <pad name="DPLUS_BOT_1" number="47" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_dp_bottom" wire="0" />
+      </pad>
+    </pin>
+    <pin number="101" name="CC1_P1">
+      <pad name="CC1_0_0" number="24" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc1_0" />
+      </pad>
+      <pad name="CC1_0_1" number="25" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc1_1" />
+      </pad>
+      <pad name="CC1_0_2" number="26" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_cc1_2" />
+      </pad>
+      <pad name="RD1_0" number="27" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_vconn20_rd1" />
+      </pad>
+    </pin>
+    <pin number="102" name="VBUS_P_CTRL_P1">
+      <pad name="VBUS_P_CTRL_0" number="31" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_pgdo_ctrl" wire="1" />
+      </pad>
+    </pin>
+    <pin number="103" name="VBUS_C_CTRL_P1">
+      <pad name="VBUS_C_CTRL_0" number="32" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="pad_pgdo_ctrl" wire="0" />
+      </pad>
+    </pin>
+    <pin number="104" name="OVP_TRIP_P1">
+      <pad name="P2[4]" number="38" type="GPIO" portId="2" pinId="4" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="gpio_ddft1" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="i2c_sda" alternative="1" />
+      </pad>
+    </pin>
+    <pin number="105" name="I2C_SDA_SCB1">
+      <pad name="P5[0]" number="40" type="OVTIO" portId="5" pinId="0" ioSupplyPin="VDDIO" capabilities="0x0000003000000053">
+        <ffbterm ffbtype="SCB" ffbid="0" term="i2c_sda" />
+      </pad>
+    </pin>
+    <pin number="106" name="HPD_P1">
+      <pad name="P3[0]" number="53" type="GPIO" portId="3" pinId="0" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="0" term="uart_rts" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="hpd" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="spi_select" wire="1" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="0" resource="spi_select_1" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="1" resource="spi_select_1" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="2" resource="spi_select_1" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="select_m" wire="3" resource="spi_select_1" />
+      </pad>
+    </pin>
+    <pin number="107" name="CSN_P2">
+      <pad name="CSP_INN_1" number="33" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_csa_inn" wire="0" />
+      </pad>
+    </pin>
+    <pin number="108" name="CC1_P2">
+      <pad name="RD1_1" number="69" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_vconn20_rd1" />
+      </pad>
+      <pad name="CC1_1_2" number="70" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc1_2" />
+      </pad>
+      <pad name="CC1_1_1" number="71" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc1_1" />
+      </pad>
+      <pad name="CC1_1_0" number="72" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc1_0" />
+      </pad>
+    </pin>
+    <pin number="109" name="CC2_P2">
+      <pad name="CC2_1_2" number="76" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc2_2" />
+      </pad>
+      <pad name="CC2_1_1" number="77" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc2_1" />
+      </pad>
+      <pad name="CC2_1_0" number="78" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_cc2_0" />
+      </pad>
+      <pad name="RD2_1" number="79" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_vconn20_rd2" />
+      </pad>
+    </pin>
+    <pin number="110" name="LSTX_P2">
+      <pad name="LSTX_1" number="99" type="DEDICATED" ioSupplyPin="VDDIO" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="sbu20_lstx" />
+      </pad>
+    </pin>
+    <pin number="111" name="DMINUS_BOT_P2">
+      <pad name="DMINUS_BOT_1" number="45" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_dpdm_dm_bottom" wire="0" />
+      </pad>
+    </pin>
+    <pin number="112" name="CSP_P2">
+      <pad name="CSP_INP_1" number="34" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_csa_inp" wire="0" />
+      </pad>
+    </pin>
+    <pin number="113" name="VBUS_P2">
+      <pad name="VBUS_P2" number="66" type="PWR" ioSupplyPin="VDDIO" powerPadNames="VBUS_P2" capabilities="0x0000000000000000" />
+    </pin>
+    <pin number="114" name="GPIO5_VSEL_1_P2">
+      <pad name="P0[0]" number="42" type="GPIO" portId="0" pinId="0" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="2" term="uart_rx" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="adc_cmp_out_gpio" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="spi_select" wire="0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="select_m" wire="0" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="select_m" wire="1" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="select_m" wire="2" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="select_m" wire="3" resource="spi_select_0" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="select_s" resource="spi_select_0" />
+      </pad>
+    </pin>
+    <pin number="115" name="I2C_INT_EC">
+      <pad name="P2[5]" number="39" type="GPIO" portId="2" pinId="5" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="USBPD" ffbid="0" term="tx_data" />
+      </pad>
+    </pin>
+    <pin number="116" name="I2C_SCL_SCB1">
+      <pad name="P5[1]" number="41" type="OVTIO" portId="5" pinId="1" ioSupplyPin="VDDIO" capabilities="0x0000003000000053">
+        <ffbterm ffbtype="SCB" ffbid="0" term="i2c_scl" />
+      </pad>
+    </pin>
+    <pin number="117" name="GPIO3">
+      <pad name="P3[1]" number="56" type="GPIO" portId="3" pinId="1" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="3" term="uart_cts" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="gpio_ddft0" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="spi_miso" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="miso_m" />
+        <ffbterm ffbtype="SCB" ffbid="3" term="miso_s" />
+      </pad>
+    </pin>
+    <pin number="118" name="OVP_TRIP_P2">
+      <pad name="P2[2]" number="14" type="GPIO" portId="2" pinId="2" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="2" term="uart_rts" />
+        <ffbterm ffbtype="USBPD" ffbid="1" term="gpio_ddft1" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="spi_clk" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="sclk_m" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="sclk_s" />
+      </pad>
+    </pin>
+    <pin number="119" name="V5V_P2">
+      <pad name="V5V_1_2" number="73" type="PWR" ioSupplyPin="V5V_1" powerPadNames="V5V_1_2" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_v5v_2" />
+      </pad>
+      <pad name="V5V_1_1" number="74" type="PWR" ioSupplyPin="V5V_1" powerPadNames="V5V_1_1" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_v5v_1" />
+      </pad>
+      <pad name="V5V_1_0" number="75" type="PWR" ioSupplyPin="V5V_1" powerPadNames="V5V_1_0" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="pad_v5v_0" />
+      </pad>
+    </pin>
+    <pin number="120" name="VSEL_1_P1">
+      <pad name="P3[7]" number="63" type="GPIO" portId="3" pinId="7" ioSupplyPin="VDDIO" capabilities="0x0000001000000013">
+        <ffbterm ffbtype="SCB" ffbid="0" term="uart_rx" />
+        <ffbterm ffbtype="USBPD" ffbid="0" term="swapt_in" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="spi_miso" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="miso_m" />
+        <ffbterm ffbtype="SCB" ffbid="0" term="miso_s" />
+        <ffbterm ffbtype="SCB" ffbid="2" term="i2c_scl" />
+      </pad>
+    </pin>
+    <pin number="121" name="LSRX_P2">
+      <pad name="LSRX_1" number="98" type="DEDICATED" ioSupplyPin="VDDD" capabilities="0x0000000000000000">
+        <ffbterm ffbtype="USBPD" ffbid="1" term="sbu20_lsrx" />
+      </pad>
+    </pin>
+  </pins>
+</pindata>

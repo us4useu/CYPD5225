@@ -1,0 +1,1857 @@
+ARM GAS  e:\temp\ccP4ef6T.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cyfitter_cfg_2.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.section	.gnu.lto_.profile.6240bb6e,"",%progbits
+  19 0000 789C6361 		.ascii	"x\234ca`d`a`\000\222\246\212\000\000\365\000a"
+  19      60646061 
+  19      600092A6 
+  19      8A0000F5 
+  19      0061
+  20              		.text
+  21              		.section	.gnu.lto_.icf.6240bb6e,"",%progbits
+  22 0000 789C6361 		.ascii	"x\234ca`d\000\001^\006\004`bhXq\213\221q\372\325\256"
+  22      60640001 
+  22      5E060460 
+  22      62685871 
+  22      8B9171FA 
+  23 0016 EF4C0C00 		.ascii	"\357L\014\000\"\260\005\010"
+  23      22B00508 
+  24              		.text
+  25              		.section	.gnu.lto_.jmpfuncs.6240bb6e,"",%progbits
+  26 0000 789C6361 		.ascii	"x\234ca`d\000\001\005\006\004`\002a\306\277L\214\213"
+  26      60640001 
+  26      05060460 
+  26      0261C6BF 
+  26      4C8C8B
+  27 0013 37AC6863 		.ascii	"7\254hc\376\302\324\312\314\300h\300\270\234Q\206\001"
+  27      FEC2D4CA 
+  27      CCC068C0 
+  27      B89C5186 
+  27      01
+  28 0024 A218007B 		.ascii	"\242\030\000{\026\006$"
+  28      160624
+  29              		.text
+  30              		.section	.gnu.lto_.inline.6240bb6e,"",%progbits
+  31 0000 789C6361 		.ascii	"x\234ca`d\000\001S\006\004`b`\020\227gd`RY0\223\211"
+  31      60640001 
+  31      53060460 
+  31      62601097 
+  31      67646052 
+  32 0018 816D813C 		.ascii	"\201m\201<\023X\220\233\001\250\224\221\201O\014(#\262"
+  32      1358909B 
+  32      01A89491 
+  32      814F0C28 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 2
+
+
+  32      23B2
+  33 002a 600E235C 		.ascii	"`\016#\\\206\221\013D\002\000\233L\004\365"
+  33      86910B44 
+  33      02009B4C 
+  33      04F5
+  34              		.text
+  35              		.section	.gnu.lto_.pureconst.6240bb6e,"",%progbits
+  36 0000 789C6361 		.ascii	"x\234ca`d`c```b\220b\334\305\010\000\002z\000\344"
+  36      60646063 
+  36      60606062 
+  36      9062DCC5 
+  36      0800027A 
+  37              		.text
+  38              		.section	.gnu.lto_ClockSetup.6240bb6e,"",%progbits
+  39 0000 789C85D4 		.ascii	"x\234\205\324\313O\023A\034\300\361\371\355\226R@\320"
+  39      CB4F1341 
+  39      1CC0F1F9 
+  39      ED965240 
+  39      D0
+  40 0011 989818E5 		.ascii	"\230\230\030\345`<\251\007\243\306\377\300\2037c4\361"
+  40      603CA907 
+  40      A3C6FFC0 
+  40      83376334 
+  40      F1
+  41 0022 64420C56 		.ascii	"dB\014V\343E\023\202\007OL\333]@\003I\017\242\361\211"
+  41      E3451382 
+  41      074F4CDB 
+  41      5D400349 
+  41      0FA2F189 
+  42 0036 82400179 		.ascii	"\202@\001yi)\024\021JyTy\024\360\205(\"*!\004\201T\005"
+  42      69291411 
+  42      4A795479 
+  42      14F08528 
+  42      222A2104 
+  43 004d 2B08ADB3 		.ascii	"+\010\255\263\373\233\331\345b\272I\323\307\354|\366"
+  43      FB9BD9E5 
+  43      62BA49D3 
+  43      C7EC7CF6 
+  44 005d BBDBDDB1 		.ascii	"\273\333\335\261\020 \332v\320J\310>\366\276\223\275"
+  44      1020DA76 
+  44      D04AC83E 
+  44      F6BE93BD 
+  45 006d 402620B9 		.ascii	"@& \271\303\2048l\022\200\366\201\332\200\344I\220\007"
+  45      C384386C 
+  45      1280F681 
+  45      DA80E449 
+  45      9007
+  46 007f CBD2BA04 		.ascii	"\313\322\272\004\301\202\031\277\264\267\212\262m\252"
+  46      C18219BF 
+  46      B4B78AB2 
+  46      6DAA
+  47 008d C277C141 		.ascii	"\302w\301A\325\355\252LH\\\322%\002U\260\227\260\335"
+  47      D5EDAA4C 
+  47      485CD225 
+  47      0255B097 
+  47      B0DD
+  48 009f BE36C54A 		.ascii	"\2766\305J\322\255\212\266\333.\034\004\017X\265\303"
+ARM GAS  e:\temp\ccP4ef6T.s 			page 3
+
+
+  48      D2AD8AB6 
+  48      DB2E1C04 
+  48      0F58B5C3 
+  49 00af 359C08D0 		.ascii	"5\234\010\320x\334E\003\315i]\336\214m\204D\330\250"
+  49      78DC4503 
+  49      CD695DDE 
+  49      8C6D8444 
+  49      D8A8
+  50 00c1 769C1F92 		.ascii	"v\234\037\222\244\275\3133\020\\\212,\356\326\366g\320"
+  50      A4BDCB33 
+  50      105C8A2C 
+  50      EED6F667 
+  50      D0
+  51 00d2 0D35389C 		.ascii	"\01558\234\274$\2512\200\346\376\371V?o\303\257\215"
+  51      BC24A932 
+  51      80E6FEF9 
+  51      563F6FC3 
+  51      AF8D
+  52 00e4 34402DEC 		.ascii	"4@-\354'Wskyj)\334s(\240\312\022\324@&TC&;`-\224\002"
+  52      2757736B 
+  52      796A29DC 
+  52      7328A0CA 
+  52      12D44026 
+  53 0100 1B6F9A5A 		.ascii	"\033o\232Zk\267hSd\330\012\217\331\310,(\201\2164\315"
+  53      6BB76853 
+  53      64D80A8F 
+  53      D9C82C28 
+  53      818E34CD 
+  54 0114 D744BF7F 		.ascii	"\327D\277\177\376cr\336:-\244t\213*[\342\022\213\204"
+  54      FE6372DE 
+  54      3A2DA474 
+  54      8B2A5BE2 
+  54      128B84
+  55 0127 3AC8D3C6 		.ascii	":\310\323\306\312\033=\371\26265\011\016@=d\252\262"
+  55      CA1B3DF9 
+  55      B2363509 
+  55      0E403D64 
+  55      AAB2
+  56 0139 956879EE 		.ascii	"\225hy\356e\211\347\365Ot\225m\306\036\232\257\350="
+  56      6589E7F5 
+  56      4F74956D 
+  56      C61E9AAF 
+  56      E83D
+  57 014b 8BC575A1 		.ascii	"\213\305u\241\014\263\247\301\350i\304\036\247\3675"
+  57      0CB3A7C1 
+  57      E869C41E 
+  57      A7F735
+  58 015a 05ECA11D 		.ascii	"\005\354\241\035\000MlL3G\014\263\354\341\337\261$n"
+  58      004D6C4C 
+  58      33470CB3 
+  58      ECE1DFB1 
+  58      246E
+  59 016c 52340BD4 		.ascii	"R4\013\324\321\352M\246\371\3040\237\2429\340\276\355"
+  59      D1EA4DA6 
+  59      F9C4309F 
+  59      A239E0BE 
+  59      ED
+ARM GAS  e:\temp\ccP4ef6T.s 			page 4
+
+
+  60 017d 48453310 		.ascii	"HE3\020s\261\177\314\313U\367o\241\256V\314^KE\365\272"
+  60      73B17FCC 
+  60      CB55F76F 
+  60      A1AE56CC 
+  60      5E4B45F5 
+  61 0192 82EAE7EA 		.ascii	"\202\352\347\352h\030L\265\331P}\250vvN\226\247\360"
+  61      68184CB5 
+  61      D9507DA8 
+  61      76764E96 
+  61      A7F0
+  62 01a4 D2FB002D 		.ascii	"\322\373\000-\242\3240\377\233\325\212\300\265\357\345"
+  62      A2D430FF 
+  62      9BD58AC0 
+  62      B5EFE5
+  63 01b3 AB1202AA 		.ascii	"\253\022\002\252\236\345\027YQAT\216\257=I\301,7\317"
+  63      9EE51759 
+  63      5141548E 
+  63      AF3D49C1 
+  63      2C37CF
+  64 01c6 AA19507B 		.ascii	"\252\031P{7\\\3006C}\206jt\276\275[dM\022h\027Y\321"
+  64      375CC036 
+  64      437D866A 
+  64      74BEBD5B 
+  64      644D1268 
+  65 01dd 8459CF11 		.ascii	"\204Y\317\021\370T\334\177+\011\001E\317\352\020Yk\202"
+  65      F854DC7F 
+  65      2B090145 
+  65      CFEA1059 
+  65      6B82
+  66 01ef F074D78C 		.ascii	"\360t\327\214\002f\025\361\254\3227\336q\213\251v\032"
+  66      026615F1 
+  66      ACD237DE 
+  66      718BA976 
+  66      1A
+  67 0200 6A00D5E9 		.ascii	"j\000\325\351\212\351\007\"\313\012]\242j-aU\020\347"
+  67      8AE90722 
+  67      CB0A5DA2 
+  67      6A2D6155 
+  67      10E7
+  68 0212 DF097F69 		.ascii	"\337\011\177i\222q\276K\257\352\026U\353\202pE\333\032"
+  68      9271BE4B 
+  68      AFEA1655 
+  68      EB827045 
+  68      DB1A
+  69 0224 F9DD56C8 		.ascii	"\371\335V\310\253~\025+\223\311\246\332c\250\275L5+"
+  69      AB7E152B 
+  69      93C9A6DA 
+  69      63A8BD4C 
+  69      352B
+  70 0236 D61356F4 		.ascii	"\326\023V\364a\205oux\204\337IN\275\"$*b\202\030\373"
+  70      61856F75 
+  70      7884DF49 
+  70      4EBD2224 
+  70      2A628218 
+  71 024b B9F43C0D 		.ascii	"\271\364<\015+\024^\021\251\237,\264\231\352\013C}\211"
+  71      2B145E11 
+  71      A99F2CB4 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 5
+
+
+  71      99EA0B43 
+  71      7D89
+  72 025d EACD8595 		.ascii	"\352\315\205\225\035\374\322X\240_D\305\022F\015\340"
+  72      1DFCD258 
+  72      A05F44C5 
+  72      12460DE0 
+  73 026d F4B6C8AB 		.ascii	"\364\266\310\253{\3118\337\241G\015\212\250\270 \256"
+  73      7BC938DF 
+  73      A1470D8A 
+  73      A8B820AE 
+  74 027d B6C68A64 		.ascii	"\266\306\212d\376\320\360\250\360\334\347\\\023\035"
+  74      FED0F0A8 
+  74      F0DCE75C 
+  74      131D
+  75 028b 32D030A2 		.ascii	"2\3200\242\365\263\235w\371\231R\011\206ET<a\324\010"
+  75      F5B39D77 
+  75      F9995209 
+  75      8645543C 
+  75      61D408
+  76 029e 3FA7BA89 		.ascii	"?\247\272\211S|\272\3364*\232ze.\314\375\354\351\316"
+  76      537CBADE 
+  76      342A9A7A 
+  76      652ECCFD 
+  76      ECE9CE
+  77 02b1 C0260F2D 		.ascii	"\300&\017-\322\233f\037\365Omx\344^\031\350kD[\026k"
+  77      D29B661F 
+  77      F54F6D78 
+  77      E45E19E8 
+  77      6B445B16 
+  78 02c6 5BD2F983 		.ascii	"[\322\371\203L\340\215\210\352\023\344\340P%\277\001"
+  78      4CE08D88 
+  78      EA13E4E0 
+  78      5025BF01 
+  79 02d6 14279E65 		.ascii	"\024'\236e\311\013\337\362\206\247\345\255!\276C\321"
+  79      C90BDFF2 
+  79      86A7E5AD 
+  79      21BE43D1 
+  80 02e6 DB13CAB7 		.ascii	"\333\023\312\267\241\0100&\032\007\0058\361)Dy#\345"
+  80      A1083026 
+  80      1A070538 
+  80      F1294479 
+  80      23E5
+  81 02f8 E2826F68 		.ascii	"\342\202oh\300j\212\357\015q\034\305\206y\377\012o$"
+  81      C06A8AEF 
+  81      0D711CC5 
+  81      8679FF0A 
+  81      6F24
+  82 030a F0818DCC 		.ascii	"\360\201\215\314\2013\320|L_P\265-\302\226P\266\220"
+  82      8133D07C 
+  82      4C5F50B5 
+  82      2DC29650 
+  82      B690
+  83 031c B3657DCF 		.ascii	"\263e}\317Q\373E{\316\231\\\373\331\254\223\227.\347"
+  83      51FB457B 
+  83      CE995CFB 
+  83      D9AC9397 
+  83      2EE7
+ARM GAS  e:\temp\ccP4ef6T.s 			page 6
+
+
+  84 032e 64DB4F1F 		.ascii	"d\333O\037?y\351\310\341\323\331W\316]\310\315\265\347"
+  84      3F79E9C8 
+  84      E1D3D957 
+  84      CE5DC8CD 
+  84      B5E7
+  85 0340 64659F3B 		.ascii	"de\237;\237uh\1776\371\007\250\335A/"
+  85      9F75687F 
+  85      36F907A8 
+  85      DD412F
+  86              		.text
+  87              		.section	.gnu.lto_cyfitter_cfg.6240bb6e,"",%progbits
+  88 0000 789C4DD3 		.ascii	"x\234M\323\357KSQ\030\007\360\363\234;\267e\352\242"
+  88      EF4B5351 
+  88      1807F0F3 
+  88      9C3BB765 
+  88      EAA2
+  89 0012 972534A8 		.ascii	"\227%4\250\027I\020\364\353/0\210\336\211{+\214X3|\223"
+  89      174910F4 
+  89      EB2F3088 
+  89      DE897B2B 
+  89      8C58337C 
+  90 0027 20F6A257 		.ascii	" \366\242W;\323\335\032\021\265\244\025i\342\017\020"
+  90      3BD3DD1A 
+  90      11B5A415 
+  90      69E20F10 
+  91 0037 35B34D6D 		.ascii	"5\263Mm\233S\253\353,\232/Z?\336\024\224 &\316L\230"
+  91      9B53ABEB 
+  91      2C9A2F5A 
+  91      3FDE1494 
+  91      2026CE4C 
+  92 004c DA740BDB 		.ascii	"\332t\013\333\3269\236s\356\365\302\345n\3679\367\363"
+  92      D6399E73 
+  92      EEF5C2E5 
+  92      6EF739F7 
+  92      F3
+  93 005d 7C0FF73E 		.ascii	"|\017\367>&\004\210\035\023\012B\027\350\365(=AA\200"
+  93      2604881D 
+  93      130A4217 
+  93      E8F5283D 
+  93      414180
+  94 0070 032984BC 		.ascii	"\003)\204\274V\014\300~\020+ \017\006\017l\343\002\206"
+  94      560CC07E 
+  94      102B200F 
+  94      060F6CE3 
+  94      0286
+  95 0082 C4ED9538 		.ascii	"\304\355\2258\256\031$\364X\034\330:C\2064P\351\343"
+  95      AE1924F4 
+  95      581CD83A 
+  95      43863450 
+  95      E9E3
+  96 0094 25BC2721 		.ascii	"%\274'!\030\204\032D\227-\215\025\203\225f\037[f\347"
+  96      18841A44 
+  96      972D8D15 
+  96      8395661F 
+  96      5B66E7
+  97 00a7 45180233 		.ascii	"E\030\0023k\027\252\327H\251\324N\264\240m\366\341\341"
+  97      6B17AAD7 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 7
+
+
+  97      48A9D44E 
+  97      B4A06DF6 
+  97      E1E1
+  98 00b9 0A843668 		.ascii	"\012\2046h\225\365\331\304\230]\2254\220\271'\367\201"
+  98      95F5D9C4 
+  98      985D9534 
+  98      90B927F7 
+  98      81
+  99 00ca AD67E229 		.ascii	"\255g\342)\264\002\211lx\375\034\273A\345Gj\342\243"
+  99      B402896C 
+  99      78FD1CBB 
+  99      41E5476A 
+  99      E2A3
+ 100 00dc 258B5505 		.ascii	"%\213U\005\2005\332^\370\233\253\340\177I\233\237\230"
+ 100      8035DA5E 
+ 100      F89BABE0 
+ 100      7F499B9F 
+ 100      98
+ 101 00ed D8ADE8BF 		.ascii	"\330\255\350\277IS\017t{}4\032\206gP\015\303PM\023\214"
+ 101      49530F74 
+ 101      7B7D341A 
+ 101      8667500D 
+ 101      C3504D13 
+ 102 0102 400FD0FA 		.ascii	"@\017\320\372\327\341\356\030\260G\024\3308\006\317"
+ 102      D7E1EE18 
+ 102      B04714D8 
+ 102      3806CF
+ 103 0111 698975F8 		.ascii	"i\211u\370\264\256\210\016\323+\177\226\252\004y\207"
+ 103      B4AE880E 
+ 103      D32B7F96 
+ 103      AA047987 
+ 104 0121 93C9B5E4 		.ascii	"\223\311\265\344\252\325 Gu\362\005'C\352\362\260\225"
+ 104      AAD52047 
+ 104      75F20527 
+ 104      43EAF2B0 
+ 104      95
+ 105 0132 93258090 		.ascii	"\223%\200\220 72\307%\231\327\036\227\311\224\201=2"
+ 105      203732C7 
+ 105      2599D71E 
+ 105      97C99481 
+ 105      3D32
+ 106 0144 9D8ECDDB 		.ascii	"\235\216\315\333\0142\254\223c\234\\\336\035\235\252"
+ 106      0C32AC93 
+ 106      639C5CDE 
+ 106      1D9DAA
+ 107 0153 E2A419C6 		.ascii	"\342\244\031\306\205\030\310\312\220\023\367\276\024"
+ 107      8518C8CA 
+ 107      9013F7BE 
+ 107      14
+ 108 0160 0F72D12F 		.ascii	"\017r\321/\304\337\003\251\244\305\020't\361%\027{\337"
+ 108      C4DF03A9 
+ 108      A4C51027 
+ 108      74F12517 
+ 108      7BDF
+ 109 0172 FF683773 		.ascii	"\377h7s\261\357\010D\344\276\267%\271\233\312f\004I"
+ 109      B1EF0844 
+ 109      E4BEB725 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 8
+
+
+ 109      B99BCA66 
+ 109      0449
+ 110 0184 7C9CEC8A 		.ascii	"|\234\354\212D\027*\0152\252\2231Nn~\350\374)B\332a"
+ 110      44172A0D 
+ 110      32AA9331 
+ 110      4E6E7EE8 
+ 110      FC2942DA 
+ 111 0199 5286DC91 		.ascii	"R\206\334\221bl\316\233\306\"\244\020\003\3711\262\357"
+ 111      626CCE9B 
+ 111      C622A410 
+ 111      03F931B2 
+ 111      EF
+ 112 01aa E5C47571 		.ascii	"\345\304uq\212\213\363}K\021\033\027\303\364\313\233"
+ 112      8A8BF37D 
+ 112      4B111B17 
+ 112      C3F4CB9B 
+ 113 01ba 962973D2 		.ascii	"\226)s\322,DC\235\345\302\274\305\315H\377\203 \030"
+ 113      2C44439D 
+ 113      E5C2BCC5 
+ 113      CD48FF83 
+ 113      2018
+ 114 01cc E68C6EBE 		.ascii	"\346\214n\276\342\346x.\357\027\033W{\001^\313\234\005"
+ 114      E2E6782E 
+ 114      EF171B57 
+ 114      7B015ECB 
+ 114      9C05
+ 115 01de 6986331D 		.ascii	"i\2063\035]f\371\306\271\331;\022\332\331\267\3637\272"
+ 115      5D66F9C6 
+ 115      B9D93B12 
+ 115      DAD9B7F3 
+ 115      37BA
+ 116 01f0 A97133B1 		.ascii	"\251q3\261\025\036\254\340\246\002\2632\245..z\177u"
+ 116      151EACE0 
+ 116      A602B332 
+ 116      A52E2E7A 
+ 116      7F75
+ 117 0202 1C102985 		.ascii	"\034\020)\205xw\367\333S\305\020\023\2728\307\305\374"
+ 117      7877F7DB 
+ 117      53C51013 
+ 117      BA38C7C5 
+ 117      FC
+ 118 0213 CCE77ECC 		.ascii	"\314\347~\314\305\023\360\226VV\241]+\332\366\346\200"
+ 118      C513F096 
+ 118      5656A15D 
+ 118      2BDAF6E6 
+ 118      80
+ 119 0224 96E3F1F5 		.ascii	"\226\343\361\365\357\026O\201\370\0119\244*\246\022"
+ 119      EF164F81 
+ 119      F80939A4 
+ 119      2AA612
+ 120 0233 A6C304EF 		.ascii	"\246\303\004\357\300\203T\245\014\255A\233\026\254\227"
+ 120      C08354A5 
+ 120      0CAD419B 
+ 120      16AC97
+ 121 0242 2343470A 		.ascii	"#CG\012\330(\321\301:y\311}\335\335r\245\325}\325\351"
+ 121      D828D1C1 
+ 121      3A79C97D 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 9
+
+
+ 121      DDDD72A5 
+ 121      D57DD5E9 
+ 122 0256 68BED1E2 		.ascii	"h\276\321\342r7\3249\232k\3177\270n66\265\266\272[\234"
+ 122      7237D439 
+ 122      9A6BCF37 
+ 122      B86E3636 
+ 122      B5B6BA5B 
+ 123 026b AEC66BCE 		.ascii	"\256\306k\316\263\247]\250\274\266\316q\371\242\335"
+ 123      B3A75DA8 
+ 123      BCB6CE71 
+ 123      F9A2DD
+ 124 027a 6E6F42FF 		.ascii	"noB\377\0014\227d\214"
+ 124      01349764 
+ 124      8C
+ 125              		.text
+ 126              		.section	.gnu.lto_.symbol_nodes.6240bb6e,"",%progbits
+ 127 0000 789C6361 		.ascii	"x\234ca`d\210`\000\002&\226z\006\206\011\347\030\030"
+ 127      60648860 
+ 127      00022696 
+ 127      7A068609 
+ 127      E71818
+ 128 0013 80D4CE86 		.ascii	"\200\324\316\206\205\015\314z\005\305\371\311\231y\231"
+ 128      850DCC7A 
+ 128      05C5F9C9 
+ 128      997999
+ 129 0022 254039B6 		.ascii	"%@9\266zF\230\334\256\006E$\031F\366z&\260\014\003C"
+ 129      7A4698DC 
+ 129      AE064524 
+ 129      1946F67A 
+ 129      26B00C03 
+ 130 0037 43830203 		.ascii	"C\203\002\003\0033\003\023\303\221\007\377\030\231\031"
+ 130      03330313 
+ 130      C39107FF 
+ 130      189919
+ 131 0046 19181EB5 		.ascii	"\031\030\036\265\275\221g\000\000Cl\0301"
+ 131      BD916700 
+ 131      00436C18 
+ 131      31
+ 132              		.text
+ 133              		.section	.gnu.lto_.refs.6240bb6e,"",%progbits
+ 134 0000 789C6361 		.ascii	"x\234ca`\004B \000\000\0009\000\007"
+ 134      60044220 
+ 134      00000039 
+ 134      0007
+ 135              		.text
+ 136              		.section	.gnu.lto_.decls.6240bb6e,"",%progbits
+ 137 0000 789C8D54 		.ascii	"x\234\215T]L\024W\024\276gfX`X\324\020\323\360\260I"
+ 137      5D4C1457 
+ 137      14BE6766 
+ 137      586058D4 
+ 137      10D3F0B0 
+ 138 0015 C117D697 		.ascii	"\301\027\326\227\255\202\317\255\3116Z\223\2465!\352"
+ 138      AD82CFAD 
+ 138      C9365A93 
+ 138      A63521EA 
+ 139 0025 8B09D1ED 		.ascii	"\213\011\321\355\250\033q\227.\303\303>\365\312\032"
+ 139      A81B7197 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 10
+
+
+ 139      2EC3C33E 
+ 139      F5CA1A
+ 140 0034 954A7569 		.ascii	"\225Juik\025\304\210\232\002\212?k\375\341G\300\005"
+ 140      6B15C488 
+ 140      9A028A3F 
+ 140      6BFDE147 
+ 140      C005
+ 141 0046 2B2068DD 		.ascii	"+ h\335]%QIY\252\321\304\324\244k\323Tm \333s\357\235"
+ 141      5D255149 
+ 141      59AAD1C4 
+ 141      D4A46BD3 
+ 141      546D20DB 
+ 142 005d D95D14A2 		.ascii	"\331]\024\2427s\357\235{\356w\316\371\316\317\214B\200"
+ 142      3773EF9D 
+ 142      7BEE77CE 
+ 142      F9CECF8C 
+ 142      4280
+ 143 006f B011CA22 		.ascii	"\260\021\312\"d\030\367.\234I\0342\356\353q\262\333"
+ 143      6418F72E 
+ 143      9C491C32 
+ 143      EEEB71B2 
+ 143      DB
+ 144 0080 B3440C26 		.ascii	"\263D\014&\033$\0027F\336\036\354.\333\320\213\340\274"
+ 144      1B240237 
+ 144      46DE1EEC 
+ 144      2EDBD08B 
+ 144      E0BC
+ 145 0092 83B30467 		.ascii	"\203\263\004g\324\2601j\340$\003;\227\015f\3332\207"
+ 145      D4B0316A 
+ 145      E024033B 
+ 145      970D66DB 
+ 145      3287
+ 146 00a4 8D18CE81 		.ascii	"\215\030\316\201\014\375a\303\306\233cF\202\337GNu\310"
+ 146      0CFD61C3 
+ 146      C69B6346 
+ 146      82DF474E 
+ 146      75C8
+ 147 00b6 FF4850A2 		.ascii	"\377HP\242\002\213d!\212\316?\357~\235/D\014\021\177"
+ 147      028B6421 
+ 147      8ACE3FEF 
+ 147      7E9D2F44 
+ 147      0C117F
+ 148 00c9 DDBECA71 		.ascii	"\335\276\312q\206\342\010R*Ii\325\321\370\223\277s\345"
+ 148      86E20852 
+ 148      2A4969D5 
+ 148      D1F893BF 
+ 148      73E5
+ 149 00db 3C0E8AEE 		.ascii	"<\016\212\356\012533\005*(x|q\273\351\361\002<.V\241"
+ 149      0A353333 
+ 149      052A2878 
+ 149      7C71BBE9 
+ 149      F1023C2E 
+ 150 00f1 68469262 		.ascii	"hF\222b\215\317\343\026P\355{)\255\245\301\000-\370"
+ 150      8DCFE316 
+ 150      50ED7B29 
+ 150      ADA5C100 
+ 150      2DF8
+ARM GAS  e:\temp\ccP4ef6T.s 			page 11
+
+
+ 151 0103 8CC019B0 		.ascii	"\214\300\031\260A\007\330\010\234\003;su\012\034\004"
+ 151      4107D808 
+ 151      9C033B73 
+ 151      750A1C04 
+ 152 0113 DA51D886 		.ascii	"\332Q\330\206\302V\346nj\274\353\343nJ\027\301YP\341"
+ 152      C256E66E 
+ 152      6ABCEBE3 
+ 152      6E4A17C1 
+ 152      5950E1
+ 153 0126 34C81C82 		.ascii	"4\310\034\202I.Q\331\212Bt\224<z\256=w\002\036\200\004"
+ 153      492E51D9 
+ 153      8A427494 
+ 153      3C7AAE3D 
+ 153      77021E80 
+ 154 013b 466D0880 		.ascii	"Fm\010\200X\201O\"&?\342\213\304W\222\022\2456\302V"
+ 154      58814F22 
+ 154      263FE28B 
+ 154      C4579212 
+ 154      A536C256 
+ 155 014f 22F05C96 		.ascii	"\"\360\\\2266\306\037sO\232\203\033I[\007C\011R\014"
+ 155      36C61F73 
+ 155      4F9A831B 
+ 155      495B0743 
+ 155      09520C
+ 156 0162 8496B897 		.ascii	"\204\226\270\227\014\030\021\306\245\264B\206=A7\203"
+ 156      0C1811C6 
+ 156      A5B44286 
+ 156      3D413783 
+ 157 0172 13CC8E09 		.ascii	"\023\314\216\011\314\304wE'\226\312+x\336;\256\374\334"
+ 157      CCC47745 
+ 157      2796CA2B 
+ 157      78DE3BAE 
+ 157      FCDC
+ 158 0184 0322EFB9 		.ascii	"\003\"\357\271\254t/\002\2559\352^^,\226f&7\023M\340"
+ 158      AC742F02 
+ 158      AD39EA5E 
+ 158      5E2C9666 
+ 158      2637134D 
+ 159 0199 17C0CCC1 		.ascii	"\027\300\314\301G6\270\200GD\317$\"3V\241\314ry\367"
+ 159      4736B880 
+ 159      4744CF24 
+ 159      223356A1 
+ 159      CC7279F7 
+ 160 01ad E9F15D56 		.ascii	"\351\361]VQ\264\010\273\036\177\325\367\237U\376\204"
+ 160      51B408BB 
+ 160      1E7FD5F7 
+ 160      9F55FE84 
+ 161 01bd F9512ED6 		.ascii	"\371Q.\326\306\217/\000\273\015\320\030\250\255f7\020"
+ 161      C68F2F00 
+ 161      BB0DD018 
+ 161      A8AD6637 
+ 161      10
+ 162 01ce E8C6DA5C 		.ascii	"\350\306\332\\\006\331\354\250&\212\316\023\33701\276"
+ 162      06D9ECA8 
+ 162      268ACE13 
+ 162      DF3031BE 
+ 163 01de E7F09D57 		.ascii	"\347\360\235W=q\202Z\012\011\224\331`\031\326\374\012"
+ARM GAS  e:\temp\ccP4ef6T.s 			page 12
+
+
+ 163      3D71825A 
+ 163      0A0994D9 
+ 163      6019D6FC 
+ 163      0A
+ 164 01ef D69C69F2 		.ascii	"\326\234i\362\242w\241\315N\301h\367P}}~A\3200\277\022"
+ 164      A277A1CD 
+ 164      4EC168F7 
+ 164      507D7D7E 
+ 164      41D030BF 
+ 165 0204 38E812DE 		.ascii	"8\350\022\336_\344\001\364@\201\031\006CO?\353\254\313"
+ 165      5FE401F4 
+ 165      40811906 
+ 165      434F3FEB 
+ 165      ACCB
+ 166 0216 2DFEF418 		.ascii	"-\376\364\030=\\\304\257P\024\332\323\027\227\024lR"
+ 166      3D5CC4AF 
+ 166      5014DAD3 
+ 166      1797146C 
+ 166      52
+ 167 0227 B80AC51C 		.ascii	"\270\012\305\034\364d\347\320\241|\371K\236\255\266"
+ 167      F464E7D0 
+ 167      A17CF94B 
+ 167      9EADB6
+ 168 0236 E0E36105 		.ascii	"\340\343a\005o\241\017\273\251\027\024\016\270\221|"
+ 168      6FA10FBB 
+ 168      A917140E 
+ 168      B8917C
+ 169 0245 195E28B2 		.ascii	"\031^(\262 \3411\226\270u4Oda\021\036\377\354oL\346"
+ 169      20E13196 
+ 169      B875344F 
+ 169      6461111E 
+ 169      FFEC6F4C 
+ 170 025a 17FEC418 		.ascii	"\027\376\304\030\321\000-\222`\375\007\020FB\3278\241"
+ 170      D1002D92 
+ 170      60FD0710 
+ 170      4642D738 
+ 170      A1
+ 171 026b 0128C475 		.ascii	"\001(\304u\263\"\3704\035\273?\226\263\244\205\206C"
+ 171      B322F834 
+ 171      1DBB3F96 
+ 171      B3A48586 
+ 171      43
+ 172 027c 742A3E54 		.ascii	"t*>T\031;\271\233FPm%\307A\310\354`\350\007\205\235"
+ 172      193BB99B 
+ 172      46506D25 
+ 172      C741C8EC 
+ 172      60E80785 
+ 173 0291 5849CFC3 		.ascii	"XI\317\303\004\026y\020\226\240\372\303=\373\357\201"
+ 173      04167910 
+ 173      96A0FAC3 
+ 173      3DFBEF81 
+ 174 02a1 4C01DE19 		.ascii	"L\001\336\031\333\257Fl\263\342\271a\304s\244\241\367"
+ 174      DBAF466C 
+ 174      B3E2B961 
+ 174      C473A4A1 
+ 174      F7
+ 175 02b2 2F0BB268 		.ascii	"/\013\262h\011\321\360\017\007\344F\032\256E\022\022"
+ARM GAS  e:\temp\ccP4ef6T.s 			page 13
+
+
+ 175      09D1F00F 
+ 175      07E4461A 
+ 175      AE451212 
+ 176 02c2 E7703DC5 		.ascii	"\347p=\305a\0109\\\317\3440\3149\364O?;\000\362w\202"
+ 176      6108395C 
+ 176      CFE430CC 
+ 176      39F44F3F 
+ 176      3B00F277 
+ 177 02d7 4372EA52 		.ascii	"Cr\352RP8d_ F\311\232\2429q7o\336|\214\362|\334\004"
+ 177      5038645F 
+ 177      2046C99A 
+ 177      A2397137 
+ 177      6FDE7C8C 
+ 178 02ef 2321E3D3 		.ascii	"#!\343\323\373'\263\221\312\024~\314?\356\3634\004Z"
+ 178      FB27B391 
+ 178      CA147ECC 
+ 178      3FEEF334 
+ 178      045A
+ 179 0301 EC0C0223 		.ascii	"\354\014\002#\351\217y\304\350\035\030\343\376\353\376"
+ 179      E98F79C4 
+ 179      E81D18E3 
+ 179      FEEBFE
+ 180 0310 38F8308B 		.ascii	"8\3700\2135p\340\275\376\023\250\3213I\233\263\344A"
+ 180      3570E0BD 
+ 180      FE13A8D1 
+ 180      33499BB3 
+ 180      E441
+ 181 0322 CE581ADF 		.ascii	"\316X\032\337\327yX\006\273j\374?Z\3265\324\261\320"
+ 181      D7795806 
+ 181      BB6AFC3F 
+ 181      5AD635D4 
+ 181      B1D0
+ 182 0334 EF20FDDB 		.ascii	"\357 \375\333i\237\267x\003\315\351\344\267\271\235"
+ 182      699FB778 
+ 182      03CDE9E4 
+ 182      B7B99D
+ 183 0343 FCFBEA66 		.ascii	"\374\373\352f\275\325\372m\352\367\305-\246?\254\010"
+ 183      BDD5FA6D 
+ 183      EAF7C52D 
+ 183      A63FAC08 
+ 184 0353 58790CB8 		.ascii	"Xy\014\270#\370\321\344\351\336Y`\026r\032\0345\300"
+ 184      23F8D1E4 
+ 184      E9DE5960 
+ 184      16721A1C 
+ 184      35C0
+ 185 0365 510EFEFE 		.ascii	"Q\016\376\376`\240-;\023<0\013\034\003\253\311\032_"
+ 185      60A02D3B 
+ 185      133C300B 
+ 185      1C03ABC9 
+ 185      1A5F
+ 186 0377 49CEEA2F 		.ascii	"I\316\352/\326\0259\227/'\226\032\267G/+-^\255y4\337"
+ 186      D6153997 
+ 186      2F27961A 
+ 186      B7472F2B 
+ 186      2D5EAD79 
+ 187 038d 265DFBAA 		.ascii	"&]\373\252\242\334[\343si\033\327\226{\235+6\272\374"
+ 187      A2DC5BE3 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 14
+
+
+ 187      73691BD7 
+ 187      967B9D2B 
+ 187      36BAFC
+ 188 03a0 BABF4AAB 		.ascii	"\272\277J\253vl#\252\263\322\353\332^\256\3515U\212"
+ 188      766C23AA 
+ 188      B3D2EBDA 
+ 188      5EAEE935 
+ 188      558A
+ 189 03b2 6BDB269F 		.ascii	"k\333&\237\352\250\252\366\272\334\036\267N\262\253"
+ 189      EAA8AAF6 
+ 189      BADC1EB7 
+ 189      4EB2AB
+ 190 03c1 3597EEF6 		.ascii	"5\227\356\366z\354\363\032\331\342\326u\315W\341\332"
+ 190      7AECF31A 
+ 190      D9E2D675 
+ 190      CD57E1DA 
+ 191 03d1 B2B5A2D4 		.ascii	"\262\265\242\324\341\"\326L\311b\247\277\334_\355\254"
+ 191      E122D64C 
+ 191      C962A7BF 
+ 191      DC5FEDAC 
+ 192 03e1 DCBEC1E7 		.ascii	"\334\276\301\347\326\2655;\274\253|\332\327\037\316"
+ 192      D6B5353B 
+ 192      BCAB7CDA 
+ 192      D71FCE
+ 193 03f0 63CAE9FF 		.ascii	"c\312\351\377\334\275\031\331d\371\264\255e\245\377"
+ 193      DCBD19D9 
+ 193      64F9B4AD 
+ 193      65A5FF
+ 194 03ff 03E7A3DE 		.ascii	"\003\347\243\336\350"
+ 194      E8
+ 195              		.text
+ 196              		.section	.gnu.lto_.symtab.6240bb6e,"",%progbits
+ 197 0000 63796669 		.ascii	"cyfitter_cfg\000"
+ 197      74746572 
+ 197      5F636667 
+ 197      00
+ 198 000d 00       		.ascii	"\000"
+ 199 000e 00       		.ascii	"\000"
+ 200 000f 00       		.ascii	"\000"
+ 201 0010 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 201      00000000 
+ 202 0018 C7000000 		.ascii	"\307\000\000\000"
+ 203 001c 43795379 		.ascii	"CySysClkWriteImoFreq\000"
+ 203      73436C6B 
+ 203      57726974 
+ 203      65496D6F 
+ 203      46726571 
+ 204 0031 00       		.ascii	"\000"
+ 205 0032 02       		.ascii	"\002"
+ 206 0033 00       		.ascii	"\000"
+ 207 0034 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 207      00000000 
+ 208 003c CB000000 		.ascii	"\313\000\000\000"
+ 209              		.text
+ 210              		.section	.gnu.lto_.opts,"",%progbits
+ 211 0000 272D666D 		.ascii	"'-fmath-errno' '-fsigned-zeros' '-ftrapping-math' '"
+ 211      6174682D 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 15
+
+
+ 211      6572726E 
+ 211      6F272027 
+ 211      2D667369 
+ 212 0033 2D666E6F 		.ascii	"-fno-trapv' '-fno-openmp' '-fno-openacc' '-mcpu=cor"
+ 212      2D747261 
+ 212      70762720 
+ 212      272D666E 
+ 212      6F2D6F70 
+ 213 0066 7465782D 		.ascii	"tex-m0' '-mthumb' '-g' '-Os' '-Werror' '-ffunction-"
+ 213      6D302720 
+ 213      272D6D74 
+ 213      68756D62 
+ 213      2720272D 
+ 214 0099 73656374 		.ascii	"sections' '-ffat-lto-objects' '-finline-functions' "
+ 214      696F6E73 
+ 214      2720272D 
+ 214      66666174 
+ 214      2D6C746F 
+ 215 00cc 272D666C 		.ascii	"'-flto' '-fno-strict-aliasing'\000"
+ 215      746F2720 
+ 215      272D666E 
+ 215      6F2D7374 
+ 215      72696374 
+ 216              		.text
+ 217              		.cfi_sections	.debug_frame
+ 218              		.section	.psocinit,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	cyfitter_cfg
+ 221              		.code	16
+ 222              		.thumb_func
+ 223              		.type	cyfitter_cfg, %function
+ 224              	cyfitter_cfg:
+ 225              	.LFB4:
+ 226              		.file 1 "Generated_Source\\PSoC4\\cyfitter_cfg_2.c"
+   1:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+   2:Generated_Source\PSoC4/cyfitter_cfg_2.c **** /*******************************************************************************
+   3:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * File Name: cyfitter_cfg.c
+   4:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * 
+   5:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * PSoC Creator  4.2
+   6:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+   7:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Description:
+   8:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * This file contains device initialization code.
+   9:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Except for the user defined sections in CyClockStartupError(), this file should not be modified.
+  10:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * This file is automatically generated by PSoC Creator.
+  11:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+  12:Generated_Source\PSoC4/cyfitter_cfg_2.c **** ********************************************************************************
+  13:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Copyright (c) 2007-2018 Cypress Semiconductor.  All rights reserved.
+  14:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  15:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  16:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * the software package with which this file was provided.
+  17:Generated_Source\PSoC4/cyfitter_cfg_2.c **** ********************************************************************************/
+  18:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  19:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include <string.h>
+  20:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include "cytypes.h"
+  21:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include "cydevice_trm.h"
+  22:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include "cyfitter.h"
+  23:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include "CyLib.h"
+ARM GAS  e:\temp\ccP4ef6T.s 			page 16
+
+
+  24:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include "cyfitter_cfg.h"
+  25:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #include "cyapicallbacks.h"
+  26:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  27:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  28:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #if defined(__GNUC__) || defined(__ARMCC_VERSION)
+  29:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYPACKED 
+  30:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYPACKED_ATTR __attribute__ ((packed))
+  31:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYALIGNED __attribute__ ((aligned))
+  32:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CY_CFG_UNUSED __attribute__ ((unused))
+  33:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #ifndef CY_CFG_SECTION
+  34:Generated_Source\PSoC4/cyfitter_cfg_2.c ****         #define CY_CFG_SECTION __attribute__ ((section(".psocinit")))
+  35:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #endif
+  36:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     
+  37:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #if defined(__ARMCC_VERSION)
+  38:Generated_Source\PSoC4/cyfitter_cfg_2.c ****         #define CY_CFG_MEMORY_BARRIER() __memory_changed()
+  39:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #else
+  40:Generated_Source\PSoC4/cyfitter_cfg_2.c ****         #define CY_CFG_MEMORY_BARRIER() __sync_synchronize()
+  41:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #endif
+  42:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     
+  43:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #elif defined(__ICCARM__)
+  44:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #include <intrinsics.h>
+  45:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  46:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYPACKED __packed
+  47:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYPACKED_ATTR 
+  48:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYALIGNED _Pragma("data_alignment=4")
+  49:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CY_CFG_UNUSED _Pragma("diag_suppress=Pe177")
+  50:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CY_CFG_SECTION _Pragma("location=\".psocinit\"")
+  51:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     
+  52:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CY_CFG_MEMORY_BARRIER() __DMB()
+  53:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     
+  54:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #else
+  55:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #error Unsupported toolchain
+  56:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif
+  57:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  58:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #ifndef CYCODE
+  59:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYCODE
+  60:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif
+  61:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #ifndef CYDATA
+  62:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYDATA
+  63:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif
+  64:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #ifndef CYFAR
+  65:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYFAR
+  66:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif
+  67:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #ifndef CYXDATA
+  68:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     #define CYXDATA
+  69:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif
+  70:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  71:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  72:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+  73:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CYMEMZERO(void *s, size_t n);
+  74:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+  75:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CYMEMZERO(void *s, size_t n)
+  76:Generated_Source\PSoC4/cyfitter_cfg_2.c **** {
+  77:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	(void)memset(s, 0, n);
+  78:Generated_Source\PSoC4/cyfitter_cfg_2.c **** }
+  79:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+  80:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CYCONFIGCPY(void *dest, const void *src, size_t n);
+ARM GAS  e:\temp\ccP4ef6T.s 			page 17
+
+
+  81:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+  82:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CYCONFIGCPY(void *dest, const void *src, size_t n)
+  83:Generated_Source\PSoC4/cyfitter_cfg_2.c **** {
+  84:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	(void)memcpy(dest, src, n);
+  85:Generated_Source\PSoC4/cyfitter_cfg_2.c **** }
+  86:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+  87:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CYCONFIGCPYCODE(void *dest, const void *src, size_t n);
+  88:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+  89:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CYCONFIGCPYCODE(void *dest, const void *src, size_t n)
+  90:Generated_Source\PSoC4/cyfitter_cfg_2.c **** {
+  91:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	(void)memcpy(dest, src, n);
+  92:Generated_Source\PSoC4/cyfitter_cfg_2.c **** }
+  93:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  94:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  95:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  96:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+  97:Generated_Source\PSoC4/cyfitter_cfg_2.c **** /* Clock startup error codes                                                   */
+  98:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #define CYCLOCKSTART_NO_ERROR    0u
+  99:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #define CYCLOCKSTART_XTAL_ERROR  1u
+ 100:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #define CYCLOCKSTART_32KHZ_ERROR 2u
+ 101:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #define CYCLOCKSTART_PLL_ERROR   3u
+ 102:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #define CYCLOCKSTART_FLL_ERROR   4u
+ 103:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #define CYCLOCKSTART_WCO_ERROR   5u
+ 104:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 105:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 106:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #ifdef CY_NEED_CYCLOCKSTARTUPERROR
+ 107:Generated_Source\PSoC4/cyfitter_cfg_2.c **** /*******************************************************************************
+ 108:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Function Name: CyClockStartupError
+ 109:Generated_Source\PSoC4/cyfitter_cfg_2.c **** ********************************************************************************
+ 110:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Summary:
+ 111:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  If an error is encountered during clock configuration (crystal startup error,
+ 112:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  PLL lock error, etc.), the system will end up here.  Unless reimplemented by
+ 113:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  the customer, this function will stop in an infinite loop.
+ 114:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 115:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Parameters:
+ 116:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   void
+ 117:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 118:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Return:
+ 119:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   void
+ 120:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 121:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *******************************************************************************/
+ 122:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+ 123:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CyClockStartupError(uint8 errorCode);
+ 124:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_UNUSED
+ 125:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void CyClockStartupError(uint8 errorCode)
+ 126:Generated_Source\PSoC4/cyfitter_cfg_2.c **** {
+ 127:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /* To remove the compiler warning if errorCode not used.                */
+ 128:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     errorCode = errorCode;
+ 129:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 130:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /* If we have a clock startup error (bad MHz crystal, PLL lock, etc.),  */
+ 131:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /* we will end up here to allow the customer to implement something to  */
+ 132:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /* deal with the clock condition.                                       */
+ 133:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 134:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #ifdef CY_CFG_CLOCK_STARTUP_ERROR_CALLBACK
+ 135:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     CY_CFG_Clock_Startup_ErrorCallback();
+ 136:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #else
+ 137:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /*  If not using CY_CFG_CLOCK_STARTUP_ERROR_CALLBACK, place your clock startup code here. */
+ARM GAS  e:\temp\ccP4ef6T.s 			page 18
+
+
+ 138:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /* `#START CyClockStartupError` */
+ 139:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 140:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 141:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 142:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     /* `#END` */
+ 143:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 144:Generated_Source\PSoC4/cyfitter_cfg_2.c ****     while(1) {}
+ 145:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif /* CY_CFG_CLOCK_STARTUP_ERROR_CALLBACK */
+ 146:Generated_Source\PSoC4/cyfitter_cfg_2.c **** }
+ 147:Generated_Source\PSoC4/cyfitter_cfg_2.c **** #endif
+ 148:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 149:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 150:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 151:Generated_Source\PSoC4/cyfitter_cfg_2.c **** /*******************************************************************************
+ 152:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Function Name: ClockSetup
+ 153:Generated_Source\PSoC4/cyfitter_cfg_2.c **** ********************************************************************************
+ 154:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 155:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Summary:
+ 156:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   Performs the initialization of all of the clocks in the device based on the
+ 157:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   settings in the Clock tab of the DWR.  This includes enabling the requested
+ 158:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   clocks and setting the necessary dividers to produce the desired frequency. 
+ 159:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 160:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Parameters:
+ 161:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   void
+ 162:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 163:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Return:
+ 164:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   void
+ 165:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 166:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *******************************************************************************/
+ 167:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void ClockSetup(void);
+ 168:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_SECTION
+ 169:Generated_Source\PSoC4/cyfitter_cfg_2.c **** static void ClockSetup(void)
+ 170:Generated_Source\PSoC4/cyfitter_cfg_2.c **** {
+ 171:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 172:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Set Flash Cycles based on max possible frequency in case a glitch occurs during ClockSetup(). *
+ 173:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void CYXDATA *)(CYREG_CPUSS_FLASH_CTL), (0x0012u));
+ 174:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Update IMO to new clock speed. */
+ 175:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CySysClkWriteImoFreq(48u);
+ 176:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 177:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Setup phase aligned clocks */
+ 178:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_16_CTL0, 0x00005F00u);
+ 179:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF40u);
+ 180:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL5, 0x00004F00u);
+ 181:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF05u);
+ 182:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL4, 0x00002F00u);
+ 183:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF04u);
+ 184:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL3, 0x00000300u);
+ 185:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF03u);
+ 186:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL2, 0x00000300u);
+ 187:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF02u);
+ 188:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL1, 0x00000200u);
+ 189:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF01u);
+ 190:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL0, 0x00000100u);
+ 191:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF00u);
+ 192:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 193:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* CYDEV_CLK_SELECT Starting address: CYDEV_CLK_SELECT */
+ 194:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_CLK_SELECT), 0x00000040u);
+ARM GAS  e:\temp\ccP4ef6T.s 			page 19
+
+
+ 195:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 196:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* CYDEV_PERI_PCLK_CTL1 Starting address: CYDEV_PERI_PCLK_CTL1 */
+ 197:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_PERI_PCLK_CTL1), 0x00000001u);
+ 198:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 199:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* CYDEV_PERI_PCLK_CTL0 Starting address: CYDEV_PERI_PCLK_CTL0 */
+ 200:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_PERI_PCLK_CTL0), 0x00000000u);
+ 201:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 202:Generated_Source\PSoC4/cyfitter_cfg_2.c **** }
+ 203:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 204:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 205:Generated_Source\PSoC4/cyfitter_cfg_2.c **** /* Analog API Functions */
+ 206:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 207:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 208:Generated_Source\PSoC4/cyfitter_cfg_2.c **** /*******************************************************************************
+ 209:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Function Name: cyfitter_cfg
+ 210:Generated_Source\PSoC4/cyfitter_cfg_2.c **** ********************************************************************************
+ 211:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Summary:
+ 212:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  This function is called by the start-up code for the selected device. It
+ 213:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  performs all of the necessary device configuration based on the design
+ 214:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  settings.  This includes settings from the Design Wide Resources (DWR) such
+ 215:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *  as Clocks and Pins as well as any component configuration that is necessary.
+ 216:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 217:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Parameters:
+ 218:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   void
+ 219:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 220:Generated_Source\PSoC4/cyfitter_cfg_2.c **** * Return:
+ 221:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *   void
+ 222:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *
+ 223:Generated_Source\PSoC4/cyfitter_cfg_2.c **** *******************************************************************************/
+ 224:Generated_Source\PSoC4/cyfitter_cfg_2.c **** CY_CFG_SECTION
+ 225:Generated_Source\PSoC4/cyfitter_cfg_2.c **** void cyfitter_cfg(void)
+ 226:Generated_Source\PSoC4/cyfitter_cfg_2.c **** {
+ 227              		.loc 1 226 0
+ 228              		.cfi_startproc
+ 229              		@ args = 0, pretend = 0, frame = 0
+ 230              		@ frame_needed = 0, uses_anonymous_args = 0
+ 231 0000 10B5     		push	{r4, lr}
+ 232              		.cfi_def_cfa_offset 8
+ 233              		.cfi_offset 4, -8
+ 234              		.cfi_offset 14, -4
+ 227:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Disable interrupts by default. Let user enable if/when they want. */
+ 228:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CyGlobalIntDisable;
+ 235              		.loc 1 228 0
+ 236              		.syntax divided
+ 237              	@ 228 "Generated_Source\PSoC4\cyfitter_cfg_2.c" 1
+ 238 0002 72B6     		CPSID   i
+ 239              	@ 0 "" 2
+ 229:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 230:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	{
+ 231:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 		/* HSIOM Starting address: CYDEV_HSIOM_BASE */
+ 232:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 		CY_SET_REG32((void *)(CYREG_HSIOM_PORT_SEL1), 0x00000FF0u);
+ 240              		.loc 1 232 0
+ 241              		.thumb
+ 242              		.syntax unified
+ 243 0004 FF22     		movs	r2, #255
+ 244 0006 2A4B     		ldr	r3, .L2
+ 245 0008 1201     		lsls	r2, r2, #4
+ARM GAS  e:\temp\ccP4ef6T.s 			page 20
+
+
+ 246 000a 1A60     		str	r2, [r3]
+ 233:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 		CY_SET_REG32((void *)(CYREG_HSIOM_PORT_SEL5), 0x000000FFu);
+ 247              		.loc 1 233 0
+ 248 000c FF22     		movs	r2, #255
+ 249 000e 294B     		ldr	r3, .L2+4
+ 250              	.LBB4:
+ 251              	.LBB5:
+ 175:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 252              		.loc 1 175 0
+ 253 0010 3020     		movs	r0, #48
+ 254              	.LBE5:
+ 255              	.LBE4:
+ 256              		.loc 1 233 0
+ 257 0012 1A60     		str	r2, [r3]
+ 234:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 235:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	}
+ 236:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 237:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Perform second pass device configuration. These items must be configured in specific order afte
+ 238:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* IOPINS0_1 Starting address: CYDEV_GPIO_PRT1_BASE */
+ 239:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYDEV_GPIO_PRT1_BASE), 0x00000006u);
+ 258              		.loc 1 239 0
+ 259 0014 284B     		ldr	r3, .L2+8
+ 260 0016 F93A     		subs	r2, r2, #249
+ 261 0018 1A60     		str	r2, [r3]
+ 240:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT1_PC), 0x00000D21u);
+ 262              		.loc 1 240 0
+ 263 001a 284A     		ldr	r2, .L2+12
+ 264 001c 284B     		ldr	r3, .L2+16
+ 241:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 242:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* IOPINS0_2 Starting address: CYDEV_GPIO_PRT2_BASE */
+ 243:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYDEV_GPIO_PRT2_BASE), 0x00000020u);
+ 244:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT2_PC), 0x00020030u);
+ 245:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 246:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* IOPINS0_3 Starting address: CYDEV_GPIO_PRT3_BASE */
+ 247:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT3_PC), 0x00005005u);
+ 248:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 249:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* IOPINS0_5 Starting address: CYDEV_GPIO_PRT5_BASE */
+ 250:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYDEV_GPIO_PRT5_BASE), 0x00000003u);
+ 251:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT5_PC), 0x00000024u);
+ 252:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 253:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 254:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Setup clocks based on selections from Clock DWR */
+ 255:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	ClockSetup();
+ 256:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 257:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 258:Generated_Source\PSoC4/cyfitter_cfg_2.c **** }
+ 265              		.loc 1 258 0
+ 266              		@ sp needed
+ 240:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT1_PC), 0x00000D21u);
+ 267              		.loc 1 240 0
+ 268 001e 1A60     		str	r2, [r3]
+ 243:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT2_PC), 0x00020030u);
+ 269              		.loc 1 243 0
+ 270 0020 2022     		movs	r2, #32
+ 271 0022 284B     		ldr	r3, .L2+20
+ 272 0024 1A60     		str	r2, [r3]
+ 244:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 21
+
+
+ 273              		.loc 1 244 0
+ 274 0026 284A     		ldr	r2, .L2+24
+ 275 0028 284B     		ldr	r3, .L2+28
+ 276 002a 1A60     		str	r2, [r3]
+ 247:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 277              		.loc 1 247 0
+ 278 002c 284A     		ldr	r2, .L2+32
+ 279 002e 294B     		ldr	r3, .L2+36
+ 280 0030 1A60     		str	r2, [r3]
+ 250:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)(CYREG_GPIO_PRT5_PC), 0x00000024u);
+ 281              		.loc 1 250 0
+ 282 0032 0322     		movs	r2, #3
+ 283 0034 284B     		ldr	r3, .L2+40
+ 284 0036 1A60     		str	r2, [r3]
+ 251:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 285              		.loc 1 251 0
+ 286 0038 284B     		ldr	r3, .L2+44
+ 287 003a 2132     		adds	r2, r2, #33
+ 288 003c 1A60     		str	r2, [r3]
+ 289              	.LBB7:
+ 290              	.LBB6:
+ 173:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	/* Update IMO to new clock speed. */
+ 291              		.loc 1 173 0
+ 292 003e 284B     		ldr	r3, .L2+48
+ 293 0040 123A     		subs	r2, r2, #18
+ 294 0042 1A60     		str	r2, [r3]
+ 175:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 295              		.loc 1 175 0
+ 296 0044 FFF7FEFF 		bl	CySysClkWriteImoFreq
+ 297              	.LVL0:
+ 178:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF40u);
+ 298              		.loc 1 178 0
+ 299 0048 BE22     		movs	r2, #190
+ 180:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF05u);
+ 300              		.loc 1 180 0
+ 301 004a 9E21     		movs	r1, #158
+ 178:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF40u);
+ 302              		.loc 1 178 0
+ 303 004c 254B     		ldr	r3, .L2+52
+ 304 004e D201     		lsls	r2, r2, #7
+ 305 0050 1A60     		str	r2, [r3]
+ 179:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL5, 0x00004F00u);
+ 306              		.loc 1 179 0
+ 307 0052 254B     		ldr	r3, .L2+56
+ 308 0054 254A     		ldr	r2, .L2+60
+ 180:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF05u);
+ 309              		.loc 1 180 0
+ 310 0056 C901     		lsls	r1, r1, #7
+ 179:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL5, 0x00004F00u);
+ 311              		.loc 1 179 0
+ 312 0058 1A60     		str	r2, [r3]
+ 180:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF05u);
+ 313              		.loc 1 180 0
+ 314 005a 254A     		ldr	r2, .L2+64
+ 315 005c 1160     		str	r1, [r2]
+ 182:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF04u);
+ 316              		.loc 1 182 0
+ARM GAS  e:\temp\ccP4ef6T.s 			page 22
+
+
+ 317 005e BC21     		movs	r1, #188
+ 181:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL4, 0x00002F00u);
+ 318              		.loc 1 181 0
+ 319 0060 244A     		ldr	r2, .L2+68
+ 182:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF04u);
+ 320              		.loc 1 182 0
+ 321 0062 8901     		lsls	r1, r1, #6
+ 181:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL4, 0x00002F00u);
+ 322              		.loc 1 181 0
+ 323 0064 1A60     		str	r2, [r3]
+ 182:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF04u);
+ 324              		.loc 1 182 0
+ 325 0066 244A     		ldr	r2, .L2+72
+ 326 0068 1160     		str	r1, [r2]
+ 183:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL3, 0x00000300u);
+ 327              		.loc 1 183 0
+ 328 006a 244A     		ldr	r2, .L2+76
+ 184:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF03u);
+ 329              		.loc 1 184 0
+ 330 006c 2449     		ldr	r1, .L2+80
+ 183:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL3, 0x00000300u);
+ 331              		.loc 1 183 0
+ 332 006e 1A60     		str	r2, [r3]
+ 184:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF03u);
+ 333              		.loc 1 184 0
+ 334 0070 C022     		movs	r2, #192
+ 335 0072 9200     		lsls	r2, r2, #2
+ 336 0074 0A60     		str	r2, [r1]
+ 185:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL2, 0x00000300u);
+ 337              		.loc 1 185 0
+ 338 0076 2349     		ldr	r1, .L2+84
+ 339 0078 1960     		str	r1, [r3]
+ 186:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF02u);
+ 340              		.loc 1 186 0
+ 341 007a 2349     		ldr	r1, .L2+88
+ 342 007c 0A60     		str	r2, [r1]
+ 188:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF01u);
+ 343              		.loc 1 188 0
+ 344 007e 8021     		movs	r1, #128
+ 187:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL1, 0x00000200u);
+ 345              		.loc 1 187 0
+ 346 0080 224A     		ldr	r2, .L2+92
+ 188:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF01u);
+ 347              		.loc 1 188 0
+ 348 0082 8900     		lsls	r1, r1, #2
+ 187:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL1, 0x00000200u);
+ 349              		.loc 1 187 0
+ 350 0084 1A60     		str	r2, [r3]
+ 188:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF01u);
+ 351              		.loc 1 188 0
+ 352 0086 224A     		ldr	r2, .L2+96
+ 353 0088 1160     		str	r1, [r2]
+ 189:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL0, 0x00000100u);
+ 354              		.loc 1 189 0
+ 355 008a 224A     		ldr	r2, .L2+100
+ 190:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF00u);
+ 356              		.loc 1 190 0
+ARM GAS  e:\temp\ccP4ef6T.s 			page 23
+
+
+ 357 008c 0139     		subs	r1, r1, #1
+ 189:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_8_CTL0, 0x00000100u);
+ 358              		.loc 1 189 0
+ 359 008e 1A60     		str	r2, [r3]
+ 190:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 	CY_SET_REG32((void *)CYREG_PERI_DIV_CMD, 0x8000FF00u);
+ 360              		.loc 1 190 0
+ 361 0090 214A     		ldr	r2, .L2+104
+ 362 0092 FF39     		subs	r1, r1, #255
+ 363 0094 1160     		str	r1, [r2]
+ 191:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 364              		.loc 1 191 0
+ 365 0096 214A     		ldr	r2, .L2+108
+ 366 0098 1A60     		str	r2, [r3]
+ 194:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 367              		.loc 1 194 0
+ 368 009a 4022     		movs	r2, #64
+ 369 009c 204B     		ldr	r3, .L2+112
+ 370 009e 1A60     		str	r2, [r3]
+ 197:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 371              		.loc 1 197 0
+ 372 00a0 204B     		ldr	r3, .L2+116
+ 373 00a2 3F3A     		subs	r2, r2, #63
+ 374 00a4 1A60     		str	r2, [r3]
+ 200:Generated_Source\PSoC4/cyfitter_cfg_2.c **** 
+ 375              		.loc 1 200 0
+ 376 00a6 0022     		movs	r2, #0
+ 377 00a8 1F4B     		ldr	r3, .L2+120
+ 378 00aa 1A60     		str	r2, [r3]
+ 379              	.LBE6:
+ 380              	.LBE7:
+ 381              		.loc 1 258 0
+ 382 00ac 10BD     		pop	{r4, pc}
+ 383              	.L3:
+ 384 00ae C046     		.align	2
+ 385              	.L2:
+ 386 00b0 00010240 		.word	1073873152
+ 387 00b4 00050240 		.word	1073874176
+ 388 00b8 00010440 		.word	1074004224
+ 389 00bc 210D0000 		.word	3361
+ 390 00c0 08010440 		.word	1074004232
+ 391 00c4 00020440 		.word	1074004480
+ 392 00c8 30000200 		.word	131120
+ 393 00cc 08020440 		.word	1074004488
+ 394 00d0 05500000 		.word	20485
+ 395 00d4 08030440 		.word	1074004744
+ 396 00d8 00050440 		.word	1074005248
+ 397 00dc 08050440 		.word	1074005256
+ 398 00e0 30001040 		.word	1074790448
+ 399 00e4 00030140 		.word	1073808128
+ 400 00e8 00000140 		.word	1073807360
+ 401 00ec 40FF0080 		.word	-2147418304
+ 402 00f0 14020140 		.word	1073807892
+ 403 00f4 05FF0080 		.word	-2147418363
+ 404 00f8 10020140 		.word	1073807888
+ 405 00fc 04FF0080 		.word	-2147418364
+ 406 0100 0C020140 		.word	1073807884
+ 407 0104 03FF0080 		.word	-2147418365
+ARM GAS  e:\temp\ccP4ef6T.s 			page 24
+
+
+ 408 0108 08020140 		.word	1073807880
+ 409 010c 02FF0080 		.word	-2147418366
+ 410 0110 04020140 		.word	1073807876
+ 411 0114 01FF0080 		.word	-2147418367
+ 412 0118 00020140 		.word	1073807872
+ 413 011c 00FF0080 		.word	-2147418368
+ 414 0120 28000340 		.word	1073938472
+ 415 0124 04010140 		.word	1073807620
+ 416 0128 00010140 		.word	1073807616
+ 417              		.cfi_endproc
+ 418              	.LFE4:
+ 419              		.size	cyfitter_cfg, .-cyfitter_cfg
+ 420              		.text
+ 421              	.Letext0:
+ 422              		.file 2 "Generated_Source\\PSoC4\\cytypes.h"
+ 423              		.file 3 "Generated_Source\\PSoC4\\CyLib.h"
+ 424              		.section	.debug_info,"",%progbits
+ 425              	.Ldebug_info0:
+ 426 0000 F1000000 		.4byte	0xf1
+ 427 0004 0400     		.2byte	0x4
+ 428 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 429 000a 04       		.byte	0x4
+ 430 000b 01       		.uleb128 0x1
+ 431 000c 95000000 		.4byte	.LASF16
+ 432 0010 0C       		.byte	0xc
+ 433 0011 6D000000 		.4byte	.LASF17
+ 434 0015 57010000 		.4byte	.LASF18
+ 435 0019 18000000 		.4byte	.Ldebug_ranges0+0x18
+ 436 001d 00000000 		.4byte	0
+ 437 0021 00000000 		.4byte	.Ldebug_line0
+ 438 0025 02       		.uleb128 0x2
+ 439 0026 04       		.byte	0x4
+ 440 0027 05       		.byte	0x5
+ 441 0028 696E7400 		.ascii	"int\000"
+ 442 002c 03       		.uleb128 0x3
+ 443 002d 04       		.byte	0x4
+ 444 002e 07       		.byte	0x7
+ 445 002f 15000000 		.4byte	.LASF0
+ 446 0033 03       		.uleb128 0x3
+ 447 0034 08       		.byte	0x8
+ 448 0035 05       		.byte	0x5
+ 449 0036 00000000 		.4byte	.LASF1
+ 450 003a 03       		.uleb128 0x3
+ 451 003b 08       		.byte	0x8
+ 452 003c 04       		.byte	0x4
+ 453 003d 25020000 		.4byte	.LASF2
+ 454 0041 03       		.uleb128 0x3
+ 455 0042 01       		.byte	0x1
+ 456 0043 06       		.byte	0x6
+ 457 0044 19020000 		.4byte	.LASF3
+ 458 0048 03       		.uleb128 0x3
+ 459 0049 01       		.byte	0x1
+ 460 004a 08       		.byte	0x8
+ 461 004b D2010000 		.4byte	.LASF4
+ 462 004f 03       		.uleb128 0x3
+ 463 0050 02       		.byte	0x2
+ 464 0051 05       		.byte	0x5
+ARM GAS  e:\temp\ccP4ef6T.s 			page 25
+
+
+ 465 0052 31020000 		.4byte	.LASF5
+ 466 0056 03       		.uleb128 0x3
+ 467 0057 02       		.byte	0x2
+ 468 0058 07       		.byte	0x7
+ 469 0059 06020000 		.4byte	.LASF6
+ 470 005d 03       		.uleb128 0x3
+ 471 005e 04       		.byte	0x4
+ 472 005f 05       		.byte	0x5
+ 473 0060 E5010000 		.4byte	.LASF7
+ 474 0064 03       		.uleb128 0x3
+ 475 0065 04       		.byte	0x4
+ 476 0066 07       		.byte	0x7
+ 477 0067 37000000 		.4byte	.LASF8
+ 478 006b 03       		.uleb128 0x3
+ 479 006c 08       		.byte	0x8
+ 480 006d 07       		.byte	0x7
+ 481 006e 56000000 		.4byte	.LASF9
+ 482 0072 03       		.uleb128 0x3
+ 483 0073 04       		.byte	0x4
+ 484 0074 07       		.byte	0x7
+ 485 0075 3B020000 		.4byte	.LASF10
+ 486 0079 03       		.uleb128 0x3
+ 487 007a 01       		.byte	0x1
+ 488 007b 08       		.byte	0x8
+ 489 007c E0010000 		.4byte	.LASF11
+ 490 0080 04       		.uleb128 0x4
+ 491 0081 0E000000 		.4byte	.LASF14
+ 492 0085 02       		.byte	0x2
+ 493 0086 E601     		.2byte	0x1e6
+ 494 0088 64000000 		.4byte	0x64
+ 495 008c 03       		.uleb128 0x3
+ 496 008d 04       		.byte	0x4
+ 497 008e 04       		.byte	0x4
+ 498 008f 51010000 		.4byte	.LASF12
+ 499 0093 03       		.uleb128 0x3
+ 500 0094 08       		.byte	0x8
+ 501 0095 04       		.byte	0x4
+ 502 0096 F9010000 		.4byte	.LASF13
+ 503 009a 04       		.uleb128 0x4
+ 504 009b 00020000 		.4byte	.LASF15
+ 505 009f 02       		.byte	0x2
+ 506 00a0 9002     		.2byte	0x290
+ 507 00a2 A6000000 		.4byte	0xa6
+ 508 00a6 05       		.uleb128 0x5
+ 509 00a7 80000000 		.4byte	0x80
+ 510 00ab 06       		.uleb128 0x6
+ 511 00ac EE010000 		.4byte	.LASF19
+ 512 00b0 01       		.byte	0x1
+ 513 00b1 A9       		.byte	0xa9
+ 514 00b2 01       		.byte	0x1
+ 515 00b3 07       		.uleb128 0x7
+ 516 00b4 49000000 		.4byte	.LASF20
+ 517 00b8 01       		.byte	0x1
+ 518 00b9 E1       		.byte	0xe1
+ 519 00ba 00000000 		.4byte	.LFB4
+ 520 00be 2C010000 		.4byte	.LFE4-.LFB4
+ 521 00c2 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccP4ef6T.s 			page 26
+
+
+ 522 00c3 9C       		.byte	0x9c
+ 523 00c4 E9000000 		.4byte	0xe9
+ 524 00c8 08       		.uleb128 0x8
+ 525 00c9 AB000000 		.4byte	0xab
+ 526 00cd 10000000 		.4byte	.LBB4
+ 527 00d1 00000000 		.4byte	.Ldebug_ranges0+0
+ 528 00d5 01       		.byte	0x1
+ 529 00d6 FF       		.byte	0xff
+ 530 00d7 09       		.uleb128 0x9
+ 531 00d8 48000000 		.4byte	.LVL0
+ 532 00dc E9000000 		.4byte	0xe9
+ 533 00e0 0A       		.uleb128 0xa
+ 534 00e1 01       		.uleb128 0x1
+ 535 00e2 50       		.byte	0x50
+ 536 00e3 02       		.uleb128 0x2
+ 537 00e4 08       		.byte	0x8
+ 538 00e5 30       		.byte	0x30
+ 539 00e6 00       		.byte	0
+ 540 00e7 00       		.byte	0
+ 541 00e8 00       		.byte	0
+ 542 00e9 0B       		.uleb128 0xb
+ 543 00ea 22000000 		.4byte	.LASF21
+ 544 00ee 22000000 		.4byte	.LASF21
+ 545 00f2 03       		.byte	0x3
+ 546 00f3 6C       		.byte	0x6c
+ 547 00f4 00       		.byte	0
+ 548              		.section	.debug_abbrev,"",%progbits
+ 549              	.Ldebug_abbrev0:
+ 550 0000 01       		.uleb128 0x1
+ 551 0001 11       		.uleb128 0x11
+ 552 0002 01       		.byte	0x1
+ 553 0003 25       		.uleb128 0x25
+ 554 0004 0E       		.uleb128 0xe
+ 555 0005 13       		.uleb128 0x13
+ 556 0006 0B       		.uleb128 0xb
+ 557 0007 03       		.uleb128 0x3
+ 558 0008 0E       		.uleb128 0xe
+ 559 0009 1B       		.uleb128 0x1b
+ 560 000a 0E       		.uleb128 0xe
+ 561 000b 55       		.uleb128 0x55
+ 562 000c 17       		.uleb128 0x17
+ 563 000d 11       		.uleb128 0x11
+ 564 000e 01       		.uleb128 0x1
+ 565 000f 10       		.uleb128 0x10
+ 566 0010 17       		.uleb128 0x17
+ 567 0011 00       		.byte	0
+ 568 0012 00       		.byte	0
+ 569 0013 02       		.uleb128 0x2
+ 570 0014 24       		.uleb128 0x24
+ 571 0015 00       		.byte	0
+ 572 0016 0B       		.uleb128 0xb
+ 573 0017 0B       		.uleb128 0xb
+ 574 0018 3E       		.uleb128 0x3e
+ 575 0019 0B       		.uleb128 0xb
+ 576 001a 03       		.uleb128 0x3
+ 577 001b 08       		.uleb128 0x8
+ 578 001c 00       		.byte	0
+ARM GAS  e:\temp\ccP4ef6T.s 			page 27
+
+
+ 579 001d 00       		.byte	0
+ 580 001e 03       		.uleb128 0x3
+ 581 001f 24       		.uleb128 0x24
+ 582 0020 00       		.byte	0
+ 583 0021 0B       		.uleb128 0xb
+ 584 0022 0B       		.uleb128 0xb
+ 585 0023 3E       		.uleb128 0x3e
+ 586 0024 0B       		.uleb128 0xb
+ 587 0025 03       		.uleb128 0x3
+ 588 0026 0E       		.uleb128 0xe
+ 589 0027 00       		.byte	0
+ 590 0028 00       		.byte	0
+ 591 0029 04       		.uleb128 0x4
+ 592 002a 16       		.uleb128 0x16
+ 593 002b 00       		.byte	0
+ 594 002c 03       		.uleb128 0x3
+ 595 002d 0E       		.uleb128 0xe
+ 596 002e 3A       		.uleb128 0x3a
+ 597 002f 0B       		.uleb128 0xb
+ 598 0030 3B       		.uleb128 0x3b
+ 599 0031 05       		.uleb128 0x5
+ 600 0032 49       		.uleb128 0x49
+ 601 0033 13       		.uleb128 0x13
+ 602 0034 00       		.byte	0
+ 603 0035 00       		.byte	0
+ 604 0036 05       		.uleb128 0x5
+ 605 0037 35       		.uleb128 0x35
+ 606 0038 00       		.byte	0
+ 607 0039 49       		.uleb128 0x49
+ 608 003a 13       		.uleb128 0x13
+ 609 003b 00       		.byte	0
+ 610 003c 00       		.byte	0
+ 611 003d 06       		.uleb128 0x6
+ 612 003e 2E       		.uleb128 0x2e
+ 613 003f 00       		.byte	0
+ 614 0040 03       		.uleb128 0x3
+ 615 0041 0E       		.uleb128 0xe
+ 616 0042 3A       		.uleb128 0x3a
+ 617 0043 0B       		.uleb128 0xb
+ 618 0044 3B       		.uleb128 0x3b
+ 619 0045 0B       		.uleb128 0xb
+ 620 0046 27       		.uleb128 0x27
+ 621 0047 19       		.uleb128 0x19
+ 622 0048 20       		.uleb128 0x20
+ 623 0049 0B       		.uleb128 0xb
+ 624 004a 00       		.byte	0
+ 625 004b 00       		.byte	0
+ 626 004c 07       		.uleb128 0x7
+ 627 004d 2E       		.uleb128 0x2e
+ 628 004e 01       		.byte	0x1
+ 629 004f 3F       		.uleb128 0x3f
+ 630 0050 19       		.uleb128 0x19
+ 631 0051 03       		.uleb128 0x3
+ 632 0052 0E       		.uleb128 0xe
+ 633 0053 3A       		.uleb128 0x3a
+ 634 0054 0B       		.uleb128 0xb
+ 635 0055 3B       		.uleb128 0x3b
+ARM GAS  e:\temp\ccP4ef6T.s 			page 28
+
+
+ 636 0056 0B       		.uleb128 0xb
+ 637 0057 27       		.uleb128 0x27
+ 638 0058 19       		.uleb128 0x19
+ 639 0059 11       		.uleb128 0x11
+ 640 005a 01       		.uleb128 0x1
+ 641 005b 12       		.uleb128 0x12
+ 642 005c 06       		.uleb128 0x6
+ 643 005d 40       		.uleb128 0x40
+ 644 005e 18       		.uleb128 0x18
+ 645 005f 9742     		.uleb128 0x2117
+ 646 0061 19       		.uleb128 0x19
+ 647 0062 01       		.uleb128 0x1
+ 648 0063 13       		.uleb128 0x13
+ 649 0064 00       		.byte	0
+ 650 0065 00       		.byte	0
+ 651 0066 08       		.uleb128 0x8
+ 652 0067 1D       		.uleb128 0x1d
+ 653 0068 01       		.byte	0x1
+ 654 0069 31       		.uleb128 0x31
+ 655 006a 13       		.uleb128 0x13
+ 656 006b 52       		.uleb128 0x52
+ 657 006c 01       		.uleb128 0x1
+ 658 006d 55       		.uleb128 0x55
+ 659 006e 17       		.uleb128 0x17
+ 660 006f 58       		.uleb128 0x58
+ 661 0070 0B       		.uleb128 0xb
+ 662 0071 59       		.uleb128 0x59
+ 663 0072 0B       		.uleb128 0xb
+ 664 0073 00       		.byte	0
+ 665 0074 00       		.byte	0
+ 666 0075 09       		.uleb128 0x9
+ 667 0076 898201   		.uleb128 0x4109
+ 668 0079 01       		.byte	0x1
+ 669 007a 11       		.uleb128 0x11
+ 670 007b 01       		.uleb128 0x1
+ 671 007c 31       		.uleb128 0x31
+ 672 007d 13       		.uleb128 0x13
+ 673 007e 00       		.byte	0
+ 674 007f 00       		.byte	0
+ 675 0080 0A       		.uleb128 0xa
+ 676 0081 8A8201   		.uleb128 0x410a
+ 677 0084 00       		.byte	0
+ 678 0085 02       		.uleb128 0x2
+ 679 0086 18       		.uleb128 0x18
+ 680 0087 9142     		.uleb128 0x2111
+ 681 0089 18       		.uleb128 0x18
+ 682 008a 00       		.byte	0
+ 683 008b 00       		.byte	0
+ 684 008c 0B       		.uleb128 0xb
+ 685 008d 2E       		.uleb128 0x2e
+ 686 008e 00       		.byte	0
+ 687 008f 3F       		.uleb128 0x3f
+ 688 0090 19       		.uleb128 0x19
+ 689 0091 3C       		.uleb128 0x3c
+ 690 0092 19       		.uleb128 0x19
+ 691 0093 6E       		.uleb128 0x6e
+ 692 0094 0E       		.uleb128 0xe
+ARM GAS  e:\temp\ccP4ef6T.s 			page 29
+
+
+ 693 0095 03       		.uleb128 0x3
+ 694 0096 0E       		.uleb128 0xe
+ 695 0097 3A       		.uleb128 0x3a
+ 696 0098 0B       		.uleb128 0xb
+ 697 0099 3B       		.uleb128 0x3b
+ 698 009a 0B       		.uleb128 0xb
+ 699 009b 00       		.byte	0
+ 700 009c 00       		.byte	0
+ 701 009d 00       		.byte	0
+ 702              		.section	.debug_aranges,"",%progbits
+ 703 0000 1C000000 		.4byte	0x1c
+ 704 0004 0200     		.2byte	0x2
+ 705 0006 00000000 		.4byte	.Ldebug_info0
+ 706 000a 04       		.byte	0x4
+ 707 000b 00       		.byte	0
+ 708 000c 0000     		.2byte	0
+ 709 000e 0000     		.2byte	0
+ 710 0010 00000000 		.4byte	.LFB4
+ 711 0014 2C010000 		.4byte	.LFE4-.LFB4
+ 712 0018 00000000 		.4byte	0
+ 713 001c 00000000 		.4byte	0
+ 714              		.section	.debug_ranges,"",%progbits
+ 715              	.Ldebug_ranges0:
+ 716 0000 10000000 		.4byte	.LBB4
+ 717 0004 12000000 		.4byte	.LBE4
+ 718 0008 3E000000 		.4byte	.LBB7
+ 719 000c AC000000 		.4byte	.LBE7
+ 720 0010 00000000 		.4byte	0
+ 721 0014 00000000 		.4byte	0
+ 722 0018 00000000 		.4byte	.LFB4
+ 723 001c 2C010000 		.4byte	.LFE4
+ 724 0020 00000000 		.4byte	0
+ 725 0024 00000000 		.4byte	0
+ 726              		.section	.debug_line,"",%progbits
+ 727              	.Ldebug_line0:
+ 728 0000 A9000000 		.section	.debug_str,"MS",%progbits,1
+ 728      02005600 
+ 728      00000201 
+ 728      FB0E0D00 
+ 728      01010101 
+ 729              	.LASF1:
+ 730 0000 6C6F6E67 		.ascii	"long long int\000"
+ 730      206C6F6E 
+ 730      6720696E 
+ 730      7400
+ 731              	.LASF14:
+ 732 000e 75696E74 		.ascii	"uint32\000"
+ 732      333200
+ 733              	.LASF0:
+ 734 0015 756E7369 		.ascii	"unsigned int\000"
+ 734      676E6564 
+ 734      20696E74 
+ 734      00
+ 735              	.LASF21:
+ 736 0022 43795379 		.ascii	"CySysClkWriteImoFreq\000"
+ 736      73436C6B 
+ 736      57726974 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 30
+
+
+ 736      65496D6F 
+ 736      46726571 
+ 737              	.LASF8:
+ 738 0037 6C6F6E67 		.ascii	"long unsigned int\000"
+ 738      20756E73 
+ 738      69676E65 
+ 738      6420696E 
+ 738      7400
+ 739              	.LASF20:
+ 740 0049 63796669 		.ascii	"cyfitter_cfg\000"
+ 740      74746572 
+ 740      5F636667 
+ 740      00
+ 741              	.LASF9:
+ 742 0056 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 742      206C6F6E 
+ 742      6720756E 
+ 742      7369676E 
+ 742      65642069 
+ 743              	.LASF17:
+ 744 006d 47656E65 		.ascii	"Generated_Source\\PSoC4\\cyfitter_cfg_2.c\000"
+ 744      72617465 
+ 744      645F536F 
+ 744      75726365 
+ 744      5C50536F 
+ 745              	.LASF16:
+ 746 0095 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 746      43313120 
+ 746      352E342E 
+ 746      31203230 
+ 746      31363036 
+ 747 00c8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 747      20726576 
+ 747      6973696F 
+ 747      6E203233 
+ 747      37373135 
+ 748 00fb 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects -finline-fu"
+ 748      66756E63 
+ 748      74696F6E 
+ 748      2D736563 
+ 748      74696F6E 
+ 749 012e 6E637469 		.ascii	"nctions -flto -fno-strict-aliasing\000"
+ 749      6F6E7320 
+ 749      2D666C74 
+ 749      6F202D66 
+ 749      6E6F2D73 
+ 750              	.LASF12:
+ 751 0151 666C6F61 		.ascii	"float\000"
+ 751      7400
+ 752              	.LASF18:
+ 753 0157 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 753      73657273 
+ 753      5C41646D 
+ 753      696E5C44 
+ 753      65736B74 
+ 754 0184 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 754      355C4359 
+ARM GAS  e:\temp\ccP4ef6T.s 			page 31
+
+
+ 754      50443532 
+ 754      32352D39 
+ 754      36425A58 
+ 755 01b5 7465626F 		.ascii	"tebook.cydsn\\backup_fw.cydsn\000"
+ 755      6F6B2E63 
+ 755      7964736E 
+ 755      5C626163 
+ 755      6B75705F 
+ 756              	.LASF4:
+ 757 01d2 756E7369 		.ascii	"unsigned char\000"
+ 757      676E6564 
+ 757      20636861 
+ 757      7200
+ 758              	.LASF11:
+ 759 01e0 63686172 		.ascii	"char\000"
+ 759      00
+ 760              	.LASF7:
+ 761 01e5 6C6F6E67 		.ascii	"long int\000"
+ 761      20696E74 
+ 761      00
+ 762              	.LASF19:
+ 763 01ee 436C6F63 		.ascii	"ClockSetup\000"
+ 763      6B536574 
+ 763      757000
+ 764              	.LASF13:
+ 765 01f9 646F7562 		.ascii	"double\000"
+ 765      6C6500
+ 766              	.LASF15:
+ 767 0200 72656733 		.ascii	"reg32\000"
+ 767      3200
+ 768              	.LASF6:
+ 769 0206 73686F72 		.ascii	"short unsigned int\000"
+ 769      7420756E 
+ 769      7369676E 
+ 769      65642069 
+ 769      6E7400
+ 770              	.LASF3:
+ 771 0219 7369676E 		.ascii	"signed char\000"
+ 771      65642063 
+ 771      68617200 
+ 772              	.LASF2:
+ 773 0225 6C6F6E67 		.ascii	"long double\000"
+ 773      20646F75 
+ 773      626C6500 
+ 774              	.LASF5:
+ 775 0231 73686F72 		.ascii	"short int\000"
+ 775      7420696E 
+ 775      7400
+ 776              	.LASF10:
+ 777 023b 73697A65 		.ascii	"sizetype\000"
+ 777      74797065 
+ 777      00
+ 778              		.comm	__gnu_lto_v1,1,1
+ 779              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

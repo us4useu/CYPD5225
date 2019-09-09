@@ -1,0 +1,1633 @@
+ARM GAS  e:\temp\ccd3leo5.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"I2C_MSTR_PM.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.section	.gnu.lto_.profile.6240a9c4,"",%progbits
+  19 0000 789C6361 		.ascii	"x\234ca`d`a`\000\222\012<\000\000\266\0007"
+  19      60646061 
+  19      6000920A 
+  19      3C0000B6 
+  19      0037
+  20              		.text
+  21              		.section	.gnu.lto_.icf.6240a9c4,"",%progbits
+  22 0000 789C6361 		.ascii	"x\234ca`d\000\001\021\006\004`f88e\363\"6\306cW\333"
+  22      60640001 
+  22      11060460 
+  22      66383865 
+  22      F32236C6 
+  23 0017 BEF23175 		.ascii	"\276\3621u\\\376\367\206\215\001\000^\374\011?"
+  23      5CFEF786 
+  23      8D01005E 
+  23      FC093F
+  24              		.text
+  25              		.section	.gnu.lto_.jmpfuncs.6240a9c4,"",%progbits
+  26 0000 789C6361 		.ascii	"x\234ca`d\000\001.\006\004`\202\023\000\001\254\000"
+  26      60640001 
+  26      2E060460 
+  26      82130001 
+  26      AC00
+  27 0012 14       		.ascii	"\024"
+  28              		.text
+  29              		.section	.gnu.lto_.inline.6240a9c4,"",%progbits
+  30 0000 789C6361 		.ascii	"x\234ca`d\000\001#\006\004`b`\340\344fd`\342\232\340"
+  30      60640001 
+  30      23060460 
+  30      6260E0E4 
+  30      666460E2 
+  31 0016 C7C0B640 		.ascii	"\307\300\266@\236\011$\306\310\005\226`\347\004\212"
+  31      9E0924C6 
+  31      C8059660 
+  31      E7048A
+  32 0025 B37DD043 		.ascii	"\263}\320C\025g\000\000tV\004\026"
+  32      15670000 
+  32      74560416 
+  33              		.text
+ARM GAS  e:\temp\ccd3leo5.s 			page 2
+
+
+  34              		.section	.gnu.lto_.pureconst.6240a9c4,"",%progbits
+  35 0000 789C6361 		.ascii	"x\234ca`d`e```b\220b\222\000\000\000\355\000A"
+  35      60646065 
+  35      60606062 
+  35      90629200 
+  35      0000ED00 
+  36              		.text
+  37              		.section	.gnu.lto_I2C_MSTR_Sleep.6240a9c4,"",%progbits
+  38 0000 789C6550 		.ascii	"x\234eP\277K\034A\030\375\336\314\334\336\271jH\037"
+  38      BF4B1C41 
+  38      18FDDECC 
+  38      DCDEB96A 
+  38      481F
+  39 0012 913489D8 		.ascii	"\2214\211\330x\"\376\007\026!\001A\274\224\302\021\314"
+  39      7822FE07 
+  39      16210141 
+  39      BC94C211 
+  39      CC
+  40 0023 B51145EB 		.ascii	"\265\021E\353\033\335[\374QH\012O\022H\270*x\2111wJ"
+  40      1BDD5BFC 
+  40      51480A4F 
+  40      1248B82A 
+  40      78893177 
+  41 0038 849C45D8 		.ascii	"\204\234E\330\034!\004\011Zic\243)\216 \026&h\241\250"
+  41      1C210409 
+  41      5A6963A3 
+  41      298E2016 
+  41      2668A1A8 
+  42 004c EBF7ED5A 		.ascii	"\353\367\355Z\010\031\330\231\371\336\274\357{o\237"
+  42      0819D899 
+  42      F9DEBCEF 
+  42      7B6F9F
+  43 005b 21902CA5 		.ascii	"!\220,\245\210:\370\354\345\017\011\202z\271E4\231R"
+  43      883AF8EC 
+  43      E50F0982 
+  43      7AB94534 
+  43      9952
+  44 006d 4A6FB493 		.ascii	"Jo\264\223u\315n\232l\213\206\211a\003\310\305\246@"
+  44      75CD6E9A 
+  44      6C8B8689 
+  44      6103C8C5 
+  44      A640
+  45 007f 79A50DF2 		.ascii	"y\245\015\3628U\227\012\365\351FMu.Y^\373\357\032\335"
+  45      3855970A 
+  45      F5E9464D 
+  45      752E595E 
+  45      FBEF1ADD 
+  46 0093 B61CC0D7 		.ascii	"\266\034\300\327D\241\212$\010K\350$\246\375^\275*\266"
+  46      44A18A24 
+  46      084BE824 
+  46      A6FD5EBD 
+  46      2AB6
+  47 00a5 3A05A1DD 		.ascii	":\005\241\335\217\037Q\206#>*\203\201\015C\317\006\353"
+  47      8F1F5186 
+  47      233E2A83 
+  47      810D43CF 
+  47      06EB
+ARM GAS  e:\temp\ccd3leo5.s 			page 3
+
+
+  48 00b7 CEB7CF6E 		.ascii	"\316\267\317n\223&\237%yS\011\336\264\303\233!:\346"
+  48      93269F25 
+  48      795309DE 
+  48      B4C39B21 
+  48      3AE6
+  49 00c9 0E51FFCB 		.ascii	"\016Q\377\313\236\371\324\015\324\317\347~\224\277B"
+  49      9EF9D40D 
+  49      D4CFE77E 
+  49      94BF42
+  50 00d8 A6785AB3 		.ascii	"\246xZ\263\302\242_\337N\236(_' \202a\351\347\232\033"
+  50      C2A25FDF 
+  50      4E9E285F 
+  50      27208261 
+  50      E9E79A1B 
+  51 00ec 97D6BEB2 		.ascii	"\227\326\276\262\206\241\315\240Zl.\341\355d\201-:\370"
+  51      86A1CDA0 
+  51      5A6C2EE1 
+  51      ED64812D 
+  51      3AF8
+  52 00fe 8036BC47 		.ascii	"\2006\274G\033;YF\011\324\300\324\277\351\013\023\017"
+  52      1B3B5946 
+  52      09D4C0D4 
+  52      BFE90B13 
+  52      0F
+  53 010f 343C9311 		.ascii	"4<\223\021\357M2\256\023\014\335\326P |\344^i\272\241"
+  53      EF4D32AE 
+  53      130CDDD6 
+  53      50207CE4 
+  53      5E69BAA1 
+  54 0123 084BEAC5 		.ascii	"\010K\352\305\203\207\002\334f'#G\265\332\321^2\177"
+  54      838702DC 
+  54      66272347 
+  54      B5DAD15E 
+  54      327F
+  55 0135 6967ACBD 		.ascii	"ig\254\275\313\330,\247$\360\341\257\235\357\256\270"
+  55      CBD82CA7 
+  55      24F0E1AF 
+  55      9DEFAEB8 
+  56 0145 B2119EC2 		.ascii	"\262\021\236\302'\216vE|\361\343\374\227\352l*\275\""
+  56      278E7645 
+  56      7CF1E3FC 
+  56      97EA6C2A 
+  56      BD22
+  57 0157 B1D9515F 		.ascii	"\261\331Q_7\241\302V\257\242lQE\232U\351\000\205=oy"
+  57      37A1C256 
+  57      AFA26C51 
+  57      459A55E9 
+  57      00853D6F 
+  58 016c E1DE8D0B 		.ascii	"\341\336\215\013n\252\034\325\316ZE\327\260\313U\231"
+  58      6EAA1CD5 
+  58      CE5A45D7 
+  58      B0CB5599 
+  59 017c 44929CA6 		.ascii	"D\222\234\246\215v\375\007^\360z\363\216\220\377\367"
+  59      8D76FD07 
+  59      5EF07AF3 
+  59      8E90FFF7 
+  60 018c E486FC5F 		.ascii	"\344\206\374_\2045\3449\365\346\250\311Dq\037b*X\177"
+ARM GAS  e:\temp\ccd3leo5.s 			page 4
+
+
+  60      8435E439 
+  60      F5E6A8C9 
+  60      44711F62 
+  60      2A587F
+  61 019f 1235C93A 		.ascii	"\0225\311:f\032\303l\343\301\243\334\213\334\330\263"
+  61      661AC36C 
+  61      E3C1A3DC 
+  61      8BDCD8B3 
+  62 01af F1DCF36C 		.ascii	"\361\334\363lfdbl874\220\031\351\353\035z\334\323\227"
+  62      6664626C 
+  62      38373490 
+  62      19E9EB1D 
+  62      7ADCD397 
+  63 01c3 EDCF3C1D 		.ascii	"\355\317<\035\314\016\364w\015\3235\"\360\273o"
+  63      CC0EF477 
+  63      0DD33522 
+  63      F0BB6F
+  64              		.text
+  65              		.section	.gnu.lto_I2C_MSTR_backup.6240a9c4,"",%progbits
+  66 0000 789C6361 		.ascii	"x\234ca`d\000\001] \206\260\030\030\37621\256\177\263"
+  66      60640001 
+  66      5D2086B0 
+  66      1818FE32 
+  66      31AE7FB3 
+  67 0014 F327EF17 		.ascii	"\363'\357\027\246Vf\240 \220\273sn\373m>\213m\015\035"
+  67      A65666A0 
+  67      2090BB73 
+  67      6EFB6D3E 
+  67      8B6D0D1D 
+  68 0028 0B1A045A 		.ascii	"\013\032\004Z\231\031\377110.g\224a`\\\301h\301\000"
+  68      9919FF31 
+  68      31302E67 
+  68      9461605C 
+  68      C168C100 
+  69 003c 00C3A010 		.ascii	"\000\303\240\020)"
+  69      29
+  70              		.text
+  71              		.section	.gnu.lto_I2C_MSTR_Wakeup.6240a9c4,"",%progbits
+  72 0000 789C658F 		.ascii	"x\234e\217\277KBQ\024\307\317\271\367\371#K\351\017"
+  72      BF4B4251 
+  72      14C7CFB9 
+  72      F7F9234B 
+  72      E90F
+  73 0012 08698970 		.ascii	"\010i\211p()\374\017\034\242\301\020\255M\2200W\005"
+  73      2829FC0F 
+  73      1CA2C110 
+  73      AD4D9030 
+  73      5705
+  74 0024 A9F95D7D 		.ascii	"\251\371]}>\312%\212\250-\034\265\237\346\226N/i\014"
+  74      3ECA258A 
+  74      A82D1CB5 
+  74      9FE6964E 
+  74      2F690C
+  75 0037 9B7291A0 		.ascii	"\233r\221\240\202$\304\301\240 \007}\235\373\034\032"
+  75      8224C4C1 
+  75      A020077D 
+  75      9DFB1C1A 
+ARM GAS  e:\temp\ccd3leo5.s 			page 5
+
+
+  76 0047 3A703997 		.ascii	":p9\227\357\375\236\373\375\034\005\020dmP\233\247\036"
+  76      EFFD9EFB 
+  76      FD1C0510 
+  76      646D509B 
+  76      A71E
+  77 0059 A0833640 		.ascii	"\240\2036@v\320\004\310:\031\343u/\010\227\322\362\203"
+  77      76D004C8 
+  77      3A19E375 
+  77      2F0897D2 
+  77      F283
+  78 006b 98E2A88C 		.ascii	"\230\342\250\214e\005Q^\204\023Ae\\A\025\277\331\220"
+  78      6505515E 
+  78      84134165 
+  78      5C4115BF 
+  78      D990
+  79 007d 6163B753 		.ascii	"ac\267Sc\276\222\240zy\257,\211\262\201:\0070\231\025"
+  79      63BE92A0 
+  79      7A79AF2C 
+  79      89B2813A 
+  79      07309915 
+  80 0091 0158421F 		.ascii	"\001XB\037\220\355\255::v\333\363\3226;~\3042\332%G"
+  80      90EDAD3A 
+  80      3A76DBF3 
+  80      D2363B7E 
+  80      C432DA25 
+  81 00a6 256208D3 		.ascii	"%b\010\323\324\204q8y\367\343\261q\3209\311}\262\310"
+  81      D4847138 
+  81      79F7E3B1 
+  81      71D039C9 
+  81      7DB2C8
+  82 00b9 B84FC664 		.ascii	"\270O\306d\347\035\314\325\253\255\243\0119\245qN?\236"
+  82      E71DCCD5 
+  82      ABADA309 
+  82      39A5714E 
+  82      3F9E
+  83 00cb E88D47C7 		.ascii	"\350\215G\307\027\3239C\031P\253\365\332\016u(\366\204"
+  83      17D33943 
+  83      1950ABF5 
+  83      DA0E7528 
+  83      F684
+  84 00dd 9826AD40 		.ascii	"\230&\255@\014R\356><\335\273\212x\232\025\226\316\361"
+  84      0C52EE3E 
+  84      3CDDBB8A 
+  84      789A1596 
+  84      CEF1
+  85 00ef 9CC0CF70 		.ascii	"\234\300\317p\306z\334\277\275)8\375\013:ms\201E\034"
+  85      C67ADCBF 
+  85      BD2938FD 
+  85      0B3A6D73 
+  85      81451C
+  86 0102 59CC7889 		.ascii	"Y\314x\211~x\305|[K\375\205Uz\265\201[\206!\002^\311"
+  86      7E78C57C 
+  86      5B4BFD85 
+  86      557AB581 
+  86      5B862102 
+  87 0118 71906C1C 		.ascii	"q\220l\034\352^\376\201\232\361\334\364H\363\177\020"
+  87      EA5EFE81 
+ARM GAS  e:\temp\ccd3leo5.s 			page 6
+
+
+  87      9AF1DCF4 
+  87      48F37F10 
+  88 0128 9B497880 		.ascii	"\233Ix\200\327\250\322^vkH\261\026\352b\316\030\254"
+  88      D7A8D25E 
+  88      766B48B1 
+  88      16EA62CE 
+  88      18AC
+  89 013a 5943B2FA 		.ascii	"YC\262\372d#\231\010\346V\222\251dfs;\271\025\217\246"
+  89      64239908 
+  89      E65692A9 
+  89      6466733B 
+  89      B9158FA6 
+  90 014e 77328964 		.ascii	"w2\211d,\034M\007\003\261\325\345`<\024]\217\304\303"
+  90      2C1C4D07 
+  90      03B1D5E5 
+  90      603C145D 
+  90      8FC4C3
+  91 0161 A1C504FC 		.ascii	"\241\305\004\374\002x\377\206\303"
+  91      0278FF86 
+  91      C3
+  92              		.text
+  93              		.section	.gnu.lto_.symbol_nodes.6240a9c4,"",%progbits
+  94 0000 789C6361 		.ascii	"x\234ca`d\210b\000\002&\306z\006\206\011\347\030\030"
+  94      60648862 
+  94      000226C6 
+  94      7A068609 
+  94      E71818
+  95 0013 80D4AE06 		.ascii	"\200\324\256\006E\006\006V\006\206F!\220\004S=#\212"
+  95      45060656 
+  95      06864621 
+  95      9004533D 
+  95      238A
+  96 0025 0423733D 		.ascii	"\004#s=\023X\200\201\241\241A\001\310g\251gF\3463\003"
+  96      13588081 
+  96      A1A14101 
+  96      C867A967 
+  96      46E63303 
+  97 0039 E193AD26 		.ascii	"\341\223\255&\314L,\014O\266\2300\000\000#\304\022\036"
+  97      CC4C2C0C 
+  97      4FB69830 
+  97      000023C4 
+  97      121E
+  98              		.text
+  99              		.section	.gnu.lto_.refs.6240a9c4,"",%progbits
+ 100 0000 789C6361 		.ascii	"x\234ca`d\340f`\000\222\214\214\254\214L@\222\001\000"
+ 100      6064E066 
+ 100      6000928C 
+ 100      8CAC8C4C 
+ 100      40920100 
+ 101 0014 0169001E 		.ascii	"\001i\000\036"
+ 102              		.text
+ 103              		.section	.gnu.lto_.decls.6240a9c4,"",%progbits
+ 104 0000 789C8D94 		.ascii	"x\234\215\224kL\\E\024\200\347\334\273\017\270\\\036"
+ 104      6B4C5C45 
+ 104      1480E7DC 
+ 104      BB0FB85C 
+ 104      1E
+ARM GAS  e:\temp\ccd3leo5.s 			page 7
+
+
+ 105 0011 29A62166 		.ascii	")\246!f\177 )a\375C\005\374\341\317Z\324\326\230\032"
+ 105      7F202961 
+ 105      FD4305FC 
+ 105      E1CF5AD4 
+ 105      D6981A
+ 106 0024 2250FF34 		.ascii	"\"P\3774A\300k5%,A\366G\1779\262\264\305\326&\256\011"
+ 106      41C06B35 
+ 106      252C41F6 
+ 106      477F39B2 
+ 106      B4C5D626 
+ 107 003a B4101A79 		.ascii	"\264\020\032y$\024\344\261\273\264\265\002},my\024A"
+ 107      2414E4B1 
+ 107      BBB4B502 
+ 107      7D2C6D79 
+ 107      1441
+ 108 004c BA3C536A 		.ascii	"\272<Sj\013J\233\364\301\017\254\255\212\012\353\231"
+ 108      0B4A9BF4 
+ 108      C10FACAD 
+ 108      8A0AEB99 
+ 109 005c 99BB7BB7 		.ascii	"\231\273{\267J\265\223=\367\316\231{\3167g\3169\263"
+ 109      4AB5933D 
+ 109      F7CE997B 
+ 109      CE3767CE 
+ 109      39B3
+ 110 006e 2602848D 		.ascii	"&\002\204\215\026\013!\353\370N@5\210\303\204\363\335"
+ 110      160B21EB 
+ 110      F84E4035 
+ 110      88C384F3 
+ 110      DD
+ 111 007f C4184CEF 		.ascii	"\304\030L\357B\361\240\370PN\2410\317\001\362\344`6"
+ 111      42F1A0F8 
+ 111      504EA130 
+ 111      CF01F2E4 
+ 111      6036
+ 112 0091 AAEE9B86 		.ascii	"\252\356\233\2062\2042\202bC\231A\231F\231E\271\210"
+ 112      32843282 
+ 112      62439941 
+ 112      99469945 
+ 112      B988
+ 113 00a3 D2873287 		.ascii	"\322\2072\207\322\251\263\372Q$\235\341{\012\177@\267"
+ 113      D2A9B3FA 
+ 113      51249DE1 
+ 113      7B0A7F40 
+ 113      B7
+ 114 00b4 B1E98C90 		.ascii	"\261\351\214\220\337F\203\305j\325c\261=\303\276\236"
+ 114      DF4683C5 
+ 114      6AD563B1 
+ 114      3DC3BE9E 
+ 115 00c4 FF38D79A 		.ascii	"\3778\327\232\004\301\023\335m\3217\340:H\240'\215\000"
+ 115      04C113DD 
+ 115      6DD137E0 
+ 115      3A48A027 
+ 115      8D00
+ 116 00d6 88277021 		.ascii	"\210'p!B\270\212\023\211?Ix)\374\"\354I\204=_3`\374"
+ 116      42B88A13 
+ 116      893F4978 
+ 116      29FC22EC 
+ARM GAS  e:\temp\ccd3leo5.s 			page 8
+
+
+ 116      49843D5F 
+ 117 00ed 177A0743 		.ascii	"\027z\007C\203C\014:\350N\020\216@x\211\357\222nF\004"
+ 117      83430C3A 
+ 117      E84E108E 
+ 117      407889EF 
+ 117      926E4604 
+ 118 0101 5C321C22 		.ascii	"\\2\034\"x\"\334\210\230\340\3113A\350\320\201\243\201"
+ 118      7822DC88 
+ 118      98E0C933 
+ 118      41E8D081 
+ 118      A381
+ 119 0113 89381999 		.ascii	"\2118\031\2318_Xm{#\275\223\342\370\202R\351E#3\203"
+ 119      385F586D 
+ 119      7B23BD93 
+ 119      E2F88252 
+ 119      E9452333 
+ 120 0128 C1DFFCF1 		.ascii	"\301\337\374\361\217$\330\244\200\204\352\344\312\330"
+ 120      8F24D8A4 
+ 120      8084EAE4 
+ 120      CAD8
+ 121 0136 8918549F 		.ascii	"\211\030T\237S \001\325\007\027\352\202\261I\265\314"
+ 121      532001D5 
+ 121      0717EA82 
+ 121      B149B5CC 
+ 122 0146 8FBA68B2 		.ascii	"\217\272h\262\004\2737C\007\330\340k\300\242@'$\341"
+ 122      04BB3743 
+ 122      07D8E06B 
+ 122      C0A24027 
+ 122      24E1
+ 123 0158 B3C82448 		.ascii	"\263\310$H\376\376a\277)\245\2216z\351\342\343\333j"
+ 123      FEFE61BF 
+ 123      29A59136 
+ 123      7AE9E2E3 
+ 123      DB6A
+ 124 016a AD8BB6A1 		.ascii	"\255\213\266\241W2\263\2026\220\241\035\322Yt8e\257"
+ 124      5732B382 
+ 124      3690A11D 
+ 124      D2597438 
+ 124      65AF
+ 125 017c 937003C3 		.ascii	"\223p\003\303\356\202\024\364lx\260z\323*o\343\201\326"
+ 125      EE8214F4 
+ 125      6C78B07A 
+ 125      D32A6FE3 
+ 125      81D6
+ 126 018e F83AA6AC 		.ascii	"\370:\246\254\202\342_\037U\3515dl\343\214n\203\321"
+ 126      82E25F1F 
+ 126      55E93564 
+ 126      6CE38C6E 
+ 126      83D1
+ 127 01a0 1DC9F070 		.ascii	"\035\311\360p\206'0_\257\3129\234q\363\217\301\2432"
+ 127      8627305F 
+ 127      AFCA399C 
+ 127      71F38FC1 
+ 127      A332
+ 128 01b2 3216295D 		.ascii	"2\026)]\374k\310\351v5\3329\301k\020\274\234\200\023"
+ 128      FC6BC8E9 
+ 128      7635DA39 
+ARM GAS  e:\temp\ccd3leo5.s 			page 9
+
+
+ 128      C16B10BC 
+ 128      9C8013
+ 129 01c5 1FF73E13 		.ascii	"\037\367>\023\350\257\222\344O\201\273\337\372\352t"
+ 129      E8AF92E4 
+ 129      4F81BBDF 
+ 129      FAEA74
+ 130 01d4 9D45B8FB 		.ascii	"\235E\270\373'\207U\177\016w\3561\234{B\316\247\270"
+ 130      2787557F 
+ 130      0E77EE31 
+ 130      9C7B42CE 
+ 130      A7B8
+ 131 01e6 F3C1B1FB 		.ascii	"\363\301\261\373\327\343e\267p\276T\373\303\264*7\011"
+ 131      D7E365B7 
+ 131      70BE54FB 
+ 131      C3B42A37 
+ 131      09
+ 132 01f7 C573E076 		.ascii	"\305s\340v{\024f\323\246@\020\230\276\334\273\032+t"
+ 132      7B1466D3 
+ 132      A6401098 
+ 132      BEDCBB1A 
+ 132      2B74
+ 133 0209 F6B9CEBD 		.ascii	"\366\271\316\275\264\036#wq[ij\251\343\236\011\354J"
+ 133      B41E2377 
+ 133      715B696A 
+ 133      A9E39E09 
+ 133      EC4A
+ 134 021b 2BCBF5E2 		.ascii	"+\313\365\342\334\221\017\216\035\302JA\037(\360\255"
+ 134      DC910F8E 
+ 134      1DC24A41 
+ 134      1F28F0AD 
+ 135 022b B1B54DC1 		.ascii	"\261\265M\301g5\245\225t\245\231Z\222\010d\331\340%"
+ 135      6735A595 
+ 135      74A5995A 
+ 135      920864D9 
+ 135      E025
+ 136 023d 1B815EB0 		.ascii	"\033\201^\2603*\263\202\263X\240o\260@k\222\334\344"
+ 136      332AB382 
+ 136      B358A06F 
+ 136      B0406B92 
+ 136      DCE4
+ 137 024f 9A2D812D 		.ascii	"\232-\201-\211\366f\346\261\270vP\363-\035\240\336\367"
+ 137      89F666E6 
+ 137      B1B87650 
+ 137      F32D1DA0 
+ 137      DEF7
+ 138 0261 38F50C52 		.ascii	"8\365\014R\317Ab\210\260\225U4\203\33557\213`\245\222"
+ 138      CF416288 
+ 138      B0955534 
+ 138      83DD3537 
+ 138      8B60A592 
+ 139 0275 52D658E2 		.ascii	"R\326X\342+\341\226H\207\363\270Q?l\341\347\347\241"
+ 139      2BE19648 
+ 139      87F3B851 
+ 139      3F6CE1E7 
+ 139      E7A1
+ 140 0287 FADDC32A 		.ascii	"\372\335\303*\245Q\314\200\350Q\352\255\325{\367\247"
+ 140      A551CC80 
+ARM GAS  e:\temp\ccd3leo5.s 			page 10
+
+
+ 140      E851EAAD 
+ 140      D57BF7A7 
+ 141 0297 9E187946 		.ascii	"\236\030yF\034\357\360\225\211;\012$\3327\200\203\037"
+ 141      1CEFF095 
+ 141      893B0A24 
+ 141      DA378083 
+ 141      1F
+ 142 02a8 994FE71F 		.ascii	"\231O\347\037\033\006\306\277\210\006\027\214D\260\355"
+ 142      1B06C6BF 
+ 142      8806178C 
+ 142      44B0ED
+ 143 02b7 F82E3377 		.ascii	"\370.3w\353\347-\251-\264\021\013\366\370Q\321/\225"
+ 143      EBE72DA9 
+ 143      2DB4110B 
+ 143      F6F851D1 
+ 143      2F95
+ 144 02c9 3489DB9E 		.ascii	"4\211\333\236\026\266\341\0030=\017\357\365\000\244"
+ 144      16B6E103 
+ 144      303D0FEF 
+ 144      F500A4
+ 145 02d8 B2BB51E5 		.ascii	"\262\273Q\345m\220E\333\233P\375y\274~)N\264}2\246\255"
+ 145      6D9045DB 
+ 145      9B50FD79 
+ 145      BC7E294E 
+ 145      B47D32A6 
+ 146 02ed A5EBCFD6 		.ascii	"\245\353\317\3268\314\"\373)\365\024\363\275\022\014"
+ 146      38CC22FB 
+ 146      29F514F3 
+ 146      BD120C
+ 147 02fc 7E120C5A 		.ascii	"~\022\014Za\010\024\302\027\250\273\371\265j\367\363"
+ 147      610814C2 
+ 147      17A8BBF9 
+ 147      B56AF7F3 
+ 148 030c 7CA19ADF 		.ascii	"|\241\232\337+\027\335\264\223\300e\364\271\304o\007"
+ 148      2B17DDB4 
+ 148      93C065F4 
+ 148      B9C46F07 
+ 149 031c FB426010 		.ascii	"\373B`\020\365+\2503\0257\032\037\234:n\225\227yNL\367"
+ 149      F52BA833 
+ 149      15371A1F 
+ 149      9C3A6E95 
+ 149      97794E4C 
+ 150 0331 3C4DB50A 		.ascii	"<M\265\012D\213}\354\207xU+\033\223\215\304|\207\311"
+ 150      448B7DEC 
+ 150      8778552B 
+ 150      1B938DC4 
+ 150      7C87C9
+ 151 0344 188168C4 		.ascii	"\030\201h\304\\E\223Q\304\324c&\330\012\217!\201O[C"
+ 151      5C459351 
+ 151      C4D46326 
+ 151      D80A8F21 
+ 151      814F5B43 
+ 152 0358 B79A3015 		.ascii	"\267\2320\025\206\365\346dIB\235]\207\221\366\016v\326"
+ 152      86F5E664 
+ 152      49429D5D 
+ 152      8791F60E 
+ 152      76D6
+ARM GAS  e:\temp\ccd3leo5.s 			page 11
+
+
+ 153 036a 34EC421C 		.ascii	"4\354B\034\361\021\215\230&\032qt\341\316\303h\371\241"
+ 153      F1118D98 
+ 153      261A7174 
+ 153      E1CEC368 
+ 153      F9A1
+ 154 037c A8D464DD 		.ascii	"\250\324d\335\362\202\005\024;\357\262\177\234\012\256"
+ 154      F2820514 
+ 154      3BEFB27F 
+ 154      9C0AAE
+ 155 038b 6144697A 		.ascii	"aDiz\237\215\343\342\030.\206:v\257\350\330\011\354"
+ 155      9F8DE3E2 
+ 155      182E863A 
+ 155      76AFE8D8 
+ 155      09EC
+ 156 039d ADEF8D42 		.ascii	"\255\357\215B\245)\242N\237\375X3oV\252\331\377\310"
+ 156      A529A24E 
+ 156      9FFD5833 
+ 156      6F56AAD9 
+ 156      FFC8
+ 157 03af B340D1A3 		.ascii	"\263@\321\243\357\026m0\313\253\"\252\231#g\217\313"
+ 157      EF166D30 
+ 157      CBAB22AA 
+ 157      9923678F 
+ 157      CB
+ 158 03c0 A1EBE10F 		.ascii	"\241\353\341\017\334\337Y\305Zh\032\367\2324\366\012"
+ 158      DCDF59C5 
+ 158      5A681AF7 
+ 158      9A34F60A 
+ 159 03d0 807E3DFE 		.ascii	"\200~=\376\275\307\324\306{\374\372\373\325\317U\365"
+ 159      BDC7D4C6 
+ 159      7BFCFAFB 
+ 159      D5CF55F5 
+ 160 03e0 70F8A89C 		.ascii	"p\370\250\234h\324p\006T\236H|\243\361e\337|\235%\322"
+ 160      68D47006 
+ 160      549E487C 
+ 160      A3F165DF 
+ 160      7C9D25D2 
+ 161 03f4 98F59961 		.ascii	"\230\365\231a<\253\033\317r\343/k\\'\255\221\306\354"
+ 161      3CAB1BCF 
+ 161      72E32F6B 
+ 161      5C27AD91 
+ 161      C6EC
+ 162 0406 4FC4309E 		.ascii	"O\3040\236\0035\0245NI\334\233\231\331\005\273r\363"
+ 162      03351435 
+ 162      4E49DC9B 
+ 162      99D905BB 
+ 162      72F3
+ 163 0418 DE29C82D 		.ascii	"\336)\310-\321\264\262\250\035o\347'ggd\220\324\035"
+ 163      D1B4B2A8 
+ 163      1D6FE727 
+ 163      67676490 
+ 163      D41D
+ 164 042a 5AA9565E 		.ascii	"Z\251V^X\241\275_\220\353p\226\027k{rr\035\331/\357"
+ 164      58A1BD5F 
+ 164      90EB7096 
+ 164      176B7B72 
+ 164      721DD92F 
+ARM GAS  e:\temp\ccd3leo5.s 			page 12
+
+
+ 165 043f 099BE7EC 		.ascii	"\011\233\347\354J/&\361a\365\335\302}\232\263,\326\240"
+ 165      4A2F26F1 
+ 165      61F5DDC2 
+ 165      7D9AB32C 
+ 165      D6A0
+ 166 0451 5538CA52 		.ascii	"U8\312R\376\207\221\376a\004\340\365\322\302\242\022"
+ 166      FE8791FE 
+ 166      6104E0F5 
+ 166      D2C2A212 
+ 167 0461 CDD08B0A 		.ascii	"\315\320\213\012\213\3679\313b4\276\234[\201\024\263"
+ 167      8BF739CB 
+ 167      6234BE9C 
+ 167      5B8114B3 
+ 168 0471 F3A3D28A 		.ascii	"\363\243\322\212W^\330\030\272\265x\177\305\3762\355"
+ 168      575ED818 
+ 168      BAB5787F 
+ 168      C5FE32ED 
+ 169 0481 63646E0E 		.ascii	"cdn\0163\266\277\232\375V~N\001N\363\263\363\314\005"
+ 169      33B6BF9A 
+ 169      FD567E4E 
+ 169      014EF3B3 
+ 169      F3CC05
+ 170 0494 DB1D8E12 		.ascii	"\333\035\216\022\013\203de\232\313\265\275Y\231\177"
+ 170      0B836465 
+ 170      9ACBB5BD 
+ 170      59997F
+ 171 04a3 03780042 		.ascii	"\003x\000B\013"
+ 171      0B
+ 172              		.text
+ 173              		.section	.gnu.lto_.symtab.6240a9c4,"",%progbits
+ 174 0000 4932435F 		.ascii	"I2C_MSTR_Sleep\000"
+ 174      4D535452 
+ 174      5F536C65 
+ 174      657000
+ 175 000f 00       		.ascii	"\000"
+ 176 0010 00       		.ascii	"\000"
+ 177 0011 00       		.ascii	"\000"
+ 178 0012 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 178      00000000 
+ 179 001a AD000000 		.ascii	"\255\000\000\000"
+ 180 001e 4932435F 		.ascii	"I2C_MSTR_backup\000"
+ 180      4D535452 
+ 180      5F626163 
+ 180      6B757000 
+ 181 002e 00       		.ascii	"\000"
+ 182 002f 00       		.ascii	"\000"
+ 183 0030 00       		.ascii	"\000"
+ 184 0031 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 184      00000000 
+ 185 0039 C1000000 		.ascii	"\301\000\000\000"
+ 186 003d 4932435F 		.ascii	"I2C_MSTR_Wakeup\000"
+ 186      4D535452 
+ 186      5F57616B 
+ 186      65757000 
+ 187 004d 00       		.ascii	"\000"
+ 188 004e 00       		.ascii	"\000"
+ 189 004f 00       		.ascii	"\000"
+ARM GAS  e:\temp\ccd3leo5.s 			page 13
+
+
+ 190 0050 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 190      00000000 
+ 191 0058 AF000000 		.ascii	"\257\000\000\000"
+ 192 005c 4932435F 		.ascii	"I2C_MSTR_Stop\000"
+ 192      4D535452 
+ 192      5F53746F 
+ 192      7000
+ 193 006a 00       		.ascii	"\000"
+ 194 006b 02       		.ascii	"\002"
+ 195 006c 00       		.ascii	"\000"
+ 196 006d 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 196      00000000 
+ 197 0075 B1000000 		.ascii	"\261\000\000\000"
+ 198 0079 4932435F 		.ascii	"I2C_MSTR_Enable\000"
+ 198      4D535452 
+ 198      5F456E61 
+ 198      626C6500 
+ 199 0089 00       		.ascii	"\000"
+ 200 008a 02       		.ascii	"\002"
+ 201 008b 00       		.ascii	"\000"
+ 202 008c 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 202      00000000 
+ 203 0094 B3000000 		.ascii	"\263\000\000\000"
+ 204              		.text
+ 205              		.section	.gnu.lto_.opts,"",%progbits
+ 206 0000 272D666D 		.ascii	"'-fmath-errno' '-fsigned-zeros' '-ftrapping-math' '"
+ 206      6174682D 
+ 206      6572726E 
+ 206      6F272027 
+ 206      2D667369 
+ 207 0033 2D666E6F 		.ascii	"-fno-trapv' '-fno-openmp' '-fno-openacc' '-mcpu=cor"
+ 207      2D747261 
+ 207      70762720 
+ 207      272D666E 
+ 207      6F2D6F70 
+ 208 0066 7465782D 		.ascii	"tex-m0' '-mthumb' '-g' '-Os' '-Werror' '-ffunction-"
+ 208      6D302720 
+ 208      272D6D74 
+ 208      68756D62 
+ 208      2720272D 
+ 209 0099 73656374 		.ascii	"sections' '-ffat-lto-objects' '-finline-functions' "
+ 209      696F6E73 
+ 209      2720272D 
+ 209      66666174 
+ 209      2D6C746F 
+ 210 00cc 272D666C 		.ascii	"'-flto' '-fno-strict-aliasing'\000"
+ 210      746F2720 
+ 210      272D666E 
+ 210      6F2D7374 
+ 210      72696374 
+ 211              		.text
+ 212              		.cfi_sections	.debug_frame
+ 213              		.section	.text.I2C_MSTR_Sleep,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	I2C_MSTR_Sleep
+ 216              		.code	16
+ 217              		.thumb_func
+ARM GAS  e:\temp\ccd3leo5.s 			page 14
+
+
+ 218              		.type	I2C_MSTR_Sleep, %function
+ 219              	I2C_MSTR_Sleep:
+ 220              	.LFB0:
+ 221              		.file 1 "Generated_Source\\PSoC4\\I2C_MSTR_PM.c"
+   1:Generated_Source\PSoC4/I2C_MSTR_PM.c **** /***************************************************************************//**
+   2:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * \file I2C_MSTR_PM.c
+   3:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * \version 4.0
+   4:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+   5:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * \brief
+   6:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  This file provides the source code to the Power Management support for
+   7:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  the SCB Component.
+   8:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+   9:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * Note:
+  10:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+  11:Generated_Source\PSoC4/I2C_MSTR_PM.c **** ********************************************************************************
+  12:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * \copyright
+  13:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * Copyright 2013-2017, Cypress Semiconductor Corporation.  All rights reserved.
+  14:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  15:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  16:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * the software package with which this file was provided.
+  17:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *******************************************************************************/
+  18:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  19:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #include "I2C_MSTR.h"
+  20:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #include "I2C_MSTR_PVT.h"
+  21:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  22:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #if(I2C_MSTR_SCB_MODE_I2C_INC)
+  23:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #include "I2C_MSTR_I2C_PVT.h"
+  24:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #endif /* (I2C_MSTR_SCB_MODE_I2C_INC) */
+  25:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  26:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #if(I2C_MSTR_SCB_MODE_EZI2C_INC)
+  27:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #include "I2C_MSTR_EZI2C_PVT.h"
+  28:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #endif /* (I2C_MSTR_SCB_MODE_EZI2C_INC) */
+  29:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  30:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #if(I2C_MSTR_SCB_MODE_SPI_INC || I2C_MSTR_SCB_MODE_UART_INC)
+  31:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #include "I2C_MSTR_SPI_UART_PVT.h"
+  32:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #endif /* (I2C_MSTR_SCB_MODE_SPI_INC || I2C_MSTR_SCB_MODE_UART_INC) */
+  33:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  34:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  35:Generated_Source\PSoC4/I2C_MSTR_PM.c **** /***************************************
+  36:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *   Backup Structure declaration
+  37:Generated_Source\PSoC4/I2C_MSTR_PM.c **** ***************************************/
+  38:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  39:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #if(I2C_MSTR_SCB_MODE_UNCONFIG_CONST_CFG || \
+  40:Generated_Source\PSoC4/I2C_MSTR_PM.c ****    (I2C_MSTR_SCB_MODE_I2C_CONST_CFG   && (!I2C_MSTR_I2C_WAKE_ENABLE_CONST))   || \
+  41:Generated_Source\PSoC4/I2C_MSTR_PM.c ****    (I2C_MSTR_SCB_MODE_EZI2C_CONST_CFG && (!I2C_MSTR_EZI2C_WAKE_ENABLE_CONST)) || \
+  42:Generated_Source\PSoC4/I2C_MSTR_PM.c ****    (I2C_MSTR_SCB_MODE_SPI_CONST_CFG   && (!I2C_MSTR_SPI_WAKE_ENABLE_CONST))   || \
+  43:Generated_Source\PSoC4/I2C_MSTR_PM.c ****    (I2C_MSTR_SCB_MODE_UART_CONST_CFG  && (!I2C_MSTR_UART_WAKE_ENABLE_CONST)))
+  44:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  45:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     I2C_MSTR_BACKUP_STRUCT I2C_MSTR_backup =
+  46:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     {
+  47:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         0u, /* enableState */
+  48:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     };
+  49:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #endif
+  50:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  51:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  52:Generated_Source\PSoC4/I2C_MSTR_PM.c **** /*******************************************************************************
+  53:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * Function Name: I2C_MSTR_Sleep
+ARM GAS  e:\temp\ccd3leo5.s 			page 15
+
+
+  54:Generated_Source\PSoC4/I2C_MSTR_PM.c **** ****************************************************************************//**
+  55:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+  56:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  Prepares the I2C_MSTR component to enter Deep Sleep.
+  57:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  The “Enable wakeup from Deep Sleep Mode” selection has an influence on this 
+  58:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  function implementation:
+  59:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  - Checked: configures the component to be wakeup source from Deep Sleep.
+  60:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  - Unchecked: stores the current component state (enabled or disabled) and 
+  61:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *    disables the component. See SCB_Stop() function for details about component 
+  62:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *    disabling.
+  63:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+  64:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  Call the I2C_MSTR_Sleep() function before calling the 
+  65:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  CyPmSysDeepSleep() function. 
+  66:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  Refer to the PSoC Creator System Reference Guide for more information about 
+  67:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  power management functions and Low power section of this document for the 
+  68:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  selected mode.
+  69:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+  70:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  This function should not be called before entering Sleep.
+  71:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+  72:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *******************************************************************************/
+  73:Generated_Source\PSoC4/I2C_MSTR_PM.c **** void I2C_MSTR_Sleep(void)
+  74:Generated_Source\PSoC4/I2C_MSTR_PM.c **** {
+ 222              		.loc 1 74 0
+ 223              		.cfi_startproc
+ 224              		@ args = 0, pretend = 0, frame = 0
+ 225              		@ frame_needed = 0, uses_anonymous_args = 0
+ 226 0000 10B5     		push	{r4, lr}
+ 227              		.cfi_def_cfa_offset 8
+ 228              		.cfi_offset 4, -8
+ 229              		.cfi_offset 14, -4
+  75:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #if(I2C_MSTR_SCB_MODE_UNCONFIG_CONST_CFG)
+  76:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+  77:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     if(I2C_MSTR_SCB_WAKE_ENABLE_CHECK)
+  78:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     {
+  79:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         if(I2C_MSTR_SCB_MODE_I2C_RUNTM_CFG)
+  80:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+  81:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_I2CSaveConfig();
+  82:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+  83:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else if(I2C_MSTR_SCB_MODE_EZI2C_RUNTM_CFG)
+  84:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+  85:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_EzI2CSaveConfig();
+  86:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+  87:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #if(!I2C_MSTR_CY_SCBIP_V1)
+  88:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else if(I2C_MSTR_SCB_MODE_SPI_RUNTM_CFG)
+  89:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+  90:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_SpiSaveConfig();
+  91:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+  92:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else if(I2C_MSTR_SCB_MODE_UART_RUNTM_CFG)
+  93:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+  94:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_UartSaveConfig();
+  95:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+  96:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #endif /* (!I2C_MSTR_CY_SCBIP_V1) */
+  97:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else
+  98:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+  99:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             /* Unknown mode */
+ 100:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 101:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     }
+ 102:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     else
+ARM GAS  e:\temp\ccd3leo5.s 			page 16
+
+
+ 103:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     {
+ 104:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_backup.enableState = (uint8) I2C_MSTR_GET_CTRL_ENABLED;
+ 105:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 106:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         if(0u != I2C_MSTR_backup.enableState)
+ 107:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 108:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_Stop();
+ 109:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 110:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     }
+ 111:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 112:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #else
+ 113:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 114:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #if (I2C_MSTR_SCB_MODE_I2C_CONST_CFG && I2C_MSTR_I2C_WAKE_ENABLE_CONST)
+ 115:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_I2CSaveConfig();
+ 116:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 117:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #elif (I2C_MSTR_SCB_MODE_EZI2C_CONST_CFG && I2C_MSTR_EZI2C_WAKE_ENABLE_CONST)
+ 118:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_EzI2CSaveConfig();
+ 119:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 120:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #elif (I2C_MSTR_SCB_MODE_SPI_CONST_CFG && I2C_MSTR_SPI_WAKE_ENABLE_CONST)
+ 121:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_SpiSaveConfig();
+ 122:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 123:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #elif (I2C_MSTR_SCB_MODE_UART_CONST_CFG && I2C_MSTR_UART_WAKE_ENABLE_CONST)
+ 124:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_UartSaveConfig();
+ 125:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 126:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #else
+ 127:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 128:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_backup.enableState = (uint8) I2C_MSTR_GET_CTRL_ENABLED;
+ 230              		.loc 1 128 0
+ 231 0002 054B     		ldr	r3, .L4
+ 232 0004 054A     		ldr	r2, .L4+4
+ 233 0006 1B68     		ldr	r3, [r3]
+ 234 0008 D90F     		lsrs	r1, r3, #31
+ 235 000a 1170     		strb	r1, [r2]
+ 129:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 130:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         if(0u != I2C_MSTR_backup.enableState)
+ 236              		.loc 1 130 0
+ 237 000c 002B     		cmp	r3, #0
+ 238 000e 01DA     		bge	.L1
+ 131:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 132:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_Stop();
+ 239              		.loc 1 132 0
+ 240 0010 FFF7FEFF 		bl	I2C_MSTR_Stop
+ 241              	.LVL0:
+ 242              	.L1:
+ 133:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 134:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 135:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #endif /* defined (I2C_MSTR_SCB_MODE_I2C_CONST_CFG) && (I2C_MSTR_I2C_WAKE_ENABLE_CONST) */
+ 136:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 137:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #endif /* (I2C_MSTR_SCB_MODE_UNCONFIG_CONST_CFG) */
+ 138:Generated_Source\PSoC4/I2C_MSTR_PM.c **** }
+ 243              		.loc 1 138 0
+ 244              		@ sp needed
+ 245 0014 10BD     		pop	{r4, pc}
+ 246              	.L5:
+ 247 0016 C046     		.align	2
+ 248              	.L4:
+ 249 0018 00000640 		.word	1074135040
+ 250 001c 00000000 		.word	.LANCHOR0
+ARM GAS  e:\temp\ccd3leo5.s 			page 17
+
+
+ 251              		.cfi_endproc
+ 252              	.LFE0:
+ 253              		.size	I2C_MSTR_Sleep, .-I2C_MSTR_Sleep
+ 254              		.section	.text.I2C_MSTR_Wakeup,"ax",%progbits
+ 255              		.align	1
+ 256              		.global	I2C_MSTR_Wakeup
+ 257              		.code	16
+ 258              		.thumb_func
+ 259              		.type	I2C_MSTR_Wakeup, %function
+ 260              	I2C_MSTR_Wakeup:
+ 261              	.LFB1:
+ 139:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 140:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 141:Generated_Source\PSoC4/I2C_MSTR_PM.c **** /*******************************************************************************
+ 142:Generated_Source\PSoC4/I2C_MSTR_PM.c **** * Function Name: I2C_MSTR_Wakeup
+ 143:Generated_Source\PSoC4/I2C_MSTR_PM.c **** ****************************************************************************//**
+ 144:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+ 145:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  Prepares the I2C_MSTR component for Active mode operation after 
+ 146:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  Deep Sleep.
+ 147:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  The “Enable wakeup from Deep Sleep Mode” selection has influence on this 
+ 148:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  function implementation:
+ 149:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  - Checked: restores the component Active mode configuration.
+ 150:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  - Unchecked: enables the component if it was enabled before enter Deep Sleep.
+ 151:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+ 152:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  This function should not be called after exiting Sleep.
+ 153:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+ 154:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *  \sideeffect
+ 155:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *   Calling the I2C_MSTR_Wakeup() function without first calling the 
+ 156:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *   I2C_MSTR_Sleep() function may produce unexpected behavior.
+ 157:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *
+ 158:Generated_Source\PSoC4/I2C_MSTR_PM.c **** *******************************************************************************/
+ 159:Generated_Source\PSoC4/I2C_MSTR_PM.c **** void I2C_MSTR_Wakeup(void)
+ 160:Generated_Source\PSoC4/I2C_MSTR_PM.c **** {
+ 262              		.loc 1 160 0
+ 263              		.cfi_startproc
+ 264              		@ args = 0, pretend = 0, frame = 0
+ 265              		@ frame_needed = 0, uses_anonymous_args = 0
+ 266 0000 10B5     		push	{r4, lr}
+ 267              		.cfi_def_cfa_offset 8
+ 268              		.cfi_offset 4, -8
+ 269              		.cfi_offset 14, -4
+ 161:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #if(I2C_MSTR_SCB_MODE_UNCONFIG_CONST_CFG)
+ 162:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 163:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     if(I2C_MSTR_SCB_WAKE_ENABLE_CHECK)
+ 164:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     {
+ 165:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         if(I2C_MSTR_SCB_MODE_I2C_RUNTM_CFG)
+ 166:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 167:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_I2CRestoreConfig();
+ 168:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 169:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else if(I2C_MSTR_SCB_MODE_EZI2C_RUNTM_CFG)
+ 170:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 171:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_EzI2CRestoreConfig();
+ 172:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 173:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #if(!I2C_MSTR_CY_SCBIP_V1)
+ 174:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else if(I2C_MSTR_SCB_MODE_SPI_RUNTM_CFG)
+ 175:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 176:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_SpiRestoreConfig();
+ARM GAS  e:\temp\ccd3leo5.s 			page 18
+
+
+ 177:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 178:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else if(I2C_MSTR_SCB_MODE_UART_RUNTM_CFG)
+ 179:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 180:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_UartRestoreConfig();
+ 181:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 182:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #endif /* (!I2C_MSTR_CY_SCBIP_V1) */
+ 183:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         else
+ 184:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 185:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             /* Unknown mode */
+ 186:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 187:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     }
+ 188:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     else
+ 189:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     {
+ 190:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         if(0u != I2C_MSTR_backup.enableState)
+ 191:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 192:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_Enable();
+ 193:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 194:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     }
+ 195:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 196:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #else
+ 197:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 198:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #if (I2C_MSTR_SCB_MODE_I2C_CONST_CFG  && I2C_MSTR_I2C_WAKE_ENABLE_CONST)
+ 199:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_I2CRestoreConfig();
+ 200:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 201:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #elif (I2C_MSTR_SCB_MODE_EZI2C_CONST_CFG && I2C_MSTR_EZI2C_WAKE_ENABLE_CONST)
+ 202:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_EzI2CRestoreConfig();
+ 203:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 204:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #elif (I2C_MSTR_SCB_MODE_SPI_CONST_CFG && I2C_MSTR_SPI_WAKE_ENABLE_CONST)
+ 205:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_SpiRestoreConfig();
+ 206:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 207:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #elif (I2C_MSTR_SCB_MODE_UART_CONST_CFG && I2C_MSTR_UART_WAKE_ENABLE_CONST)
+ 208:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         I2C_MSTR_UartRestoreConfig();
+ 209:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 210:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #else
+ 211:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 212:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         if(0u != I2C_MSTR_backup.enableState)
+ 270              		.loc 1 212 0
+ 271 0002 034B     		ldr	r3, .L11
+ 272 0004 1B78     		ldrb	r3, [r3]
+ 273 0006 002B     		cmp	r3, #0
+ 274 0008 01D0     		beq	.L6
+ 213:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         {
+ 214:Generated_Source\PSoC4/I2C_MSTR_PM.c ****             I2C_MSTR_Enable();
+ 275              		.loc 1 214 0
+ 276 000a FFF7FEFF 		bl	I2C_MSTR_Enable
+ 277              	.LVL1:
+ 278              	.L6:
+ 215:Generated_Source\PSoC4/I2C_MSTR_PM.c ****         }
+ 216:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 217:Generated_Source\PSoC4/I2C_MSTR_PM.c ****     #endif /* (I2C_MSTR_I2C_WAKE_ENABLE_CONST) */
+ 218:Generated_Source\PSoC4/I2C_MSTR_PM.c **** 
+ 219:Generated_Source\PSoC4/I2C_MSTR_PM.c **** #endif /* (I2C_MSTR_SCB_MODE_UNCONFIG_CONST_CFG) */
+ 220:Generated_Source\PSoC4/I2C_MSTR_PM.c **** }
+ 279              		.loc 1 220 0
+ 280              		@ sp needed
+ 281 000e 10BD     		pop	{r4, pc}
+ 282              	.L12:
+ARM GAS  e:\temp\ccd3leo5.s 			page 19
+
+
+ 283              		.align	2
+ 284              	.L11:
+ 285 0010 00000000 		.word	.LANCHOR0
+ 286              		.cfi_endproc
+ 287              	.LFE1:
+ 288              		.size	I2C_MSTR_Wakeup, .-I2C_MSTR_Wakeup
+ 289              		.global	I2C_MSTR_backup
+ 290              		.bss
+ 291              		.set	.LANCHOR0,. + 0
+ 292              		.type	I2C_MSTR_backup, %object
+ 293              		.size	I2C_MSTR_backup, 1
+ 294              	I2C_MSTR_backup:
+ 295 0000 00       		.space	1
+ 296              		.text
+ 297              	.Letext0:
+ 298              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 299              		.file 3 "Generated_Source\\PSoC4\\I2C_MSTR.h"
+ 300              		.section	.debug_info,"",%progbits
+ 301              	.Ldebug_info0:
+ 302 0000 39010000 		.4byte	0x139
+ 303 0004 0400     		.2byte	0x4
+ 304 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 305 000a 04       		.byte	0x4
+ 306 000b 01       		.uleb128 0x1
+ 307 000c 9F000000 		.4byte	.LASF22
+ 308 0010 0C       		.byte	0xc
+ 309 0011 4B000000 		.4byte	.LASF23
+ 310 0015 61010000 		.4byte	.LASF24
+ 311 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 312 001d 00000000 		.4byte	0
+ 313 0021 00000000 		.4byte	.Ldebug_line0
+ 314 0025 02       		.uleb128 0x2
+ 315 0026 01       		.byte	0x1
+ 316 0027 06       		.byte	0x6
+ 317 0028 31020000 		.4byte	.LASF0
+ 318 002c 02       		.uleb128 0x2
+ 319 002d 01       		.byte	0x1
+ 320 002e 08       		.byte	0x8
+ 321 002f 2E000000 		.4byte	.LASF1
+ 322 0033 02       		.uleb128 0x2
+ 323 0034 02       		.byte	0x2
+ 324 0035 05       		.byte	0x5
+ 325 0036 57020000 		.4byte	.LASF2
+ 326 003a 02       		.uleb128 0x2
+ 327 003b 02       		.byte	0x2
+ 328 003c 07       		.byte	0x7
+ 329 003d 1E020000 		.4byte	.LASF3
+ 330 0041 02       		.uleb128 0x2
+ 331 0042 04       		.byte	0x4
+ 332 0043 05       		.byte	0x5
+ 333 0044 F8010000 		.4byte	.LASF4
+ 334 0048 02       		.uleb128 0x2
+ 335 0049 04       		.byte	0x4
+ 336 004a 07       		.byte	0x7
+ 337 004b 76000000 		.4byte	.LASF5
+ 338 004f 02       		.uleb128 0x2
+ 339 0050 08       		.byte	0x8
+ARM GAS  e:\temp\ccd3leo5.s 			page 20
+
+
+ 340 0051 05       		.byte	0x5
+ 341 0052 00000000 		.4byte	.LASF6
+ 342 0056 02       		.uleb128 0x2
+ 343 0057 08       		.byte	0x8
+ 344 0058 07       		.byte	0x7
+ 345 0059 88000000 		.4byte	.LASF7
+ 346 005d 03       		.uleb128 0x3
+ 347 005e 04       		.byte	0x4
+ 348 005f 05       		.byte	0x5
+ 349 0060 696E7400 		.ascii	"int\000"
+ 350 0064 02       		.uleb128 0x2
+ 351 0065 04       		.byte	0x4
+ 352 0066 07       		.byte	0x7
+ 353 0067 21000000 		.4byte	.LASF8
+ 354 006b 04       		.uleb128 0x4
+ 355 006c 70000000 		.4byte	.LASF9
+ 356 0070 02       		.byte	0x2
+ 357 0071 E401     		.2byte	0x1e4
+ 358 0073 2C000000 		.4byte	0x2c
+ 359 0077 04       		.uleb128 0x4
+ 360 0078 0E000000 		.4byte	.LASF10
+ 361 007c 02       		.byte	0x2
+ 362 007d E601     		.2byte	0x1e6
+ 363 007f 48000000 		.4byte	0x48
+ 364 0083 02       		.uleb128 0x2
+ 365 0084 04       		.byte	0x4
+ 366 0085 04       		.byte	0x4
+ 367 0086 5B010000 		.4byte	.LASF11
+ 368 008a 02       		.uleb128 0x2
+ 369 008b 08       		.byte	0x8
+ 370 008c 04       		.byte	0x4
+ 371 008d 11020000 		.4byte	.LASF12
+ 372 0091 02       		.uleb128 0x2
+ 373 0092 01       		.byte	0x1
+ 374 0093 08       		.byte	0x8
+ 375 0094 F3010000 		.4byte	.LASF13
+ 376 0098 04       		.uleb128 0x4
+ 377 0099 18020000 		.4byte	.LASF14
+ 378 009d 02       		.byte	0x2
+ 379 009e 9002     		.2byte	0x290
+ 380 00a0 A4000000 		.4byte	0xa4
+ 381 00a4 05       		.uleb128 0x5
+ 382 00a5 77000000 		.4byte	0x77
+ 383 00a9 02       		.uleb128 0x2
+ 384 00aa 08       		.byte	0x8
+ 385 00ab 04       		.byte	0x4
+ 386 00ac 3D020000 		.4byte	.LASF15
+ 387 00b0 02       		.uleb128 0x2
+ 388 00b1 04       		.byte	0x4
+ 389 00b2 07       		.byte	0x7
+ 390 00b3 61020000 		.4byte	.LASF16
+ 391 00b7 06       		.uleb128 0x6
+ 392 00b8 01       		.byte	0x1
+ 393 00b9 03       		.byte	0x3
+ 394 00ba 60       		.byte	0x60
+ 395 00bb CC000000 		.4byte	0xcc
+ 396 00bf 07       		.uleb128 0x7
+ARM GAS  e:\temp\ccd3leo5.s 			page 21
+
+
+ 397 00c0 15000000 		.4byte	.LASF25
+ 398 00c4 03       		.byte	0x3
+ 399 00c5 62       		.byte	0x62
+ 400 00c6 6B000000 		.4byte	0x6b
+ 401 00ca 00       		.byte	0
+ 402 00cb 00       		.byte	0
+ 403 00cc 08       		.uleb128 0x8
+ 404 00cd DC010000 		.4byte	.LASF17
+ 405 00d1 03       		.byte	0x3
+ 406 00d2 63       		.byte	0x63
+ 407 00d3 B7000000 		.4byte	0xb7
+ 408 00d7 09       		.uleb128 0x9
+ 409 00d8 3C000000 		.4byte	.LASF18
+ 410 00dc 01       		.byte	0x1
+ 411 00dd 49       		.byte	0x49
+ 412 00de 00000000 		.4byte	.LFB0
+ 413 00e2 20000000 		.4byte	.LFE0-.LFB0
+ 414 00e6 01       		.uleb128 0x1
+ 415 00e7 9C       		.byte	0x9c
+ 416 00e8 F6000000 		.4byte	0xf6
+ 417 00ec 0A       		.uleb128 0xa
+ 418 00ed 14000000 		.4byte	.LVL0
+ 419 00f1 26010000 		.4byte	0x126
+ 420 00f5 00       		.byte	0
+ 421 00f6 09       		.uleb128 0x9
+ 422 00f7 7A020000 		.4byte	.LASF19
+ 423 00fb 01       		.byte	0x1
+ 424 00fc 9F       		.byte	0x9f
+ 425 00fd 00000000 		.4byte	.LFB1
+ 426 0101 14000000 		.4byte	.LFE1-.LFB1
+ 427 0105 01       		.uleb128 0x1
+ 428 0106 9C       		.byte	0x9c
+ 429 0107 15010000 		.4byte	0x115
+ 430 010b 0A       		.uleb128 0xa
+ 431 010c 0E000000 		.4byte	.LVL1
+ 432 0110 31010000 		.4byte	0x131
+ 433 0114 00       		.byte	0
+ 434 0115 0B       		.uleb128 0xb
+ 435 0116 01020000 		.4byte	.LASF26
+ 436 011a 01       		.byte	0x1
+ 437 011b 2D       		.byte	0x2d
+ 438 011c CC000000 		.4byte	0xcc
+ 439 0120 05       		.uleb128 0x5
+ 440 0121 03       		.byte	0x3
+ 441 0122 00000000 		.4byte	I2C_MSTR_backup
+ 442 0126 0C       		.uleb128 0xc
+ 443 0127 49020000 		.4byte	.LASF20
+ 444 012b 49020000 		.4byte	.LASF20
+ 445 012f 03       		.byte	0x3
+ 446 0130 73       		.byte	0x73
+ 447 0131 0C       		.uleb128 0xc
+ 448 0132 6A020000 		.4byte	.LASF21
+ 449 0136 6A020000 		.4byte	.LASF21
+ 450 013a 03       		.byte	0x3
+ 451 013b 71       		.byte	0x71
+ 452 013c 00       		.byte	0
+ 453              		.section	.debug_abbrev,"",%progbits
+ARM GAS  e:\temp\ccd3leo5.s 			page 22
+
+
+ 454              	.Ldebug_abbrev0:
+ 455 0000 01       		.uleb128 0x1
+ 456 0001 11       		.uleb128 0x11
+ 457 0002 01       		.byte	0x1
+ 458 0003 25       		.uleb128 0x25
+ 459 0004 0E       		.uleb128 0xe
+ 460 0005 13       		.uleb128 0x13
+ 461 0006 0B       		.uleb128 0xb
+ 462 0007 03       		.uleb128 0x3
+ 463 0008 0E       		.uleb128 0xe
+ 464 0009 1B       		.uleb128 0x1b
+ 465 000a 0E       		.uleb128 0xe
+ 466 000b 55       		.uleb128 0x55
+ 467 000c 17       		.uleb128 0x17
+ 468 000d 11       		.uleb128 0x11
+ 469 000e 01       		.uleb128 0x1
+ 470 000f 10       		.uleb128 0x10
+ 471 0010 17       		.uleb128 0x17
+ 472 0011 00       		.byte	0
+ 473 0012 00       		.byte	0
+ 474 0013 02       		.uleb128 0x2
+ 475 0014 24       		.uleb128 0x24
+ 476 0015 00       		.byte	0
+ 477 0016 0B       		.uleb128 0xb
+ 478 0017 0B       		.uleb128 0xb
+ 479 0018 3E       		.uleb128 0x3e
+ 480 0019 0B       		.uleb128 0xb
+ 481 001a 03       		.uleb128 0x3
+ 482 001b 0E       		.uleb128 0xe
+ 483 001c 00       		.byte	0
+ 484 001d 00       		.byte	0
+ 485 001e 03       		.uleb128 0x3
+ 486 001f 24       		.uleb128 0x24
+ 487 0020 00       		.byte	0
+ 488 0021 0B       		.uleb128 0xb
+ 489 0022 0B       		.uleb128 0xb
+ 490 0023 3E       		.uleb128 0x3e
+ 491 0024 0B       		.uleb128 0xb
+ 492 0025 03       		.uleb128 0x3
+ 493 0026 08       		.uleb128 0x8
+ 494 0027 00       		.byte	0
+ 495 0028 00       		.byte	0
+ 496 0029 04       		.uleb128 0x4
+ 497 002a 16       		.uleb128 0x16
+ 498 002b 00       		.byte	0
+ 499 002c 03       		.uleb128 0x3
+ 500 002d 0E       		.uleb128 0xe
+ 501 002e 3A       		.uleb128 0x3a
+ 502 002f 0B       		.uleb128 0xb
+ 503 0030 3B       		.uleb128 0x3b
+ 504 0031 05       		.uleb128 0x5
+ 505 0032 49       		.uleb128 0x49
+ 506 0033 13       		.uleb128 0x13
+ 507 0034 00       		.byte	0
+ 508 0035 00       		.byte	0
+ 509 0036 05       		.uleb128 0x5
+ 510 0037 35       		.uleb128 0x35
+ARM GAS  e:\temp\ccd3leo5.s 			page 23
+
+
+ 511 0038 00       		.byte	0
+ 512 0039 49       		.uleb128 0x49
+ 513 003a 13       		.uleb128 0x13
+ 514 003b 00       		.byte	0
+ 515 003c 00       		.byte	0
+ 516 003d 06       		.uleb128 0x6
+ 517 003e 13       		.uleb128 0x13
+ 518 003f 01       		.byte	0x1
+ 519 0040 0B       		.uleb128 0xb
+ 520 0041 0B       		.uleb128 0xb
+ 521 0042 3A       		.uleb128 0x3a
+ 522 0043 0B       		.uleb128 0xb
+ 523 0044 3B       		.uleb128 0x3b
+ 524 0045 0B       		.uleb128 0xb
+ 525 0046 01       		.uleb128 0x1
+ 526 0047 13       		.uleb128 0x13
+ 527 0048 00       		.byte	0
+ 528 0049 00       		.byte	0
+ 529 004a 07       		.uleb128 0x7
+ 530 004b 0D       		.uleb128 0xd
+ 531 004c 00       		.byte	0
+ 532 004d 03       		.uleb128 0x3
+ 533 004e 0E       		.uleb128 0xe
+ 534 004f 3A       		.uleb128 0x3a
+ 535 0050 0B       		.uleb128 0xb
+ 536 0051 3B       		.uleb128 0x3b
+ 537 0052 0B       		.uleb128 0xb
+ 538 0053 49       		.uleb128 0x49
+ 539 0054 13       		.uleb128 0x13
+ 540 0055 38       		.uleb128 0x38
+ 541 0056 0B       		.uleb128 0xb
+ 542 0057 00       		.byte	0
+ 543 0058 00       		.byte	0
+ 544 0059 08       		.uleb128 0x8
+ 545 005a 16       		.uleb128 0x16
+ 546 005b 00       		.byte	0
+ 547 005c 03       		.uleb128 0x3
+ 548 005d 0E       		.uleb128 0xe
+ 549 005e 3A       		.uleb128 0x3a
+ 550 005f 0B       		.uleb128 0xb
+ 551 0060 3B       		.uleb128 0x3b
+ 552 0061 0B       		.uleb128 0xb
+ 553 0062 49       		.uleb128 0x49
+ 554 0063 13       		.uleb128 0x13
+ 555 0064 00       		.byte	0
+ 556 0065 00       		.byte	0
+ 557 0066 09       		.uleb128 0x9
+ 558 0067 2E       		.uleb128 0x2e
+ 559 0068 01       		.byte	0x1
+ 560 0069 3F       		.uleb128 0x3f
+ 561 006a 19       		.uleb128 0x19
+ 562 006b 03       		.uleb128 0x3
+ 563 006c 0E       		.uleb128 0xe
+ 564 006d 3A       		.uleb128 0x3a
+ 565 006e 0B       		.uleb128 0xb
+ 566 006f 3B       		.uleb128 0x3b
+ 567 0070 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccd3leo5.s 			page 24
+
+
+ 568 0071 27       		.uleb128 0x27
+ 569 0072 19       		.uleb128 0x19
+ 570 0073 11       		.uleb128 0x11
+ 571 0074 01       		.uleb128 0x1
+ 572 0075 12       		.uleb128 0x12
+ 573 0076 06       		.uleb128 0x6
+ 574 0077 40       		.uleb128 0x40
+ 575 0078 18       		.uleb128 0x18
+ 576 0079 9742     		.uleb128 0x2117
+ 577 007b 19       		.uleb128 0x19
+ 578 007c 01       		.uleb128 0x1
+ 579 007d 13       		.uleb128 0x13
+ 580 007e 00       		.byte	0
+ 581 007f 00       		.byte	0
+ 582 0080 0A       		.uleb128 0xa
+ 583 0081 898201   		.uleb128 0x4109
+ 584 0084 00       		.byte	0
+ 585 0085 11       		.uleb128 0x11
+ 586 0086 01       		.uleb128 0x1
+ 587 0087 31       		.uleb128 0x31
+ 588 0088 13       		.uleb128 0x13
+ 589 0089 00       		.byte	0
+ 590 008a 00       		.byte	0
+ 591 008b 0B       		.uleb128 0xb
+ 592 008c 34       		.uleb128 0x34
+ 593 008d 00       		.byte	0
+ 594 008e 03       		.uleb128 0x3
+ 595 008f 0E       		.uleb128 0xe
+ 596 0090 3A       		.uleb128 0x3a
+ 597 0091 0B       		.uleb128 0xb
+ 598 0092 3B       		.uleb128 0x3b
+ 599 0093 0B       		.uleb128 0xb
+ 600 0094 49       		.uleb128 0x49
+ 601 0095 13       		.uleb128 0x13
+ 602 0096 3F       		.uleb128 0x3f
+ 603 0097 19       		.uleb128 0x19
+ 604 0098 02       		.uleb128 0x2
+ 605 0099 18       		.uleb128 0x18
+ 606 009a 00       		.byte	0
+ 607 009b 00       		.byte	0
+ 608 009c 0C       		.uleb128 0xc
+ 609 009d 2E       		.uleb128 0x2e
+ 610 009e 00       		.byte	0
+ 611 009f 3F       		.uleb128 0x3f
+ 612 00a0 19       		.uleb128 0x19
+ 613 00a1 3C       		.uleb128 0x3c
+ 614 00a2 19       		.uleb128 0x19
+ 615 00a3 6E       		.uleb128 0x6e
+ 616 00a4 0E       		.uleb128 0xe
+ 617 00a5 03       		.uleb128 0x3
+ 618 00a6 0E       		.uleb128 0xe
+ 619 00a7 3A       		.uleb128 0x3a
+ 620 00a8 0B       		.uleb128 0xb
+ 621 00a9 3B       		.uleb128 0x3b
+ 622 00aa 0B       		.uleb128 0xb
+ 623 00ab 00       		.byte	0
+ 624 00ac 00       		.byte	0
+ARM GAS  e:\temp\ccd3leo5.s 			page 25
+
+
+ 625 00ad 00       		.byte	0
+ 626              		.section	.debug_aranges,"",%progbits
+ 627 0000 24000000 		.4byte	0x24
+ 628 0004 0200     		.2byte	0x2
+ 629 0006 00000000 		.4byte	.Ldebug_info0
+ 630 000a 04       		.byte	0x4
+ 631 000b 00       		.byte	0
+ 632 000c 0000     		.2byte	0
+ 633 000e 0000     		.2byte	0
+ 634 0010 00000000 		.4byte	.LFB0
+ 635 0014 20000000 		.4byte	.LFE0-.LFB0
+ 636 0018 00000000 		.4byte	.LFB1
+ 637 001c 14000000 		.4byte	.LFE1-.LFB1
+ 638 0020 00000000 		.4byte	0
+ 639 0024 00000000 		.4byte	0
+ 640              		.section	.debug_ranges,"",%progbits
+ 641              	.Ldebug_ranges0:
+ 642 0000 00000000 		.4byte	.LFB0
+ 643 0004 20000000 		.4byte	.LFE0
+ 644 0008 00000000 		.4byte	.LFB1
+ 645 000c 14000000 		.4byte	.LFE1
+ 646 0010 00000000 		.4byte	0
+ 647 0014 00000000 		.4byte	0
+ 648              		.section	.debug_line,"",%progbits
+ 649              	.Ldebug_line0:
+ 650 0000 87000000 		.section	.debug_str,"MS",%progbits,1
+ 650      02005600 
+ 650      00000201 
+ 650      FB0E0D00 
+ 650      01010101 
+ 651              	.LASF6:
+ 652 0000 6C6F6E67 		.ascii	"long long int\000"
+ 652      206C6F6E 
+ 652      6720696E 
+ 652      7400
+ 653              	.LASF10:
+ 654 000e 75696E74 		.ascii	"uint32\000"
+ 654      333200
+ 655              	.LASF25:
+ 656 0015 656E6162 		.ascii	"enableState\000"
+ 656      6C655374 
+ 656      61746500 
+ 657              	.LASF8:
+ 658 0021 756E7369 		.ascii	"unsigned int\000"
+ 658      676E6564 
+ 658      20696E74 
+ 658      00
+ 659              	.LASF1:
+ 660 002e 756E7369 		.ascii	"unsigned char\000"
+ 660      676E6564 
+ 660      20636861 
+ 660      7200
+ 661              	.LASF18:
+ 662 003c 4932435F 		.ascii	"I2C_MSTR_Sleep\000"
+ 662      4D535452 
+ 662      5F536C65 
+ 662      657000
+ARM GAS  e:\temp\ccd3leo5.s 			page 26
+
+
+ 663              	.LASF23:
+ 664 004b 47656E65 		.ascii	"Generated_Source\\PSoC4\\I2C_MSTR_PM.c\000"
+ 664      72617465 
+ 664      645F536F 
+ 664      75726365 
+ 664      5C50536F 
+ 665              	.LASF9:
+ 666 0070 75696E74 		.ascii	"uint8\000"
+ 666      3800
+ 667              	.LASF5:
+ 668 0076 6C6F6E67 		.ascii	"long unsigned int\000"
+ 668      20756E73 
+ 668      69676E65 
+ 668      6420696E 
+ 668      7400
+ 669              	.LASF7:
+ 670 0088 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 670      206C6F6E 
+ 670      6720756E 
+ 670      7369676E 
+ 670      65642069 
+ 671              	.LASF22:
+ 672 009f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 672      43313120 
+ 672      352E342E 
+ 672      31203230 
+ 672      31363036 
+ 673 00d2 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 673      20726576 
+ 673      6973696F 
+ 673      6E203233 
+ 673      37373135 
+ 674 0105 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects -finline-fu"
+ 674      66756E63 
+ 674      74696F6E 
+ 674      2D736563 
+ 674      74696F6E 
+ 675 0138 6E637469 		.ascii	"nctions -flto -fno-strict-aliasing\000"
+ 675      6F6E7320 
+ 675      2D666C74 
+ 675      6F202D66 
+ 675      6E6F2D73 
+ 676              	.LASF11:
+ 677 015b 666C6F61 		.ascii	"float\000"
+ 677      7400
+ 678              	.LASF24:
+ 679 0161 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 679      73657273 
+ 679      5C41646D 
+ 679      696E5C44 
+ 679      65736B74 
+ 680 018e 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 680      355C4359 
+ 680      50443532 
+ 680      32352D39 
+ 680      36425A58 
+ 681 01bf 7465626F 		.ascii	"tebook.cydsn\\backup_fw.cydsn\000"
+ARM GAS  e:\temp\ccd3leo5.s 			page 27
+
+
+ 681      6F6B2E63 
+ 681      7964736E 
+ 681      5C626163 
+ 681      6B75705F 
+ 682              	.LASF17:
+ 683 01dc 4932435F 		.ascii	"I2C_MSTR_BACKUP_STRUCT\000"
+ 683      4D535452 
+ 683      5F424143 
+ 683      4B55505F 
+ 683      53545255 
+ 684              	.LASF13:
+ 685 01f3 63686172 		.ascii	"char\000"
+ 685      00
+ 686              	.LASF4:
+ 687 01f8 6C6F6E67 		.ascii	"long int\000"
+ 687      20696E74 
+ 687      00
+ 688              	.LASF26:
+ 689 0201 4932435F 		.ascii	"I2C_MSTR_backup\000"
+ 689      4D535452 
+ 689      5F626163 
+ 689      6B757000 
+ 690              	.LASF12:
+ 691 0211 646F7562 		.ascii	"double\000"
+ 691      6C6500
+ 692              	.LASF14:
+ 693 0218 72656733 		.ascii	"reg32\000"
+ 693      3200
+ 694              	.LASF3:
+ 695 021e 73686F72 		.ascii	"short unsigned int\000"
+ 695      7420756E 
+ 695      7369676E 
+ 695      65642069 
+ 695      6E7400
+ 696              	.LASF0:
+ 697 0231 7369676E 		.ascii	"signed char\000"
+ 697      65642063 
+ 697      68617200 
+ 698              	.LASF15:
+ 699 023d 6C6F6E67 		.ascii	"long double\000"
+ 699      20646F75 
+ 699      626C6500 
+ 700              	.LASF20:
+ 701 0249 4932435F 		.ascii	"I2C_MSTR_Stop\000"
+ 701      4D535452 
+ 701      5F53746F 
+ 701      7000
+ 702              	.LASF2:
+ 703 0257 73686F72 		.ascii	"short int\000"
+ 703      7420696E 
+ 703      7400
+ 704              	.LASF16:
+ 705 0261 73697A65 		.ascii	"sizetype\000"
+ 705      74797065 
+ 705      00
+ 706              	.LASF21:
+ 707 026a 4932435F 		.ascii	"I2C_MSTR_Enable\000"
+ARM GAS  e:\temp\ccd3leo5.s 			page 28
+
+
+ 707      4D535452 
+ 707      5F456E61 
+ 707      626C6500 
+ 708              	.LASF19:
+ 709 027a 4932435F 		.ascii	"I2C_MSTR_Wakeup\000"
+ 709      4D535452 
+ 709      5F57616B 
+ 709      65757000 
+ 710              		.comm	__gnu_lto_v1,1,1
+ 711              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

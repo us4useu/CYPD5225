@@ -1,0 +1,2144 @@
+ARM GAS  e:\temp\ccwJ39rO.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"cyPm.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.section	.gnu.lto_.profile.624161d0,"",%progbits
+  19 0000 789C6361 		.ascii	"x\234ca`d`a`\000\222N\322\000\001\011\000h"
+  19      60646061 
+  19      6000924E 
+  19      D2000109 
+  19      0068
+  20              		.text
+  21              		.section	.gnu.lto_.icf.624161d0,"",%progbits
+  22 0000 789C6361 		.ascii	"x\234ca`d\000\001\021\006\004`fh\234\260\240\205\213"
+  22      60640001 
+  22      11060460 
+  22      66689CB0 
+  22      A0858B
+  23 0013 F1FE942F 		.ascii	"\361\376\224/\333\271\230V\277^\332\311\302\000\000"
+  23      DBB99856 
+  23      BF5EDAC9 
+  23      C20000
+  24 0022 5696084F 		.ascii	"V\226\010O"
+  25              		.text
+  26              		.section	.gnu.lto_.jmpfuncs.624161d0,"",%progbits
+  27 0000 789C6361 		.ascii	"x\234ca`d\000\001q\006\004`\006b&\020\203\021J3122\326"
+  27      60640001 
+  27      71060460 
+  27      06622610 
+  27      83114A33 
+  28 0018 33000005 		.ascii	"3\000\000\005\312\000\251"
+  28      CA00A9
+  29              		.text
+  30              		.section	.gnu.lto_.inline.624161d0,"",%progbits
+  31 0000 789C6361 		.ascii	"x\234ca`d\000\201X\006\004`f`\340\221ed`\342\232\340"
+  31      60640081 
+  31      58060460 
+  31      6660E091 
+  31      656460E2 
+  32 0016 C7C0B640 		.ascii	"\307\300\266@\236\011$\306\304\315\300\3008\301\017"
+  32      9E0924C6 
+  32      C4CDC0C0 
+  32      38C10F
+  33 0025 440175F0 		.ascii	"D\001u\360\311\003\245\3716\344b\225fb`gcddP\000\032"
+  33      C903A5F9 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 2
+
+
+  33      36E46295 
+  33      66626067 
+  33      63646450 
+  34 003b CCCC7481 		.ascii	"\314\314t\201\037\242\206\355\203\036\013\330p\000\276"
+  34      1FA286ED 
+  34      831E0BD8 
+  34      7000BE
+  35 004a 74095B   		.ascii	"t\011["
+  36              		.text
+  37              		.section	.gnu.lto_.pureconst.624161d0,"",%progbits
+  38 0000 789C6361 		.ascii	"x\234ca`d\340d```f\330\305\310\270\213\221I\012\000"
+  38      6064E064 
+  38      60606066 
+  38      D8C5C8B8 
+  38      8B91490A 
+  39 0015 091E01A5 		.ascii	"\011\036\001\245"
+  40              		.text
+  41              		.section	.gnu.lto_CySysPmSleep.624161d0,"",%progbits
+  42 0000 789C7D90 		.ascii	"x\234}\220\315K\033Q\024\305\357y/3\011bM7]\031$.\\"
+  42      CD4B1B51 
+  42      14C5EF79 
+  42      2F330962 
+  42      4D375D19 
+  43 0017 B82982D2 		.ascii	"\270)\202\322\177@h\351N\314\242\233@\221t\026]\370"
+  43      7F4068E9 
+  43      4ECCA29B 
+  43      40917416 
+  43      5DF8
+  44 0029 41888BAE 		.ascii	"A\210\213\256\362\342\314\240u\025\024\315B$\320P\222"
+  44      F2E2CCA0 
+  44      751514CD 
+  44      4224D050 
+  44      92
+  45 003a 561BCDC6 		.ascii	"V\033\315\306\032A\030\"\270\264\373\224\202H\261\""
+  45      1A411822 
+  45      B8B4FB94 
+  45      8248B122 
+  46 004a 222A75D1 		.ascii	"\"*u\321\252\235\3367\203\253B\037\274\271o.\347\374"
+  46      AA9DDE37 
+  46      83AB421F 
+  46      BCB96F2E 
+  46      E7FC
+  47 005c EE478440 		.ascii	"\356G\204@\372\234sx\302\261\233/$A\024\017\210\012"
+  47      FA9C7378 
+  47      C2B19B2F 
+  47      2441140F 
+  47      880A
+  48 006e 3101E887 		.ascii	"1\001\350\207\212\201\362\002y\\\213;\201\326\354qS"
+  48      8A81F202 
+  48      795C8B3B 
+  48      81D6EC71 
+  48      53
+  49 007f F457159F 		.ascii	"\364W\025\237\303\367\013R\325<\270\222\310\027\001"
+  49      C3F70B52 
+  49      D53CB892 
+  49      C81701
+  50 008e 8950453F 		.ascii	"\211PE?\261l\361\352\333\266){\241\337\355z\321\351"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 3
+
+
+  50      B16CF1EA 
+  50      DBB6297B 
+  50      A1DFED7A 
+  50      D1E9
+  51 00a0 E8AB2835 		.ascii	"\350\253(5\243\274\322xIy\205\244+\201\032$\2730\230"
+  51      A3BCD278 
+  51      497985A4 
+  51      2B811A24 
+  51      BB3098
+  52 00b3 C04022F0 		.ascii	"\300@\"\360\262\364\250\361g\351\201\351hz\022\037\320"
+  52      B2F4A8F1 
+  52      67E981E9 
+  52      687A121F 
+  52      D0
+  53 00c4 1772F111 		.ascii	"\027r\361\021&\267\010\235\331\030\365\224\357\333\312"
+  53      26B7089D 
+  53      D918F594 
+  53      EFDBCA
+  54 00d3 5B327E89 		.ascii	"[2~\211\0307\313\271\010\271R\030\372Ct\301Ww})\204"
+  54      1837CBB9 
+  54      08B95218 
+  54      FA4374C1 
+  54      57777D29 
+  55 00e8 8EF204B6 		.ascii	"\216\362\004\266\267\322\200F\330Rr\211f\363\354k4\177"
+  55      B7D28046 
+  55      D8527289 
+  55      66F3EC6B 
+  55      347F
+  56 00fa A7E6947A 		.ascii	"\247\346\224z\350JnA\223\327\220g{\204\216 \202b\014"
+  56      E84A6E41 
+  56      93D79067 
+  56      7B848E20 
+  56      82620C
+  57 010d 65351DA3 		.ascii	"e5\035\243\365{~\377\332\010\335\021v/\273\255/\321"
+  57      F57B7EFF 
+  57      DA08DD11 
+  57      762FBBAD 
+  57      2FD1
+  58 011f 9FC29546 		.ascii	"\237\302\225F0Z\345\2553\327\031\376\026\333\266\352"
+  58      305AE5AD 
+  58      33D719FE 
+  58      16DBB6EA 
+  59 012f E2D4F6E1 		.ascii	"\342\324\366\341\273\255x\031\253\005\207\027c\342\023"
+  59      BBAD7819 
+  59      AB058717 
+  59      63E213
+  60 013e 1258070F 		.ascii	"\022X\007\017\210:\312`\242}k\2068#$V\333\337[q\215"
+  60      883ACA60 
+  60      A27D6B86 
+  60      38232456 
+  60      DBDF5B71 
+  61 0153 10B8F17D 		.ascii	"\020\270\361}?\216\015Vs\341\345\240\347\377\0017\031"
+  61      3F8E0D56 
+  61      73E1E5A0 
+  61      E7FF0137 
+  61      19
+  62 0164 C818FA01 		.ascii	"\310\030\372\001\265\367\371\221V\353-\016\320\011\034"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 4
+
+
+  62      B5F7F991 
+  62      56EB2D0E 
+  62      D0091C
+  63 0173 6F2770D3 		.ascii	"o'p\323?\363F}\336\013\241\301\363\362\200\256\214\321"
+  63      3FF3467D 
+  63      DE0BA1C1 
+  63      F3F280AE 
+  63      8CD1
+  64 0185 2966BC5D 		.ascii	")f\274]\343\336\315\373\203\336\033\213z\236Y\023Vv"
+  64      E3DECDFB 
+  64      83DE1B8B 
+  64      7A9E5913 
+  64      5676
+  65 0197 2C67BD7A 		.ascii	",g\275z\231\232\234\316f\254\364Hjrx(\235y32\3768C]"
+  65      999A9CCE 
+  65      66ACF448 
+  65      6A727828 
+  65      9D793332 
+  66 01af AF277256 		.ascii	"\257'rV6;=\225K\345Xd\276x\372<\331A\177\001\2437\264"
+  66      363B3D95 
+  66      4BE55864 
+  66      BE78FA3C 
+  66      D9417F01 
+  67 01c6 75       		.ascii	"u"
+  68              		.text
+  69              		.section	.gnu.lto_CySysPmDeepSleep.624161d0,"",%progbits
+  70 0000 789C7591 		.ascii	"x\234u\221\317k\023A\024\307\337wf\263\331&\266z\362"
+  70      CF6B1341 
+  70      14C7DF77 
+  70      66B3D926 
+  70      B67AF2
+  71 0013 629078E8 		.ascii	"b\220x\350\241\027\011(\376\003\202\242\247b\016^\212"
+  71      A1170928 
+  71      FE0382A2 
+  71      A7620E5E 
+  71      8A
+  72 0024 2231070F 		.ascii	"\"1\007\017\266\022\322\203\0273Iv\333*\036\2025\025"
+  72      B612D283 
+  72      17334976 
+  72      DB2A1E82 
+  72      3515
+  73 0036 315AB587 		.ascii	"1Z\265\207\266\376\350\017\265irrMA/R\321\223T\224\032"
+  73      B6FEE80F 
+  73      B5697272 
+  73      4D412F52 
+  73      D1935494 
+  74 004b 2416DB83 		.ascii	"$\026\333\203\026\005\021\352\372f\227JA\034\330\231"
+  74      160511EA 
+  74      FA66974A 
+  74      411CD899 
+  75 005b 798FF7FD 		.ascii	"y\217\367\375|\337\3543\010\244\327-At\200\317]\374"
+  75      7CDFEC33 
+  75      08A4D72D 
+  75      417480CF 
+  75      5DFC
+  76 006d 41124469 		.ascii	"A\022Di\221(o\011@_\224\005\312\011\344\360Cl\0104\006"
+  76      91286F09 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 5
+
+
+  76      405F9405 
+  76      CA09E4F0 
+  76      436C0834 
+  77 0082 5B75D135 		.ascii	"[u\3215\256x-;\315\204\232p\341H\"O\370$\3028\272\210"
+  77      AE782D3B 
+  77      CD849A70 
+  77      E148224F 
+  77      F824C238 
+  78 0098 CB86D7DF 		.ascii	"\313\206\327\337\327L\271\007\372\2764U\262#\235cJ\025"
+  78      D74CB907 
+  78      FABE3455 
+  78      B2239D63 
+  78      4A15
+  79 00aa 945B7EDE 		.ascii	"\224[~\336~M\271\371\270#\201\011H\226a_\014\211\230"
+  79      7E4DB9F9 
+  79      B8238109 
+  79      4896615F 
+  79      0C8998
+  80 00bd 2FE6DAE6 		.ascii	"/\346\332\346\354\357r\273ik|\034\223\350\014\300\270"
+  80      ECEF72BB 
+  80      696B7C1C 
+  80      93E80CC0 
+  80      B8
+  81 00ce 07935B85 		.ascii	"\007\223[\205\316L\037s\225\347\025\225;l>\273\032\211"
+  81      CE4C1F73 
+  81      95E71595 
+  81      3B6C3EBB 
+  81      1A89
+  82 00e0 72BB9C34 		.ascii	"r\273\2344\310\221\"\304\233\014\353\315\322\033\321"
+  82      C89122C4 
+  82      9B0CEBCD 
+  82      D21BD1
+  83 00ef 57D6EA17 		.ascii	"W\326\352\027|\023B\237r\005Ew~`\247\246\025\245d\267"
+  83      7C13429F 
+  83      72054577 
+  83      7E60A7A6 
+  83      15A564B7 
+  84 0103 7A7DED5D 		.ascii	"z}\355]8\267\241\206\224\332\341H\303\023\332\344>r"
+  84      38B7A186 
+  84      94DAE148 
+  84      C313DAE4 
+  84      3E72
+  85 0115 2C0F5113 		.ascii	",\017Q\023\302\367e<WS\013\215_\227\026+\027\002\265"
+  85      C2F7653C 
+  85      57530B8D 
+  85      5F97162B 
+  85      1702B5
+  86 0128 C1EA11A7 		.ascii	"\301\352\021\247\361*\374]8\322\364\237\271\372\361"
+  86      F12AFC5D 
+  86      38D2F49F 
+  86      B9FAF1
+  87 0137 C65B1184 		.ascii	"\306[\021\204o>y\236N\335\231\254\275\014\215\342f\336"
+  87      6F3E799E 
+  87      4EDD99AC 
+  87      BD0C8DE2 
+  87      66DE
+  88 0149 E69F14C6 		.ascii	"\346\237\024\306C\304\360\000\374VLa\024L,\254\017\256"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 6
+
+
+  88      43C4F000 
+  88      FC564C61 
+  88      144C2CAC 
+  88      0FAE
+  89 015b C9001862 		.ascii	"\311\000\030b\246\366\030\201\216\267\322-\237\376\241"
+  89      A6F61881 
+  89      8EB7D22D 
+  89      9FFEA1
+  90 016a 7A7B2E14 		.ascii	"z{.\024\204\266\272\254\264\377\352\365\205y\303\247"
+  90      84B6BAAC 
+  90      B4FFEAF5 
+  90      8579C3A7 
+  91 017a E7958A3A 		.ascii	"\347\225\212:\262\0153l0\355\033\314\262\001C\203\256"
+  91      B20D336C 
+  91      30ED1BCC 
+  91      B2014383 
+  91      AE
+  92 018b 5B951381 		.ascii	"[\225\023\201I\230Uc\027\355\241m\001\250\264TT\035"
+  92      49985563 
+  92      17EDA16D 
+  92      01A8B454 
+  92      541D
+  93 019d 9CAA2DDF 		.ascii	"\234\252-\337\255n\337l\263\015\217\376R\036\007m\026"
+  93      AD6EDF6C 
+  93      B30D8FFE 
+  93      521E076D 
+  93      16
+  94 01ae 7F9A81DE 		.ascii	"\177\232\201\336\012\020\257\355\231\212\324\010\011"
+  94      0A10AFED 
+  94      998AD408 
+  94      09
+  95 01bb 034FB872 		.ascii	"\003O\270rk\337\377\205\315\371-Y\364\031j\341\351\013"
+  95      6BDFFF85 
+  95      CDF92D59 
+  95      F4196AE1 
+  95      E90B
+  96 01cd FFDFEAA1 		.ascii	"\377\337\352\241'h\005\266{%\342\307\377\314$\342\361"
+  96      276805B6 
+  96      7B25E2C7 
+  96      FFCC24E2 
+  96      F1
+  97 01de EC08559E 		.ascii	"\354\010U\236\011\017\301\221Q\372\202\202[>\272\251"
+  97      090FC191 
+  97      51FA8282 
+  97      5B3EBAA9 
+  98 01ee E61943CF 		.ascii	"\346\031C\317\226\213v\037N\367\2463\247\262\351\323"
+  98      968B761F 
+  98      4EF7A633 
+  98      A7B2E9D3 
+  99 01fe 27937DFD 		.ascii	"'\223}\375\231T\272\247;\331wp\177O\352|\367\331\275"
+  99      9954BAA7 
+  99      3BD97770 
+  99      7F4FEA7C 
+  99      F7D9BD
+ 100 0211 29EA38D3 		.ascii	")\3528\323\233Mg2\375\347\262\311,\027\231\307\017\035"
+ 100      9B4D6732 
+ 100      FDE7B2C9 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 7
+
+
+ 100      2C1799C7 
+ 100      0F1D
+ 101 0223 8947E80F 		.ascii	"\211G\350\017\224\214\355y"
+ 101      948CED79 
+ 102              		.text
+ 103              		.section	.gnu.lto_CySysPmSetWakeupHoldoff.624161d0,"",%progbits
+ 104 0000 789C2591 		.ascii	"x\234%\221\317KTQ\024\307\317\367\3367?\324\222\202"
+ 104      CF4B5451 
+ 104      14C7CFF7 
+ 104      DE373FD4 
+ 104      9282
+ 105 0012 16132361 		.ascii	"\026\023#a\253\301M\213\362?\020j\025\014\315V\210x"
+ 105      ABC14D8B 
+ 105      F23F106A 
+ 105      150CCD56 
+ 105      8878
+ 106 0024 BD103287 		.ascii	"\275\0202\207\006ga\033\3578\363\236\233\026m\032H\032"
+ 106      0667611B 
+ 106      EF38F39E 
+ 106      9B166D1A 
+ 106      481A
+ 107 0036 2612B1EC 		.ascii	"&\022\261\354\207\232:\352\"\033\306\304M9\024\2702"
+ 107      879A3AEA 
+ 107      221BC6C4 
+ 107      4D3914B8 
+ 107      32
+ 108 0047 44D25C28 		.ascii	"D\322\\(\305LX\233\260\361\234y\027\336=\367\274\367"
+ 108      C54C589B 
+ 108      B0F19C79 
+ 108      17DE3DF7 
+ 108      BCF7
+ 109 0059 39DF73BF 		.ascii	"9\337s\277\347Y\004\222U\342p\231c\224\037h\202z\264"
+ 109      E7590492 
+ 109      55E27099 
+ 109      63941F68 
+ 109      827AB4
+ 110 006c 4194092B 		.ascii	"A\224\011+@\016&\014\032V\030\306\037u\254P\031\335"
+ 110      400E260C 
+ 110      1A5618C6 
+ 110      1F75AC50 
+ 110      19DD
+ 111 007e 5F565D93 		.ascii	"_V]\223\206\327\316\217R\"c\334\210\253\211\032\252"
+ 111      86D7CE8F 
+ 111      522263DC 
+ 111      88AB891A 
+ 111      AA
+ 112 008f A9449844 		.ascii	"\251D\230D\027S_r3O\365\221r5`qZ\377<\266\333.\251B"
+ 112      17535F72 
+ 112      334FF591 
+ 112      72356071 
+ 112      5AFF3CB6 
+ 113 00a7 27A7DFDE 		.ascii	"'\247\337\336\037?o\325\027A|\316{\325\177\201\330\204"
+ 113      1F3F6FD5 
+ 113      17417CCE 
+ 113      7BD57F81 
+ 113      D884
+ 114 00b9 3123C6CC 		.ascii	"1#\306\3149\246\305\325\032S\320\254\207\227\350\300"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 8
+
+
+ 114      39A6C5D5 
+ 114      1A53D0AC 
+ 114      8797E8C0 
+ 115 00c9 0B7410BF 		.ascii	"\013t\020\277\"\274BL\360\357\263\377\037\237\016\346"
+ 115      22BC424C 
+ 115      F0EFB3FF 
+ 115      1F9F0EE6 
+ 116 00d9 A47DA7DF 		.ascii	"\244}\247\337\024\257\021\024\033\3237\312\246\321\310"
+ 116      14AF1114 
+ 116      1BD337CA 
+ 116      A6D1C8
+ 117 00e8 9AF27274 		.ascii	"\232\362rtm%\032\002\244Dq\261\245e\263d#\252q\211\230"
+ 117      6D251A02 
+ 117      A44471B1 
+ 117      A565B364 
+ 117      23AA7189 
+ 118 00fd AA2B2551 		.ascii	"\252+%Q\357#;\346\375\375\271\002\221\311j\225\325\340"
+ 118      EF233BE6 
+ 118      FDFDB902 
+ 118      91C96A95 
+ 118      D5E0
+ 119 010f 2E4B73E3 		.ascii	".Ks\343\265Sr_\013S\233\347\360\206/\301\340oo/\342"
+ 119      B553725F 
+ 119      0B539BE7 
+ 119      F0862FC1 
+ 119      E06F6F2F 
+ 120 0124 639A49C6 		.ascii	"c\232I\306\276\326>\025\332\004\013\340\014\336\372"
+ 120      BED63E15 
+ 120      DA040BE0 
+ 120      0CDEFA
+ 121 0133 50DEDB3B 		.ascii	"P\336\333;\357C\026s\014\315\177\\\367\302\276\0260"
+ 121      EF431673 
+ 121      0CCD7F5C 
+ 121      F7C2BE16 
+ 121      30
+ 122 0144 DD842AF9 		.ascii	"\335\204*\371\372\257|\213P2\000\267R\015\311\367`s"
+ 122      FAAF7C8B 
+ 122      503200B7 
+ 122      520DC9F7 
+ 122      6073
+ 123 0156 1EDBA567 		.ascii	"\036\333\245g\013\001?\315\231\207F\246w\370du\321*"
+ 123      0B013FCD 
+ 123      998746A6 
+ 123      77F86475 
+ 123      D12A
+ 124 0168 A290C965 		.ascii	"\242\220\311e\214\271\302>B\230\345\321\314\260\026"
+ 124      8CB9C23E 
+ 124      4298E5D1 
+ 124      CCB016
+ 125 0177 E11D8AE0 		.ascii	"\341\035\212\340^t\200\221\362\207-%\242\315\037QS\020"
+ 125      5E748091 
+ 125      F2872D25 
+ 125      A2CD1F51 
+ 125      5310
+ 126 0189 836CF7C2 		.ascii	"\203l\367\3025g\300I\335\032tn\337L$\323)\333\351\215"
+ 126      3567C049 
+ 126      DD1A746E 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 9
+
+
+ 126      DF4C24D3 
+ 126      29DBE98D 
+ 127 019d 27923DDD 		.ascii	"'\222=\335\275\366P\374\336%\233\316\366\335\261\373"
+ 127      BDF650FC 
+ 127      DE259BCE 
+ 127      F6DDB1FB 
+ 128 01ad EF5E4D39 		.ascii	"\357^M9\367\323\316\200=t\275\357\301\011$v\247m"
+ 128      F7D3CE80 
+ 128      3D74BDEF 
+ 128      C1092476 
+ 128      A76D
+ 129              		.text
+ 130              		.section	.gnu.lto_.symbol_nodes.624161d0,"",%progbits
+ 131 0000 789C6361 		.ascii	"x\234ca`d(e\000\002&\206z\006\206\011\347\030@\324\256"
+ 131      60642865 
+ 131      00022686 
+ 131      7A068609 
+ 131      E71840D4 
+ 132 0015 0645A000 		.ascii	"\006E\240\000c=#\252\000S=\023\212\000#K=3X\200\201"
+ 132      633D23AA 
+ 132      00533D13 
+ 132      8A00234B 
+ 132      3D335880 
+ 133 002a A1A14101 		.ascii	"\241\241A\001\310g\256gA\34633\2600,y\360\217\221\031"
+ 133      C867AE67 
+ 133      41E63333 
+ 133      B0302C79 
+ 133      F08F9119 
+ 134 003e C87AF210 		.ascii	"\310z\362\020H3B\371@\221#mo\344\031\000\006{\033\361"
+ 134      483342F9 
+ 134      4091236D 
+ 134      6FE41900 
+ 134      067B1BF1 
+ 135              		.text
+ 136              		.section	.gnu.lto_.refs.624161d0,"",%progbits
+ 137 0000 789C6361 		.ascii	"x\234ca`\004B \000\000\0009\000\007"
+ 137      60044220 
+ 137      00000039 
+ 137      0007
+ 138              		.text
+ 139              		.section	.gnu.lto_.decls.624161d0,"",%progbits
+ 140 0000 789C8D93 		.ascii	"x\234\215\223kL\034U\024\307\347\314\354n\226e)\015"
+ 140      6B4C1C55 
+ 140      14C7E7CC 
+ 140      EC6E9665 
+ 140      290D
+ 141 0012 D6CA878D 		.ascii	"\326\312\207\215\305~X\366\023\0210\350G\223U\313\007"
+ 141      C57E58F6 
+ 141      131130E8 
+ 141      479355CB 
+ 141      07
+ 142 0023 A32468FD 		.ascii	"\243$h\375\322D)\035p#\005B\227\304\375vm\251\205\326"
+ 142      D244291D 
+ 142      70230542 
+ 142      97C4FD76 
+ 142      6DA985D6 
+ 143 0037 98B5B1E5 		.ascii	"\230\265\261\345Q\036\365\325B\241\200\200\255\005["
+ARM GAS  e:\temp\ccwJ39rO.s 			page 10
+
+
+ 143      511EF5D5 
+ 143      42A18080 
+ 143      AD055B
+ 144 0046 46DEE5D9 		.ascii	"F\336\345\331.\205\276\324]\304\032)\330P5\326R\353"
+ 144      2E85BED4 
+ 144      5DC41A29 
+ 144      D85035D6 
+ 144      52EB
+ 145 0058 7AEEBD33 		.ascii	"z\356\2753;\263\2644\275\3313\367\261\347\374\3179\277"
+ 145      3BB3B434 
+ 145      BDD933F7 
+ 145      B1E7FCCF 
+ 145      39BF
+ 146 006a B9631240 		.ascii	"\271c\022@\240\343\232E\020n\341\354\302m\030\207\011"
+ 146      A0E39A45 
+ 146      106EE1EC 
+ 146      C26D1887 
+ 146      09
+ 147 007b D75B057D 		.ascii	"\327[\005}\230\321N\242\265\241u\243\365\243\015\011"
+ 147      98D14EA2 
+ 147      B5A175A3 
+ 147      F5A30D09 
+ 148 008b 0F0EEA13 		.ascii	"\017\016\352\023\243\306*h\311h\303h\203h\343hch\023"
+ 148      A3C62A68 
+ 148      C968C368 
+ 148      8368E368 
+ 148      636813
+ 149 009e 687DAABF 		.ascii	"h}\252\277\244\306\014\251\232\253\007\315g7\3509Wi"
+ 149      A4C60CA9 
+ 149      9AAB07CD 
+ 149      6737E839 
+ 149      5769
+ 150 00b0 5E469B7D 		.ascii	"^F\233}\204v\333#\264i\037VU;\001m\003\332)U\377u\203"
+ 150      8476DB23 
+ 150      B4691F56 
+ 150      553B016D 
+ 150      03DA2955 
+ 151 00c7 261DA0FA 		.ascii	"&\035\240\372\257\036\367E\010\327\2656\306\\\207\253"
+ 151      AF1EF745 
+ 151      08D7B536 
+ 151      C65C87AB 
+ 152 00d7 20820A53 		.ascii	" \202\012S\000\340O`&pc[\\\210\354)D\216\"\223@\237"
+ 152      00E04F60 
+ 152      2670635B 
+ 152      5C88EC29 
+ 152      448E2293 
+ 153 00ed 02F76767 		.ascii	"\002\367gg\272\030\373isX\033LDW\0075\010\"\025\360"
+ 153      BA18FB69 
+ 153      73581B4C 
+ 153      44570735 
+ 153      082215F0 
+ 154 0101 28FEBFA8 		.ascii	"(\376\277\250\272\011\\\\\324\003\014z\274\\CM\020\335"
+ 154      BA095C5C 
+ 154      D4030C7A 
+ 154      BC5C434D 
+ 154      10DD
+ 155 0113 13684DDF 		.ascii	"\023hM\337.?T\017\022j\342:x\267\361\225\224\026\202"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 11
+
+
+ 155      2E3F540F 
+ 155      126AE23A 
+ 155      78B7F195 
+ 155      941682
+ 156 0126 C34F88B8 		.ascii	"\303O\210\270I'3\030\276\243\304\377%B\202\015D\334"
+ 156      49273318 
+ 156      BEA3C4FF 
+ 156      2542820D 
+ 156      44DC
+ 157 0138 0696C7EB 		.ascii	"\006\226\307\353bq\273\301\006\353q\273x\256:\034\227"
+ 157      6271BBC1 
+ 157      06EB71BB 
+ 157      78AE3A1C 
+ 157      97
+ 158 0149 7898C691 		.ascii	"x\230\306\221=$I\204\255\033\241\031\034p\002\034\230"
+ 158      3D244984 
+ 158      AD1BA119 
+ 158      1C70021C 
+ 158      98
+ 159 015a A80512F1 		.ascii	"\250\005\022\361\271\335\304\225\006*\202i\233\217\222"
+ 159      B9DDC495 
+ 159      062A8269 
+ 159      9B8F92
+ 160 0169 A3ED2474 		.ascii	"\243\355$t\373\313\264j\242\354\306 \221:A#H\320\004"
+ 160      FBCBB46A 
+ 160      A2ECC620 
+ 160      913A4123 
+ 160      48D004
+ 161 017c 29B4385C 		.ascii	")\2648\\\322\3518\\\307\252O\302f\014\034k\2713i\221"
+ 161      D2E9385C 
+ 161      C7AA4FC2 
+ 161      660C1C6B 
+ 161      B9336991 
+ 162 0190 9E67757E 		.ascii	"\236gu~x6x)\236\253(\376!;\271\200\032/2\215V]\243\325"
+ 162      78367829 
+ 162      9EAB28FE 
+ 162      213BB980 
+ 162      1A2F328D 
+ 163 01a8 A8D1C634 		.ascii	"\250\321\3064\016/,\226\201\224\3114~\034ij\226\260"
+ 163      0E2F2C96 
+ 163      8194C934 
+ 163      7E1C696A 
+ 163      96B0
+ 164 01ba 87641B50 		.ascii	"\207d\033Pb\361x\324\266t\346n\034?\242\036\243\301"
+ 164      62F178D4 
+ 164      B674E66E 
+ 164      1C3FA21E 
+ 164      A3C1
+ 165 01cc 1B7FC448 		.ascii	"\033\177\304H\357\260\365\305\262\366Z\211\0030Qh\023"
+ 165      EFB0F5C5 
+ 165      B2F65A89 
+ 165      03305168 
+ 165      13
+ 166 01dd 35F3EB38 		.ascii	"5\363\3538\200\244\373\242\030\250^\012Z\300\346*'d"
+ 166      80A4FBA2 
+ 166      18A85E0A 
+ 166      5AC0E62A 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 12
+
+
+ 166      2764
+ 167 01ef 37F1EF21 		.ascii	"7\361\357!\011\231\002|\203\000\272\020\000\234\006"
+ 167      0999027C 
+ 167      8300BA10 
+ 167      009C06
+ 168 01fe 1755A455 		.ascii	"\027U\244UA\007\036~\215\207\307(\252P\303\276\374\312"
+ 168      41071E7E 
+ 168      8D87C728 
+ 168      AA50C3BE 
+ 168      FCCA
+ 169 0210 7DB4FB53 		.ascii	"}\264\373S`\203N\275\362d\233z\037C]~\321$\342\011u"
+ 169      60834EBD 
+ 169      F2649B7A 
+ 169      1F435D7E 
+ 169      D124E209 
+ 170 0225 40827836 		.ascii	"@\202x6S\273<\035\273&\3533\214\365\267\240\302\256"
+ 170      53BB3C1D 
+ 170      BB26EB33 
+ 170      8CF5B7A0 
+ 170      C2AE
+ 171 0237 0A054640 		.ascii	"\012\005F@\243\275\224Q\323A\310^\2143Q?h\327\023\266"
+ 171      A3BD9451 
+ 171      D341C85E 
+ 171      8C33513F 
+ 171      68D713B6 
+ 172 024b 1B517533 		.ascii	"\033Qu3T\275\013\243\307%\251\002X\367m{\177i\262b\273"
+ 172      54BD0BA3 
+ 172      C725A902 
+ 172      58F76D7B 
+ 172      7F69B262 
+ 173 0260 0E640506 		.ascii	"\016d\005\006P\016\016\252\372\223\371\377b\245\006"
+ 173      500E0EAA 
+ 173      FA93F9FF 
+ 173      62A506
+ 174 026f E62B4ECF 		.ascii	"\346+N\3177/\230\300e\323Z\314\343-*\330\3019=\243\203"
+ 174      372F98C0 
+ 174      65D35ACC 
+ 174      E32D2AD8 
+ 174      C1393DA3 
+ 175 0284 B6C8702D 		.ascii	"\266\310p-\177N,\211\002\244;\340Y\204\325\213\260\034"
+ 175      7F4E2C89 
+ 175      02A43BE0 
+ 175      5984D58B 
+ 175      B01C
+ 176 0296 2AACB3D8 		.ascii	"*\254\263\330\326w\330\026f\270Q\331\260ha$\224\010"
+ 176      D677D816 
+ 176      66B851D9 
+ 176      B0686124 
+ 176      9408
+ 177 02a8 89C94FAF 		.ascii	"\211\311O\257\006`M\022}\214\304\367\032\211\271\212"
+ 177      06604D12 
+ 177      7D8CC4F7 
+ 177      1A89B98A 
+ 178 02b8 B92B7624 		.ascii	"\271+v$\021\302\232\216\034\310\377\263\203\224\231"
+ 178      11C29A8E 
+ 178      1CC8FFB3 
+ 178      839499
+ARM GAS  e:\temp\ccwJ39rO.s 			page 13
+
+
+ 179 02c7 A90FF4E8 		.ascii	"\251\017\364\3505\3650\012\270\350g\004Zz\352\356Y\245"
+ 179      35F5300A 
+ 179      B8E86704 
+ 179      5A7AEAEE 
+ 179      59A5
+ 180 02d9 414EA0CE 		.ascii	"AN\240\316\377\305\211(\354\264\016=\333`\324\035\277"
+ 180      FFC58928 
+ 180      ECB40E3D 
+ 180      DB60D41D 
+ 180      BF
+ 181 02ea F95BFD54 		.ascii	"\371[\375T<O\246\324L\331\225,\372?\014\350\231\006"
+ 181      3C4FA6D4 
+ 181      4CD9952C 
+ 181      FA3F0CE8 
+ 181      9906
+ 182 02fc B44C432C 		.ascii	"\264LC,\323J\315\307d\235}\177\344\3620w\355\376\010"
+ 182      D34ACDC7 
+ 182      649D7D7F 
+ 182      E4F23077 
+ 182      EDFE08
+ 183 030f 300C76E6 		.ascii	"0\014v\346\2143:W\314\035\272f\266\225\3232\036\347"
+ 183      8C333A57 
+ 183      CC1DBA66 
+ 183      B695D332 
+ 183      1EE7
+ 184 0321 A66144F7 		.ascii	"\246aD\367O\244\326,\375\300_\317\314\201\323U\222\341"
+ 184      4FA4D62C 
+ 184      FDC05FCF 
+ 184      CC81D355 
+ 184      92E1
+ 185 0333 F5BC5173 		.ascii	"\365\274Qs\360\003\222\004c\330\316y\275\300\021P\337"
+ 185      F0039204 
+ 185      63D8CE79 
+ 185      BDC01150 
+ 185      DF
+ 186 0344 CF834946 		.ascii	"\317\203IF\037\236\344\357\177\316\177d7\366@\025\365"
+ 186      1F9EE4EF 
+ 186      7FCE7F64 
+ 186      37F64015 
+ 186      F5
+ 187 0355 1EC6D51E 		.ascii	"\036\306\325\036\306Y\017\344\330Jg\214\321\271/\252"
+ 187      C6590FE4 
+ 187      D84A678C 
+ 187      D1B92FAA 
+ 188 0365 E109D579 		.ascii	"\341\011\325y\2029\177\265ro\231~zN\372\241J\206\333"
+ 188      82397FB5 
+ 188      726F997E 
+ 188      7A4EFAA1 
+ 188      4A86DB
+ 189 0378 E7E4B7AF 		.ascii	"\347\344\267\257\361\263\241N\233\3643o\357V\327\360"
+ 189      F1B3A14E 
+ 189      9BF4336F 
+ 189      EF56D7F0 
+ 190 0388 9538ED4B 		.ascii	"\2258\355K\304\352m.!\362\232 \200\245;\325\322\247"
+ 190      C4EA6D2E 
+ 190      21F29A20 
+ 190      80A53BD5 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 14
+
+
+ 190      D2A7
+ 191 039a F07052FB 		.ascii	"\360pR\373\022\225#A\007!V\270\2105_\320)8\325\357\360"
+ 191      12952341 
+ 191      072156B8 
+ 191      88355FD0 
+ 191      2938D5EF 
+ 192 03af D7FEAADF 		.ascii	"\327\376\252\337E\216\374q$1\342_e\362\011i\201\227"
+ 192      458EFC71 
+ 192      2431E25F 
+ 192      65F20969 
+ 192      8197
+ 193 03c1 5439BFBF 		.ascii	"T9\277\277\336\254\021Wzof\226\021\0020\213\251.\351"
+ 193      DEAC1157 
+ 193      7A6F6696 
+ 193      1102308B 
+ 193      A92EE9
+ 194 03d4 A9A675E0 		.ascii	"\251\246u\340\253S\314<<\305R0|P42\234\215\002~YeHg"
+ 194      AB53CC3C 
+ 194      3CC55230 
+ 194      7C503432 
+ 194      9C8D027E 
+ 195 03ec BBDB97ED 		.ascii	"\273\333\227\355\333\225\2653\273@\226\213\255[^{3\311"
+ 195      DB95B533 
+ 195      BB40968B 
+ 195      AD5B5E7B 
+ 195      33C9
+ 196 03fe 9D9A2A3C 		.ascii	"\235\232*<\275E.\224Kr\274\362\216\267\263\213JKr\345"
+ 196      BD452E94 
+ 196      4B72BCF2 
+ 196      8EB7B38B 
+ 196      4A4B72E5 
+ 197 0412 6D59D945 		.ascii	"mY\331E\356\347\266\345\372\262v\246\344\012\353\325"
+ 197      EEE7B6E5 
+ 197      FAB276A6 
+ 197      E40AEBD5 
+ 198 0422 A0973086 		.ascii	"\240\2270\206\005>\245\251\310\336\267r\336\223K\213"
+ 198      053EA5A9 
+ 198      C8DEB772 
+ 198      DE934B8B 
+ 199 0432 338B0A76 		.ascii	"3\213\012v\024\345\345YJ=\205\336\364\264g\326\224\363"
+ 199      14E5E559 
+ 199      4A3D85DE 
+ 199      F4B467D6 
+ 199      94F3
+ 200 0444 FA8AE55D 		.ascii	"\372\212\345])\357\012O\272}/\277\357\361\272K<^OnN"
+ 200      29EF0A4F 
+ 200      BA7D2FBF 
+ 200      EFF1BA4B 
+ 200      3C5E4F6E 
+ 201 0459 41B69CEB 		.ascii	"A\266\234\353\365\024\025\232i\370\013\233\326\210v"
+ 201      F514159A 
+ 201      69F80B9B 
+ 201      D68876
+ 202 0468 FB5EF56C 		.ascii	"\373^\365l\307\330\215\030[\350\225KV\007\227\310\371"
+ 202      C7D88D18 
+ 202      5BE8954B 
+ 202      560797C8 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 15
+
+
+ 202      F9
+ 203 0479 E969AC82 		.ascii	"\351i\254\202\324\014\272I\315\370\037\304\031U\362"
+ 203      D40CBA49 
+ 203      CDF81FC4 
+ 203      1955F2
+ 204              		.text
+ 205              		.section	.gnu.lto_.symtab.624161d0,"",%progbits
+ 206 0000 43795379 		.ascii	"CySysPmSleep\000"
+ 206      73506D53 
+ 206      6C656570 
+ 206      00
+ 207 000d 00       		.ascii	"\000"
+ 208 000e 00       		.ascii	"\000"
+ 209 000f 00       		.ascii	"\000"
+ 210 0010 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 210      00000000 
+ 211 0018 AD000000 		.ascii	"\255\000\000\000"
+ 212 001c 43795379 		.ascii	"CySysPmDeepSleep\000"
+ 212      73506D44 
+ 212      65657053 
+ 212      6C656570 
+ 212      00
+ 213 002d 00       		.ascii	"\000"
+ 214 002e 00       		.ascii	"\000"
+ 215 002f 00       		.ascii	"\000"
+ 216 0030 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 216      00000000 
+ 217 0038 AF000000 		.ascii	"\257\000\000\000"
+ 218 003c 43795379 		.ascii	"CySysPmSetWakeupHoldoff\000"
+ 218      73506D53 
+ 218      65745761 
+ 218      6B657570 
+ 218      486F6C64 
+ 219 0054 00       		.ascii	"\000"
+ 220 0055 00       		.ascii	"\000"
+ 221 0056 00       		.ascii	"\000"
+ 222 0057 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 222      00000000 
+ 223 005f BA000000 		.ascii	"\272\000\000\000"
+ 224 0063 43794578 		.ascii	"CyExitCriticalSection\000"
+ 224      69744372 
+ 224      69746963 
+ 224      616C5365 
+ 224      6374696F 
+ 225 0079 00       		.ascii	"\000"
+ 226 007a 02       		.ascii	"\002"
+ 227 007b 00       		.ascii	"\000"
+ 228 007c 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 228      00000000 
+ 229 0084 C3000000 		.ascii	"\303\000\000\000"
+ 230 0088 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 230      74657243 
+ 230      72697469 
+ 230      63616C53 
+ 230      65637469 
+ 231 009f 00       		.ascii	"\000"
+ 232 00a0 02       		.ascii	"\002"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 16
+
+
+ 233 00a1 00       		.ascii	"\000"
+ 234 00a2 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 234      00000000 
+ 235 00aa C6000000 		.ascii	"\306\000\000\000"
+ 236              		.text
+ 237              		.section	.gnu.lto_.opts,"",%progbits
+ 238 0000 272D666D 		.ascii	"'-fmath-errno' '-fsigned-zeros' '-ftrapping-math' '"
+ 238      6174682D 
+ 238      6572726E 
+ 238      6F272027 
+ 238      2D667369 
+ 239 0033 2D666E6F 		.ascii	"-fno-trapv' '-fno-openmp' '-fno-openacc' '-mcpu=cor"
+ 239      2D747261 
+ 239      70762720 
+ 239      272D666E 
+ 239      6F2D6F70 
+ 240 0066 7465782D 		.ascii	"tex-m0' '-mthumb' '-g' '-Os' '-Werror' '-ffunction-"
+ 240      6D302720 
+ 240      272D6D74 
+ 240      68756D62 
+ 240      2720272D 
+ 241 0099 73656374 		.ascii	"sections' '-ffat-lto-objects' '-finline-functions' "
+ 241      696F6E73 
+ 241      2720272D 
+ 241      66666174 
+ 241      2D6C746F 
+ 242 00cc 272D666C 		.ascii	"'-flto' '-fno-strict-aliasing'\000"
+ 242      746F2720 
+ 242      272D666E 
+ 242      6F2D7374 
+ 242      72696374 
+ 243              		.text
+ 244              		.cfi_sections	.debug_frame
+ 245              		.section	.text.CySysPmSleep,"ax",%progbits
+ 246              		.align	1
+ 247              		.global	CySysPmSleep
+ 248              		.code	16
+ 249              		.thumb_func
+ 250              		.type	CySysPmSleep, %function
+ 251              	CySysPmSleep:
+ 252              	.LFB0:
+ 253              		.file 1 "Generated_Source\\PSoC4\\cyPm.c"
+   1:Generated_Source\PSoC4/cyPm.c **** /***************************************************************************//**
+   2:Generated_Source\PSoC4/cyPm.c **** * \file cyPm.c
+   3:Generated_Source\PSoC4/cyPm.c **** * \version 5.70
+   4:Generated_Source\PSoC4/cyPm.c **** *
+   5:Generated_Source\PSoC4/cyPm.c **** * \brief Provides an API for the power management.
+   6:Generated_Source\PSoC4/cyPm.c **** *
+   7:Generated_Source\PSoC4/cyPm.c **** * \note Documentation of the API's in this file is located in the System
+   8:Generated_Source\PSoC4/cyPm.c **** * Reference Guide provided with PSoC Creator.
+   9:Generated_Source\PSoC4/cyPm.c **** *
+  10:Generated_Source\PSoC4/cyPm.c **** ********************************************************************************
+  11:Generated_Source\PSoC4/cyPm.c **** * \copyright
+  12:Generated_Source\PSoC4/cyPm.c **** * Copyright 2011-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  13:Generated_Source\PSoC4/cyPm.c **** * You may use this file only in accordance with the license, terms, conditions,
+  14:Generated_Source\PSoC4/cyPm.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  15:Generated_Source\PSoC4/cyPm.c **** * the software package with which this file was provided.
+ARM GAS  e:\temp\ccwJ39rO.s 			page 17
+
+
+  16:Generated_Source\PSoC4/cyPm.c **** *******************************************************************************/
+  17:Generated_Source\PSoC4/cyPm.c **** 
+  18:Generated_Source\PSoC4/cyPm.c **** #include "cyPm.h"
+  19:Generated_Source\PSoC4/cyPm.c **** #include "CyLib.h"
+  20:Generated_Source\PSoC4/cyPm.c **** #include "CyFlash.h"
+  21:Generated_Source\PSoC4/cyPm.c **** 
+  22:Generated_Source\PSoC4/cyPm.c **** 
+  23:Generated_Source\PSoC4/cyPm.c **** /*******************************************************************************
+  24:Generated_Source\PSoC4/cyPm.c **** * Function Name: CySysPmSleep
+  25:Generated_Source\PSoC4/cyPm.c **** ****************************************************************************//**
+  26:Generated_Source\PSoC4/cyPm.c **** *
+  27:Generated_Source\PSoC4/cyPm.c **** * Puts the part into the Sleep state. This is a CPU-centric power mode.
+  28:Generated_Source\PSoC4/cyPm.c **** * It means that the CPU has indicated that it is in the sleep mode and
+  29:Generated_Source\PSoC4/cyPm.c **** * its main clock can be removed. It is identical to Active from a peripheral
+  30:Generated_Source\PSoC4/cyPm.c **** * point of view. Any enabled interrupts can cause wakeup from the Sleep mode.
+  31:Generated_Source\PSoC4/cyPm.c **** *
+  32:Generated_Source\PSoC4/cyPm.c **** *******************************************************************************/
+  33:Generated_Source\PSoC4/cyPm.c **** void CySysPmSleep(void)
+  34:Generated_Source\PSoC4/cyPm.c **** {
+ 254              		.loc 1 34 0
+ 255              		.cfi_startproc
+ 256              		@ args = 0, pretend = 0, frame = 0
+ 257              		@ frame_needed = 0, uses_anonymous_args = 0
+ 258 0000 10B5     		push	{r4, lr}
+ 259              		.cfi_def_cfa_offset 8
+ 260              		.cfi_offset 4, -8
+ 261              		.cfi_offset 14, -4
+  35:Generated_Source\PSoC4/cyPm.c ****     uint8 interruptState;
+  36:Generated_Source\PSoC4/cyPm.c **** 
+  37:Generated_Source\PSoC4/cyPm.c ****     interruptState = CyEnterCriticalSection();
+ 262              		.loc 1 37 0
+ 263 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+ 264              	.LVL0:
+  38:Generated_Source\PSoC4/cyPm.c **** 
+  39:Generated_Source\PSoC4/cyPm.c ****     /* CPU enters Sleep mode upon execution of WFI */
+  40:Generated_Source\PSoC4/cyPm.c ****     CY_PM_CPU_SCR_REG &= (uint32) (~CY_PM_CPU_SCR_SLEEPDEEP);
+ 265              		.loc 1 40 0
+ 266 0006 0421     		movs	r1, #4
+ 267 0008 034A     		ldr	r2, .L2
+ 268 000a 1368     		ldr	r3, [r2]
+ 269 000c 8B43     		bics	r3, r1
+ 270 000e 1360     		str	r3, [r2]
+  41:Generated_Source\PSoC4/cyPm.c **** 
+  42:Generated_Source\PSoC4/cyPm.c ****     /* Sleep and wait for interrupt */
+  43:Generated_Source\PSoC4/cyPm.c ****     CY_PM_WFI;
+ 271              		.loc 1 43 0
+ 272              		.syntax divided
+ 273              	@ 43 "Generated_Source\PSoC4\cyPm.c" 1
+ 274 0010 30BF     		WFI 
+ 275              	
+ 276              	@ 0 "" 2
+  44:Generated_Source\PSoC4/cyPm.c **** 
+  45:Generated_Source\PSoC4/cyPm.c ****     CyExitCriticalSection(interruptState);
+ 277              		.loc 1 45 0
+ 278              		.thumb
+ 279              		.syntax unified
+ 280 0012 FFF7FEFF 		bl	CyExitCriticalSection
+ARM GAS  e:\temp\ccwJ39rO.s 			page 18
+
+
+ 281              	.LVL1:
+  46:Generated_Source\PSoC4/cyPm.c **** }
+ 282              		.loc 1 46 0
+ 283              		@ sp needed
+ 284 0016 10BD     		pop	{r4, pc}
+ 285              	.L3:
+ 286              		.align	2
+ 287              	.L2:
+ 288 0018 10ED00E0 		.word	-536810224
+ 289              		.cfi_endproc
+ 290              	.LFE0:
+ 291              		.size	CySysPmSleep, .-CySysPmSleep
+ 292              		.section	.text.CySysPmDeepSleep,"ax",%progbits
+ 293              		.align	1
+ 294              		.global	CySysPmDeepSleep
+ 295              		.code	16
+ 296              		.thumb_func
+ 297              		.type	CySysPmDeepSleep, %function
+ 298              	CySysPmDeepSleep:
+ 299              	.LFB1:
+  47:Generated_Source\PSoC4/cyPm.c **** 
+  48:Generated_Source\PSoC4/cyPm.c **** 
+  49:Generated_Source\PSoC4/cyPm.c **** /*******************************************************************************
+  50:Generated_Source\PSoC4/cyPm.c **** * Function Name: CySysPmDeepSleep
+  51:Generated_Source\PSoC4/cyPm.c **** ****************************************************************************//**
+  52:Generated_Source\PSoC4/cyPm.c **** *
+  53:Generated_Source\PSoC4/cyPm.c **** * Puts the part into the Deep Sleep state. If the firmware attempts to enter
+  54:Generated_Source\PSoC4/cyPm.c **** * this mode before the system is ready (that is, when
+  55:Generated_Source\PSoC4/cyPm.c **** * PWR_CONTROL.LPM_READY = 0), then the device will go into the Sleep mode
+  56:Generated_Source\PSoC4/cyPm.c **** * instead and automatically enter the originally intended mode when the
+  57:Generated_Source\PSoC4/cyPm.c **** * holdoff expires.
+  58:Generated_Source\PSoC4/cyPm.c **** *
+  59:Generated_Source\PSoC4/cyPm.c **** * The wakeup occurs when an interrupt is received from a DeepSleep or
+  60:Generated_Source\PSoC4/cyPm.c **** * Hibernate peripheral. For more details, see a corresponding
+  61:Generated_Source\PSoC4/cyPm.c **** * peripheral's datasheet.
+  62:Generated_Source\PSoC4/cyPm.c **** *
+  63:Generated_Source\PSoC4/cyPm.c **** *******************************************************************************/
+  64:Generated_Source\PSoC4/cyPm.c **** void CySysPmDeepSleep(void)
+  65:Generated_Source\PSoC4/cyPm.c **** {
+ 300              		.loc 1 65 0
+ 301              		.cfi_startproc
+ 302              		@ args = 0, pretend = 0, frame = 0
+ 303              		@ frame_needed = 0, uses_anonymous_args = 0
+ 304 0000 10B5     		push	{r4, lr}
+ 305              		.cfi_def_cfa_offset 8
+ 306              		.cfi_offset 4, -8
+ 307              		.cfi_offset 14, -4
+  66:Generated_Source\PSoC4/cyPm.c ****     uint8 interruptState;
+  67:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_SRSSV2)
+  68:Generated_Source\PSoC4/cyPm.c ****         volatile uint32 clkSelectReg;
+  69:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_SRSSV2) */
+  70:Generated_Source\PSoC4/cyPm.c ****     
+  71:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_ECO_SRSSLT)
+  72:Generated_Source\PSoC4/cyPm.c ****         volatile uint32 pllResoreFlag = 0u;
+  73:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_ECO_SRSSLT) */
+  74:Generated_Source\PSoC4/cyPm.c ****     
+  75:Generated_Source\PSoC4/cyPm.c ****     interruptState = CyEnterCriticalSection();
+ARM GAS  e:\temp\ccwJ39rO.s 			page 19
+
+
+ 308              		.loc 1 75 0
+ 309 0002 FFF7FEFF 		bl	CyEnterCriticalSection
+ 310              	.LVL2:
+  76:Generated_Source\PSoC4/cyPm.c **** 
+  77:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_ECO_SRSSLT)
+  78:Generated_Source\PSoC4/cyPm.c ****         if(0u != (CY_SYS_ECO_CLK_SELECT_REG & CY_SYS_ECO_CLK_SELECT_ECO_PLL_MASK))
+  79:Generated_Source\PSoC4/cyPm.c ****         {
+  80:Generated_Source\PSoC4/cyPm.c ****             pllResoreFlag = 1u;
+  81:Generated_Source\PSoC4/cyPm.c ****             
+  82:Generated_Source\PSoC4/cyPm.c ****             /* Set default state = IMO for HFCLK_SEL bit mask */
+  83:Generated_Source\PSoC4/cyPm.c ****             CY_SYS_CLK_SELECT_REG &= (uint32)(~CY_SYS_CLK_SELECT_DIRECT_SEL_MASK);
+  84:Generated_Source\PSoC4/cyPm.c ****         }
+  85:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_ECO_SRSSLT) */
+  86:Generated_Source\PSoC4/cyPm.c **** 
+  87:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_SRSSV2)
+  88:Generated_Source\PSoC4/cyPm.c ****         /* Device enters DeepSleep mode when CPU asserts SLEEPDEEP signal */
+  89:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_CONTROL_REG &= (uint32) (~CY_PM_PWR_CONTROL_HIBERNATE);
+  90:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_SRSSV2) */
+  91:Generated_Source\PSoC4/cyPm.c **** 
+  92:Generated_Source\PSoC4/cyPm.c ****     #if (CY_IP_CPUSS && CY_IP_SRSSV2)
+  93:Generated_Source\PSoC4/cyPm.c ****         CY_PM_CPUSS_CONFIG_REG |= CY_PM_CPUSS_CONFIG_FLSH_ACC_BYPASS;
+  94:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_CPUSS && CY_IP_SRSSV2) */
+  95:Generated_Source\PSoC4/cyPm.c **** 
+  96:Generated_Source\PSoC4/cyPm.c ****     /* Adjust delay to wait for references to settle on wakeup from Deep Sleep */
+  97:Generated_Source\PSoC4/cyPm.c ****     CY_PM_PWR_KEY_DELAY_REG = CY_SFLASH_DPSLP_KEY_DELAY_REG;
+  98:Generated_Source\PSoC4/cyPm.c **** 
+  99:Generated_Source\PSoC4/cyPm.c ****     /* CPU enters DeepSleep/Hibernate mode upon execution of WFI */
+ 100:Generated_Source\PSoC4/cyPm.c ****     CY_PM_CPU_SCR_REG |= CY_PM_CPU_SCR_SLEEPDEEP;
+ 311              		.loc 1 100 0
+ 312 0006 0421     		movs	r1, #4
+  97:Generated_Source\PSoC4/cyPm.c **** 
+ 313              		.loc 1 97 0
+ 314 0008 064B     		ldr	r3, .L5
+ 315 000a 074A     		ldr	r2, .L5+4
+ 316 000c 1B88     		ldrh	r3, [r3]
+ 317 000e 9BB2     		uxth	r3, r3
+ 318 0010 1360     		str	r3, [r2]
+ 319              		.loc 1 100 0
+ 320 0012 064A     		ldr	r2, .L5+8
+ 321 0014 1368     		ldr	r3, [r2]
+ 322 0016 0B43     		orrs	r3, r1
+ 323 0018 1360     		str	r3, [r2]
+ 101:Generated_Source\PSoC4/cyPm.c **** 
+ 102:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_SRSSV2)
+ 103:Generated_Source\PSoC4/cyPm.c ****         /* Preserve system clock configuration and
+ 104:Generated_Source\PSoC4/cyPm.c ****         * reduce sysclk to <=12 MHz (Cypress ID #158710, #179888).
+ 105:Generated_Source\PSoC4/cyPm.c ****         */
+ 106:Generated_Source\PSoC4/cyPm.c ****         clkSelectReg = CY_SYS_CLK_SELECT_REG;
+ 107:Generated_Source\PSoC4/cyPm.c ****         CySysClkWriteSysclkDiv(CY_SYS_CLK_SYSCLK_DIV4);
+ 108:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_SRSSV2) */
+ 109:Generated_Source\PSoC4/cyPm.c ****     
+ 110:Generated_Source\PSoC4/cyPm.c ****     /* Sleep and wait for interrupt */
+ 111:Generated_Source\PSoC4/cyPm.c ****     CY_PM_WFI;
+ 324              		.loc 1 111 0
+ 325              		.syntax divided
+ 326              	@ 111 "Generated_Source\PSoC4\cyPm.c" 1
+ 327 001a 30BF     		WFI 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 20
+
+
+ 328              	
+ 329              	@ 0 "" 2
+ 112:Generated_Source\PSoC4/cyPm.c **** 
+ 113:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_SRSSV2)
+ 114:Generated_Source\PSoC4/cyPm.c ****         /* Restore system clock configuration */
+ 115:Generated_Source\PSoC4/cyPm.c ****         CY_SYS_CLK_SELECT_REG = clkSelectReg;
+ 116:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_SRSSV2) */
+ 117:Generated_Source\PSoC4/cyPm.c ****     
+ 118:Generated_Source\PSoC4/cyPm.c ****     #if (CY_IP_CPUSS && CY_IP_SRSSV2)
+ 119:Generated_Source\PSoC4/cyPm.c ****         CY_PM_CPUSS_CONFIG_REG &= (uint32) (~CY_PM_CPUSS_CONFIG_FLSH_ACC_BYPASS);
+ 120:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_CPUSS && CY_IP_SRSSV2) */
+ 121:Generated_Source\PSoC4/cyPm.c **** 
+ 122:Generated_Source\PSoC4/cyPm.c ****     #if(CY_IP_ECO_SRSSLT)
+ 123:Generated_Source\PSoC4/cyPm.c ****         if(0u != pllResoreFlag)
+ 124:Generated_Source\PSoC4/cyPm.c ****         {
+ 125:Generated_Source\PSoC4/cyPm.c ****             CySysClkWriteHfclkDirect(CY_SYS_CLK_HFCLK_PLL0);
+ 126:Generated_Source\PSoC4/cyPm.c ****         }
+ 127:Generated_Source\PSoC4/cyPm.c ****     #endif /* (CY_IP_ECO_SRSSLT) */    
+ 128:Generated_Source\PSoC4/cyPm.c **** 
+ 129:Generated_Source\PSoC4/cyPm.c ****     CyExitCriticalSection(interruptState);
+ 330              		.loc 1 129 0
+ 331              		.thumb
+ 332              		.syntax unified
+ 333 001c FFF7FEFF 		bl	CyExitCriticalSection
+ 334              	.LVL3:
+ 130:Generated_Source\PSoC4/cyPm.c **** }
+ 335              		.loc 1 130 0
+ 336              		@ sp needed
+ 337 0020 10BD     		pop	{r4, pc}
+ 338              	.L6:
+ 339 0022 C046     		.align	2
+ 340              	.L5:
+ 341 0024 52F2FF0F 		.word	268431954
+ 342 0028 04000340 		.word	1073938436
+ 343 002c 10ED00E0 		.word	-536810224
+ 344              		.cfi_endproc
+ 345              	.LFE1:
+ 346              		.size	CySysPmDeepSleep, .-CySysPmDeepSleep
+ 347              		.section	.text.CySysPmSetWakeupHoldoff,"ax",%progbits
+ 348              		.align	1
+ 349              		.global	CySysPmSetWakeupHoldoff
+ 350              		.code	16
+ 351              		.thumb_func
+ 352              		.type	CySysPmSetWakeupHoldoff, %function
+ 353              	CySysPmSetWakeupHoldoff:
+ 354              	.LFB2:
+ 131:Generated_Source\PSoC4/cyPm.c **** 
+ 132:Generated_Source\PSoC4/cyPm.c **** 
+ 133:Generated_Source\PSoC4/cyPm.c **** #if(CY_IP_SRSSV2)
+ 134:Generated_Source\PSoC4/cyPm.c **** 
+ 135:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 136:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmHibernate
+ 137:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 138:Generated_Source\PSoC4/cyPm.c ****     *
+ 139:Generated_Source\PSoC4/cyPm.c ****     * Puts the part into the Hibernate state. Only SRAM and UDBs are retained;
+ 140:Generated_Source\PSoC4/cyPm.c ****     * most internal supplies are off. Wakeup is possible from a pin or a hibernate
+ 141:Generated_Source\PSoC4/cyPm.c ****     * comparator only.
+ARM GAS  e:\temp\ccwJ39rO.s 			page 21
+
+
+ 142:Generated_Source\PSoC4/cyPm.c ****     *
+ 143:Generated_Source\PSoC4/cyPm.c ****     * It is expected that the firmware has already frozen the IO-Cells using
+ 144:Generated_Source\PSoC4/cyPm.c ****     * CySysPmFreezeIo() function before the call to this function. If this is
+ 145:Generated_Source\PSoC4/cyPm.c ****     * omitted, the IO-cells will be frozen in the same way as they are
+ 146:Generated_Source\PSoC4/cyPm.c ****     * in the Active to Deep Sleep transition, but will lose their state on wake up
+ 147:Generated_Source\PSoC4/cyPm.c ****     * (because of the reset occurring at that time).
+ 148:Generated_Source\PSoC4/cyPm.c ****     *
+ 149:Generated_Source\PSoC4/cyPm.c ****     * Because all the CPU state is lost, the CPU will start up at the reset vector.
+ 150:Generated_Source\PSoC4/cyPm.c ****     * To save the firmware state through the Hibernate low power mode, a
+ 151:Generated_Source\PSoC4/cyPm.c ****     * corresponding variable should be defined with CY_NOINIT attribute. It
+ 152:Generated_Source\PSoC4/cyPm.c ****     * prevents data from being initialized to zero on startup. The interrupt
+ 153:Generated_Source\PSoC4/cyPm.c ****     * cause of the hibernate peripheral is retained, such that it can be either
+ 154:Generated_Source\PSoC4/cyPm.c ****     * read by the firmware or cause an interrupt after the firmware has booted and
+ 155:Generated_Source\PSoC4/cyPm.c ****     * enabled the corresponding interrupt. To distinguish the wakeup from
+ 156:Generated_Source\PSoC4/cyPm.c ****     * the Hibernate mode and the general Reset event, the
+ 157:Generated_Source\PSoC4/cyPm.c ****     * \ref CySysPmGetResetReason() function could be used.
+ 158:Generated_Source\PSoC4/cyPm.c ****     *
+ 159:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ 160:Generated_Source\PSoC4/cyPm.c ****     void CySysPmHibernate(void)
+ 161:Generated_Source\PSoC4/cyPm.c ****     {
+ 162:Generated_Source\PSoC4/cyPm.c ****         uint8 interruptState;
+ 163:Generated_Source\PSoC4/cyPm.c **** 
+ 164:Generated_Source\PSoC4/cyPm.c ****         interruptState = CyEnterCriticalSection();
+ 165:Generated_Source\PSoC4/cyPm.c **** 
+ 166:Generated_Source\PSoC4/cyPm.c ****         #if (CY_IP_HOBTO_DEVICE)
+ 167:Generated_Source\PSoC4/cyPm.c ****             /* Disable input buffers for all ports */
+ 168:Generated_Source\PSoC4/cyPm.c ****             CySysPmHibPinsDisableInputBuf();
+ 169:Generated_Source\PSoC4/cyPm.c ****         #endif /* (CY_IP_HOBTO_DEVICE) */
+ 170:Generated_Source\PSoC4/cyPm.c **** 
+ 171:Generated_Source\PSoC4/cyPm.c ****         /* Device enters Hibernate mode when CPU asserts SLEEPDEEP signal */
+ 172:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_CONTROL_REG |= CY_PM_PWR_CONTROL_HIBERNATE;
+ 173:Generated_Source\PSoC4/cyPm.c **** 
+ 174:Generated_Source\PSoC4/cyPm.c ****         /* Adjust delay to wait for references to settle on wakeup from hibernate */
+ 175:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_KEY_DELAY_REG = CY_SFLASH_HIB_KEY_DELAY_REG;
+ 176:Generated_Source\PSoC4/cyPm.c **** 
+ 177:Generated_Source\PSoC4/cyPm.c ****         /* CPU enters DeepSleep/Hibernate mode upon execution of WFI */
+ 178:Generated_Source\PSoC4/cyPm.c ****         CY_PM_CPU_SCR_REG |= CY_PM_CPU_SCR_SLEEPDEEP;
+ 179:Generated_Source\PSoC4/cyPm.c **** 
+ 180:Generated_Source\PSoC4/cyPm.c ****         /* Save token that will retain through a STOP/WAKEUP sequence
+ 181:Generated_Source\PSoC4/cyPm.c ****          * thus could be used by CySysPmGetResetReason() to differentiate
+ 182:Generated_Source\PSoC4/cyPm.c ****          * WAKEUP from a general RESET event.
+ 183:Generated_Source\PSoC4/cyPm.c ****          */
+ 184:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_STOP_REG = (CY_PM_PWR_STOP_REG & (uint32)(~CY_PM_PWR_STOP_TOKEN_MASK)) | CY_PM_PW
+ 185:Generated_Source\PSoC4/cyPm.c **** 
+ 186:Generated_Source\PSoC4/cyPm.c ****         /* Sleep and wait for interrupt. Wakeup from Hibernate is performed
+ 187:Generated_Source\PSoC4/cyPm.c ****          * through RESET state, causing a normal Boot procedure to occur.
+ 188:Generated_Source\PSoC4/cyPm.c ****          * The WFI instruction doesn't put the core to sleep if its wake condition
+ 189:Generated_Source\PSoC4/cyPm.c ****          * is true when the instruction is executed.
+ 190:Generated_Source\PSoC4/cyPm.c ****          */
+ 191:Generated_Source\PSoC4/cyPm.c ****         CY_PM_WFI;
+ 192:Generated_Source\PSoC4/cyPm.c **** 
+ 193:Generated_Source\PSoC4/cyPm.c ****         CyExitCriticalSection(interruptState);
+ 194:Generated_Source\PSoC4/cyPm.c ****     }
+ 195:Generated_Source\PSoC4/cyPm.c **** 
+ 196:Generated_Source\PSoC4/cyPm.c **** 
+ 197:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 198:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmStop
+ARM GAS  e:\temp\ccwJ39rO.s 			page 22
+
+
+ 199:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 200:Generated_Source\PSoC4/cyPm.c ****     *
+ 201:Generated_Source\PSoC4/cyPm.c ****     * Puts the part into the Stop state. All internal supplies are off;
+ 202:Generated_Source\PSoC4/cyPm.c ****     * no state is retained.
+ 203:Generated_Source\PSoC4/cyPm.c ****     *
+ 204:Generated_Source\PSoC4/cyPm.c ****     * Wakeup from Stop is performed by toggling the wakeup pin, causing
+ 205:Generated_Source\PSoC4/cyPm.c ****     * a normal boot procedure to occur. To configure the wakeup pin,
+ 206:Generated_Source\PSoC4/cyPm.c ****     * the Digital Input Pin component should be placed on the schematic,
+ 207:Generated_Source\PSoC4/cyPm.c ****     * assigned to the wakeup pin, and resistively pulled up or down to the inverse
+ 208:Generated_Source\PSoC4/cyPm.c ****     * state of the wakeup polarity. To distinguish the wakeup from the Stop mode
+ 209:Generated_Source\PSoC4/cyPm.c ****     * and the general Reset event, \ref CySysPmGetResetReason() function could be
+ 210:Generated_Source\PSoC4/cyPm.c ****     * used.  The wakeup pin is active low by default. The wakeup pin polarity
+ 211:Generated_Source\PSoC4/cyPm.c ****     * could be changed with the \ref CySysPmSetWakeupPolarity() function.
+ 212:Generated_Source\PSoC4/cyPm.c ****     *
+ 213:Generated_Source\PSoC4/cyPm.c ****     * This function freezes IO cells implicitly. It is not possible to enter
+ 214:Generated_Source\PSoC4/cyPm.c ****     * the STOP mode before freezing the IO cells. The IO cells remain frozen after
+ 215:Generated_Source\PSoC4/cyPm.c ****     * awake from the Stop mode until the firmware unfreezes them after booting
+ 216:Generated_Source\PSoC4/cyPm.c ****     * explicitly with \ref CySysPmUnfreezeIo() function call.
+ 217:Generated_Source\PSoC4/cyPm.c ****     *
+ 218:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ 219:Generated_Source\PSoC4/cyPm.c ****     void CySysPmStop(void)
+ 220:Generated_Source\PSoC4/cyPm.c ****     {
+ 221:Generated_Source\PSoC4/cyPm.c ****         (void) CyEnterCriticalSection();
+ 222:Generated_Source\PSoC4/cyPm.c **** 
+ 223:Generated_Source\PSoC4/cyPm.c ****         /* Update token to indicate Stop mode transition. Preserve only polarity. */
+ 224:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_STOP_REG = (CY_PM_PWR_STOP_REG & CY_PM_PWR_STOP_POLARITY) | CY_PM_PWR_STOP_TOKEN_
+ 225:Generated_Source\PSoC4/cyPm.c **** 
+ 226:Generated_Source\PSoC4/cyPm.c ****         /* Freeze IO-Cells to save IO-Cell state */
+ 227:Generated_Source\PSoC4/cyPm.c ****         CySysPmFreezeIo();
+ 228:Generated_Source\PSoC4/cyPm.c **** 
+ 229:Generated_Source\PSoC4/cyPm.c ****         /* Initiates transition to Stop state */
+ 230:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_STOP_REG = CY_PM_PWR_STOP_REG | CY_PM_PWR_STOP_STOP;
+ 231:Generated_Source\PSoC4/cyPm.c **** 
+ 232:Generated_Source\PSoC4/cyPm.c ****         /* Depending on the clock frequency and internal timing delays,
+ 233:Generated_Source\PSoC4/cyPm.c ****          * the final AHB transaction may or may not complete. To guard against
+ 234:Generated_Source\PSoC4/cyPm.c ****          * accidentally executing an unintended instruction, it is recommended
+ 235:Generated_Source\PSoC4/cyPm.c ****          * to add 2 NOP cycles after the final write to the STOP register.
+ 236:Generated_Source\PSoC4/cyPm.c ****          */
+ 237:Generated_Source\PSoC4/cyPm.c ****         CY_NOP;
+ 238:Generated_Source\PSoC4/cyPm.c ****         CY_NOP;
+ 239:Generated_Source\PSoC4/cyPm.c **** 
+ 240:Generated_Source\PSoC4/cyPm.c ****         /* Should never get to this WFI instruction */
+ 241:Generated_Source\PSoC4/cyPm.c ****         CY_PM_WFI;
+ 242:Generated_Source\PSoC4/cyPm.c **** 
+ 243:Generated_Source\PSoC4/cyPm.c ****         /* Wakeup from Stop is performed by toggling of Wakeup pin,
+ 244:Generated_Source\PSoC4/cyPm.c ****          * causing a normal Boot procedure to occur. No need to exit
+ 245:Generated_Source\PSoC4/cyPm.c ****          * from the critical section.
+ 246:Generated_Source\PSoC4/cyPm.c ****          */
+ 247:Generated_Source\PSoC4/cyPm.c ****     }
+ 248:Generated_Source\PSoC4/cyPm.c **** 
+ 249:Generated_Source\PSoC4/cyPm.c **** 
+ 250:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 251:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmSetWakeupPolarity
+ 252:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 253:Generated_Source\PSoC4/cyPm.c ****     *
+ 254:Generated_Source\PSoC4/cyPm.c ****     * Wake up from the stop mode is performed by toggling the wakeup pin,
+ 255:Generated_Source\PSoC4/cyPm.c ****     * causing a normal boot procedure to occur. This function assigns
+ARM GAS  e:\temp\ccwJ39rO.s 			page 23
+
+
+ 256:Generated_Source\PSoC4/cyPm.c ****     * the wakeup pin active level. Setting the wakeup pin to this level will cause
+ 257:Generated_Source\PSoC4/cyPm.c ****     * the wakeup from stop mode. The wakeup pin is active low by default.
+ 258:Generated_Source\PSoC4/cyPm.c ****     *
+ 259:Generated_Source\PSoC4/cyPm.c ****     * \param polarity
+ 260:Generated_Source\PSoC4/cyPm.c ****     * - \ref CY_PM_STOP_WAKEUP_ACTIVE_LOW Logical zero will wakeup the chip
+ 261:Generated_Source\PSoC4/cyPm.c ****     * - \ref CY_PM_STOP_WAKEUP_ACTIVE_HIGH Logical one will wakeup the chip
+ 262:Generated_Source\PSoC4/cyPm.c ****     *
+ 263:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ 264:Generated_Source\PSoC4/cyPm.c ****     void CySysPmSetWakeupPolarity(uint32 polarity)
+ 265:Generated_Source\PSoC4/cyPm.c ****     {
+ 266:Generated_Source\PSoC4/cyPm.c ****         uint8 interruptState;
+ 267:Generated_Source\PSoC4/cyPm.c **** 
+ 268:Generated_Source\PSoC4/cyPm.c ****         interruptState = CyEnterCriticalSection();
+ 269:Generated_Source\PSoC4/cyPm.c **** 
+ 270:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_STOP_REG = (CY_PM_STOP_WAKEUP_ACTIVE_LOW != polarity) ?
+ 271:Generated_Source\PSoC4/cyPm.c ****                             (CY_PM_PWR_STOP_REG | CY_PM_PWR_STOP_POLARITY) :
+ 272:Generated_Source\PSoC4/cyPm.c ****                             (CY_PM_PWR_STOP_REG & (uint32) (~CY_PM_PWR_STOP_POLARITY));
+ 273:Generated_Source\PSoC4/cyPm.c **** 
+ 274:Generated_Source\PSoC4/cyPm.c ****         CyExitCriticalSection(interruptState);
+ 275:Generated_Source\PSoC4/cyPm.c ****     }
+ 276:Generated_Source\PSoC4/cyPm.c **** 
+ 277:Generated_Source\PSoC4/cyPm.c **** 
+ 278:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 279:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmGetResetReason
+ 280:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 281:Generated_Source\PSoC4/cyPm.c ****     *
+ 282:Generated_Source\PSoC4/cyPm.c ****     * Retrieves the last reset reason - transition from OFF/XRES/STOP/HIBERNATE to
+ 283:Generated_Source\PSoC4/cyPm.c ****     * the RESET state. Note that waking up from STOP using XRES will be perceived
+ 284:Generated_Source\PSoC4/cyPm.c ****     * as a general RESET.
+ 285:Generated_Source\PSoC4/cyPm.c ****     *
+ 286:Generated_Source\PSoC4/cyPm.c ****     * \return CY_PM_RESET_REASON_UNKN          Unknown reset reason.
+ 287:Generated_Source\PSoC4/cyPm.c ****     * \return CY_PM_RESET_REASON_XRES          Transition from OFF/XRES to RESET
+ 288:Generated_Source\PSoC4/cyPm.c ****     * \return CY_PM_RESET_REASON_WAKEUP_HIB    Transition/wakeup from HIBERNATE to RESET
+ 289:Generated_Source\PSoC4/cyPm.c ****     * \return CY_PM_RESET_REASON_WAKEUP_STOP   Transition/wakeup from STOP to RESET
+ 290:Generated_Source\PSoC4/cyPm.c ****     *
+ 291:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ 292:Generated_Source\PSoC4/cyPm.c ****     uint32 CySysPmGetResetReason(void)
+ 293:Generated_Source\PSoC4/cyPm.c ****     {
+ 294:Generated_Source\PSoC4/cyPm.c ****         uint32 reason = CY_PM_RESET_REASON_UNKN;
+ 295:Generated_Source\PSoC4/cyPm.c **** 
+ 296:Generated_Source\PSoC4/cyPm.c ****         switch(CY_PM_PWR_STOP_REG & CY_PM_PWR_STOP_TOKEN_MASK)
+ 297:Generated_Source\PSoC4/cyPm.c ****         {
+ 298:Generated_Source\PSoC4/cyPm.c ****         /* Power up, XRES */
+ 299:Generated_Source\PSoC4/cyPm.c ****         case CY_PM_PWR_STOP_TOKEN_XRES:
+ 300:Generated_Source\PSoC4/cyPm.c ****             reason = CY_PM_RESET_REASON_XRES;
+ 301:Generated_Source\PSoC4/cyPm.c ****             break;
+ 302:Generated_Source\PSoC4/cyPm.c **** 
+ 303:Generated_Source\PSoC4/cyPm.c ****         /* Wakeup from Hibernate */
+ 304:Generated_Source\PSoC4/cyPm.c ****         case CY_PM_PWR_STOP_TOKEN_HIB:
+ 305:Generated_Source\PSoC4/cyPm.c ****             reason = CY_PM_RESET_REASON_WAKEUP_HIB;
+ 306:Generated_Source\PSoC4/cyPm.c ****             break;
+ 307:Generated_Source\PSoC4/cyPm.c **** 
+ 308:Generated_Source\PSoC4/cyPm.c ****         /* Wakeup from Stop (through WAKEUP pin assert) */
+ 309:Generated_Source\PSoC4/cyPm.c ****         case CY_PM_PWR_STOP_TOKEN_STOP:
+ 310:Generated_Source\PSoC4/cyPm.c ****             reason = CY_PM_RESET_REASON_WAKEUP_STOP;
+ 311:Generated_Source\PSoC4/cyPm.c ****             break;
+ 312:Generated_Source\PSoC4/cyPm.c **** 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 24
+
+
+ 313:Generated_Source\PSoC4/cyPm.c ****         /* Unknown reason */
+ 314:Generated_Source\PSoC4/cyPm.c ****         default:
+ 315:Generated_Source\PSoC4/cyPm.c ****             break;
+ 316:Generated_Source\PSoC4/cyPm.c ****         }
+ 317:Generated_Source\PSoC4/cyPm.c **** 
+ 318:Generated_Source\PSoC4/cyPm.c ****         return (reason);
+ 319:Generated_Source\PSoC4/cyPm.c ****     }
+ 320:Generated_Source\PSoC4/cyPm.c **** 
+ 321:Generated_Source\PSoC4/cyPm.c **** 
+ 322:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 323:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmFreezeIo
+ 324:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 325:Generated_Source\PSoC4/cyPm.c ****     *
+ 326:Generated_Source\PSoC4/cyPm.c ****     * Freezes IO-Cells directly to save the IO-Cell state on wake up from the
+ 327:Generated_Source\PSoC4/cyPm.c ****     * Hibernate or Stop state. It is not required to call this function before
+ 328:Generated_Source\PSoC4/cyPm.c ****     * entering the Stop mode, since \ref CySysPmStop() function freezes IO-Cells
+ 329:Generated_Source\PSoC4/cyPm.c ****     * implicitly.
+ 330:Generated_Source\PSoC4/cyPm.c ****     *
+ 331:Generated_Source\PSoC4/cyPm.c ****     * This API is not available for PSoC 4000 family of devices.
+ 332:Generated_Source\PSoC4/cyPm.c ****     *
+ 333:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ 334:Generated_Source\PSoC4/cyPm.c ****     void CySysPmFreezeIo(void)
+ 335:Generated_Source\PSoC4/cyPm.c ****     {
+ 336:Generated_Source\PSoC4/cyPm.c ****         uint8 interruptState;
+ 337:Generated_Source\PSoC4/cyPm.c **** 
+ 338:Generated_Source\PSoC4/cyPm.c ****         interruptState = CyEnterCriticalSection();
+ 339:Generated_Source\PSoC4/cyPm.c **** 
+ 340:Generated_Source\PSoC4/cyPm.c ****         /* Check FREEZE state to avoid recurrent IO-Cells freeze attempt,
+ 341:Generated_Source\PSoC4/cyPm.c ****          * since the second call to this function will cause accidental switch
+ 342:Generated_Source\PSoC4/cyPm.c ****          * to the STOP mode (the system will enter STOP mode immediately after
+ 343:Generated_Source\PSoC4/cyPm.c ****          * writing to STOP bit since both UNLOCK and FREEZE have been set correctly
+ 344:Generated_Source\PSoC4/cyPm.c ****          * in a previous call to this function).
+ 345:Generated_Source\PSoC4/cyPm.c ****          */
+ 346:Generated_Source\PSoC4/cyPm.c ****         if (0u == (CY_PM_PWR_STOP_REG & CY_PM_PWR_STOP_FREEZE))
+ 347:Generated_Source\PSoC4/cyPm.c ****         {
+ 348:Generated_Source\PSoC4/cyPm.c ****             /* Preserve last reset reason and disable overrides the next freeze command by peripher
+ 349:Generated_Source\PSoC4/cyPm.c ****             CY_PM_PWR_STOP_REG = CY_PM_PWR_STOP_STOP | CY_PM_PWR_STOP_FREEZE | CY_PM_PWR_STOP_UNLOC
+ 350:Generated_Source\PSoC4/cyPm.c ****                                 (CY_PM_PWR_STOP_REG & (CY_PM_PWR_STOP_TOKEN_MASK | CY_PM_PWR_STOP_P
+ 351:Generated_Source\PSoC4/cyPm.c **** 
+ 352:Generated_Source\PSoC4/cyPm.c ****             /* If reading after writing, read this register three times to delay
+ 353:Generated_Source\PSoC4/cyPm.c ****             *  enough time for internal settling.
+ 354:Generated_Source\PSoC4/cyPm.c ****             */
+ 355:Generated_Source\PSoC4/cyPm.c ****             (void) CY_PM_PWR_STOP_REG;
+ 356:Generated_Source\PSoC4/cyPm.c ****             (void) CY_PM_PWR_STOP_REG;
+ 357:Generated_Source\PSoC4/cyPm.c **** 
+ 358:Generated_Source\PSoC4/cyPm.c ****             /* Second write causes the freeze of IO-Cells to save IO-Cell state */
+ 359:Generated_Source\PSoC4/cyPm.c ****             CY_PM_PWR_STOP_REG = CY_PM_PWR_STOP_REG;
+ 360:Generated_Source\PSoC4/cyPm.c ****         }
+ 361:Generated_Source\PSoC4/cyPm.c **** 
+ 362:Generated_Source\PSoC4/cyPm.c ****         CyExitCriticalSection(interruptState);
+ 363:Generated_Source\PSoC4/cyPm.c ****     }
+ 364:Generated_Source\PSoC4/cyPm.c **** 
+ 365:Generated_Source\PSoC4/cyPm.c **** 
+ 366:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 367:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmUnfreezeIo
+ 368:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 369:Generated_Source\PSoC4/cyPm.c ****     *
+ARM GAS  e:\temp\ccwJ39rO.s 			page 25
+
+
+ 370:Generated_Source\PSoC4/cyPm.c ****     * The IO-Cells remain frozen after awake from Hibernate or Stop mode until
+ 371:Generated_Source\PSoC4/cyPm.c ****     * the firmware unfreezes them after booting. The call of this function
+ 372:Generated_Source\PSoC4/cyPm.c ****     * unfreezes IO-Cells explicitly.
+ 373:Generated_Source\PSoC4/cyPm.c ****     *
+ 374:Generated_Source\PSoC4/cyPm.c ****     * If the firmware intent is to retain the data value on the port, then the
+ 375:Generated_Source\PSoC4/cyPm.c ****     * value must be read and re-written to the data register before calling this
+ 376:Generated_Source\PSoC4/cyPm.c ****     * API. Furthermore, the drive mode must be re-programmed.  If this is not done,
+ 377:Generated_Source\PSoC4/cyPm.c ****     * the pin state will change to default state the moment the freeze is removed.
+ 378:Generated_Source\PSoC4/cyPm.c ****     *
+ 379:Generated_Source\PSoC4/cyPm.c ****     * This API is not available for PSoC 4000 family of devices.
+ 380:Generated_Source\PSoC4/cyPm.c ****     *
+ 381:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ 382:Generated_Source\PSoC4/cyPm.c ****     void CySysPmUnfreezeIo(void)
+ 383:Generated_Source\PSoC4/cyPm.c ****     {
+ 384:Generated_Source\PSoC4/cyPm.c ****         uint8 interruptState;
+ 385:Generated_Source\PSoC4/cyPm.c **** 
+ 386:Generated_Source\PSoC4/cyPm.c ****         interruptState = CyEnterCriticalSection();
+ 387:Generated_Source\PSoC4/cyPm.c **** 
+ 388:Generated_Source\PSoC4/cyPm.c ****         /* Preserve last reset reason and wakeup polarity. Then, unfreeze I/O:
+ 389:Generated_Source\PSoC4/cyPm.c ****          * write PWR_STOP.FREEZE=0, .UNLOCK=0x3A, .STOP=0, .TOKEN
+ 390:Generated_Source\PSoC4/cyPm.c ****          */
+ 391:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_STOP_REG = CY_PM_PWR_STOP_UNLOCK |
+ 392:Generated_Source\PSoC4/cyPm.c ****                             (CY_PM_PWR_STOP_REG & (CY_PM_PWR_STOP_TOKEN_MASK | CY_PM_PWR_STOP_POLAR
+ 393:Generated_Source\PSoC4/cyPm.c **** 
+ 394:Generated_Source\PSoC4/cyPm.c ****         /* If reading after writing, read this register three times to delay
+ 395:Generated_Source\PSoC4/cyPm.c ****         *  enough time for internal settling.
+ 396:Generated_Source\PSoC4/cyPm.c ****         */
+ 397:Generated_Source\PSoC4/cyPm.c ****         (void) CY_PM_PWR_STOP_REG;
+ 398:Generated_Source\PSoC4/cyPm.c ****         (void) CY_PM_PWR_STOP_REG;
+ 399:Generated_Source\PSoC4/cyPm.c **** 
+ 400:Generated_Source\PSoC4/cyPm.c ****         /* Lock STOP mode: write PWR_STOP.FREEZE=0, UNLOCK=0x00, STOP=0, .TOKEN */
+ 401:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_STOP_REG &= (CY_PM_PWR_STOP_TOKEN_MASK | CY_PM_PWR_STOP_POLARITY);
+ 402:Generated_Source\PSoC4/cyPm.c **** 
+ 403:Generated_Source\PSoC4/cyPm.c ****         CyExitCriticalSection(interruptState);
+ 404:Generated_Source\PSoC4/cyPm.c ****     }
+ 405:Generated_Source\PSoC4/cyPm.c **** 
+ 406:Generated_Source\PSoC4/cyPm.c **** #else
+ 407:Generated_Source\PSoC4/cyPm.c **** 
+ 408:Generated_Source\PSoC4/cyPm.c ****     /*******************************************************************************
+ 409:Generated_Source\PSoC4/cyPm.c ****     * Function Name: CySysPmSetWakeupHoldoff
+ 410:Generated_Source\PSoC4/cyPm.c ****     ****************************************************************************//**
+ 411:Generated_Source\PSoC4/cyPm.c ****     *
+ 412:Generated_Source\PSoC4/cyPm.c ****     * Sets the Deep Sleep wakeup time by scaling the hold-off to the HFCLK
+ 413:Generated_Source\PSoC4/cyPm.c ****     * frequency.
+ 414:Generated_Source\PSoC4/cyPm.c ****     *
+ 415:Generated_Source\PSoC4/cyPm.c ****     * This function must be called before increasing HFCLK clock frequency. It can
+ 416:Generated_Source\PSoC4/cyPm.c ****     * optionally be called after lowering HFCLK clock frequency in order to improve
+ 417:Generated_Source\PSoC4/cyPm.c ****     * Deep Sleep wakeup time.
+ 418:Generated_Source\PSoC4/cyPm.c ****     *
+ 419:Generated_Source\PSoC4/cyPm.c ****     * It is functionally acceptable to leave the default hold-off setting, but
+ 420:Generated_Source\PSoC4/cyPm.c ****     * Deep Sleep wakeup time may exceed the specification.
+ 421:Generated_Source\PSoC4/cyPm.c ****     *
+ 422:Generated_Source\PSoC4/cyPm.c ****     * This function is applicable only for the 4000 device family.
+ 423:Generated_Source\PSoC4/cyPm.c ****     *
+ 424:Generated_Source\PSoC4/cyPm.c ****     * \param hfclkFrequencyMhz The HFCLK frequency in MHz.
+ 425:Generated_Source\PSoC4/cyPm.c ****     *
+ 426:Generated_Source\PSoC4/cyPm.c ****     *******************************************************************************/
+ARM GAS  e:\temp\ccwJ39rO.s 			page 26
+
+
+ 427:Generated_Source\PSoC4/cyPm.c ****     void CySysPmSetWakeupHoldoff(uint32 hfclkFrequencyMhz)
+ 428:Generated_Source\PSoC4/cyPm.c ****     {
+ 355              		.loc 1 428 0
+ 356              		.cfi_startproc
+ 357              		@ args = 0, pretend = 0, frame = 0
+ 358              		@ frame_needed = 0, uses_anonymous_args = 0
+ 359              		@ link register save eliminated.
+ 360              	.LVL4:
+ 429:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_KEY_DELAY_REG = ((((uint32)(CY_PM_PWR_KEY_DELAY_REG_DEFAULT << 16u) /
+ 430:Generated_Source\PSoC4/cyPm.c ****             CY_PM_PWR_KEY_DELAY_FREQ_DEFAULT) * hfclkFrequencyMhz) >> 16u) + 1u;
+ 361              		.loc 1 430 0
+ 362 0000 034B     		ldr	r3, .L8
+ 431:Generated_Source\PSoC4/cyPm.c ****     }
+ 363              		.loc 1 431 0
+ 364              		@ sp needed
+ 430:Generated_Source\PSoC4/cyPm.c ****     }
+ 365              		.loc 1 430 0
+ 366 0002 5843     		muls	r0, r3
+ 367              	.LVL5:
+ 429:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_KEY_DELAY_REG = ((((uint32)(CY_PM_PWR_KEY_DELAY_REG_DEFAULT << 16u) /
+ 368              		.loc 1 429 0
+ 369 0004 034B     		ldr	r3, .L8+4
+ 430:Generated_Source\PSoC4/cyPm.c ****     }
+ 370              		.loc 1 430 0
+ 371 0006 000C     		lsrs	r0, r0, #16
+ 372 0008 0130     		adds	r0, r0, #1
+ 429:Generated_Source\PSoC4/cyPm.c ****         CY_PM_PWR_KEY_DELAY_REG = ((((uint32)(CY_PM_PWR_KEY_DELAY_REG_DEFAULT << 16u) /
+ 373              		.loc 1 429 0
+ 374 000a 1860     		str	r0, [r3]
+ 375              		.loc 1 431 0
+ 376 000c 7047     		bx	lr
+ 377              	.L9:
+ 378 000e C046     		.align	2
+ 379              	.L8:
+ 380 0010 AA2A0500 		.word	338602
+ 381 0014 04000340 		.word	1073938436
+ 382              		.cfi_endproc
+ 383              	.LFE2:
+ 384              		.size	CySysPmSetWakeupHoldoff, .-CySysPmSetWakeupHoldoff
+ 385              		.text
+ 386              	.Letext0:
+ 387              		.file 2 "Generated_Source\\PSoC4\\cytypes.h"
+ 388              		.file 3 "Generated_Source\\PSoC4\\CyLib.h"
+ 389              		.section	.debug_info,"",%progbits
+ 390              	.Ldebug_info0:
+ 391 0000 7C010000 		.4byte	0x17c
+ 392 0004 0400     		.2byte	0x4
+ 393 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 394 000a 04       		.byte	0x4
+ 395 000b 01       		.uleb128 0x1
+ 396 000c AF000000 		.4byte	.LASF25
+ 397 0010 0C       		.byte	0xc
+ 398 0011 33000000 		.4byte	.LASF26
+ 399 0015 71010000 		.4byte	.LASF27
+ 400 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 401 001d 00000000 		.4byte	0
+ 402 0021 00000000 		.4byte	.Ldebug_line0
+ARM GAS  e:\temp\ccwJ39rO.s 			page 27
+
+
+ 403 0025 02       		.uleb128 0x2
+ 404 0026 01       		.byte	0x1
+ 405 0027 06       		.byte	0x6
+ 406 0028 30020000 		.4byte	.LASF0
+ 407 002c 02       		.uleb128 0x2
+ 408 002d 01       		.byte	0x1
+ 409 002e 08       		.byte	0x8
+ 410 002f DC010000 		.4byte	.LASF1
+ 411 0033 02       		.uleb128 0x2
+ 412 0034 02       		.byte	0x2
+ 413 0035 05       		.byte	0x5
+ 414 0036 6B020000 		.4byte	.LASF2
+ 415 003a 02       		.uleb128 0x2
+ 416 003b 02       		.byte	0x2
+ 417 003c 07       		.byte	0x7
+ 418 003d 1D020000 		.4byte	.LASF3
+ 419 0041 02       		.uleb128 0x2
+ 420 0042 04       		.byte	0x4
+ 421 0043 05       		.byte	0x5
+ 422 0044 EF010000 		.4byte	.LASF4
+ 423 0048 02       		.uleb128 0x2
+ 424 0049 04       		.byte	0x4
+ 425 004a 07       		.byte	0x7
+ 426 004b 86000000 		.4byte	.LASF5
+ 427 004f 02       		.uleb128 0x2
+ 428 0050 08       		.byte	0x8
+ 429 0051 05       		.byte	0x5
+ 430 0052 00000000 		.4byte	.LASF6
+ 431 0056 02       		.uleb128 0x2
+ 432 0057 08       		.byte	0x8
+ 433 0058 07       		.byte	0x7
+ 434 0059 98000000 		.4byte	.LASF7
+ 435 005d 03       		.uleb128 0x3
+ 436 005e 04       		.byte	0x4
+ 437 005f 05       		.byte	0x5
+ 438 0060 696E7400 		.ascii	"int\000"
+ 439 0064 02       		.uleb128 0x2
+ 440 0065 04       		.byte	0x4
+ 441 0066 07       		.byte	0x7
+ 442 0067 15000000 		.4byte	.LASF8
+ 443 006b 04       		.uleb128 0x4
+ 444 006c 80000000 		.4byte	.LASF9
+ 445 0070 02       		.byte	0x2
+ 446 0071 E401     		.2byte	0x1e4
+ 447 0073 2C000000 		.4byte	0x2c
+ 448 0077 04       		.uleb128 0x4
+ 449 0078 75020000 		.4byte	.LASF10
+ 450 007c 02       		.byte	0x2
+ 451 007d E501     		.2byte	0x1e5
+ 452 007f 3A000000 		.4byte	0x3a
+ 453 0083 04       		.uleb128 0x4
+ 454 0084 0E000000 		.4byte	.LASF11
+ 455 0088 02       		.byte	0x2
+ 456 0089 E601     		.2byte	0x1e6
+ 457 008b 48000000 		.4byte	0x48
+ 458 008f 02       		.uleb128 0x2
+ 459 0090 04       		.byte	0x4
+ARM GAS  e:\temp\ccwJ39rO.s 			page 28
+
+
+ 460 0091 04       		.byte	0x4
+ 461 0092 6B010000 		.4byte	.LASF12
+ 462 0096 02       		.uleb128 0x2
+ 463 0097 08       		.byte	0x8
+ 464 0098 04       		.byte	0x4
+ 465 0099 FE010000 		.4byte	.LASF13
+ 466 009d 02       		.uleb128 0x2
+ 467 009e 01       		.byte	0x1
+ 468 009f 08       		.byte	0x8
+ 469 00a0 EA010000 		.4byte	.LASF14
+ 470 00a4 04       		.uleb128 0x4
+ 471 00a5 F8010000 		.4byte	.LASF15
+ 472 00a9 02       		.byte	0x2
+ 473 00aa 8F02     		.2byte	0x28f
+ 474 00ac B0000000 		.4byte	0xb0
+ 475 00b0 05       		.uleb128 0x5
+ 476 00b1 77000000 		.4byte	0x77
+ 477 00b5 04       		.uleb128 0x4
+ 478 00b6 17020000 		.4byte	.LASF16
+ 479 00ba 02       		.byte	0x2
+ 480 00bb 9002     		.2byte	0x290
+ 481 00bd C1000000 		.4byte	0xc1
+ 482 00c1 05       		.uleb128 0x5
+ 483 00c2 83000000 		.4byte	0x83
+ 484 00c6 02       		.uleb128 0x2
+ 485 00c7 08       		.byte	0x8
+ 486 00c8 04       		.byte	0x4
+ 487 00c9 5F020000 		.4byte	.LASF17
+ 488 00cd 02       		.uleb128 0x2
+ 489 00ce 04       		.byte	0x4
+ 490 00cf 07       		.byte	0x7
+ 491 00d0 7C020000 		.4byte	.LASF18
+ 492 00d4 06       		.uleb128 0x6
+ 493 00d5 3C020000 		.4byte	.LASF19
+ 494 00d9 01       		.byte	0x1
+ 495 00da 21       		.byte	0x21
+ 496 00db 00000000 		.4byte	.LFB0
+ 497 00df 1C000000 		.4byte	.LFE0-.LFB0
+ 498 00e3 01       		.uleb128 0x1
+ 499 00e4 9C       		.byte	0x9c
+ 500 00e5 0B010000 		.4byte	0x10b
+ 501 00e9 07       		.uleb128 0x7
+ 502 00ea 85020000 		.4byte	.LASF21
+ 503 00ee 01       		.byte	0x1
+ 504 00ef 23       		.byte	0x23
+ 505 00f0 6B000000 		.4byte	0x6b
+ 506 00f4 00000000 		.4byte	.LLST0
+ 507 00f8 08       		.uleb128 0x8
+ 508 00f9 06000000 		.4byte	.LVL0
+ 509 00fd 69010000 		.4byte	0x169
+ 510 0101 08       		.uleb128 0x8
+ 511 0102 16000000 		.4byte	.LVL1
+ 512 0106 74010000 		.4byte	0x174
+ 513 010a 00       		.byte	0
+ 514 010b 06       		.uleb128 0x6
+ 515 010c 22000000 		.4byte	.LASF20
+ 516 0110 01       		.byte	0x1
+ARM GAS  e:\temp\ccwJ39rO.s 			page 29
+
+
+ 517 0111 40       		.byte	0x40
+ 518 0112 00000000 		.4byte	.LFB1
+ 519 0116 30000000 		.4byte	.LFE1-.LFB1
+ 520 011a 01       		.uleb128 0x1
+ 521 011b 9C       		.byte	0x9c
+ 522 011c 42010000 		.4byte	0x142
+ 523 0120 07       		.uleb128 0x7
+ 524 0121 85020000 		.4byte	.LASF21
+ 525 0125 01       		.byte	0x1
+ 526 0126 42       		.byte	0x42
+ 527 0127 6B000000 		.4byte	0x6b
+ 528 012b 13000000 		.4byte	.LLST1
+ 529 012f 08       		.uleb128 0x8
+ 530 0130 06000000 		.4byte	.LVL2
+ 531 0134 69010000 		.4byte	0x169
+ 532 0138 08       		.uleb128 0x8
+ 533 0139 20000000 		.4byte	.LVL3
+ 534 013d 74010000 		.4byte	0x174
+ 535 0141 00       		.byte	0
+ 536 0142 09       		.uleb128 0x9
+ 537 0143 68000000 		.4byte	.LASF22
+ 538 0147 01       		.byte	0x1
+ 539 0148 AB01     		.2byte	0x1ab
+ 540 014a 00000000 		.4byte	.LFB2
+ 541 014e 18000000 		.4byte	.LFE2-.LFB2
+ 542 0152 01       		.uleb128 0x1
+ 543 0153 9C       		.byte	0x9c
+ 544 0154 69010000 		.4byte	0x169
+ 545 0158 0A       		.uleb128 0xa
+ 546 0159 05020000 		.4byte	.LASF28
+ 547 015d 01       		.byte	0x1
+ 548 015e AB01     		.2byte	0x1ab
+ 549 0160 83000000 		.4byte	0x83
+ 550 0164 26000000 		.4byte	.LLST2
+ 551 0168 00       		.byte	0
+ 552 0169 0B       		.uleb128 0xb
+ 553 016a 51000000 		.4byte	.LASF23
+ 554 016e 51000000 		.4byte	.LASF23
+ 555 0172 03       		.byte	0x3
+ 556 0173 E5       		.byte	0xe5
+ 557 0174 0B       		.uleb128 0xb
+ 558 0175 49020000 		.4byte	.LASF24
+ 559 0179 49020000 		.4byte	.LASF24
+ 560 017d 03       		.byte	0x3
+ 561 017e E6       		.byte	0xe6
+ 562 017f 00       		.byte	0
+ 563              		.section	.debug_abbrev,"",%progbits
+ 564              	.Ldebug_abbrev0:
+ 565 0000 01       		.uleb128 0x1
+ 566 0001 11       		.uleb128 0x11
+ 567 0002 01       		.byte	0x1
+ 568 0003 25       		.uleb128 0x25
+ 569 0004 0E       		.uleb128 0xe
+ 570 0005 13       		.uleb128 0x13
+ 571 0006 0B       		.uleb128 0xb
+ 572 0007 03       		.uleb128 0x3
+ 573 0008 0E       		.uleb128 0xe
+ARM GAS  e:\temp\ccwJ39rO.s 			page 30
+
+
+ 574 0009 1B       		.uleb128 0x1b
+ 575 000a 0E       		.uleb128 0xe
+ 576 000b 55       		.uleb128 0x55
+ 577 000c 17       		.uleb128 0x17
+ 578 000d 11       		.uleb128 0x11
+ 579 000e 01       		.uleb128 0x1
+ 580 000f 10       		.uleb128 0x10
+ 581 0010 17       		.uleb128 0x17
+ 582 0011 00       		.byte	0
+ 583 0012 00       		.byte	0
+ 584 0013 02       		.uleb128 0x2
+ 585 0014 24       		.uleb128 0x24
+ 586 0015 00       		.byte	0
+ 587 0016 0B       		.uleb128 0xb
+ 588 0017 0B       		.uleb128 0xb
+ 589 0018 3E       		.uleb128 0x3e
+ 590 0019 0B       		.uleb128 0xb
+ 591 001a 03       		.uleb128 0x3
+ 592 001b 0E       		.uleb128 0xe
+ 593 001c 00       		.byte	0
+ 594 001d 00       		.byte	0
+ 595 001e 03       		.uleb128 0x3
+ 596 001f 24       		.uleb128 0x24
+ 597 0020 00       		.byte	0
+ 598 0021 0B       		.uleb128 0xb
+ 599 0022 0B       		.uleb128 0xb
+ 600 0023 3E       		.uleb128 0x3e
+ 601 0024 0B       		.uleb128 0xb
+ 602 0025 03       		.uleb128 0x3
+ 603 0026 08       		.uleb128 0x8
+ 604 0027 00       		.byte	0
+ 605 0028 00       		.byte	0
+ 606 0029 04       		.uleb128 0x4
+ 607 002a 16       		.uleb128 0x16
+ 608 002b 00       		.byte	0
+ 609 002c 03       		.uleb128 0x3
+ 610 002d 0E       		.uleb128 0xe
+ 611 002e 3A       		.uleb128 0x3a
+ 612 002f 0B       		.uleb128 0xb
+ 613 0030 3B       		.uleb128 0x3b
+ 614 0031 05       		.uleb128 0x5
+ 615 0032 49       		.uleb128 0x49
+ 616 0033 13       		.uleb128 0x13
+ 617 0034 00       		.byte	0
+ 618 0035 00       		.byte	0
+ 619 0036 05       		.uleb128 0x5
+ 620 0037 35       		.uleb128 0x35
+ 621 0038 00       		.byte	0
+ 622 0039 49       		.uleb128 0x49
+ 623 003a 13       		.uleb128 0x13
+ 624 003b 00       		.byte	0
+ 625 003c 00       		.byte	0
+ 626 003d 06       		.uleb128 0x6
+ 627 003e 2E       		.uleb128 0x2e
+ 628 003f 01       		.byte	0x1
+ 629 0040 3F       		.uleb128 0x3f
+ 630 0041 19       		.uleb128 0x19
+ARM GAS  e:\temp\ccwJ39rO.s 			page 31
+
+
+ 631 0042 03       		.uleb128 0x3
+ 632 0043 0E       		.uleb128 0xe
+ 633 0044 3A       		.uleb128 0x3a
+ 634 0045 0B       		.uleb128 0xb
+ 635 0046 3B       		.uleb128 0x3b
+ 636 0047 0B       		.uleb128 0xb
+ 637 0048 27       		.uleb128 0x27
+ 638 0049 19       		.uleb128 0x19
+ 639 004a 11       		.uleb128 0x11
+ 640 004b 01       		.uleb128 0x1
+ 641 004c 12       		.uleb128 0x12
+ 642 004d 06       		.uleb128 0x6
+ 643 004e 40       		.uleb128 0x40
+ 644 004f 18       		.uleb128 0x18
+ 645 0050 9742     		.uleb128 0x2117
+ 646 0052 19       		.uleb128 0x19
+ 647 0053 01       		.uleb128 0x1
+ 648 0054 13       		.uleb128 0x13
+ 649 0055 00       		.byte	0
+ 650 0056 00       		.byte	0
+ 651 0057 07       		.uleb128 0x7
+ 652 0058 34       		.uleb128 0x34
+ 653 0059 00       		.byte	0
+ 654 005a 03       		.uleb128 0x3
+ 655 005b 0E       		.uleb128 0xe
+ 656 005c 3A       		.uleb128 0x3a
+ 657 005d 0B       		.uleb128 0xb
+ 658 005e 3B       		.uleb128 0x3b
+ 659 005f 0B       		.uleb128 0xb
+ 660 0060 49       		.uleb128 0x49
+ 661 0061 13       		.uleb128 0x13
+ 662 0062 02       		.uleb128 0x2
+ 663 0063 17       		.uleb128 0x17
+ 664 0064 00       		.byte	0
+ 665 0065 00       		.byte	0
+ 666 0066 08       		.uleb128 0x8
+ 667 0067 898201   		.uleb128 0x4109
+ 668 006a 00       		.byte	0
+ 669 006b 11       		.uleb128 0x11
+ 670 006c 01       		.uleb128 0x1
+ 671 006d 31       		.uleb128 0x31
+ 672 006e 13       		.uleb128 0x13
+ 673 006f 00       		.byte	0
+ 674 0070 00       		.byte	0
+ 675 0071 09       		.uleb128 0x9
+ 676 0072 2E       		.uleb128 0x2e
+ 677 0073 01       		.byte	0x1
+ 678 0074 3F       		.uleb128 0x3f
+ 679 0075 19       		.uleb128 0x19
+ 680 0076 03       		.uleb128 0x3
+ 681 0077 0E       		.uleb128 0xe
+ 682 0078 3A       		.uleb128 0x3a
+ 683 0079 0B       		.uleb128 0xb
+ 684 007a 3B       		.uleb128 0x3b
+ 685 007b 05       		.uleb128 0x5
+ 686 007c 27       		.uleb128 0x27
+ 687 007d 19       		.uleb128 0x19
+ARM GAS  e:\temp\ccwJ39rO.s 			page 32
+
+
+ 688 007e 11       		.uleb128 0x11
+ 689 007f 01       		.uleb128 0x1
+ 690 0080 12       		.uleb128 0x12
+ 691 0081 06       		.uleb128 0x6
+ 692 0082 40       		.uleb128 0x40
+ 693 0083 18       		.uleb128 0x18
+ 694 0084 9742     		.uleb128 0x2117
+ 695 0086 19       		.uleb128 0x19
+ 696 0087 01       		.uleb128 0x1
+ 697 0088 13       		.uleb128 0x13
+ 698 0089 00       		.byte	0
+ 699 008a 00       		.byte	0
+ 700 008b 0A       		.uleb128 0xa
+ 701 008c 05       		.uleb128 0x5
+ 702 008d 00       		.byte	0
+ 703 008e 03       		.uleb128 0x3
+ 704 008f 0E       		.uleb128 0xe
+ 705 0090 3A       		.uleb128 0x3a
+ 706 0091 0B       		.uleb128 0xb
+ 707 0092 3B       		.uleb128 0x3b
+ 708 0093 05       		.uleb128 0x5
+ 709 0094 49       		.uleb128 0x49
+ 710 0095 13       		.uleb128 0x13
+ 711 0096 02       		.uleb128 0x2
+ 712 0097 17       		.uleb128 0x17
+ 713 0098 00       		.byte	0
+ 714 0099 00       		.byte	0
+ 715 009a 0B       		.uleb128 0xb
+ 716 009b 2E       		.uleb128 0x2e
+ 717 009c 00       		.byte	0
+ 718 009d 3F       		.uleb128 0x3f
+ 719 009e 19       		.uleb128 0x19
+ 720 009f 3C       		.uleb128 0x3c
+ 721 00a0 19       		.uleb128 0x19
+ 722 00a1 6E       		.uleb128 0x6e
+ 723 00a2 0E       		.uleb128 0xe
+ 724 00a3 03       		.uleb128 0x3
+ 725 00a4 0E       		.uleb128 0xe
+ 726 00a5 3A       		.uleb128 0x3a
+ 727 00a6 0B       		.uleb128 0xb
+ 728 00a7 3B       		.uleb128 0x3b
+ 729 00a8 0B       		.uleb128 0xb
+ 730 00a9 00       		.byte	0
+ 731 00aa 00       		.byte	0
+ 732 00ab 00       		.byte	0
+ 733              		.section	.debug_loc,"",%progbits
+ 734              	.Ldebug_loc0:
+ 735              	.LLST0:
+ 736 0000 06000000 		.4byte	.LVL0
+ 737 0004 15000000 		.4byte	.LVL1-1
+ 738 0008 0100     		.2byte	0x1
+ 739 000a 50       		.byte	0x50
+ 740 000b 00000000 		.4byte	0
+ 741 000f 00000000 		.4byte	0
+ 742              	.LLST1:
+ 743 0013 06000000 		.4byte	.LVL2
+ 744 0017 1F000000 		.4byte	.LVL3-1
+ARM GAS  e:\temp\ccwJ39rO.s 			page 33
+
+
+ 745 001b 0100     		.2byte	0x1
+ 746 001d 50       		.byte	0x50
+ 747 001e 00000000 		.4byte	0
+ 748 0022 00000000 		.4byte	0
+ 749              	.LLST2:
+ 750 0026 00000000 		.4byte	.LVL4
+ 751 002a 04000000 		.4byte	.LVL5
+ 752 002e 0100     		.2byte	0x1
+ 753 0030 50       		.byte	0x50
+ 754 0031 04000000 		.4byte	.LVL5
+ 755 0035 18000000 		.4byte	.LFE2
+ 756 0039 0400     		.2byte	0x4
+ 757 003b F3       		.byte	0xf3
+ 758 003c 01       		.uleb128 0x1
+ 759 003d 50       		.byte	0x50
+ 760 003e 9F       		.byte	0x9f
+ 761 003f 00000000 		.4byte	0
+ 762 0043 00000000 		.4byte	0
+ 763              		.section	.debug_aranges,"",%progbits
+ 764 0000 2C000000 		.4byte	0x2c
+ 765 0004 0200     		.2byte	0x2
+ 766 0006 00000000 		.4byte	.Ldebug_info0
+ 767 000a 04       		.byte	0x4
+ 768 000b 00       		.byte	0
+ 769 000c 0000     		.2byte	0
+ 770 000e 0000     		.2byte	0
+ 771 0010 00000000 		.4byte	.LFB0
+ 772 0014 1C000000 		.4byte	.LFE0-.LFB0
+ 773 0018 00000000 		.4byte	.LFB1
+ 774 001c 30000000 		.4byte	.LFE1-.LFB1
+ 775 0020 00000000 		.4byte	.LFB2
+ 776 0024 18000000 		.4byte	.LFE2-.LFB2
+ 777 0028 00000000 		.4byte	0
+ 778 002c 00000000 		.4byte	0
+ 779              		.section	.debug_ranges,"",%progbits
+ 780              	.Ldebug_ranges0:
+ 781 0000 00000000 		.4byte	.LFB0
+ 782 0004 1C000000 		.4byte	.LFE0
+ 783 0008 00000000 		.4byte	.LFB1
+ 784 000c 30000000 		.4byte	.LFE1
+ 785 0010 00000000 		.4byte	.LFB2
+ 786 0014 18000000 		.4byte	.LFE2
+ 787 0018 00000000 		.4byte	0
+ 788 001c 00000000 		.4byte	0
+ 789              		.section	.debug_line,"",%progbits
+ 790              	.Ldebug_line0:
+ 791 0000 9C000000 		.section	.debug_str,"MS",%progbits,1
+ 791      02004C00 
+ 791      00000201 
+ 791      FB0E0D00 
+ 791      01010101 
+ 792              	.LASF6:
+ 793 0000 6C6F6E67 		.ascii	"long long int\000"
+ 793      206C6F6E 
+ 793      6720696E 
+ 793      7400
+ 794              	.LASF11:
+ARM GAS  e:\temp\ccwJ39rO.s 			page 34
+
+
+ 795 000e 75696E74 		.ascii	"uint32\000"
+ 795      333200
+ 796              	.LASF8:
+ 797 0015 756E7369 		.ascii	"unsigned int\000"
+ 797      676E6564 
+ 797      20696E74 
+ 797      00
+ 798              	.LASF20:
+ 799 0022 43795379 		.ascii	"CySysPmDeepSleep\000"
+ 799      73506D44 
+ 799      65657053 
+ 799      6C656570 
+ 799      00
+ 800              	.LASF26:
+ 801 0033 47656E65 		.ascii	"Generated_Source\\PSoC4\\cyPm.c\000"
+ 801      72617465 
+ 801      645F536F 
+ 801      75726365 
+ 801      5C50536F 
+ 802              	.LASF23:
+ 803 0051 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 803      74657243 
+ 803      72697469 
+ 803      63616C53 
+ 803      65637469 
+ 804              	.LASF22:
+ 805 0068 43795379 		.ascii	"CySysPmSetWakeupHoldoff\000"
+ 805      73506D53 
+ 805      65745761 
+ 805      6B657570 
+ 805      486F6C64 
+ 806              	.LASF9:
+ 807 0080 75696E74 		.ascii	"uint8\000"
+ 807      3800
+ 808              	.LASF5:
+ 809 0086 6C6F6E67 		.ascii	"long unsigned int\000"
+ 809      20756E73 
+ 809      69676E65 
+ 809      6420696E 
+ 809      7400
+ 810              	.LASF7:
+ 811 0098 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 811      206C6F6E 
+ 811      6720756E 
+ 811      7369676E 
+ 811      65642069 
+ 812              	.LASF25:
+ 813 00af 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 813      43313120 
+ 813      352E342E 
+ 813      31203230 
+ 813      31363036 
+ 814 00e2 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 814      20726576 
+ 814      6973696F 
+ 814      6E203233 
+ 814      37373135 
+ARM GAS  e:\temp\ccwJ39rO.s 			page 35
+
+
+ 815 0115 73202D66 		.ascii	"s -ffunction-sections -ffat-lto-objects -finline-fu"
+ 815      66756E63 
+ 815      74696F6E 
+ 815      2D736563 
+ 815      74696F6E 
+ 816 0148 6E637469 		.ascii	"nctions -flto -fno-strict-aliasing\000"
+ 816      6F6E7320 
+ 816      2D666C74 
+ 816      6F202D66 
+ 816      6E6F2D73 
+ 817              	.LASF12:
+ 818 016b 666C6F61 		.ascii	"float\000"
+ 818      7400
+ 819              	.LASF27:
+ 820 0171 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 820      73657273 
+ 820      5C41646D 
+ 820      696E5C44 
+ 820      65736B74 
+ 821 019e 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 821      355C4359 
+ 821      50443532 
+ 821      32352D39 
+ 821      36425A58 
+ 822 01cf 7465626F 		.ascii	"tebook.cydsn\000"
+ 822      6F6B2E63 
+ 822      7964736E 
+ 822      00
+ 823              	.LASF1:
+ 824 01dc 756E7369 		.ascii	"unsigned char\000"
+ 824      676E6564 
+ 824      20636861 
+ 824      7200
+ 825              	.LASF14:
+ 826 01ea 63686172 		.ascii	"char\000"
+ 826      00
+ 827              	.LASF4:
+ 828 01ef 6C6F6E67 		.ascii	"long int\000"
+ 828      20696E74 
+ 828      00
+ 829              	.LASF15:
+ 830 01f8 72656731 		.ascii	"reg16\000"
+ 830      3600
+ 831              	.LASF13:
+ 832 01fe 646F7562 		.ascii	"double\000"
+ 832      6C6500
+ 833              	.LASF28:
+ 834 0205 6866636C 		.ascii	"hfclkFrequencyMhz\000"
+ 834      6B467265 
+ 834      7175656E 
+ 834      63794D68 
+ 834      7A00
+ 835              	.LASF16:
+ 836 0217 72656733 		.ascii	"reg32\000"
+ 836      3200
+ 837              	.LASF3:
+ 838 021d 73686F72 		.ascii	"short unsigned int\000"
+ARM GAS  e:\temp\ccwJ39rO.s 			page 36
+
+
+ 838      7420756E 
+ 838      7369676E 
+ 838      65642069 
+ 838      6E7400
+ 839              	.LASF0:
+ 840 0230 7369676E 		.ascii	"signed char\000"
+ 840      65642063 
+ 840      68617200 
+ 841              	.LASF19:
+ 842 023c 43795379 		.ascii	"CySysPmSleep\000"
+ 842      73506D53 
+ 842      6C656570 
+ 842      00
+ 843              	.LASF24:
+ 844 0249 43794578 		.ascii	"CyExitCriticalSection\000"
+ 844      69744372 
+ 844      69746963 
+ 844      616C5365 
+ 844      6374696F 
+ 845              	.LASF17:
+ 846 025f 6C6F6E67 		.ascii	"long double\000"
+ 846      20646F75 
+ 846      626C6500 
+ 847              	.LASF2:
+ 848 026b 73686F72 		.ascii	"short int\000"
+ 848      7420696E 
+ 848      7400
+ 849              	.LASF10:
+ 850 0275 75696E74 		.ascii	"uint16\000"
+ 850      313600
+ 851              	.LASF18:
+ 852 027c 73697A65 		.ascii	"sizetype\000"
+ 852      74797065 
+ 852      00
+ 853              	.LASF21:
+ 854 0285 696E7465 		.ascii	"interruptState\000"
+ 854      72727570 
+ 854      74537461 
+ 854      746500
+ 855              		.comm	__gnu_lto_v1,1,1
+ 856              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

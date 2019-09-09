@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="catalogschema.xsd">
+  <CatalogVersion CurrentVersion="21.106.0.104" Format="0" MinimumVersion="21.106.0.104"/>
+<PrerequisiteInfo>
+</PrerequisiteInfo>
+    <VenderInfo Name="Cypress">
+      <Description>
+	The complete PSoC Programmer package includes:&lt;br&gt;
+        -PSoC Programmer.&lt;br&gt;
+        -Clock Programmer to configure Cypress clock devices.&lt;br&gt;
+        -USB Bootloader application which supports USB Bootloader User Module.&lt;br&gt;
+        -Bridge Control Panel which supports serial bridging capability.&lt;br&gt;
+        -Programmer COM code examples.&lt;br&gt;
+	-Device Database.&lt;br&gt;
+</Description>
+    </VenderInfo>
+  <ProductInfo Name="PSoC Programmer">{DA516B86-CA87-42D0-8959-D8CE5D088E8C}</ProductInfo>
+    <Licenses>
+      <License Name="eula" URL="eula.htm"/>
+    </Licenses>
+  <Releases>
+    <Release Name="PSoC Programmer 3.27.1" date="2018-01-31T01:58:04" ID="3121" URL=""/>
+  </Releases>
+  <Package Name="PSoC Programmer 3.10" Typical="true" PackageID="0" Mandatory="true">
+    <Description>PSoC Programmer GUI and PP COM</Description>
+    <LicenseRequirement Name="eula" />
+    <Version Name="PSoC Programmer 3.27.1 (3121)" Number="3.27.1.3121" URL="PSoCProgrammer3.27.1.3121.msi" Size="29338820">
+      <ChangeLog>3.27.1 Release Build 3121 &lt;P&gt;Built on Wed Jan 31 01:58:04 2018</ChangeLog>
+      <release>3121</release>
+    </Version>
+  </Package>
+  <Package Name="Clock Programmer" Typical="true" PackageID="1" Mandatory="true">
+    <Description>
+	Clock Programmer to configure Cypress clock devices.
+    </Description>
+    <DependentOn>
+      <DepPackage Name="PSoC Programmer 3.10" />
+    </DependentOn>
+    <Version Name="Clock Programmer 1.8.0 (3121)" Number="3.27.1.3121" URL="ClockProgrammer1.8.0.3121.msi" Size="584192">
+      <ChangeLog>3.27.1 Release Build 3121 &lt;P&gt;Built on Wed Jan 31 01:58:03 2018</ChangeLog>
+      <release>3121</release>
+    </Version>
+  </Package>
+  <Package Name="USB Bootloader" Typical="true" PackageID="2" Mandatory="false">
+    <Description>
+	USB Bootloader Application which supports USB Bootloader User Module.
+    </Description>
+    <DependentOn>
+      <DepPackage Name="PSoC Programmer 3.10" />
+    </DependentOn>
+    <Version Name="USB Bootloader Application (3121)" Number="3.27.1.3121" URL="USBBootloader.3121.msi" Size="786432">
+      <ChangeLog>3.27.1 Release Build 3121 &lt;P&gt;Built on Wed Jan 31 01:58:04 2018</ChangeLog>
+      <release>3121</release>
+    </Version>
+  </Package>
+  <Package Name="Bridge Control Panel" Typical="true" PackageID="3" Mandatory="true">
+    <Description>
+	Bridge Control Panel which supports serial bridging capability.
+    </Description>
+    <DependentOn>
+      <DepPackage Name="PSoC Programmer 3.10" />
+    </DependentOn>
+    <Version Name="Bridge Control Panel 1.18.0 (3121)" Number="3.27.1.3121" URL="BridgeControlPanel1.18.0.3121.msi" Size="7486464">
+      <ChangeLog>3.27.1 Release Build 3121 &lt;P&gt;Built on Wed Jan 31 01:58:02 2018</ChangeLog>
+      <release>3121</release>
+    </Version>
+  </Package>
+  <Package Name="Example Code" Typical="true" PackageID="4" Mandatory="false">
+    <Description>
+	Programmer COM code examples.
+    </Description>
+    <DependentOn>
+      <DepPackage Name="PSoC Programmer 3.10" />
+    </DependentOn>
+    <Version Name="Example Code (3121)" Number="3.27.1.3121" URL="ExampleCode.3121.msi" Size="1076736">
+      <ChangeLog>3.27.1 Release Build 3121 &lt;P&gt;Built on Wed Jan 31 01:58:03 2018</ChangeLog>
+      <release>3121</release>
+    </Version>
+  </Package>
+  <Package Name="Device Database" Typical="true" PackageID="5" Mandatory="true">
+    <Description>
+	Device Database.
+    </Description>
+    <DependentOn>
+      <DepPackage Name="PSoC Programmer 3.10" />
+    </DependentOn>
+    <Version Name="Device Database (3121)" Number="3.27.1.3121" URL="DeviceDatabase.3121.msi" Size="596992">
+      <ChangeLog>3.27.1 Release Build 3121 &lt;P&gt;Built on Wed Jan 31 01:58:03 2018</ChangeLog>
+      <release>3121</release>
+    </Version>
+  </Package>
+</Catalog>

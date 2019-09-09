@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="catalogschema.xsd">
+  <CatalogVersion CurrentVersion="21.101.245.8" Format="0" MinimumVersion="21.101.245.8"/>
+<PrerequisiteInfo>
+</PrerequisiteInfo>
+    <VenderInfo Name="Cypress">
+      <Description>
+	
+	EZ-PD Configuration Utility is a GUI based Microsoft Windows application developed by Cypress to guide a CCGx user through the process of configuring and programming the chip. The utility allows users to:
+1. Select and configure the parameters they want to modify
+2. Program the resulting configuration onto the target CCGx device.&lt;P&gt;
+     </Description>
+    </VenderInfo>
+  <ProductInfo Name="EZ-PD Configuration Utility">{4E4F3A84-A275-4ADD-82FC-D18A670D3D6B}</ProductInfo>
+    <Licenses>
+      <License Name="eula" URL="eula.htm"/>
+    </Licenses>
+  <Releases>
+    <Release Name="EZ-PD Configuration Utility 1.1" date="2016-03-14T11:23:18" ID="188" URL=""/>
+  </Releases>
+  <Package Name="EZ-PD Configuration Utility" Typical="true" PackageID="0" Mandatory="true">
+    <Description>
+	EZ-PD Configuration Utility is a GUI based Microsoft Windows application developed by Cypress to guide a CCGx user through the process of configuring and programming the chip. The utility allows users to:
+1. Select and configure the parameters they want to modify
+2. Program the resulting configuration onto the target CCGx device.&lt;P&gt;
+	&lt;P&gt;
+    </Description>
+    <LicenseRequirement Name="eula" />
+    <Version Name="EZ-PD Configuration Utility 1.1" Number="1.1.0.188" URL="EZ-PD_Configuration_Utility.msi" Size="57654272">
+      <ChangeLog>Version 1.1 Build 188 &lt;P&gt;Built on Mon Mar 14 11:23:18 2016</ChangeLog>
+      <release>188</release>
+    </Version>
+  </Package>
+</Catalog>

@@ -1,0 +1,9 @@
+C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\CYPD5225-96BZXI_notebook.cyprj|15f1040a-959d-4131-b78d-b814b1774bdb
+E:\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|257d042e-9655-4f7c-bed7-7a49590c5500
+C:\Users\Admin\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|4fcb9bc2-5912-4961-b92d-fe666e826bc9
+C:\Users\Admin\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\Downloads ( 4.1).cyprj|769f1bee-49a0-4811-ab87-6b070044354a
+E:\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|9e5a36b8-6567-40ea-91aa-0713545f6667
+E:\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|0ab20b98-c576-46fa-bb55-a6287315ccf1
+E:\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|4b9ce9e6-9dfb-4943-8d5c-a59df2fa2291
+C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\backup_fw.cydsn\backup_fw.cyprj|3f8fb025-9a19-4f00-b56f-f09596b9a0fb
+C:\Users\Admin\Desktop\_FIRMWARE\DBARLite\CYPD5225\CYPD5225-96BZXI_notebook\CYPD5225-96BZXI_notebook.cydsn\noboot.cydsn\noboot.cyprj|d82d96fd-514b-4a12-a25f-f40fff24952d

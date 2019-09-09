@@ -1,0 +1,2954 @@
+ARM GAS  e:\temp\ccmqioMm.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"config.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.get_pd_config,"ax",%progbits
+  20              		.align	2
+  21              		.global	get_pd_config
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	get_pd_config, %function
+  25              	get_pd_config:
+  26              	.LFB32:
+  27              		.file 1 "..\\common\\config.c"
+   1:..\common/config.c **** /**
+   2:..\common/config.c ****  * @file DBARLite.c
+   3:..\common/config.c ****  *
+   4:..\common/config.c ****  * @brief Contains the CCG device configuration information. Please refer to
+   5:..\common/config.c ****  * the firmware documentation and the EZ-PD Configuration Utility for details
+   6:..\common/config.c ****  * of the configuration table.
+   7:..\common/config.c ****  *
+   8:..\common/config.c ****  *******************************************************************************
+   9:..\common/config.c ****  * @copyright
+  10:..\common/config.c ****  *
+  11:..\common/config.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+  12:..\common/config.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  13:..\common/config.c ****  *
+  14:..\common/config.c ****  * This software, including source code, documentation and related materials
+  15:..\common/config.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  16:..\common/config.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  17:..\common/config.c ****  * protection (United States and foreign), United States copyright laws and
+  18:..\common/config.c ****  * international treaty provisions. Therefore, you may use this Software only
+  19:..\common/config.c ****  * as provided in the license agreement accompanying the software package from
+  20:..\common/config.c ****  * which you obtained this Software (“EULA”).
+  21:..\common/config.c ****  *
+  22:..\common/config.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  23:..\common/config.c ****  * non-transferable license to copy, modify, and compile the Software source
+  24:..\common/config.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  25:..\common/config.c ****  * products. Any reproduction, modification, translation, compilation, or
+  26:..\common/config.c ****  * representation of this Software except as specified above is prohibited
+  27:..\common/config.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  28:..\common/config.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  29:..\common/config.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  30:..\common/config.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+ARM GAS  e:\temp\ccmqioMm.s 			page 2
+
+
+  31:..\common/config.c ****  * right to make changes to the Software without notice. Cypress does not
+  32:..\common/config.c ****  * assume any liability arising out of the application or use of the Software
+  33:..\common/config.c ****  * or any product or circuit described in the Software. Cypress does not
+  34:..\common/config.c ****  * authorize its products for use in any products where a malfunction or
+  35:..\common/config.c ****  * failure of the Cypress product may reasonably be expected to result in
+  36:..\common/config.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  37:..\common/config.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  38:..\common/config.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  39:..\common/config.c ****  * indemnify Cypress against all liability.
+  40:..\common/config.c ****  */
+  41:..\common/config.c **** 
+  42:..\common/config.c **** #include <project.h>
+  43:..\common/config.c **** #include <pd.h>
+  44:..\common/config.c **** 
+  45:..\common/config.c **** /*
+  46:..\common/config.c ****    The config table should be placed in the "configSection" so that the update
+  47:..\common/config.c ****    tools can correctly retrieve the data.
+  48:..\common/config.c **** */
+  49:..\common/config.c **** const unsigned char __attribute__ ((section (".configSection"), used)) gl_config_table[0x400] =
+  50:..\common/config.c **** {
+  51:..\common/config.c **** 	0x59,0x43,0x00,0x00,0x01,0x20,0x00,0x04,0x47,0x3F,0x00,0x00,0x00,0x00,0x02,0x00,
+  52:..\common/config.c **** 	0x00,0x02,0x0B,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  53:..\common/config.c **** 	0x0C,0x02,0x18,0x00,0x24,0x02,0x0C,0x00,0x30,0x02,0x0C,0x00,0x3C,0x02,0x18,0x00,
+  54:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  55:..\common/config.c **** 	0x01,0x01,0x02,0x00,0x00,0x00,0x01,0x0C,0x00,0x01,0x81,0x00,0x00,0x07,0x01,0x00,
+  56:..\common/config.c **** 	0x01,0x01,0x01,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  57:..\common/config.c **** 	0x2C,0x91,0x01,0x05,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  58:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  59:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  60:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  61:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x13,0x00,0x54,0x02,0x58,0x02,0x00,0x00,
+  62:..\common/config.c **** 	0x00,0x00,0x60,0x02,0x00,0x00,0x00,0x00,0x64,0x02,0x00,0x00,0x00,0x00,0x00,0x00,
+  63:..\common/config.c **** 	0x3C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  64:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  65:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  66:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  67:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  68:..\common/config.c **** 	0x7C,0x02,0x18,0x00,0x94,0x02,0x0C,0x00,0xA0,0x02,0x0C,0x00,0xAC,0x02,0x18,0x00,
+  69:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  70:..\common/config.c **** 	0x02,0x01,0x02,0x00,0x00,0x00,0x01,0x00,0x01,0x04,0x0F,0x02,0x03,0x07,0x01,0x01,
+  71:..\common/config.c **** 	0x01,0x01,0x01,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  72:..\common/config.c **** 	0x2C,0x91,0x01,0x27,0x2C,0xD1,0x02,0x00,0x2C,0xB1,0x04,0x00,0x2C,0x41,0x06,0x00,
+  73:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x5A,0x90,0x01,0x26,
+  74:..\common/config.c **** 	0x5A,0x30,0x42,0x9A,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  75:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x5A,0x00,0x5A,0x00,0x00,0x00,0x00,0x00,
+  76:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x13,0x00,0xC4,0x02,0xC8,0x02,0x00,0x00,
+  77:..\common/config.c **** 	0x00,0x00,0xD0,0x02,0x00,0x00,0x00,0x00,0xD4,0x02,0x00,0x00,0x00,0x00,0x00,0x00,
+  78:..\common/config.c **** 	0x3C,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  79:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  80:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  81:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  82:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  83:..\common/config.c **** 	0xB4,0x04,0xE0,0xF6,0x43,0x79,0x70,0x72,0x65,0x73,0x73,0x00,0x18,0x00,0x00,0x00,
+  84:..\common/config.c **** 	0x41,0xA0,0x00,0xFF,0xB4,0x04,0x00,0xAE,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0xF6,
+  85:..\common/config.c **** 	0x02,0x00,0x00,0x00,0x0C,0x00,0x00,0x00,0x42,0xA0,0x00,0xFF,0x00,0x00,0x87,0x80,
+  86:..\common/config.c **** 	0x0C,0x00,0x00,0x00,0x43,0xA0,0x87,0x80,0x01,0x00,0x00,0x00,0xB4,0x04,0xE0,0xF6,
+  87:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x01,0x01,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x00,0x00,0x00,
+ARM GAS  e:\temp\ccmqioMm.s 			page 3
+
+
+  88:..\common/config.c **** 	0x00,0x01,0x00,0x3C,0x04,0x14,0x0A,0x02,0x08,0x14,0x0A,0x02,0x32,0x01,0x00,0x00,
+  89:..\common/config.c **** 	0x04,0x1E,0x01,0x00,0x18,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  90:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x00,0x00,0x00,
+  91:..\common/config.c **** 	0x41,0xA0,0x00,0xFF,0xB4,0x04,0x00,0xAE,0x00,0x00,0x00,0x00,0x00,0x00,0xE0,0xF6,
+  92:..\common/config.c **** 	0x0A,0x00,0x00,0x00,0x0C,0x00,0x00,0x00,0x42,0xA0,0x00,0xFF,0x00,0x00,0x87,0x80,
+  93:..\common/config.c **** 	0x0C,0x00,0x00,0x00,0x43,0xA0,0x87,0x80,0x01,0x00,0x00,0x00,0xB4,0x04,0xE0,0xF6,
+  94:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x01,0x01,0x00,0x00,0x00,0x02,0x00,0x00,0x00,0x00,0x00,0x00,
+  95:..\common/config.c **** 	0x00,0x01,0x00,0x3C,0x04,0x14,0x0A,0x02,0x08,0x14,0x0A,0x02,0x32,0x01,0x00,0x00,
+  96:..\common/config.c **** 	0x04,0x1E,0x01,0x00,0x18,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  97:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  98:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  99:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 100:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 101:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 102:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 103:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 104:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 105:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 106:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 107:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 108:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 109:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 110:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 111:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 112:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 113:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+ 114:..\common/config.c **** 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+ 115:..\common/config.c **** };
+ 116:..\common/config.c **** 
+ 117:..\common/config.c **** const pd_config_t * get_pd_config(void)
+ 118:..\common/config.c **** {
+  28              		.loc 1 118 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 119:..\common/config.c ****     return (pd_config_t *)&gl_config_table;
+ 120:..\common/config.c **** }
+  33              		.loc 1 120 0
+  34 0000 0048     		ldr	r0, .L2
+  35              		@ sp needed
+  36 0002 7047     		bx	lr
+  37              	.L3:
+  38              		.align	2
+  39              	.L2:
+  40 0004 00000000 		.word	.LANCHOR0
+  41              		.cfi_endproc
+  42              	.LFE32:
+  43              		.size	get_pd_config, .-get_pd_config
+  44              		.section	.text.get_pd_port_config,"ax",%progbits
+  45              		.align	2
+  46              		.global	get_pd_port_config
+  47              		.code	16
+  48              		.thumb_func
+  49              		.type	get_pd_port_config, %function
+  50              	get_pd_port_config:
+  51              	.LFB33:
+ARM GAS  e:\temp\ccmqioMm.s 			page 4
+
+
+ 121:..\common/config.c **** 
+ 122:..\common/config.c **** const pd_port_config_t * get_pd_port_config(uint8_t port)
+ 123:..\common/config.c **** {
+  52              		.loc 1 123 0
+  53              		.cfi_startproc
+  54              		@ args = 0, pretend = 0, frame = 0
+  55              		@ frame_needed = 0, uses_anonymous_args = 0
+  56              		@ link register save eliminated.
+  57              	.LVL0:
+ 124:..\common/config.c ****     return (pd_port_config_t *)&(((pd_config_t *)gl_config_table)->port_conf[port]);
+  58              		.loc 1 124 0
+  59 0000 0301     		lsls	r3, r0, #4
+  60 0002 1B1A     		subs	r3, r3, r0
+  61 0004 1801     		lsls	r0, r3, #4
+  62              	.LVL1:
+  63 0006 2030     		adds	r0, r0, #32
+  64 0008 014B     		ldr	r3, .L5
+  65 000a 1818     		adds	r0, r3, r0
+ 125:..\common/config.c **** }
+  66              		.loc 1 125 0
+  67              		@ sp needed
+  68 000c 7047     		bx	lr
+  69              	.L6:
+  70 000e C046     		.align	2
+  71              	.L5:
+  72 0010 00000000 		.word	.LANCHOR0
+  73              		.cfi_endproc
+  74              	.LFE33:
+  75              		.size	get_pd_port_config, .-get_pd_port_config
+  76              		.global	gl_config_table
+  77              		.section	.configSection,"a",%progbits
+  78              		.align	2
+  79              		.set	.LANCHOR0,. + 0
+  80              		.type	gl_config_table, %object
+  81              		.size	gl_config_table, 1024
+  82              	gl_config_table:
+  83 0000 59       		.byte	89
+  84 0001 43       		.byte	67
+  85 0002 00       		.byte	0
+  86 0003 00       		.byte	0
+  87 0004 01       		.byte	1
+  88 0005 20       		.byte	32
+  89 0006 00       		.byte	0
+  90 0007 04       		.byte	4
+  91 0008 47       		.byte	71
+  92 0009 3F       		.byte	63
+  93 000a 00       		.byte	0
+  94 000b 00       		.byte	0
+  95 000c 00       		.byte	0
+  96 000d 00       		.byte	0
+  97 000e 02       		.byte	2
+  98 000f 00       		.byte	0
+  99 0010 00       		.byte	0
+ 100 0011 02       		.byte	2
+ 101 0012 0B       		.byte	11
+ 102 0013 00       		.byte	0
+ 103 0014 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 5
+
+
+ 104 0015 00       		.byte	0
+ 105 0016 00       		.byte	0
+ 106 0017 00       		.byte	0
+ 107 0018 00       		.byte	0
+ 108 0019 00       		.byte	0
+ 109 001a 00       		.byte	0
+ 110 001b 00       		.byte	0
+ 111 001c 00       		.byte	0
+ 112 001d 00       		.byte	0
+ 113 001e 00       		.byte	0
+ 114 001f 00       		.byte	0
+ 115 0020 0C       		.byte	12
+ 116 0021 02       		.byte	2
+ 117 0022 18       		.byte	24
+ 118 0023 00       		.byte	0
+ 119 0024 24       		.byte	36
+ 120 0025 02       		.byte	2
+ 121 0026 0C       		.byte	12
+ 122 0027 00       		.byte	0
+ 123 0028 30       		.byte	48
+ 124 0029 02       		.byte	2
+ 125 002a 0C       		.byte	12
+ 126 002b 00       		.byte	0
+ 127 002c 3C       		.byte	60
+ 128 002d 02       		.byte	2
+ 129 002e 18       		.byte	24
+ 130 002f 00       		.byte	0
+ 131 0030 00       		.byte	0
+ 132 0031 00       		.byte	0
+ 133 0032 00       		.byte	0
+ 134 0033 00       		.byte	0
+ 135 0034 00       		.byte	0
+ 136 0035 00       		.byte	0
+ 137 0036 00       		.byte	0
+ 138 0037 00       		.byte	0
+ 139 0038 00       		.byte	0
+ 140 0039 00       		.byte	0
+ 141 003a 00       		.byte	0
+ 142 003b 00       		.byte	0
+ 143 003c 00       		.byte	0
+ 144 003d 00       		.byte	0
+ 145 003e 00       		.byte	0
+ 146 003f 00       		.byte	0
+ 147 0040 01       		.byte	1
+ 148 0041 01       		.byte	1
+ 149 0042 02       		.byte	2
+ 150 0043 00       		.byte	0
+ 151 0044 00       		.byte	0
+ 152 0045 00       		.byte	0
+ 153 0046 01       		.byte	1
+ 154 0047 0C       		.byte	12
+ 155 0048 00       		.byte	0
+ 156 0049 01       		.byte	1
+ 157 004a 81       		.byte	-127
+ 158 004b 00       		.byte	0
+ 159 004c 00       		.byte	0
+ 160 004d 07       		.byte	7
+ARM GAS  e:\temp\ccmqioMm.s 			page 6
+
+
+ 161 004e 01       		.byte	1
+ 162 004f 00       		.byte	0
+ 163 0050 01       		.byte	1
+ 164 0051 01       		.byte	1
+ 165 0052 01       		.byte	1
+ 166 0053 00       		.byte	0
+ 167 0054 01       		.byte	1
+ 168 0055 00       		.byte	0
+ 169 0056 00       		.byte	0
+ 170 0057 00       		.byte	0
+ 171 0058 00       		.byte	0
+ 172 0059 00       		.byte	0
+ 173 005a 00       		.byte	0
+ 174 005b 00       		.byte	0
+ 175 005c 00       		.byte	0
+ 176 005d 00       		.byte	0
+ 177 005e 00       		.byte	0
+ 178 005f 00       		.byte	0
+ 179 0060 2C       		.byte	44
+ 180 0061 91       		.byte	-111
+ 181 0062 01       		.byte	1
+ 182 0063 05       		.byte	5
+ 183 0064 00       		.byte	0
+ 184 0065 00       		.byte	0
+ 185 0066 00       		.byte	0
+ 186 0067 00       		.byte	0
+ 187 0068 00       		.byte	0
+ 188 0069 00       		.byte	0
+ 189 006a 00       		.byte	0
+ 190 006b 00       		.byte	0
+ 191 006c 00       		.byte	0
+ 192 006d 00       		.byte	0
+ 193 006e 00       		.byte	0
+ 194 006f 00       		.byte	0
+ 195 0070 00       		.byte	0
+ 196 0071 00       		.byte	0
+ 197 0072 00       		.byte	0
+ 198 0073 00       		.byte	0
+ 199 0074 00       		.byte	0
+ 200 0075 00       		.byte	0
+ 201 0076 00       		.byte	0
+ 202 0077 00       		.byte	0
+ 203 0078 00       		.byte	0
+ 204 0079 00       		.byte	0
+ 205 007a 00       		.byte	0
+ 206 007b 00       		.byte	0
+ 207 007c 00       		.byte	0
+ 208 007d 00       		.byte	0
+ 209 007e 00       		.byte	0
+ 210 007f 00       		.byte	0
+ 211 0080 00       		.byte	0
+ 212 0081 00       		.byte	0
+ 213 0082 00       		.byte	0
+ 214 0083 00       		.byte	0
+ 215 0084 00       		.byte	0
+ 216 0085 00       		.byte	0
+ 217 0086 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 7
+
+
+ 218 0087 00       		.byte	0
+ 219 0088 00       		.byte	0
+ 220 0089 00       		.byte	0
+ 221 008a 00       		.byte	0
+ 222 008b 00       		.byte	0
+ 223 008c 00       		.byte	0
+ 224 008d 00       		.byte	0
+ 225 008e 00       		.byte	0
+ 226 008f 00       		.byte	0
+ 227 0090 00       		.byte	0
+ 228 0091 00       		.byte	0
+ 229 0092 00       		.byte	0
+ 230 0093 00       		.byte	0
+ 231 0094 00       		.byte	0
+ 232 0095 00       		.byte	0
+ 233 0096 00       		.byte	0
+ 234 0097 00       		.byte	0
+ 235 0098 00       		.byte	0
+ 236 0099 00       		.byte	0
+ 237 009a 00       		.byte	0
+ 238 009b 00       		.byte	0
+ 239 009c 00       		.byte	0
+ 240 009d 00       		.byte	0
+ 241 009e 00       		.byte	0
+ 242 009f 00       		.byte	0
+ 243 00a0 00       		.byte	0
+ 244 00a1 00       		.byte	0
+ 245 00a2 00       		.byte	0
+ 246 00a3 00       		.byte	0
+ 247 00a4 00       		.byte	0
+ 248 00a5 00       		.byte	0
+ 249 00a6 00       		.byte	0
+ 250 00a7 00       		.byte	0
+ 251 00a8 13       		.byte	19
+ 252 00a9 00       		.byte	0
+ 253 00aa 54       		.byte	84
+ 254 00ab 02       		.byte	2
+ 255 00ac 58       		.byte	88
+ 256 00ad 02       		.byte	2
+ 257 00ae 00       		.byte	0
+ 258 00af 00       		.byte	0
+ 259 00b0 00       		.byte	0
+ 260 00b1 00       		.byte	0
+ 261 00b2 60       		.byte	96
+ 262 00b3 02       		.byte	2
+ 263 00b4 00       		.byte	0
+ 264 00b5 00       		.byte	0
+ 265 00b6 00       		.byte	0
+ 266 00b7 00       		.byte	0
+ 267 00b8 64       		.byte	100
+ 268 00b9 02       		.byte	2
+ 269 00ba 00       		.byte	0
+ 270 00bb 00       		.byte	0
+ 271 00bc 00       		.byte	0
+ 272 00bd 00       		.byte	0
+ 273 00be 00       		.byte	0
+ 274 00bf 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 8
+
+
+ 275 00c0 3C       		.byte	60
+ 276 00c1 00       		.byte	0
+ 277 00c2 00       		.byte	0
+ 278 00c3 00       		.byte	0
+ 279 00c4 00       		.byte	0
+ 280 00c5 00       		.byte	0
+ 281 00c6 00       		.byte	0
+ 282 00c7 00       		.byte	0
+ 283 00c8 00       		.byte	0
+ 284 00c9 00       		.byte	0
+ 285 00ca 00       		.byte	0
+ 286 00cb 00       		.byte	0
+ 287 00cc 00       		.byte	0
+ 288 00cd 00       		.byte	0
+ 289 00ce 00       		.byte	0
+ 290 00cf 00       		.byte	0
+ 291 00d0 00       		.byte	0
+ 292 00d1 00       		.byte	0
+ 293 00d2 00       		.byte	0
+ 294 00d3 00       		.byte	0
+ 295 00d4 00       		.byte	0
+ 296 00d5 00       		.byte	0
+ 297 00d6 00       		.byte	0
+ 298 00d7 00       		.byte	0
+ 299 00d8 00       		.byte	0
+ 300 00d9 00       		.byte	0
+ 301 00da 00       		.byte	0
+ 302 00db 00       		.byte	0
+ 303 00dc 00       		.byte	0
+ 304 00dd 00       		.byte	0
+ 305 00de 00       		.byte	0
+ 306 00df 00       		.byte	0
+ 307 00e0 00       		.byte	0
+ 308 00e1 00       		.byte	0
+ 309 00e2 00       		.byte	0
+ 310 00e3 00       		.byte	0
+ 311 00e4 00       		.byte	0
+ 312 00e5 00       		.byte	0
+ 313 00e6 00       		.byte	0
+ 314 00e7 00       		.byte	0
+ 315 00e8 00       		.byte	0
+ 316 00e9 00       		.byte	0
+ 317 00ea 00       		.byte	0
+ 318 00eb 00       		.byte	0
+ 319 00ec 00       		.byte	0
+ 320 00ed 00       		.byte	0
+ 321 00ee 00       		.byte	0
+ 322 00ef 00       		.byte	0
+ 323 00f0 00       		.byte	0
+ 324 00f1 00       		.byte	0
+ 325 00f2 00       		.byte	0
+ 326 00f3 00       		.byte	0
+ 327 00f4 00       		.byte	0
+ 328 00f5 00       		.byte	0
+ 329 00f6 00       		.byte	0
+ 330 00f7 00       		.byte	0
+ 331 00f8 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 9
+
+
+ 332 00f9 00       		.byte	0
+ 333 00fa 00       		.byte	0
+ 334 00fb 00       		.byte	0
+ 335 00fc 00       		.byte	0
+ 336 00fd 00       		.byte	0
+ 337 00fe 00       		.byte	0
+ 338 00ff 00       		.byte	0
+ 339 0100 00       		.byte	0
+ 340 0101 00       		.byte	0
+ 341 0102 00       		.byte	0
+ 342 0103 00       		.byte	0
+ 343 0104 00       		.byte	0
+ 344 0105 00       		.byte	0
+ 345 0106 00       		.byte	0
+ 346 0107 00       		.byte	0
+ 347 0108 00       		.byte	0
+ 348 0109 00       		.byte	0
+ 349 010a 00       		.byte	0
+ 350 010b 00       		.byte	0
+ 351 010c 00       		.byte	0
+ 352 010d 00       		.byte	0
+ 353 010e 00       		.byte	0
+ 354 010f 00       		.byte	0
+ 355 0110 7C       		.byte	124
+ 356 0111 02       		.byte	2
+ 357 0112 18       		.byte	24
+ 358 0113 00       		.byte	0
+ 359 0114 94       		.byte	-108
+ 360 0115 02       		.byte	2
+ 361 0116 0C       		.byte	12
+ 362 0117 00       		.byte	0
+ 363 0118 A0       		.byte	-96
+ 364 0119 02       		.byte	2
+ 365 011a 0C       		.byte	12
+ 366 011b 00       		.byte	0
+ 367 011c AC       		.byte	-84
+ 368 011d 02       		.byte	2
+ 369 011e 18       		.byte	24
+ 370 011f 00       		.byte	0
+ 371 0120 00       		.byte	0
+ 372 0121 00       		.byte	0
+ 373 0122 00       		.byte	0
+ 374 0123 00       		.byte	0
+ 375 0124 00       		.byte	0
+ 376 0125 00       		.byte	0
+ 377 0126 00       		.byte	0
+ 378 0127 00       		.byte	0
+ 379 0128 00       		.byte	0
+ 380 0129 00       		.byte	0
+ 381 012a 00       		.byte	0
+ 382 012b 00       		.byte	0
+ 383 012c 00       		.byte	0
+ 384 012d 00       		.byte	0
+ 385 012e 00       		.byte	0
+ 386 012f 00       		.byte	0
+ 387 0130 02       		.byte	2
+ 388 0131 01       		.byte	1
+ARM GAS  e:\temp\ccmqioMm.s 			page 10
+
+
+ 389 0132 02       		.byte	2
+ 390 0133 00       		.byte	0
+ 391 0134 00       		.byte	0
+ 392 0135 00       		.byte	0
+ 393 0136 01       		.byte	1
+ 394 0137 00       		.byte	0
+ 395 0138 01       		.byte	1
+ 396 0139 04       		.byte	4
+ 397 013a 0F       		.byte	15
+ 398 013b 02       		.byte	2
+ 399 013c 03       		.byte	3
+ 400 013d 07       		.byte	7
+ 401 013e 01       		.byte	1
+ 402 013f 01       		.byte	1
+ 403 0140 01       		.byte	1
+ 404 0141 01       		.byte	1
+ 405 0142 01       		.byte	1
+ 406 0143 00       		.byte	0
+ 407 0144 01       		.byte	1
+ 408 0145 00       		.byte	0
+ 409 0146 00       		.byte	0
+ 410 0147 00       		.byte	0
+ 411 0148 00       		.byte	0
+ 412 0149 00       		.byte	0
+ 413 014a 00       		.byte	0
+ 414 014b 00       		.byte	0
+ 415 014c 00       		.byte	0
+ 416 014d 00       		.byte	0
+ 417 014e 00       		.byte	0
+ 418 014f 00       		.byte	0
+ 419 0150 2C       		.byte	44
+ 420 0151 91       		.byte	-111
+ 421 0152 01       		.byte	1
+ 422 0153 27       		.byte	39
+ 423 0154 2C       		.byte	44
+ 424 0155 D1       		.byte	-47
+ 425 0156 02       		.byte	2
+ 426 0157 00       		.byte	0
+ 427 0158 2C       		.byte	44
+ 428 0159 B1       		.byte	-79
+ 429 015a 04       		.byte	4
+ 430 015b 00       		.byte	0
+ 431 015c 2C       		.byte	44
+ 432 015d 41       		.byte	65
+ 433 015e 06       		.byte	6
+ 434 015f 00       		.byte	0
+ 435 0160 00       		.byte	0
+ 436 0161 00       		.byte	0
+ 437 0162 00       		.byte	0
+ 438 0163 00       		.byte	0
+ 439 0164 00       		.byte	0
+ 440 0165 00       		.byte	0
+ 441 0166 00       		.byte	0
+ 442 0167 00       		.byte	0
+ 443 0168 00       		.byte	0
+ 444 0169 00       		.byte	0
+ 445 016a 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 11
+
+
+ 446 016b 00       		.byte	0
+ 447 016c 5A       		.byte	90
+ 448 016d 90       		.byte	-112
+ 449 016e 01       		.byte	1
+ 450 016f 26       		.byte	38
+ 451 0170 5A       		.byte	90
+ 452 0171 30       		.byte	48
+ 453 0172 42       		.byte	66
+ 454 0173 9A       		.byte	-102
+ 455 0174 00       		.byte	0
+ 456 0175 00       		.byte	0
+ 457 0176 00       		.byte	0
+ 458 0177 00       		.byte	0
+ 459 0178 00       		.byte	0
+ 460 0179 00       		.byte	0
+ 461 017a 00       		.byte	0
+ 462 017b 00       		.byte	0
+ 463 017c 00       		.byte	0
+ 464 017d 00       		.byte	0
+ 465 017e 00       		.byte	0
+ 466 017f 00       		.byte	0
+ 467 0180 00       		.byte	0
+ 468 0181 00       		.byte	0
+ 469 0182 00       		.byte	0
+ 470 0183 00       		.byte	0
+ 471 0184 00       		.byte	0
+ 472 0185 00       		.byte	0
+ 473 0186 00       		.byte	0
+ 474 0187 00       		.byte	0
+ 475 0188 5A       		.byte	90
+ 476 0189 00       		.byte	0
+ 477 018a 5A       		.byte	90
+ 478 018b 00       		.byte	0
+ 479 018c 00       		.byte	0
+ 480 018d 00       		.byte	0
+ 481 018e 00       		.byte	0
+ 482 018f 00       		.byte	0
+ 483 0190 00       		.byte	0
+ 484 0191 00       		.byte	0
+ 485 0192 00       		.byte	0
+ 486 0193 00       		.byte	0
+ 487 0194 00       		.byte	0
+ 488 0195 00       		.byte	0
+ 489 0196 00       		.byte	0
+ 490 0197 00       		.byte	0
+ 491 0198 13       		.byte	19
+ 492 0199 00       		.byte	0
+ 493 019a C4       		.byte	-60
+ 494 019b 02       		.byte	2
+ 495 019c C8       		.byte	-56
+ 496 019d 02       		.byte	2
+ 497 019e 00       		.byte	0
+ 498 019f 00       		.byte	0
+ 499 01a0 00       		.byte	0
+ 500 01a1 00       		.byte	0
+ 501 01a2 D0       		.byte	-48
+ 502 01a3 02       		.byte	2
+ARM GAS  e:\temp\ccmqioMm.s 			page 12
+
+
+ 503 01a4 00       		.byte	0
+ 504 01a5 00       		.byte	0
+ 505 01a6 00       		.byte	0
+ 506 01a7 00       		.byte	0
+ 507 01a8 D4       		.byte	-44
+ 508 01a9 02       		.byte	2
+ 509 01aa 00       		.byte	0
+ 510 01ab 00       		.byte	0
+ 511 01ac 00       		.byte	0
+ 512 01ad 00       		.byte	0
+ 513 01ae 00       		.byte	0
+ 514 01af 00       		.byte	0
+ 515 01b0 3C       		.byte	60
+ 516 01b1 00       		.byte	0
+ 517 01b2 00       		.byte	0
+ 518 01b3 00       		.byte	0
+ 519 01b4 00       		.byte	0
+ 520 01b5 00       		.byte	0
+ 521 01b6 00       		.byte	0
+ 522 01b7 00       		.byte	0
+ 523 01b8 00       		.byte	0
+ 524 01b9 00       		.byte	0
+ 525 01ba 00       		.byte	0
+ 526 01bb 00       		.byte	0
+ 527 01bc 00       		.byte	0
+ 528 01bd 00       		.byte	0
+ 529 01be 00       		.byte	0
+ 530 01bf 00       		.byte	0
+ 531 01c0 00       		.byte	0
+ 532 01c1 00       		.byte	0
+ 533 01c2 00       		.byte	0
+ 534 01c3 00       		.byte	0
+ 535 01c4 00       		.byte	0
+ 536 01c5 00       		.byte	0
+ 537 01c6 00       		.byte	0
+ 538 01c7 00       		.byte	0
+ 539 01c8 00       		.byte	0
+ 540 01c9 00       		.byte	0
+ 541 01ca 00       		.byte	0
+ 542 01cb 00       		.byte	0
+ 543 01cc 00       		.byte	0
+ 544 01cd 00       		.byte	0
+ 545 01ce 00       		.byte	0
+ 546 01cf 00       		.byte	0
+ 547 01d0 00       		.byte	0
+ 548 01d1 00       		.byte	0
+ 549 01d2 00       		.byte	0
+ 550 01d3 00       		.byte	0
+ 551 01d4 00       		.byte	0
+ 552 01d5 00       		.byte	0
+ 553 01d6 00       		.byte	0
+ 554 01d7 00       		.byte	0
+ 555 01d8 00       		.byte	0
+ 556 01d9 00       		.byte	0
+ 557 01da 00       		.byte	0
+ 558 01db 00       		.byte	0
+ 559 01dc 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 13
+
+
+ 560 01dd 00       		.byte	0
+ 561 01de 00       		.byte	0
+ 562 01df 00       		.byte	0
+ 563 01e0 00       		.byte	0
+ 564 01e1 00       		.byte	0
+ 565 01e2 00       		.byte	0
+ 566 01e3 00       		.byte	0
+ 567 01e4 00       		.byte	0
+ 568 01e5 00       		.byte	0
+ 569 01e6 00       		.byte	0
+ 570 01e7 00       		.byte	0
+ 571 01e8 00       		.byte	0
+ 572 01e9 00       		.byte	0
+ 573 01ea 00       		.byte	0
+ 574 01eb 00       		.byte	0
+ 575 01ec 00       		.byte	0
+ 576 01ed 00       		.byte	0
+ 577 01ee 00       		.byte	0
+ 578 01ef 00       		.byte	0
+ 579 01f0 00       		.byte	0
+ 580 01f1 00       		.byte	0
+ 581 01f2 00       		.byte	0
+ 582 01f3 00       		.byte	0
+ 583 01f4 00       		.byte	0
+ 584 01f5 00       		.byte	0
+ 585 01f6 00       		.byte	0
+ 586 01f7 00       		.byte	0
+ 587 01f8 00       		.byte	0
+ 588 01f9 00       		.byte	0
+ 589 01fa 00       		.byte	0
+ 590 01fb 00       		.byte	0
+ 591 01fc 00       		.byte	0
+ 592 01fd 00       		.byte	0
+ 593 01fe 00       		.byte	0
+ 594 01ff 00       		.byte	0
+ 595 0200 B4       		.byte	-76
+ 596 0201 04       		.byte	4
+ 597 0202 E0       		.byte	-32
+ 598 0203 F6       		.byte	-10
+ 599 0204 43       		.byte	67
+ 600 0205 79       		.byte	121
+ 601 0206 70       		.byte	112
+ 602 0207 72       		.byte	114
+ 603 0208 65       		.byte	101
+ 604 0209 73       		.byte	115
+ 605 020a 73       		.byte	115
+ 606 020b 00       		.byte	0
+ 607 020c 18       		.byte	24
+ 608 020d 00       		.byte	0
+ 609 020e 00       		.byte	0
+ 610 020f 00       		.byte	0
+ 611 0210 41       		.byte	65
+ 612 0211 A0       		.byte	-96
+ 613 0212 00       		.byte	0
+ 614 0213 FF       		.byte	-1
+ 615 0214 B4       		.byte	-76
+ 616 0215 04       		.byte	4
+ARM GAS  e:\temp\ccmqioMm.s 			page 14
+
+
+ 617 0216 00       		.byte	0
+ 618 0217 AE       		.byte	-82
+ 619 0218 00       		.byte	0
+ 620 0219 00       		.byte	0
+ 621 021a 00       		.byte	0
+ 622 021b 00       		.byte	0
+ 623 021c 00       		.byte	0
+ 624 021d 00       		.byte	0
+ 625 021e E0       		.byte	-32
+ 626 021f F6       		.byte	-10
+ 627 0220 02       		.byte	2
+ 628 0221 00       		.byte	0
+ 629 0222 00       		.byte	0
+ 630 0223 00       		.byte	0
+ 631 0224 0C       		.byte	12
+ 632 0225 00       		.byte	0
+ 633 0226 00       		.byte	0
+ 634 0227 00       		.byte	0
+ 635 0228 42       		.byte	66
+ 636 0229 A0       		.byte	-96
+ 637 022a 00       		.byte	0
+ 638 022b FF       		.byte	-1
+ 639 022c 00       		.byte	0
+ 640 022d 00       		.byte	0
+ 641 022e 87       		.byte	-121
+ 642 022f 80       		.byte	-128
+ 643 0230 0C       		.byte	12
+ 644 0231 00       		.byte	0
+ 645 0232 00       		.byte	0
+ 646 0233 00       		.byte	0
+ 647 0234 43       		.byte	67
+ 648 0235 A0       		.byte	-96
+ 649 0236 87       		.byte	-121
+ 650 0237 80       		.byte	-128
+ 651 0238 01       		.byte	1
+ 652 0239 00       		.byte	0
+ 653 023a 00       		.byte	0
+ 654 023b 00       		.byte	0
+ 655 023c B4       		.byte	-76
+ 656 023d 04       		.byte	4
+ 657 023e E0       		.byte	-32
+ 658 023f F6       		.byte	-10
+ 659 0240 00       		.byte	0
+ 660 0241 00       		.byte	0
+ 661 0242 00       		.byte	0
+ 662 0243 00       		.byte	0
+ 663 0244 01       		.byte	1
+ 664 0245 01       		.byte	1
+ 665 0246 00       		.byte	0
+ 666 0247 00       		.byte	0
+ 667 0248 00       		.byte	0
+ 668 0249 02       		.byte	2
+ 669 024a 00       		.byte	0
+ 670 024b 00       		.byte	0
+ 671 024c 00       		.byte	0
+ 672 024d 00       		.byte	0
+ 673 024e 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 15
+
+
+ 674 024f 00       		.byte	0
+ 675 0250 00       		.byte	0
+ 676 0251 01       		.byte	1
+ 677 0252 00       		.byte	0
+ 678 0253 3C       		.byte	60
+ 679 0254 04       		.byte	4
+ 680 0255 14       		.byte	20
+ 681 0256 0A       		.byte	10
+ 682 0257 02       		.byte	2
+ 683 0258 08       		.byte	8
+ 684 0259 14       		.byte	20
+ 685 025a 0A       		.byte	10
+ 686 025b 02       		.byte	2
+ 687 025c 32       		.byte	50
+ 688 025d 01       		.byte	1
+ 689 025e 00       		.byte	0
+ 690 025f 00       		.byte	0
+ 691 0260 04       		.byte	4
+ 692 0261 1E       		.byte	30
+ 693 0262 01       		.byte	1
+ 694 0263 00       		.byte	0
+ 695 0264 18       		.byte	24
+ 696 0265 00       		.byte	0
+ 697 0266 00       		.byte	0
+ 698 0267 00       		.byte	0
+ 699 0268 00       		.byte	0
+ 700 0269 00       		.byte	0
+ 701 026a 00       		.byte	0
+ 702 026b 00       		.byte	0
+ 703 026c 00       		.byte	0
+ 704 026d 00       		.byte	0
+ 705 026e 00       		.byte	0
+ 706 026f 00       		.byte	0
+ 707 0270 00       		.byte	0
+ 708 0271 00       		.byte	0
+ 709 0272 00       		.byte	0
+ 710 0273 00       		.byte	0
+ 711 0274 00       		.byte	0
+ 712 0275 00       		.byte	0
+ 713 0276 00       		.byte	0
+ 714 0277 00       		.byte	0
+ 715 0278 00       		.byte	0
+ 716 0279 00       		.byte	0
+ 717 027a 00       		.byte	0
+ 718 027b 00       		.byte	0
+ 719 027c 18       		.byte	24
+ 720 027d 00       		.byte	0
+ 721 027e 00       		.byte	0
+ 722 027f 00       		.byte	0
+ 723 0280 41       		.byte	65
+ 724 0281 A0       		.byte	-96
+ 725 0282 00       		.byte	0
+ 726 0283 FF       		.byte	-1
+ 727 0284 B4       		.byte	-76
+ 728 0285 04       		.byte	4
+ 729 0286 00       		.byte	0
+ 730 0287 AE       		.byte	-82
+ARM GAS  e:\temp\ccmqioMm.s 			page 16
+
+
+ 731 0288 00       		.byte	0
+ 732 0289 00       		.byte	0
+ 733 028a 00       		.byte	0
+ 734 028b 00       		.byte	0
+ 735 028c 00       		.byte	0
+ 736 028d 00       		.byte	0
+ 737 028e E0       		.byte	-32
+ 738 028f F6       		.byte	-10
+ 739 0290 0A       		.byte	10
+ 740 0291 00       		.byte	0
+ 741 0292 00       		.byte	0
+ 742 0293 00       		.byte	0
+ 743 0294 0C       		.byte	12
+ 744 0295 00       		.byte	0
+ 745 0296 00       		.byte	0
+ 746 0297 00       		.byte	0
+ 747 0298 42       		.byte	66
+ 748 0299 A0       		.byte	-96
+ 749 029a 00       		.byte	0
+ 750 029b FF       		.byte	-1
+ 751 029c 00       		.byte	0
+ 752 029d 00       		.byte	0
+ 753 029e 87       		.byte	-121
+ 754 029f 80       		.byte	-128
+ 755 02a0 0C       		.byte	12
+ 756 02a1 00       		.byte	0
+ 757 02a2 00       		.byte	0
+ 758 02a3 00       		.byte	0
+ 759 02a4 43       		.byte	67
+ 760 02a5 A0       		.byte	-96
+ 761 02a6 87       		.byte	-121
+ 762 02a7 80       		.byte	-128
+ 763 02a8 01       		.byte	1
+ 764 02a9 00       		.byte	0
+ 765 02aa 00       		.byte	0
+ 766 02ab 00       		.byte	0
+ 767 02ac B4       		.byte	-76
+ 768 02ad 04       		.byte	4
+ 769 02ae E0       		.byte	-32
+ 770 02af F6       		.byte	-10
+ 771 02b0 00       		.byte	0
+ 772 02b1 00       		.byte	0
+ 773 02b2 00       		.byte	0
+ 774 02b3 00       		.byte	0
+ 775 02b4 01       		.byte	1
+ 776 02b5 01       		.byte	1
+ 777 02b6 00       		.byte	0
+ 778 02b7 00       		.byte	0
+ 779 02b8 00       		.byte	0
+ 780 02b9 02       		.byte	2
+ 781 02ba 00       		.byte	0
+ 782 02bb 00       		.byte	0
+ 783 02bc 00       		.byte	0
+ 784 02bd 00       		.byte	0
+ 785 02be 00       		.byte	0
+ 786 02bf 00       		.byte	0
+ 787 02c0 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 17
+
+
+ 788 02c1 01       		.byte	1
+ 789 02c2 00       		.byte	0
+ 790 02c3 3C       		.byte	60
+ 791 02c4 04       		.byte	4
+ 792 02c5 14       		.byte	20
+ 793 02c6 0A       		.byte	10
+ 794 02c7 02       		.byte	2
+ 795 02c8 08       		.byte	8
+ 796 02c9 14       		.byte	20
+ 797 02ca 0A       		.byte	10
+ 798 02cb 02       		.byte	2
+ 799 02cc 32       		.byte	50
+ 800 02cd 01       		.byte	1
+ 801 02ce 00       		.byte	0
+ 802 02cf 00       		.byte	0
+ 803 02d0 04       		.byte	4
+ 804 02d1 1E       		.byte	30
+ 805 02d2 01       		.byte	1
+ 806 02d3 00       		.byte	0
+ 807 02d4 18       		.byte	24
+ 808 02d5 00       		.byte	0
+ 809 02d6 00       		.byte	0
+ 810 02d7 00       		.byte	0
+ 811 02d8 00       		.byte	0
+ 812 02d9 00       		.byte	0
+ 813 02da 00       		.byte	0
+ 814 02db 00       		.byte	0
+ 815 02dc 00       		.byte	0
+ 816 02dd 00       		.byte	0
+ 817 02de 00       		.byte	0
+ 818 02df 00       		.byte	0
+ 819 02e0 00       		.byte	0
+ 820 02e1 00       		.byte	0
+ 821 02e2 00       		.byte	0
+ 822 02e3 00       		.byte	0
+ 823 02e4 00       		.byte	0
+ 824 02e5 00       		.byte	0
+ 825 02e6 00       		.byte	0
+ 826 02e7 00       		.byte	0
+ 827 02e8 00       		.byte	0
+ 828 02e9 00       		.byte	0
+ 829 02ea 00       		.byte	0
+ 830 02eb 00       		.byte	0
+ 831 02ec 00       		.byte	0
+ 832 02ed 00       		.byte	0
+ 833 02ee 00       		.byte	0
+ 834 02ef 00       		.byte	0
+ 835 02f0 00       		.byte	0
+ 836 02f1 00       		.byte	0
+ 837 02f2 00       		.byte	0
+ 838 02f3 00       		.byte	0
+ 839 02f4 00       		.byte	0
+ 840 02f5 00       		.byte	0
+ 841 02f6 00       		.byte	0
+ 842 02f7 00       		.byte	0
+ 843 02f8 00       		.byte	0
+ 844 02f9 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 18
+
+
+ 845 02fa 00       		.byte	0
+ 846 02fb 00       		.byte	0
+ 847 02fc 00       		.byte	0
+ 848 02fd 00       		.byte	0
+ 849 02fe 00       		.byte	0
+ 850 02ff 00       		.byte	0
+ 851 0300 00       		.byte	0
+ 852 0301 00       		.byte	0
+ 853 0302 00       		.byte	0
+ 854 0303 00       		.byte	0
+ 855 0304 00       		.byte	0
+ 856 0305 00       		.byte	0
+ 857 0306 00       		.byte	0
+ 858 0307 00       		.byte	0
+ 859 0308 00       		.byte	0
+ 860 0309 00       		.byte	0
+ 861 030a 00       		.byte	0
+ 862 030b 00       		.byte	0
+ 863 030c 00       		.byte	0
+ 864 030d 00       		.byte	0
+ 865 030e 00       		.byte	0
+ 866 030f 00       		.byte	0
+ 867 0310 00       		.byte	0
+ 868 0311 00       		.byte	0
+ 869 0312 00       		.byte	0
+ 870 0313 00       		.byte	0
+ 871 0314 00       		.byte	0
+ 872 0315 00       		.byte	0
+ 873 0316 00       		.byte	0
+ 874 0317 00       		.byte	0
+ 875 0318 00       		.byte	0
+ 876 0319 00       		.byte	0
+ 877 031a 00       		.byte	0
+ 878 031b 00       		.byte	0
+ 879 031c 00       		.byte	0
+ 880 031d 00       		.byte	0
+ 881 031e 00       		.byte	0
+ 882 031f 00       		.byte	0
+ 883 0320 00       		.byte	0
+ 884 0321 00       		.byte	0
+ 885 0322 00       		.byte	0
+ 886 0323 00       		.byte	0
+ 887 0324 00       		.byte	0
+ 888 0325 00       		.byte	0
+ 889 0326 00       		.byte	0
+ 890 0327 00       		.byte	0
+ 891 0328 00       		.byte	0
+ 892 0329 00       		.byte	0
+ 893 032a 00       		.byte	0
+ 894 032b 00       		.byte	0
+ 895 032c 00       		.byte	0
+ 896 032d 00       		.byte	0
+ 897 032e 00       		.byte	0
+ 898 032f 00       		.byte	0
+ 899 0330 00       		.byte	0
+ 900 0331 00       		.byte	0
+ 901 0332 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 19
+
+
+ 902 0333 00       		.byte	0
+ 903 0334 00       		.byte	0
+ 904 0335 00       		.byte	0
+ 905 0336 00       		.byte	0
+ 906 0337 00       		.byte	0
+ 907 0338 00       		.byte	0
+ 908 0339 00       		.byte	0
+ 909 033a 00       		.byte	0
+ 910 033b 00       		.byte	0
+ 911 033c 00       		.byte	0
+ 912 033d 00       		.byte	0
+ 913 033e 00       		.byte	0
+ 914 033f 00       		.byte	0
+ 915 0340 00       		.byte	0
+ 916 0341 00       		.byte	0
+ 917 0342 00       		.byte	0
+ 918 0343 00       		.byte	0
+ 919 0344 00       		.byte	0
+ 920 0345 00       		.byte	0
+ 921 0346 00       		.byte	0
+ 922 0347 00       		.byte	0
+ 923 0348 00       		.byte	0
+ 924 0349 00       		.byte	0
+ 925 034a 00       		.byte	0
+ 926 034b 00       		.byte	0
+ 927 034c 00       		.byte	0
+ 928 034d 00       		.byte	0
+ 929 034e 00       		.byte	0
+ 930 034f 00       		.byte	0
+ 931 0350 00       		.byte	0
+ 932 0351 00       		.byte	0
+ 933 0352 00       		.byte	0
+ 934 0353 00       		.byte	0
+ 935 0354 00       		.byte	0
+ 936 0355 00       		.byte	0
+ 937 0356 00       		.byte	0
+ 938 0357 00       		.byte	0
+ 939 0358 00       		.byte	0
+ 940 0359 00       		.byte	0
+ 941 035a 00       		.byte	0
+ 942 035b 00       		.byte	0
+ 943 035c 00       		.byte	0
+ 944 035d 00       		.byte	0
+ 945 035e 00       		.byte	0
+ 946 035f 00       		.byte	0
+ 947 0360 00       		.byte	0
+ 948 0361 00       		.byte	0
+ 949 0362 00       		.byte	0
+ 950 0363 00       		.byte	0
+ 951 0364 00       		.byte	0
+ 952 0365 00       		.byte	0
+ 953 0366 00       		.byte	0
+ 954 0367 00       		.byte	0
+ 955 0368 00       		.byte	0
+ 956 0369 00       		.byte	0
+ 957 036a 00       		.byte	0
+ 958 036b 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 20
+
+
+ 959 036c 00       		.byte	0
+ 960 036d 00       		.byte	0
+ 961 036e 00       		.byte	0
+ 962 036f 00       		.byte	0
+ 963 0370 00       		.byte	0
+ 964 0371 00       		.byte	0
+ 965 0372 00       		.byte	0
+ 966 0373 00       		.byte	0
+ 967 0374 00       		.byte	0
+ 968 0375 00       		.byte	0
+ 969 0376 00       		.byte	0
+ 970 0377 00       		.byte	0
+ 971 0378 00       		.byte	0
+ 972 0379 00       		.byte	0
+ 973 037a 00       		.byte	0
+ 974 037b 00       		.byte	0
+ 975 037c 00       		.byte	0
+ 976 037d 00       		.byte	0
+ 977 037e 00       		.byte	0
+ 978 037f 00       		.byte	0
+ 979 0380 00       		.byte	0
+ 980 0381 00       		.byte	0
+ 981 0382 00       		.byte	0
+ 982 0383 00       		.byte	0
+ 983 0384 00       		.byte	0
+ 984 0385 00       		.byte	0
+ 985 0386 00       		.byte	0
+ 986 0387 00       		.byte	0
+ 987 0388 00       		.byte	0
+ 988 0389 00       		.byte	0
+ 989 038a 00       		.byte	0
+ 990 038b 00       		.byte	0
+ 991 038c 00       		.byte	0
+ 992 038d 00       		.byte	0
+ 993 038e 00       		.byte	0
+ 994 038f 00       		.byte	0
+ 995 0390 00       		.byte	0
+ 996 0391 00       		.byte	0
+ 997 0392 00       		.byte	0
+ 998 0393 00       		.byte	0
+ 999 0394 00       		.byte	0
+ 1000 0395 00       		.byte	0
+ 1001 0396 00       		.byte	0
+ 1002 0397 00       		.byte	0
+ 1003 0398 00       		.byte	0
+ 1004 0399 00       		.byte	0
+ 1005 039a 00       		.byte	0
+ 1006 039b 00       		.byte	0
+ 1007 039c 00       		.byte	0
+ 1008 039d 00       		.byte	0
+ 1009 039e 00       		.byte	0
+ 1010 039f 00       		.byte	0
+ 1011 03a0 00       		.byte	0
+ 1012 03a1 00       		.byte	0
+ 1013 03a2 00       		.byte	0
+ 1014 03a3 00       		.byte	0
+ 1015 03a4 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 21
+
+
+ 1016 03a5 00       		.byte	0
+ 1017 03a6 00       		.byte	0
+ 1018 03a7 00       		.byte	0
+ 1019 03a8 00       		.byte	0
+ 1020 03a9 00       		.byte	0
+ 1021 03aa 00       		.byte	0
+ 1022 03ab 00       		.byte	0
+ 1023 03ac 00       		.byte	0
+ 1024 03ad 00       		.byte	0
+ 1025 03ae 00       		.byte	0
+ 1026 03af 00       		.byte	0
+ 1027 03b0 00       		.byte	0
+ 1028 03b1 00       		.byte	0
+ 1029 03b2 00       		.byte	0
+ 1030 03b3 00       		.byte	0
+ 1031 03b4 00       		.byte	0
+ 1032 03b5 00       		.byte	0
+ 1033 03b6 00       		.byte	0
+ 1034 03b7 00       		.byte	0
+ 1035 03b8 00       		.byte	0
+ 1036 03b9 00       		.byte	0
+ 1037 03ba 00       		.byte	0
+ 1038 03bb 00       		.byte	0
+ 1039 03bc 00       		.byte	0
+ 1040 03bd 00       		.byte	0
+ 1041 03be 00       		.byte	0
+ 1042 03bf 00       		.byte	0
+ 1043 03c0 00       		.byte	0
+ 1044 03c1 00       		.byte	0
+ 1045 03c2 00       		.byte	0
+ 1046 03c3 00       		.byte	0
+ 1047 03c4 00       		.byte	0
+ 1048 03c5 00       		.byte	0
+ 1049 03c6 00       		.byte	0
+ 1050 03c7 00       		.byte	0
+ 1051 03c8 00       		.byte	0
+ 1052 03c9 00       		.byte	0
+ 1053 03ca 00       		.byte	0
+ 1054 03cb 00       		.byte	0
+ 1055 03cc 00       		.byte	0
+ 1056 03cd 00       		.byte	0
+ 1057 03ce 00       		.byte	0
+ 1058 03cf 00       		.byte	0
+ 1059 03d0 00       		.byte	0
+ 1060 03d1 00       		.byte	0
+ 1061 03d2 00       		.byte	0
+ 1062 03d3 00       		.byte	0
+ 1063 03d4 00       		.byte	0
+ 1064 03d5 00       		.byte	0
+ 1065 03d6 00       		.byte	0
+ 1066 03d7 00       		.byte	0
+ 1067 03d8 00       		.byte	0
+ 1068 03d9 00       		.byte	0
+ 1069 03da 00       		.byte	0
+ 1070 03db 00       		.byte	0
+ 1071 03dc 00       		.byte	0
+ 1072 03dd 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 22
+
+
+ 1073 03de 00       		.byte	0
+ 1074 03df 00       		.byte	0
+ 1075 03e0 00       		.byte	0
+ 1076 03e1 00       		.byte	0
+ 1077 03e2 00       		.byte	0
+ 1078 03e3 00       		.byte	0
+ 1079 03e4 00       		.byte	0
+ 1080 03e5 00       		.byte	0
+ 1081 03e6 00       		.byte	0
+ 1082 03e7 00       		.byte	0
+ 1083 03e8 00       		.byte	0
+ 1084 03e9 00       		.byte	0
+ 1085 03ea 00       		.byte	0
+ 1086 03eb 00       		.byte	0
+ 1087 03ec 00       		.byte	0
+ 1088 03ed 00       		.byte	0
+ 1089 03ee 00       		.byte	0
+ 1090 03ef 00       		.byte	0
+ 1091 03f0 00       		.byte	0
+ 1092 03f1 00       		.byte	0
+ 1093 03f2 00       		.byte	0
+ 1094 03f3 00       		.byte	0
+ 1095 03f4 00       		.byte	0
+ 1096 03f5 00       		.byte	0
+ 1097 03f6 00       		.byte	0
+ 1098 03f7 00       		.byte	0
+ 1099 03f8 00       		.byte	0
+ 1100 03f9 00       		.byte	0
+ 1101 03fa 00       		.byte	0
+ 1102 03fb 00       		.byte	0
+ 1103 03fc 00       		.byte	0
+ 1104 03fd 00       		.byte	0
+ 1105 03fe 00       		.byte	0
+ 1106 03ff 00       		.byte	0
+ 1107              		.text
+ 1108              	.Letext0:
+ 1109              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 1110              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 1111              		.file 4 "..\\src\\pd_common/pd.h"
+ 1112              		.section	.debug_info,"",%progbits
+ 1113              	.Ldebug_info0:
+ 1114 0000 36060000 		.4byte	0x636
+ 1115 0004 0400     		.2byte	0x4
+ 1116 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 1117 000a 04       		.byte	0x4
+ 1118 000b 01       		.uleb128 0x1
+ 1119 000c 1E000000 		.4byte	.LASF101
+ 1120 0010 0C       		.byte	0xc
+ 1121 0011 B2010000 		.4byte	.LASF102
+ 1122 0015 2D030000 		.4byte	.LASF103
+ 1123 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 1124 001d 00000000 		.4byte	0
+ 1125 0021 00000000 		.4byte	.Ldebug_line0
+ 1126 0025 02       		.uleb128 0x2
+ 1127 0026 01       		.byte	0x1
+ 1128 0027 06       		.byte	0x6
+ 1129 0028 41040000 		.4byte	.LASF0
+ARM GAS  e:\temp\ccmqioMm.s 			page 23
+
+
+ 1130 002c 03       		.uleb128 0x3
+ 1131 002d F3020000 		.4byte	.LASF3
+ 1132 0031 02       		.byte	0x2
+ 1133 0032 1D       		.byte	0x1d
+ 1134 0033 37000000 		.4byte	0x37
+ 1135 0037 02       		.uleb128 0x2
+ 1136 0038 01       		.byte	0x1
+ 1137 0039 08       		.byte	0x8
+ 1138 003a DD030000 		.4byte	.LASF1
+ 1139 003e 02       		.uleb128 0x2
+ 1140 003f 02       		.byte	0x2
+ 1141 0040 05       		.byte	0x5
+ 1142 0041 3D010000 		.4byte	.LASF2
+ 1143 0045 03       		.uleb128 0x3
+ 1144 0046 9B010000 		.4byte	.LASF4
+ 1145 004a 02       		.byte	0x2
+ 1146 004b 2B       		.byte	0x2b
+ 1147 004c 50000000 		.4byte	0x50
+ 1148 0050 02       		.uleb128 0x2
+ 1149 0051 02       		.byte	0x2
+ 1150 0052 07       		.byte	0x7
+ 1151 0053 12050000 		.4byte	.LASF5
+ 1152 0057 02       		.uleb128 0x2
+ 1153 0058 04       		.byte	0x4
+ 1154 0059 05       		.byte	0x5
+ 1155 005a 96020000 		.4byte	.LASF6
+ 1156 005e 03       		.uleb128 0x3
+ 1157 005f 82010000 		.4byte	.LASF7
+ 1158 0063 02       		.byte	0x2
+ 1159 0064 41       		.byte	0x41
+ 1160 0065 69000000 		.4byte	0x69
+ 1161 0069 02       		.uleb128 0x2
+ 1162 006a 04       		.byte	0x4
+ 1163 006b 07       		.byte	0x7
+ 1164 006c AF050000 		.4byte	.LASF8
+ 1165 0070 02       		.uleb128 0x2
+ 1166 0071 08       		.byte	0x8
+ 1167 0072 05       		.byte	0x5
+ 1168 0073 6B020000 		.4byte	.LASF9
+ 1169 0077 02       		.uleb128 0x2
+ 1170 0078 08       		.byte	0x8
+ 1171 0079 07       		.byte	0x7
+ 1172 007a 4D040000 		.4byte	.LASF10
+ 1173 007e 04       		.uleb128 0x4
+ 1174 007f 04       		.byte	0x4
+ 1175 0080 05       		.byte	0x5
+ 1176 0081 696E7400 		.ascii	"int\000"
+ 1177 0085 02       		.uleb128 0x2
+ 1178 0086 04       		.byte	0x4
+ 1179 0087 07       		.byte	0x7
+ 1180 0088 7B040000 		.4byte	.LASF11
+ 1181 008c 03       		.uleb128 0x3
+ 1182 008d 69060000 		.4byte	.LASF12
+ 1183 0091 03       		.byte	0x3
+ 1184 0092 18       		.byte	0x18
+ 1185 0093 2C000000 		.4byte	0x2c
+ 1186 0097 03       		.uleb128 0x3
+ARM GAS  e:\temp\ccmqioMm.s 			page 24
+
+
+ 1187 0098 97040000 		.4byte	.LASF13
+ 1188 009c 03       		.byte	0x3
+ 1189 009d 24       		.byte	0x24
+ 1190 009e 45000000 		.4byte	0x45
+ 1191 00a2 03       		.uleb128 0x3
+ 1192 00a3 00000000 		.4byte	.LASF14
+ 1193 00a7 03       		.byte	0x3
+ 1194 00a8 30       		.byte	0x30
+ 1195 00a9 5E000000 		.4byte	0x5e
+ 1196 00ad 02       		.uleb128 0x2
+ 1197 00ae 04       		.byte	0x4
+ 1198 00af 04       		.byte	0x4
+ 1199 00b0 65020000 		.4byte	.LASF15
+ 1200 00b4 02       		.uleb128 0x2
+ 1201 00b5 08       		.byte	0x8
+ 1202 00b6 04       		.byte	0x4
+ 1203 00b7 C1050000 		.4byte	.LASF16
+ 1204 00bb 02       		.uleb128 0x2
+ 1205 00bc 01       		.byte	0x1
+ 1206 00bd 08       		.byte	0x8
+ 1207 00be E2040000 		.4byte	.LASF17
+ 1208 00c2 02       		.uleb128 0x2
+ 1209 00c3 08       		.byte	0x8
+ 1210 00c4 04       		.byte	0x4
+ 1211 00c5 76010000 		.4byte	.LASF18
+ 1212 00c9 02       		.uleb128 0x2
+ 1213 00ca 04       		.byte	0x4
+ 1214 00cb 07       		.byte	0x7
+ 1215 00cc 54010000 		.4byte	.LASF19
+ 1216 00d0 05       		.uleb128 0x5
+ 1217 00d1 8C000000 		.4byte	0x8c
+ 1218 00d5 E0000000 		.4byte	0xe0
+ 1219 00d9 06       		.uleb128 0x6
+ 1220 00da C9000000 		.4byte	0xc9
+ 1221 00de 02       		.byte	0x2
+ 1222 00df 00       		.byte	0
+ 1223 00e0 07       		.uleb128 0x7
+ 1224 00e1 F0       		.byte	0xf0
+ 1225 00e2 04       		.byte	0x4
+ 1226 00e3 E207     		.2byte	0x7e2
+ 1227 00e5 2A040000 		.4byte	0x42a
+ 1228 00e9 08       		.uleb128 0x8
+ 1229 00ea BE060000 		.4byte	.LASF20
+ 1230 00ee 04       		.byte	0x4
+ 1231 00ef E407     		.2byte	0x7e4
+ 1232 00f1 97000000 		.4byte	0x97
+ 1233 00f5 00       		.byte	0
+ 1234 00f6 08       		.uleb128 0x8
+ 1235 00f7 E0000000 		.4byte	.LASF21
+ 1236 00fb 04       		.byte	0x4
+ 1237 00fc E507     		.2byte	0x7e5
+ 1238 00fe 97000000 		.4byte	0x97
+ 1239 0102 02       		.byte	0x2
+ 1240 0103 08       		.uleb128 0x8
+ 1241 0104 86050000 		.4byte	.LASF22
+ 1242 0108 04       		.byte	0x4
+ 1243 0109 E607     		.2byte	0x7e6
+ARM GAS  e:\temp\ccmqioMm.s 			page 25
+
+
+ 1244 010b 97000000 		.4byte	0x97
+ 1245 010f 04       		.byte	0x4
+ 1246 0110 08       		.uleb128 0x8
+ 1247 0111 2C060000 		.4byte	.LASF23
+ 1248 0115 04       		.byte	0x4
+ 1249 0116 E707     		.2byte	0x7e7
+ 1250 0118 97000000 		.4byte	0x97
+ 1251 011c 06       		.byte	0x6
+ 1252 011d 08       		.uleb128 0x8
+ 1253 011e 1D030000 		.4byte	.LASF24
+ 1254 0122 04       		.byte	0x4
+ 1255 0123 E807     		.2byte	0x7e8
+ 1256 0125 97000000 		.4byte	0x97
+ 1257 0129 08       		.byte	0x8
+ 1258 012a 08       		.uleb128 0x8
+ 1259 012b 0C040000 		.4byte	.LASF25
+ 1260 012f 04       		.byte	0x4
+ 1261 0130 E907     		.2byte	0x7e9
+ 1262 0132 97000000 		.4byte	0x97
+ 1263 0136 0A       		.byte	0xa
+ 1264 0137 08       		.uleb128 0x8
+ 1265 0138 0A030000 		.4byte	.LASF26
+ 1266 013c 04       		.byte	0x4
+ 1267 013d EA07     		.2byte	0x7ea
+ 1268 013f 97000000 		.4byte	0x97
+ 1269 0143 0C       		.byte	0xc
+ 1270 0144 08       		.uleb128 0x8
+ 1271 0145 EB030000 		.4byte	.LASF27
+ 1272 0149 04       		.byte	0x4
+ 1273 014a EB07     		.2byte	0x7eb
+ 1274 014c 97000000 		.4byte	0x97
+ 1275 0150 0E       		.byte	0xe
+ 1276 0151 08       		.uleb128 0x8
+ 1277 0152 C5010000 		.4byte	.LASF28
+ 1278 0156 04       		.byte	0x4
+ 1279 0157 EC07     		.2byte	0x7ec
+ 1280 0159 2A040000 		.4byte	0x42a
+ 1281 015d 10       		.byte	0x10
+ 1282 015e 08       		.uleb128 0x8
+ 1283 015f BB040000 		.4byte	.LASF29
+ 1284 0163 04       		.byte	0x4
+ 1285 0164 ED07     		.2byte	0x7ed
+ 1286 0166 97000000 		.4byte	0x97
+ 1287 016a 18       		.byte	0x18
+ 1288 016b 08       		.uleb128 0x8
+ 1289 016c D0010000 		.4byte	.LASF30
+ 1290 0170 04       		.byte	0x4
+ 1291 0171 EE07     		.2byte	0x7ee
+ 1292 0173 3A040000 		.4byte	0x43a
+ 1293 0177 1A       		.byte	0x1a
+ 1294 0178 08       		.uleb128 0x8
+ 1295 0179 33010000 		.4byte	.LASF31
+ 1296 017d 04       		.byte	0x4
+ 1297 017e EF07     		.2byte	0x7ef
+ 1298 0180 8C000000 		.4byte	0x8c
+ 1299 0184 20       		.byte	0x20
+ 1300 0185 08       		.uleb128 0x8
+ARM GAS  e:\temp\ccmqioMm.s 			page 26
+
+
+ 1301 0186 47010000 		.4byte	.LASF32
+ 1302 018a 04       		.byte	0x4
+ 1303 018b F007     		.2byte	0x7f0
+ 1304 018d 8C000000 		.4byte	0x8c
+ 1305 0191 21       		.byte	0x21
+ 1306 0192 08       		.uleb128 0x8
+ 1307 0193 79020000 		.4byte	.LASF33
+ 1308 0197 04       		.byte	0x4
+ 1309 0198 F107     		.2byte	0x7f1
+ 1310 019a 8C000000 		.4byte	0x8c
+ 1311 019e 22       		.byte	0x22
+ 1312 019f 08       		.uleb128 0x8
+ 1313 01a0 6B010000 		.4byte	.LASF34
+ 1314 01a4 04       		.byte	0x4
+ 1315 01a5 F207     		.2byte	0x7f2
+ 1316 01a7 8C000000 		.4byte	0x8c
+ 1317 01ab 23       		.byte	0x23
+ 1318 01ac 08       		.uleb128 0x8
+ 1319 01ad D2030000 		.4byte	.LASF35
+ 1320 01b1 04       		.byte	0x4
+ 1321 01b2 F307     		.2byte	0x7f3
+ 1322 01b4 8C000000 		.4byte	0x8c
+ 1323 01b8 24       		.byte	0x24
+ 1324 01b9 08       		.uleb128 0x8
+ 1325 01ba 46020000 		.4byte	.LASF36
+ 1326 01be 04       		.byte	0x4
+ 1327 01bf F407     		.2byte	0x7f4
+ 1328 01c1 8C000000 		.4byte	0x8c
+ 1329 01c5 25       		.byte	0x25
+ 1330 01c6 08       		.uleb128 0x8
+ 1331 01c7 1D020000 		.4byte	.LASF37
+ 1332 01cb 04       		.byte	0x4
+ 1333 01cc F507     		.2byte	0x7f5
+ 1334 01ce 8C000000 		.4byte	0x8c
+ 1335 01d2 26       		.byte	0x26
+ 1336 01d3 08       		.uleb128 0x8
+ 1337 01d4 F7040000 		.4byte	.LASF38
+ 1338 01d8 04       		.byte	0x4
+ 1339 01d9 F607     		.2byte	0x7f6
+ 1340 01db 4A040000 		.4byte	0x44a
+ 1341 01df 27       		.byte	0x27
+ 1342 01e0 08       		.uleb128 0x8
+ 1343 01e1 FE030000 		.4byte	.LASF39
+ 1344 01e5 04       		.byte	0x4
+ 1345 01e6 FC07     		.2byte	0x7fc
+ 1346 01e8 8C000000 		.4byte	0x8c
+ 1347 01ec 28       		.byte	0x28
+ 1348 01ed 08       		.uleb128 0x8
+ 1349 01ee D4000000 		.4byte	.LASF40
+ 1350 01f2 04       		.byte	0x4
+ 1351 01f3 FD07     		.2byte	0x7fd
+ 1352 01f5 8C000000 		.4byte	0x8c
+ 1353 01f9 29       		.byte	0x29
+ 1354 01fa 08       		.uleb128 0x8
+ 1355 01fb 25050000 		.4byte	.LASF41
+ 1356 01ff 04       		.byte	0x4
+ 1357 0200 FE07     		.2byte	0x7fe
+ARM GAS  e:\temp\ccmqioMm.s 			page 27
+
+
+ 1358 0202 8C000000 		.4byte	0x8c
+ 1359 0206 2A       		.byte	0x2a
+ 1360 0207 08       		.uleb128 0x8
+ 1361 0208 65050000 		.4byte	.LASF42
+ 1362 020c 04       		.byte	0x4
+ 1363 020d FF07     		.2byte	0x7ff
+ 1364 020f 8C000000 		.4byte	0x8c
+ 1365 0213 2B       		.byte	0x2b
+ 1366 0214 08       		.uleb128 0x8
+ 1367 0215 EB050000 		.4byte	.LASF43
+ 1368 0219 04       		.byte	0x4
+ 1369 021a 0008     		.2byte	0x800
+ 1370 021c 8C000000 		.4byte	0x8c
+ 1371 0220 2C       		.byte	0x2c
+ 1372 0221 08       		.uleb128 0x8
+ 1373 0222 C8050000 		.4byte	.LASF44
+ 1374 0226 04       		.byte	0x4
+ 1375 0227 0108     		.2byte	0x801
+ 1376 0229 8C000000 		.4byte	0x8c
+ 1377 022d 2D       		.byte	0x2d
+ 1378 022e 08       		.uleb128 0x8
+ 1379 022f E7040000 		.4byte	.LASF45
+ 1380 0233 04       		.byte	0x4
+ 1381 0234 0608     		.2byte	0x806
+ 1382 0236 8C000000 		.4byte	0x8c
+ 1383 023a 2E       		.byte	0x2e
+ 1384 023b 08       		.uleb128 0x8
+ 1385 023c 21060000 		.4byte	.LASF46
+ 1386 0240 04       		.byte	0x4
+ 1387 0241 0708     		.2byte	0x807
+ 1388 0243 8C000000 		.4byte	0x8c
+ 1389 0247 2F       		.byte	0x2f
+ 1390 0248 08       		.uleb128 0x8
+ 1391 0249 71060000 		.4byte	.LASF47
+ 1392 024d 04       		.byte	0x4
+ 1393 024e 0808     		.2byte	0x808
+ 1394 0250 8C000000 		.4byte	0x8c
+ 1395 0254 30       		.byte	0x30
+ 1396 0255 08       		.uleb128 0x8
+ 1397 0256 9D060000 		.4byte	.LASF48
+ 1398 025a 04       		.byte	0x4
+ 1399 025b 0908     		.2byte	0x809
+ 1400 025d 8C000000 		.4byte	0x8c
+ 1401 0261 31       		.byte	0x31
+ 1402 0262 08       		.uleb128 0x8
+ 1403 0263 71050000 		.4byte	.LASF49
+ 1404 0267 04       		.byte	0x4
+ 1405 0268 0A08     		.2byte	0x80a
+ 1406 026a 8C000000 		.4byte	0x8c
+ 1407 026e 32       		.byte	0x32
+ 1408 026f 08       		.uleb128 0x8
+ 1409 0270 D7020000 		.4byte	.LASF50
+ 1410 0274 04       		.byte	0x4
+ 1411 0275 0B08     		.2byte	0x80b
+ 1412 0277 4A040000 		.4byte	0x44a
+ 1413 027b 33       		.byte	0x33
+ 1414 027c 08       		.uleb128 0x8
+ARM GAS  e:\temp\ccmqioMm.s 			page 28
+
+
+ 1415 027d D5050000 		.4byte	.LASF51
+ 1416 0281 04       		.byte	0x4
+ 1417 0282 0C08     		.2byte	0x80c
+ 1418 0284 4A040000 		.4byte	0x44a
+ 1419 0288 34       		.byte	0x34
+ 1420 0289 08       		.uleb128 0x8
+ 1421 028a 17010000 		.4byte	.LASF52
+ 1422 028e 04       		.byte	0x4
+ 1423 028f 0D08     		.2byte	0x80d
+ 1424 0291 4A040000 		.4byte	0x44a
+ 1425 0295 35       		.byte	0x35
+ 1426 0296 08       		.uleb128 0x8
+ 1427 0297 E6010000 		.4byte	.LASF53
+ 1428 029b 04       		.byte	0x4
+ 1429 029c 0E08     		.2byte	0x80e
+ 1430 029e 4F040000 		.4byte	0x44f
+ 1431 02a2 36       		.byte	0x36
+ 1432 02a3 08       		.uleb128 0x8
+ 1433 02a4 3A050000 		.4byte	.LASF54
+ 1434 02a8 04       		.byte	0x4
+ 1435 02a9 1008     		.2byte	0x810
+ 1436 02ab 5F040000 		.4byte	0x45f
+ 1437 02af 40       		.byte	0x40
+ 1438 02b0 08       		.uleb128 0x8
+ 1439 02b1 2D020000 		.4byte	.LASF55
+ 1440 02b5 04       		.byte	0x4
+ 1441 02b6 1108     		.2byte	0x811
+ 1442 02b8 5F040000 		.4byte	0x45f
+ 1443 02bc 5C       		.byte	0x5c
+ 1444 02bd 08       		.uleb128 0x8
+ 1445 02be C6040000 		.4byte	.LASF56
+ 1446 02c2 04       		.byte	0x4
+ 1447 02c3 1208     		.2byte	0x812
+ 1448 02c5 6F040000 		.4byte	0x46f
+ 1449 02c9 78       		.byte	0x78
+ 1450 02ca 08       		.uleb128 0x8
+ 1451 02cb F1010000 		.4byte	.LASF57
+ 1452 02cf 04       		.byte	0x4
+ 1453 02d0 1708     		.2byte	0x817
+ 1454 02d2 97000000 		.4byte	0x97
+ 1455 02d6 86       		.byte	0x86
+ 1456 02d7 08       		.uleb128 0x8
+ 1457 02d8 01060000 		.4byte	.LASF58
+ 1458 02dc 04       		.byte	0x4
+ 1459 02dd 1808     		.2byte	0x818
+ 1460 02df 4A040000 		.4byte	0x44a
+ 1461 02e3 88       		.byte	0x88
+ 1462 02e4 08       		.uleb128 0x8
+ 1463 02e5 07020000 		.4byte	.LASF59
+ 1464 02e9 04       		.byte	0x4
+ 1465 02ea 2108     		.2byte	0x821
+ 1466 02ec 8C000000 		.4byte	0x8c
+ 1467 02f0 89       		.byte	0x89
+ 1468 02f1 08       		.uleb128 0x8
+ 1469 02f2 E4020000 		.4byte	.LASF60
+ 1470 02f6 04       		.byte	0x4
+ 1471 02f7 2208     		.2byte	0x822
+ARM GAS  e:\temp\ccmqioMm.s 			page 29
+
+
+ 1472 02f9 97000000 		.4byte	0x97
+ 1473 02fd 8A       		.byte	0x8a
+ 1474 02fe 08       		.uleb128 0x8
+ 1475 02ff 47060000 		.4byte	.LASF61
+ 1476 0303 04       		.byte	0x4
+ 1477 0304 2308     		.2byte	0x823
+ 1478 0306 97000000 		.4byte	0x97
+ 1479 030a 8C       		.byte	0x8c
+ 1480 030b 08       		.uleb128 0x8
+ 1481 030c 56020000 		.4byte	.LASF62
+ 1482 0310 04       		.byte	0x4
+ 1483 0311 2408     		.2byte	0x824
+ 1484 0313 97000000 		.4byte	0x97
+ 1485 0317 8E       		.byte	0x8e
+ 1486 0318 08       		.uleb128 0x8
+ 1487 0319 A0050000 		.4byte	.LASF63
+ 1488 031d 04       		.byte	0x4
+ 1489 031e 2508     		.2byte	0x825
+ 1490 0320 97000000 		.4byte	0x97
+ 1491 0324 90       		.byte	0x90
+ 1492 0325 08       		.uleb128 0x8
+ 1493 0326 09000000 		.4byte	.LASF64
+ 1494 032a 04       		.byte	0x4
+ 1495 032b 2608     		.2byte	0x826
+ 1496 032d 97000000 		.4byte	0x97
+ 1497 0331 92       		.byte	0x92
+ 1498 0332 08       		.uleb128 0x8
+ 1499 0333 87020000 		.4byte	.LASF65
+ 1500 0337 04       		.byte	0x4
+ 1501 0338 2708     		.2byte	0x827
+ 1502 033a 97000000 		.4byte	0x97
+ 1503 033e 94       		.byte	0x94
+ 1504 033f 08       		.uleb128 0x8
+ 1505 0340 24010000 		.4byte	.LASF66
+ 1506 0344 04       		.byte	0x4
+ 1507 0345 2808     		.2byte	0x828
+ 1508 0347 97000000 		.4byte	0x97
+ 1509 034b 96       		.byte	0x96
+ 1510 034c 08       		.uleb128 0x8
+ 1511 034d B3020000 		.4byte	.LASF67
+ 1512 0351 04       		.byte	0x4
+ 1513 0352 2908     		.2byte	0x829
+ 1514 0354 97000000 		.4byte	0x97
+ 1515 0358 98       		.byte	0x98
+ 1516 0359 08       		.uleb128 0x8
+ 1517 035a 56060000 		.4byte	.LASF68
+ 1518 035e 04       		.byte	0x4
+ 1519 035f 2A08     		.2byte	0x82a
+ 1520 0361 97000000 		.4byte	0x97
+ 1521 0365 9A       		.byte	0x9a
+ 1522 0366 08       		.uleb128 0x8
+ 1523 0367 12020000 		.4byte	.LASF69
+ 1524 036b 04       		.byte	0x4
+ 1525 036c 2B08     		.2byte	0x82b
+ 1526 036e 7F040000 		.4byte	0x47f
+ 1527 0372 9C       		.byte	0x9c
+ 1528 0373 08       		.uleb128 0x8
+ARM GAS  e:\temp\ccmqioMm.s 			page 30
+
+
+ 1529 0374 9F020000 		.4byte	.LASF70
+ 1530 0378 04       		.byte	0x4
+ 1531 0379 2C08     		.2byte	0x82c
+ 1532 037b 4A040000 		.4byte	0x44a
+ 1533 037f A0       		.byte	0xa0
+ 1534 0380 08       		.uleb128 0x8
+ 1535 0381 6C040000 		.4byte	.LASF71
+ 1536 0385 04       		.byte	0x4
+ 1537 0386 3508     		.2byte	0x835
+ 1538 0388 4A040000 		.4byte	0x44a
+ 1539 038c A1       		.byte	0xa1
+ 1540 038d 08       		.uleb128 0x8
+ 1541 038e AE060000 		.4byte	.LASF72
+ 1542 0392 04       		.byte	0x4
+ 1543 0393 3908     		.2byte	0x839
+ 1544 0395 4A040000 		.4byte	0x44a
+ 1545 0399 A2       		.byte	0xa2
+ 1546 039a 08       		.uleb128 0x8
+ 1547 039b 64040000 		.4byte	.LASF73
+ 1548 039f 04       		.byte	0x4
+ 1549 03a0 3D08     		.2byte	0x83d
+ 1550 03a2 8C000000 		.4byte	0x8c
+ 1551 03a6 A3       		.byte	0xa3
+ 1552 03a7 08       		.uleb128 0x8
+ 1553 03a8 05050000 		.4byte	.LASF74
+ 1554 03ac 04       		.byte	0x4
+ 1555 03ad 4108     		.2byte	0x841
+ 1556 03af 4A040000 		.4byte	0x44a
+ 1557 03b3 A4       		.byte	0xa4
+ 1558 03b4 08       		.uleb128 0x8
+ 1559 03b5 FC010000 		.4byte	.LASF75
+ 1560 03b9 04       		.byte	0x4
+ 1561 03ba 4708     		.2byte	0x847
+ 1562 03bc D0000000 		.4byte	0xd0
+ 1563 03c0 A5       		.byte	0xa5
+ 1564 03c1 08       		.uleb128 0x8
+ 1565 03c2 13060000 		.4byte	.LASF76
+ 1566 03c6 04       		.byte	0x4
+ 1567 03c7 4808     		.2byte	0x848
+ 1568 03c9 97000000 		.4byte	0x97
+ 1569 03cd A8       		.byte	0xa8
+ 1570 03ce 08       		.uleb128 0x8
+ 1571 03cf 8D010000 		.4byte	.LASF77
+ 1572 03d3 04       		.byte	0x4
+ 1573 03d4 4908     		.2byte	0x849
+ 1574 03d6 4A040000 		.4byte	0x44a
+ 1575 03da AA       		.byte	0xaa
+ 1576 03db 08       		.uleb128 0x8
+ 1577 03dc 4D050000 		.4byte	.LASF78
+ 1578 03e0 04       		.byte	0x4
+ 1579 03e1 4A08     		.2byte	0x84a
+ 1580 03e3 8C000000 		.4byte	0x8c
+ 1581 03e7 AB       		.byte	0xab
+ 1582 03e8 08       		.uleb128 0x8
+ 1583 03e9 1C040000 		.4byte	.LASF79
+ 1584 03ed 04       		.byte	0x4
+ 1585 03ee 4B08     		.2byte	0x84b
+ARM GAS  e:\temp\ccmqioMm.s 			page 31
+
+
+ 1586 03f0 97000000 		.4byte	0x97
+ 1587 03f4 AC       		.byte	0xac
+ 1588 03f5 08       		.uleb128 0x8
+ 1589 03f6 01010000 		.4byte	.LASF80
+ 1590 03fa 04       		.byte	0x4
+ 1591 03fb 4C08     		.2byte	0x84c
+ 1592 03fd 97000000 		.4byte	0x97
+ 1593 0401 AE       		.byte	0xae
+ 1594 0402 08       		.uleb128 0x8
+ 1595 0403 CC060000 		.4byte	.LASF81
+ 1596 0407 04       		.byte	0x4
+ 1597 0408 4D08     		.2byte	0x84d
+ 1598 040a 97000000 		.4byte	0x97
+ 1599 040e B0       		.byte	0xb0
+ 1600 040f 08       		.uleb128 0x8
+ 1601 0410 A5030000 		.4byte	.LASF82
+ 1602 0414 04       		.byte	0x4
+ 1603 0415 4E08     		.2byte	0x84e
+ 1604 0417 97000000 		.4byte	0x97
+ 1605 041b B2       		.byte	0xb2
+ 1606 041c 08       		.uleb128 0x8
+ 1607 041d 59050000 		.4byte	.LASF83
+ 1608 0421 04       		.byte	0x4
+ 1609 0422 4F08     		.2byte	0x84f
+ 1610 0424 8F040000 		.4byte	0x48f
+ 1611 0428 B4       		.byte	0xb4
+ 1612 0429 00       		.byte	0
+ 1613 042a 05       		.uleb128 0x5
+ 1614 042b 97000000 		.4byte	0x97
+ 1615 042f 3A040000 		.4byte	0x43a
+ 1616 0433 06       		.uleb128 0x6
+ 1617 0434 C9000000 		.4byte	0xc9
+ 1618 0438 03       		.byte	0x3
+ 1619 0439 00       		.byte	0
+ 1620 043a 05       		.uleb128 0x5
+ 1621 043b 97000000 		.4byte	0x97
+ 1622 043f 4A040000 		.4byte	0x44a
+ 1623 0443 06       		.uleb128 0x6
+ 1624 0444 C9000000 		.4byte	0xc9
+ 1625 0448 02       		.byte	0x2
+ 1626 0449 00       		.byte	0
+ 1627 044a 09       		.uleb128 0x9
+ 1628 044b 8C000000 		.4byte	0x8c
+ 1629 044f 05       		.uleb128 0x5
+ 1630 0450 97000000 		.4byte	0x97
+ 1631 0454 5F040000 		.4byte	0x45f
+ 1632 0458 06       		.uleb128 0x6
+ 1633 0459 C9000000 		.4byte	0xc9
+ 1634 045d 04       		.byte	0x4
+ 1635 045e 00       		.byte	0
+ 1636 045f 05       		.uleb128 0x5
+ 1637 0460 A2000000 		.4byte	0xa2
+ 1638 0464 6F040000 		.4byte	0x46f
+ 1639 0468 06       		.uleb128 0x6
+ 1640 0469 C9000000 		.4byte	0xc9
+ 1641 046d 06       		.byte	0x6
+ 1642 046e 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 32
+
+
+ 1643 046f 05       		.uleb128 0x5
+ 1644 0470 97000000 		.4byte	0x97
+ 1645 0474 7F040000 		.4byte	0x47f
+ 1646 0478 06       		.uleb128 0x6
+ 1647 0479 C9000000 		.4byte	0xc9
+ 1648 047d 06       		.byte	0x6
+ 1649 047e 00       		.byte	0
+ 1650 047f 05       		.uleb128 0x5
+ 1651 0480 8C000000 		.4byte	0x8c
+ 1652 0484 8F040000 		.4byte	0x48f
+ 1653 0488 06       		.uleb128 0x6
+ 1654 0489 C9000000 		.4byte	0xc9
+ 1655 048d 03       		.byte	0x3
+ 1656 048e 00       		.byte	0
+ 1657 048f 05       		.uleb128 0x5
+ 1658 0490 8C000000 		.4byte	0x8c
+ 1659 0494 9F040000 		.4byte	0x49f
+ 1660 0498 06       		.uleb128 0x6
+ 1661 0499 C9000000 		.4byte	0xc9
+ 1662 049d 3B       		.byte	0x3b
+ 1663 049e 00       		.byte	0
+ 1664 049f 0A       		.uleb128 0xa
+ 1665 04a0 C6020000 		.4byte	.LASF84
+ 1666 04a4 04       		.byte	0x4
+ 1667 04a5 5008     		.2byte	0x850
+ 1668 04a7 E0000000 		.4byte	0xe0
+ 1669 04ab 0B       		.uleb128 0xb
+ 1670 04ac 0002     		.2byte	0x200
+ 1671 04ae 04       		.byte	0x4
+ 1672 04af 3509     		.2byte	0x935
+ 1673 04b1 86050000 		.4byte	0x586
+ 1674 04b5 08       		.uleb128 0x8
+ 1675 04b6 E0050000 		.4byte	.LASF85
+ 1676 04ba 04       		.byte	0x4
+ 1677 04bb 3709     		.2byte	0x937
+ 1678 04bd 97000000 		.4byte	0x97
+ 1679 04c1 00       		.byte	0
+ 1680 04c2 08       		.uleb128 0x8
+ 1681 04c3 A0040000 		.4byte	.LASF86
+ 1682 04c7 04       		.byte	0x4
+ 1683 04c8 3809     		.2byte	0x938
+ 1684 04ca 8C000000 		.4byte	0x8c
+ 1685 04ce 02       		.byte	0x2
+ 1686 04cf 08       		.uleb128 0x8
+ 1687 04d0 A6010000 		.4byte	.LASF87
+ 1688 04d4 04       		.byte	0x4
+ 1689 04d5 3E09     		.2byte	0x93e
+ 1690 04d7 8C000000 		.4byte	0x8c
+ 1691 04db 03       		.byte	0x3
+ 1692 04dc 08       		.uleb128 0x8
+ 1693 04dd 5D010000 		.4byte	.LASF88
+ 1694 04e1 04       		.byte	0x4
+ 1695 04e2 4709     		.2byte	0x947
+ 1696 04e4 97000000 		.4byte	0x97
+ 1697 04e8 04       		.byte	0x4
+ 1698 04e9 08       		.uleb128 0x8
+ 1699 04ea 3C060000 		.4byte	.LASF89
+ARM GAS  e:\temp\ccmqioMm.s 			page 33
+
+
+ 1700 04ee 04       		.byte	0x4
+ 1701 04ef 4A09     		.2byte	0x94a
+ 1702 04f1 97000000 		.4byte	0x97
+ 1703 04f5 06       		.byte	0x6
+ 1704 04f6 08       		.uleb128 0x8
+ 1705 04f7 88040000 		.4byte	.LASF90
+ 1706 04fb 04       		.byte	0x4
+ 1707 04fc 4D09     		.2byte	0x94d
+ 1708 04fe 8C000000 		.4byte	0x8c
+ 1709 0502 08       		.byte	0x8
+ 1710 0503 08       		.uleb128 0x8
+ 1711 0504 32040000 		.4byte	.LASF91
+ 1712 0508 04       		.byte	0x4
+ 1713 0509 5009     		.2byte	0x950
+ 1714 050b 8C000000 		.4byte	0x8c
+ 1715 050f 09       		.byte	0x9
+ 1716 0510 08       		.uleb128 0x8
+ 1717 0511 FD020000 		.4byte	.LASF92
+ 1718 0515 04       		.byte	0x4
+ 1719 0516 5309     		.2byte	0x953
+ 1720 0518 97000000 		.4byte	0x97
+ 1721 051c 0A       		.byte	0xa
+ 1722 051d 08       		.uleb128 0x8
+ 1723 051e C4030000 		.4byte	.LASF93
+ 1724 0522 04       		.byte	0x4
+ 1725 0523 5609     		.2byte	0x956
+ 1726 0525 97000000 		.4byte	0x97
+ 1727 0529 0C       		.byte	0xc
+ 1728 052a 08       		.uleb128 0x8
+ 1729 052b B8030000 		.4byte	.LASF94
+ 1730 052f 04       		.byte	0x4
+ 1731 0530 5709     		.2byte	0x957
+ 1732 0532 8C000000 		.4byte	0x8c
+ 1733 0536 0E       		.byte	0xe
+ 1734 0537 08       		.uleb128 0x8
+ 1735 0538 C5010000 		.4byte	.LASF28
+ 1736 053c 04       		.byte	0x4
+ 1737 053d 5809     		.2byte	0x958
+ 1738 053f 8C000000 		.4byte	0x8c
+ 1739 0543 0F       		.byte	0xf
+ 1740 0544 08       		.uleb128 0x8
+ 1741 0545 8D060000 		.4byte	.LASF95
+ 1742 0549 04       		.byte	0x4
+ 1743 054a 5909     		.2byte	0x959
+ 1744 054c 97000000 		.4byte	0x97
+ 1745 0550 10       		.byte	0x10
+ 1746 0551 08       		.uleb128 0x8
+ 1747 0552 E0060000 		.4byte	.LASF96
+ 1748 0556 04       		.byte	0x4
+ 1749 0557 5A09     		.2byte	0x95a
+ 1750 0559 8C000000 		.4byte	0x8c
+ 1751 055d 12       		.byte	0x12
+ 1752 055e 08       		.uleb128 0x8
+ 1753 055f D0010000 		.4byte	.LASF30
+ 1754 0563 04       		.byte	0x4
+ 1755 0564 5B09     		.2byte	0x95b
+ 1756 0566 8C000000 		.4byte	0x8c
+ARM GAS  e:\temp\ccmqioMm.s 			page 34
+
+
+ 1757 056a 13       		.byte	0x13
+ 1758 056b 08       		.uleb128 0x8
+ 1759 056c DB010000 		.4byte	.LASF97
+ 1760 0570 04       		.byte	0x4
+ 1761 0571 5C09     		.2byte	0x95c
+ 1762 0573 86050000 		.4byte	0x586
+ 1763 0577 14       		.byte	0x14
+ 1764 0578 08       		.uleb128 0x8
+ 1765 0579 96050000 		.4byte	.LASF98
+ 1766 057d 04       		.byte	0x4
+ 1767 057e 5E09     		.2byte	0x95e
+ 1768 0580 96050000 		.4byte	0x596
+ 1769 0584 20       		.byte	0x20
+ 1770 0585 00       		.byte	0
+ 1771 0586 05       		.uleb128 0x5
+ 1772 0587 97000000 		.4byte	0x97
+ 1773 058b 96050000 		.4byte	0x596
+ 1774 058f 06       		.uleb128 0x6
+ 1775 0590 C9000000 		.4byte	0xc9
+ 1776 0594 05       		.byte	0x5
+ 1777 0595 00       		.byte	0
+ 1778 0596 05       		.uleb128 0x5
+ 1779 0597 9F040000 		.4byte	0x49f
+ 1780 059b A6050000 		.4byte	0x5a6
+ 1781 059f 06       		.uleb128 0x6
+ 1782 05a0 C9000000 		.4byte	0xc9
+ 1783 05a4 01       		.byte	0x1
+ 1784 05a5 00       		.byte	0
+ 1785 05a6 0A       		.uleb128 0xa
+ 1786 05a7 3A020000 		.4byte	.LASF99
+ 1787 05ab 04       		.byte	0x4
+ 1788 05ac 5F09     		.2byte	0x95f
+ 1789 05ae AB040000 		.4byte	0x4ab
+ 1790 05b2 02       		.uleb128 0x2
+ 1791 05b3 01       		.byte	0x1
+ 1792 05b4 02       		.byte	0x2
+ 1793 05b5 47050000 		.4byte	.LASF100
+ 1794 05b9 0C       		.uleb128 0xc
+ 1795 05ba 7F060000 		.4byte	.LASF104
+ 1796 05be 01       		.byte	0x1
+ 1797 05bf 75       		.byte	0x75
+ 1798 05c0 CE050000 		.4byte	0x5ce
+ 1799 05c4 00000000 		.4byte	.LFB32
+ 1800 05c8 08000000 		.4byte	.LFE32-.LFB32
+ 1801 05cc 01       		.uleb128 0x1
+ 1802 05cd 9C       		.byte	0x9c
+ 1803 05ce 0D       		.uleb128 0xd
+ 1804 05cf 04       		.byte	0x4
+ 1805 05d0 D4050000 		.4byte	0x5d4
+ 1806 05d4 0E       		.uleb128 0xe
+ 1807 05d5 A6050000 		.4byte	0x5a6
+ 1808 05d9 0F       		.uleb128 0xf
+ 1809 05da EE000000 		.4byte	.LASF105
+ 1810 05de 01       		.byte	0x1
+ 1811 05df 7A       		.byte	0x7a
+ 1812 05e0 02060000 		.4byte	0x602
+ 1813 05e4 00000000 		.4byte	.LFB33
+ARM GAS  e:\temp\ccmqioMm.s 			page 35
+
+
+ 1814 05e8 14000000 		.4byte	.LFE33-.LFB33
+ 1815 05ec 01       		.uleb128 0x1
+ 1816 05ed 9C       		.byte	0x9c
+ 1817 05ee 02060000 		.4byte	0x602
+ 1818 05f2 10       		.uleb128 0x10
+ 1819 05f3 81050000 		.4byte	.LASF106
+ 1820 05f7 01       		.byte	0x1
+ 1821 05f8 7A       		.byte	0x7a
+ 1822 05f9 8C000000 		.4byte	0x8c
+ 1823 05fd 00000000 		.4byte	.LLST0
+ 1824 0601 00       		.byte	0
+ 1825 0602 0D       		.uleb128 0xd
+ 1826 0603 04       		.byte	0x4
+ 1827 0604 08060000 		.4byte	0x608
+ 1828 0608 0E       		.uleb128 0xe
+ 1829 0609 9F040000 		.4byte	0x49f
+ 1830 060d 05       		.uleb128 0x5
+ 1831 060e 1E060000 		.4byte	0x61e
+ 1832 0612 1E060000 		.4byte	0x61e
+ 1833 0616 11       		.uleb128 0x11
+ 1834 0617 C9000000 		.4byte	0xc9
+ 1835 061b FF03     		.2byte	0x3ff
+ 1836 061d 00       		.byte	0
+ 1837 061e 0E       		.uleb128 0xe
+ 1838 061f 37000000 		.4byte	0x37
+ 1839 0623 12       		.uleb128 0x12
+ 1840 0624 AB040000 		.4byte	.LASF107
+ 1841 0628 01       		.byte	0x1
+ 1842 0629 31       		.byte	0x31
+ 1843 062a 34060000 		.4byte	0x634
+ 1844 062e 05       		.uleb128 0x5
+ 1845 062f 03       		.byte	0x3
+ 1846 0630 00000000 		.4byte	gl_config_table
+ 1847 0634 0E       		.uleb128 0xe
+ 1848 0635 0D060000 		.4byte	0x60d
+ 1849 0639 00       		.byte	0
+ 1850              		.section	.debug_abbrev,"",%progbits
+ 1851              	.Ldebug_abbrev0:
+ 1852 0000 01       		.uleb128 0x1
+ 1853 0001 11       		.uleb128 0x11
+ 1854 0002 01       		.byte	0x1
+ 1855 0003 25       		.uleb128 0x25
+ 1856 0004 0E       		.uleb128 0xe
+ 1857 0005 13       		.uleb128 0x13
+ 1858 0006 0B       		.uleb128 0xb
+ 1859 0007 03       		.uleb128 0x3
+ 1860 0008 0E       		.uleb128 0xe
+ 1861 0009 1B       		.uleb128 0x1b
+ 1862 000a 0E       		.uleb128 0xe
+ 1863 000b 55       		.uleb128 0x55
+ 1864 000c 17       		.uleb128 0x17
+ 1865 000d 11       		.uleb128 0x11
+ 1866 000e 01       		.uleb128 0x1
+ 1867 000f 10       		.uleb128 0x10
+ 1868 0010 17       		.uleb128 0x17
+ 1869 0011 00       		.byte	0
+ 1870 0012 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 36
+
+
+ 1871 0013 02       		.uleb128 0x2
+ 1872 0014 24       		.uleb128 0x24
+ 1873 0015 00       		.byte	0
+ 1874 0016 0B       		.uleb128 0xb
+ 1875 0017 0B       		.uleb128 0xb
+ 1876 0018 3E       		.uleb128 0x3e
+ 1877 0019 0B       		.uleb128 0xb
+ 1878 001a 03       		.uleb128 0x3
+ 1879 001b 0E       		.uleb128 0xe
+ 1880 001c 00       		.byte	0
+ 1881 001d 00       		.byte	0
+ 1882 001e 03       		.uleb128 0x3
+ 1883 001f 16       		.uleb128 0x16
+ 1884 0020 00       		.byte	0
+ 1885 0021 03       		.uleb128 0x3
+ 1886 0022 0E       		.uleb128 0xe
+ 1887 0023 3A       		.uleb128 0x3a
+ 1888 0024 0B       		.uleb128 0xb
+ 1889 0025 3B       		.uleb128 0x3b
+ 1890 0026 0B       		.uleb128 0xb
+ 1891 0027 49       		.uleb128 0x49
+ 1892 0028 13       		.uleb128 0x13
+ 1893 0029 00       		.byte	0
+ 1894 002a 00       		.byte	0
+ 1895 002b 04       		.uleb128 0x4
+ 1896 002c 24       		.uleb128 0x24
+ 1897 002d 00       		.byte	0
+ 1898 002e 0B       		.uleb128 0xb
+ 1899 002f 0B       		.uleb128 0xb
+ 1900 0030 3E       		.uleb128 0x3e
+ 1901 0031 0B       		.uleb128 0xb
+ 1902 0032 03       		.uleb128 0x3
+ 1903 0033 08       		.uleb128 0x8
+ 1904 0034 00       		.byte	0
+ 1905 0035 00       		.byte	0
+ 1906 0036 05       		.uleb128 0x5
+ 1907 0037 01       		.uleb128 0x1
+ 1908 0038 01       		.byte	0x1
+ 1909 0039 49       		.uleb128 0x49
+ 1910 003a 13       		.uleb128 0x13
+ 1911 003b 01       		.uleb128 0x1
+ 1912 003c 13       		.uleb128 0x13
+ 1913 003d 00       		.byte	0
+ 1914 003e 00       		.byte	0
+ 1915 003f 06       		.uleb128 0x6
+ 1916 0040 21       		.uleb128 0x21
+ 1917 0041 00       		.byte	0
+ 1918 0042 49       		.uleb128 0x49
+ 1919 0043 13       		.uleb128 0x13
+ 1920 0044 2F       		.uleb128 0x2f
+ 1921 0045 0B       		.uleb128 0xb
+ 1922 0046 00       		.byte	0
+ 1923 0047 00       		.byte	0
+ 1924 0048 07       		.uleb128 0x7
+ 1925 0049 13       		.uleb128 0x13
+ 1926 004a 01       		.byte	0x1
+ 1927 004b 0B       		.uleb128 0xb
+ARM GAS  e:\temp\ccmqioMm.s 			page 37
+
+
+ 1928 004c 0B       		.uleb128 0xb
+ 1929 004d 3A       		.uleb128 0x3a
+ 1930 004e 0B       		.uleb128 0xb
+ 1931 004f 3B       		.uleb128 0x3b
+ 1932 0050 05       		.uleb128 0x5
+ 1933 0051 01       		.uleb128 0x1
+ 1934 0052 13       		.uleb128 0x13
+ 1935 0053 00       		.byte	0
+ 1936 0054 00       		.byte	0
+ 1937 0055 08       		.uleb128 0x8
+ 1938 0056 0D       		.uleb128 0xd
+ 1939 0057 00       		.byte	0
+ 1940 0058 03       		.uleb128 0x3
+ 1941 0059 0E       		.uleb128 0xe
+ 1942 005a 3A       		.uleb128 0x3a
+ 1943 005b 0B       		.uleb128 0xb
+ 1944 005c 3B       		.uleb128 0x3b
+ 1945 005d 05       		.uleb128 0x5
+ 1946 005e 49       		.uleb128 0x49
+ 1947 005f 13       		.uleb128 0x13
+ 1948 0060 38       		.uleb128 0x38
+ 1949 0061 0B       		.uleb128 0xb
+ 1950 0062 00       		.byte	0
+ 1951 0063 00       		.byte	0
+ 1952 0064 09       		.uleb128 0x9
+ 1953 0065 35       		.uleb128 0x35
+ 1954 0066 00       		.byte	0
+ 1955 0067 49       		.uleb128 0x49
+ 1956 0068 13       		.uleb128 0x13
+ 1957 0069 00       		.byte	0
+ 1958 006a 00       		.byte	0
+ 1959 006b 0A       		.uleb128 0xa
+ 1960 006c 16       		.uleb128 0x16
+ 1961 006d 00       		.byte	0
+ 1962 006e 03       		.uleb128 0x3
+ 1963 006f 0E       		.uleb128 0xe
+ 1964 0070 3A       		.uleb128 0x3a
+ 1965 0071 0B       		.uleb128 0xb
+ 1966 0072 3B       		.uleb128 0x3b
+ 1967 0073 05       		.uleb128 0x5
+ 1968 0074 49       		.uleb128 0x49
+ 1969 0075 13       		.uleb128 0x13
+ 1970 0076 00       		.byte	0
+ 1971 0077 00       		.byte	0
+ 1972 0078 0B       		.uleb128 0xb
+ 1973 0079 13       		.uleb128 0x13
+ 1974 007a 01       		.byte	0x1
+ 1975 007b 0B       		.uleb128 0xb
+ 1976 007c 05       		.uleb128 0x5
+ 1977 007d 3A       		.uleb128 0x3a
+ 1978 007e 0B       		.uleb128 0xb
+ 1979 007f 3B       		.uleb128 0x3b
+ 1980 0080 05       		.uleb128 0x5
+ 1981 0081 01       		.uleb128 0x1
+ 1982 0082 13       		.uleb128 0x13
+ 1983 0083 00       		.byte	0
+ 1984 0084 00       		.byte	0
+ARM GAS  e:\temp\ccmqioMm.s 			page 38
+
+
+ 1985 0085 0C       		.uleb128 0xc
+ 1986 0086 2E       		.uleb128 0x2e
+ 1987 0087 00       		.byte	0
+ 1988 0088 3F       		.uleb128 0x3f
+ 1989 0089 19       		.uleb128 0x19
+ 1990 008a 03       		.uleb128 0x3
+ 1991 008b 0E       		.uleb128 0xe
+ 1992 008c 3A       		.uleb128 0x3a
+ 1993 008d 0B       		.uleb128 0xb
+ 1994 008e 3B       		.uleb128 0x3b
+ 1995 008f 0B       		.uleb128 0xb
+ 1996 0090 27       		.uleb128 0x27
+ 1997 0091 19       		.uleb128 0x19
+ 1998 0092 49       		.uleb128 0x49
+ 1999 0093 13       		.uleb128 0x13
+ 2000 0094 11       		.uleb128 0x11
+ 2001 0095 01       		.uleb128 0x1
+ 2002 0096 12       		.uleb128 0x12
+ 2003 0097 06       		.uleb128 0x6
+ 2004 0098 40       		.uleb128 0x40
+ 2005 0099 18       		.uleb128 0x18
+ 2006 009a 9742     		.uleb128 0x2117
+ 2007 009c 19       		.uleb128 0x19
+ 2008 009d 00       		.byte	0
+ 2009 009e 00       		.byte	0
+ 2010 009f 0D       		.uleb128 0xd
+ 2011 00a0 0F       		.uleb128 0xf
+ 2012 00a1 00       		.byte	0
+ 2013 00a2 0B       		.uleb128 0xb
+ 2014 00a3 0B       		.uleb128 0xb
+ 2015 00a4 49       		.uleb128 0x49
+ 2016 00a5 13       		.uleb128 0x13
+ 2017 00a6 00       		.byte	0
+ 2018 00a7 00       		.byte	0
+ 2019 00a8 0E       		.uleb128 0xe
+ 2020 00a9 26       		.uleb128 0x26
+ 2021 00aa 00       		.byte	0
+ 2022 00ab 49       		.uleb128 0x49
+ 2023 00ac 13       		.uleb128 0x13
+ 2024 00ad 00       		.byte	0
+ 2025 00ae 00       		.byte	0
+ 2026 00af 0F       		.uleb128 0xf
+ 2027 00b0 2E       		.uleb128 0x2e
+ 2028 00b1 01       		.byte	0x1
+ 2029 00b2 3F       		.uleb128 0x3f
+ 2030 00b3 19       		.uleb128 0x19
+ 2031 00b4 03       		.uleb128 0x3
+ 2032 00b5 0E       		.uleb128 0xe
+ 2033 00b6 3A       		.uleb128 0x3a
+ 2034 00b7 0B       		.uleb128 0xb
+ 2035 00b8 3B       		.uleb128 0x3b
+ 2036 00b9 0B       		.uleb128 0xb
+ 2037 00ba 27       		.uleb128 0x27
+ 2038 00bb 19       		.uleb128 0x19
+ 2039 00bc 49       		.uleb128 0x49
+ 2040 00bd 13       		.uleb128 0x13
+ 2041 00be 11       		.uleb128 0x11
+ARM GAS  e:\temp\ccmqioMm.s 			page 39
+
+
+ 2042 00bf 01       		.uleb128 0x1
+ 2043 00c0 12       		.uleb128 0x12
+ 2044 00c1 06       		.uleb128 0x6
+ 2045 00c2 40       		.uleb128 0x40
+ 2046 00c3 18       		.uleb128 0x18
+ 2047 00c4 9742     		.uleb128 0x2117
+ 2048 00c6 19       		.uleb128 0x19
+ 2049 00c7 01       		.uleb128 0x1
+ 2050 00c8 13       		.uleb128 0x13
+ 2051 00c9 00       		.byte	0
+ 2052 00ca 00       		.byte	0
+ 2053 00cb 10       		.uleb128 0x10
+ 2054 00cc 05       		.uleb128 0x5
+ 2055 00cd 00       		.byte	0
+ 2056 00ce 03       		.uleb128 0x3
+ 2057 00cf 0E       		.uleb128 0xe
+ 2058 00d0 3A       		.uleb128 0x3a
+ 2059 00d1 0B       		.uleb128 0xb
+ 2060 00d2 3B       		.uleb128 0x3b
+ 2061 00d3 0B       		.uleb128 0xb
+ 2062 00d4 49       		.uleb128 0x49
+ 2063 00d5 13       		.uleb128 0x13
+ 2064 00d6 02       		.uleb128 0x2
+ 2065 00d7 17       		.uleb128 0x17
+ 2066 00d8 00       		.byte	0
+ 2067 00d9 00       		.byte	0
+ 2068 00da 11       		.uleb128 0x11
+ 2069 00db 21       		.uleb128 0x21
+ 2070 00dc 00       		.byte	0
+ 2071 00dd 49       		.uleb128 0x49
+ 2072 00de 13       		.uleb128 0x13
+ 2073 00df 2F       		.uleb128 0x2f
+ 2074 00e0 05       		.uleb128 0x5
+ 2075 00e1 00       		.byte	0
+ 2076 00e2 00       		.byte	0
+ 2077 00e3 12       		.uleb128 0x12
+ 2078 00e4 34       		.uleb128 0x34
+ 2079 00e5 00       		.byte	0
+ 2080 00e6 03       		.uleb128 0x3
+ 2081 00e7 0E       		.uleb128 0xe
+ 2082 00e8 3A       		.uleb128 0x3a
+ 2083 00e9 0B       		.uleb128 0xb
+ 2084 00ea 3B       		.uleb128 0x3b
+ 2085 00eb 0B       		.uleb128 0xb
+ 2086 00ec 49       		.uleb128 0x49
+ 2087 00ed 13       		.uleb128 0x13
+ 2088 00ee 3F       		.uleb128 0x3f
+ 2089 00ef 19       		.uleb128 0x19
+ 2090 00f0 02       		.uleb128 0x2
+ 2091 00f1 18       		.uleb128 0x18
+ 2092 00f2 00       		.byte	0
+ 2093 00f3 00       		.byte	0
+ 2094 00f4 00       		.byte	0
+ 2095              		.section	.debug_loc,"",%progbits
+ 2096              	.Ldebug_loc0:
+ 2097              	.LLST0:
+ 2098 0000 00000000 		.4byte	.LVL0
+ARM GAS  e:\temp\ccmqioMm.s 			page 40
+
+
+ 2099 0004 06000000 		.4byte	.LVL1
+ 2100 0008 0100     		.2byte	0x1
+ 2101 000a 50       		.byte	0x50
+ 2102 000b 06000000 		.4byte	.LVL1
+ 2103 000f 14000000 		.4byte	.LFE33
+ 2104 0013 0400     		.2byte	0x4
+ 2105 0015 F3       		.byte	0xf3
+ 2106 0016 01       		.uleb128 0x1
+ 2107 0017 50       		.byte	0x50
+ 2108 0018 9F       		.byte	0x9f
+ 2109 0019 00000000 		.4byte	0
+ 2110 001d 00000000 		.4byte	0
+ 2111              		.section	.debug_aranges,"",%progbits
+ 2112 0000 24000000 		.4byte	0x24
+ 2113 0004 0200     		.2byte	0x2
+ 2114 0006 00000000 		.4byte	.Ldebug_info0
+ 2115 000a 04       		.byte	0x4
+ 2116 000b 00       		.byte	0
+ 2117 000c 0000     		.2byte	0
+ 2118 000e 0000     		.2byte	0
+ 2119 0010 00000000 		.4byte	.LFB32
+ 2120 0014 08000000 		.4byte	.LFE32-.LFB32
+ 2121 0018 00000000 		.4byte	.LFB33
+ 2122 001c 14000000 		.4byte	.LFE33-.LFB33
+ 2123 0020 00000000 		.4byte	0
+ 2124 0024 00000000 		.4byte	0
+ 2125              		.section	.debug_ranges,"",%progbits
+ 2126              	.Ldebug_ranges0:
+ 2127 0000 00000000 		.4byte	.LFB32
+ 2128 0004 08000000 		.4byte	.LFE32
+ 2129 0008 00000000 		.4byte	.LFB33
+ 2130 000c 14000000 		.4byte	.LFE33
+ 2131 0010 00000000 		.4byte	0
+ 2132 0014 00000000 		.4byte	0
+ 2133              		.section	.debug_line,"",%progbits
+ 2134              	.Ldebug_line0:
+ 2135 0000 40010000 		.section	.debug_str,"MS",%progbits,1
+ 2135      02001701 
+ 2135      00000201 
+ 2135      FB0E0D00 
+ 2135      01010101 
+ 2136              	.LASF14:
+ 2137 0000 75696E74 		.ascii	"uint32_t\000"
+ 2137      33325F74 
+ 2137      00
+ 2138              	.LASF64:
+ 2139 0009 76636F6E 		.ascii	"vconn_ocp_tbl_offset\000"
+ 2139      6E5F6F63 
+ 2139      705F7462 
+ 2139      6C5F6F66 
+ 2139      66736574 
+ 2140              	.LASF101:
+ 2141 001e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2141      43313120 
+ 2141      352E342E 
+ 2141      31203230 
+ 2141      31363036 
+ARM GAS  e:\temp\ccmqioMm.s 			page 41
+
+
+ 2142 0051 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 2142      20726576 
+ 2142      6973696F 
+ 2142      6E203233 
+ 2142      37373135 
+ 2143 0084 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 2143      66756E63 
+ 2143      74696F6E 
+ 2143      2D736563 
+ 2143      74696F6E 
+ 2144 00b7 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 2144      6F6E7320 
+ 2144      2D666E6F 
+ 2144      2D737472 
+ 2144      6963742D 
+ 2145              	.LASF40:
+ 2146 00d4 7372635F 		.ascii	"src_pdo_cnt\000"
+ 2146      70646F5F 
+ 2146      636E7400 
+ 2147              	.LASF21:
+ 2148 00e0 69645F76 		.ascii	"id_vdm_length\000"
+ 2148      646D5F6C 
+ 2148      656E6774 
+ 2148      6800
+ 2149              	.LASF105:
+ 2150 00ee 6765745F 		.ascii	"get_pd_port_config\000"
+ 2150      70645F70 
+ 2150      6F72745F 
+ 2150      636F6E66 
+ 2150      696700
+ 2151              	.LASF80:
+ 2152 0101 74797065 		.ascii	"type_a_chg_tbl_offset\000"
+ 2152      5F615F63 
+ 2152      68675F74 
+ 2152      626C5F6F 
+ 2152      66667365 
+ 2153              	.LASF52:
+ 2154 0117 76636F6E 		.ascii	"vconn_retain\000"
+ 2154      6E5F7265 
+ 2154      7461696E 
+ 2154      00
+ 2155              	.LASF66:
+ 2156 0124 7077725F 		.ascii	"pwr_tbl_offset\000"
+ 2156      74626C5F 
+ 2156      6F666673 
+ 2156      657400
+ 2157              	.LASF31:
+ 2158 0133 706F7274 		.ascii	"port_role\000"
+ 2158      5F726F6C 
+ 2158      6500
+ 2159              	.LASF2:
+ 2160 013d 73686F72 		.ascii	"short int\000"
+ 2160      7420696E 
+ 2160      7400
+ 2161              	.LASF32:
+ 2162 0147 64656661 		.ascii	"default_role\000"
+ 2162      756C745F 
+ARM GAS  e:\temp\ccmqioMm.s 			page 42
+
+
+ 2162      726F6C65 
+ 2162      00
+ 2163              	.LASF19:
+ 2164 0154 73697A65 		.ascii	"sizetype\000"
+ 2164      74797065 
+ 2164      00
+ 2165              	.LASF88:
+ 2166 015d 7461626C 		.ascii	"table_version\000"
+ 2166      655F7665 
+ 2166      7273696F 
+ 2166      6E00
+ 2167              	.LASF34:
+ 2168 016b 69735F73 		.ascii	"is_src_bat\000"
+ 2168      72635F62 
+ 2168      617400
+ 2169              	.LASF18:
+ 2170 0176 6C6F6E67 		.ascii	"long double\000"
+ 2170      20646F75 
+ 2170      626C6500 
+ 2171              	.LASF7:
+ 2172 0182 5F5F7569 		.ascii	"__uint32_t\000"
+ 2172      6E743332 
+ 2172      5F7400
+ 2173              	.LASF77:
+ 2174 018d 74797065 		.ascii	"type_a_enable\000"
+ 2174      5F615F65 
+ 2174      6E61626C 
+ 2174      6500
+ 2175              	.LASF4:
+ 2176 019b 5F5F7569 		.ascii	"__uint16_t\000"
+ 2176      6E743136 
+ 2176      5F7400
+ 2177              	.LASF87:
+ 2178 01a6 6170706C 		.ascii	"application\000"
+ 2178      69636174 
+ 2178      696F6E00 
+ 2179              	.LASF102:
+ 2180 01b2 2E2E5C63 		.ascii	"..\\common\\config.c\000"
+ 2180      6F6D6D6F 
+ 2180      6E5C636F 
+ 2180      6E666967 
+ 2180      2E6300
+ 2181              	.LASF28:
+ 2182 01c5 72657365 		.ascii	"reserved_0\000"
+ 2182      72766564 
+ 2182      5F3000
+ 2183              	.LASF30:
+ 2184 01d0 72657365 		.ascii	"reserved_1\000"
+ 2184      72766564 
+ 2184      5F3100
+ 2185              	.LASF97:
+ 2186 01db 72657365 		.ascii	"reserved_2\000"
+ 2186      72766564 
+ 2186      5F3200
+ 2187              	.LASF53:
+ 2188 01e6 72657365 		.ascii	"reserved_3\000"
+ 2188      72766564 
+ARM GAS  e:\temp\ccmqioMm.s 			page 43
+
+
+ 2188      5F3300
+ 2189              	.LASF57:
+ 2190 01f1 72657365 		.ascii	"reserved_4\000"
+ 2190      72766564 
+ 2190      5F3400
+ 2191              	.LASF75:
+ 2192 01fc 72657365 		.ascii	"reserved_6\000"
+ 2192      72766564 
+ 2192      5F3600
+ 2193              	.LASF59:
+ 2194 0207 72657365 		.ascii	"reserved_8\000"
+ 2194      72766564 
+ 2194      5F3800
+ 2195              	.LASF69:
+ 2196 0212 72657365 		.ascii	"reserved_9\000"
+ 2196      72766564 
+ 2196      5F3900
+ 2197              	.LASF37:
+ 2198 021d 736E6B5F 		.ascii	"snk_usb_comm_en\000"
+ 2198      7573625F 
+ 2198      636F6D6D 
+ 2198      5F656E00 
+ 2199              	.LASF55:
+ 2200 022d 736E6B5F 		.ascii	"snk_pdo_list\000"
+ 2200      70646F5F 
+ 2200      6C697374 
+ 2200      00
+ 2201              	.LASF99:
+ 2202 023a 70645F63 		.ascii	"pd_config_t\000"
+ 2202      6F6E6669 
+ 2202      675F7400 
+ 2203              	.LASF36:
+ 2204 0246 736E6B5F 		.ascii	"snk_usb_susp_en\000"
+ 2204      7573625F 
+ 2204      73757370 
+ 2204      5F656E00 
+ 2205              	.LASF62:
+ 2206 0256 7576705F 		.ascii	"uvp_tbl_offset\000"
+ 2206      74626C5F 
+ 2206      6F666673 
+ 2206      657400
+ 2207              	.LASF15:
+ 2208 0265 666C6F61 		.ascii	"float\000"
+ 2208      7400
+ 2209              	.LASF9:
+ 2210 026b 6C6F6E67 		.ascii	"long long int\000"
+ 2210      206C6F6E 
+ 2210      6720696E 
+ 2210      7400
+ 2211              	.LASF33:
+ 2212 0279 63757272 		.ascii	"current_level\000"
+ 2212      656E745F 
+ 2212      6C657665 
+ 2212      6C00
+ 2213              	.LASF65:
+ 2214 0287 6F74705F 		.ascii	"otp_tbl_offset\000"
+ 2214      74626C5F 
+ARM GAS  e:\temp\ccmqioMm.s 			page 44
+
+
+ 2214      6F666673 
+ 2214      657400
+ 2215              	.LASF6:
+ 2216 0296 6C6F6E67 		.ascii	"long int\000"
+ 2216      20696E74 
+ 2216      00
+ 2217              	.LASF70:
+ 2218 029f 64705F63 		.ascii	"dp_config_supported\000"
+ 2218      6F6E6669 
+ 2218      675F7375 
+ 2218      70706F72 
+ 2218      74656400 
+ 2219              	.LASF67:
+ 2220 02b3 6368675F 		.ascii	"chg_cfg_tbl_offset\000"
+ 2220      6366675F 
+ 2220      74626C5F 
+ 2220      6F666673 
+ 2220      657400
+ 2221              	.LASF84:
+ 2222 02c6 70645F70 		.ascii	"pd_port_config_t\000"
+ 2222      6F72745F 
+ 2222      636F6E66 
+ 2222      69675F74 
+ 2222      00
+ 2223              	.LASF50:
+ 2224 02d7 706F7274 		.ascii	"port_disable\000"
+ 2224      5F646973 
+ 2224      61626C65 
+ 2224      00
+ 2225              	.LASF60:
+ 2226 02e4 6F76705F 		.ascii	"ovp_tbl_offset\000"
+ 2226      74626C5F 
+ 2226      6F666673 
+ 2226      657400
+ 2227              	.LASF3:
+ 2228 02f3 5F5F7569 		.ascii	"__uint8_t\000"
+ 2228      6E74385F 
+ 2228      7400
+ 2229              	.LASF92:
+ 2230 02fd 666C6173 		.ascii	"flashing_vid\000"
+ 2230      68696E67 
+ 2230      5F766964 
+ 2230      00
+ 2231              	.LASF26:
+ 2232 030a 6578745F 		.ascii	"ext_src_cap_offset\000"
+ 2232      7372635F 
+ 2232      6361705F 
+ 2232      6F666673 
+ 2232      657400
+ 2233              	.LASF24:
+ 2234 031d 6D6F6465 		.ascii	"mode_vdm_offset\000"
+ 2234      5F76646D 
+ 2234      5F6F6666 
+ 2234      73657400 
+ 2235              	.LASF103:
+ 2236 032d 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 2236      73657273 
+ARM GAS  e:\temp\ccmqioMm.s 			page 45
+
+
+ 2236      5C41646D 
+ 2236      696E5C44 
+ 2236      65736B74 
+ 2237 035a 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 2237      355C4359 
+ 2237      50443532 
+ 2237      32352D39 
+ 2237      36425A58 
+ 2238 038b 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 2238      6F6B2E63 
+ 2238      7964736E 
+ 2238      5C6E6F62 
+ 2238      6F6F742E 
+ 2239              	.LASF82:
+ 2240 03a5 73706D5F 		.ascii	"spm_cfg_tbl_offset\000"
+ 2240      6366675F 
+ 2240      74626C5F 
+ 2240      6F666673 
+ 2240      657400
+ 2241              	.LASF94:
+ 2242 03b8 70645F70 		.ascii	"pd_port_cnt\000"
+ 2242      6F72745F 
+ 2242      636E7400 
+ 2243              	.LASF93:
+ 2244 03c4 666C6173 		.ascii	"flashing_mode\000"
+ 2244      68696E67 
+ 2244      5F6D6F64 
+ 2244      6500
+ 2245              	.LASF35:
+ 2246 03d2 69735F73 		.ascii	"is_snk_bat\000"
+ 2246      6E6B5F62 
+ 2246      617400
+ 2247              	.LASF1:
+ 2248 03dd 756E7369 		.ascii	"unsigned char\000"
+ 2248      676E6564 
+ 2248      20636861 
+ 2248      7200
+ 2249              	.LASF27:
+ 2250 03eb 6578745F 		.ascii	"ext_src_cap_length\000"
+ 2250      7372635F 
+ 2250      6361705F 
+ 2250      6C656E67 
+ 2250      746800
+ 2251              	.LASF39:
+ 2252 03fe 6472705F 		.ascii	"drp_toggle_en\000"
+ 2252      746F6767 
+ 2252      6C655F65 
+ 2252      6E00
+ 2253              	.LASF25:
+ 2254 040c 6D6F6465 		.ascii	"mode_vdm_length\000"
+ 2254      5F76646D 
+ 2254      5F6C656E 
+ 2254      67746800 
+ 2255              	.LASF79:
+ 2256 041c 74797065 		.ascii	"type_a_pwr_tbl_offset\000"
+ 2256      5F615F70 
+ 2256      77725F74 
+ARM GAS  e:\temp\ccmqioMm.s 			page 46
+
+
+ 2256      626C5F6F 
+ 2256      66667365 
+ 2257              	.LASF91:
+ 2258 0432 666C6173 		.ascii	"flash_checksum\000"
+ 2258      685F6368 
+ 2258      65636B73 
+ 2258      756D00
+ 2259              	.LASF0:
+ 2260 0441 7369676E 		.ascii	"signed char\000"
+ 2260      65642063 
+ 2260      68617200 
+ 2261              	.LASF10:
+ 2262 044d 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2262      206C6F6E 
+ 2262      6720756E 
+ 2262      7369676E 
+ 2262      65642069 
+ 2263              	.LASF73:
+ 2264 0464 64705F6F 		.ascii	"dp_oper\000"
+ 2264      70657200 
+ 2265              	.LASF71:
+ 2266 046c 64705F6D 		.ascii	"dp_mux_control\000"
+ 2266      75785F63 
+ 2266      6F6E7472 
+ 2266      6F6C00
+ 2267              	.LASF11:
+ 2268 047b 756E7369 		.ascii	"unsigned int\000"
+ 2268      676E6564 
+ 2268      20696E74 
+ 2268      00
+ 2269              	.LASF90:
+ 2270 0488 7461626C 		.ascii	"table_checksum\000"
+ 2270      655F6368 
+ 2270      65636B73 
+ 2270      756D00
+ 2271              	.LASF13:
+ 2272 0497 75696E74 		.ascii	"uint16_t\000"
+ 2272      31365F74 
+ 2272      00
+ 2273              	.LASF86:
+ 2274 04a0 7461626C 		.ascii	"table_type\000"
+ 2274      655F7479 
+ 2274      706500
+ 2275              	.LASF107:
+ 2276 04ab 676C5F63 		.ascii	"gl_config_table\000"
+ 2276      6F6E6669 
+ 2276      675F7461 
+ 2276      626C6500 
+ 2277              	.LASF29:
+ 2278 04bb 72615F74 		.ascii	"ra_timeout\000"
+ 2278      696D656F 
+ 2278      757400
+ 2279              	.LASF56:
+ 2280 04c6 736E6B5F 		.ascii	"snk_pdo_max_min_current_pwr\000"
+ 2280      70646F5F 
+ 2280      6D61785F 
+ 2280      6D696E5F 
+ARM GAS  e:\temp\ccmqioMm.s 			page 47
+
+
+ 2280      63757272 
+ 2281              	.LASF17:
+ 2282 04e2 63686172 		.ascii	"char\000"
+ 2282      00
+ 2283              	.LASF45:
+ 2284 04e7 70645F6F 		.ascii	"pd_operation_en\000"
+ 2284      70657261 
+ 2284      74696F6E 
+ 2284      5F656E00 
+ 2285              	.LASF38:
+ 2286 04f7 73776170 		.ascii	"swap_response\000"
+ 2286      5F726573 
+ 2286      706F6E73 
+ 2286      6500
+ 2287              	.LASF74:
+ 2288 0505 64705F70 		.ascii	"dp_pref_mode\000"
+ 2288      7265665F 
+ 2288      6D6F6465 
+ 2288      00
+ 2289              	.LASF5:
+ 2290 0512 73686F72 		.ascii	"short unsigned int\000"
+ 2290      7420756E 
+ 2290      7369676E 
+ 2290      65642069 
+ 2290      6E7400
+ 2291              	.LASF41:
+ 2292 0525 64656661 		.ascii	"default_src_pdo_mask\000"
+ 2292      756C745F 
+ 2292      7372635F 
+ 2292      70646F5F 
+ 2292      6D61736B 
+ 2293              	.LASF54:
+ 2294 053a 7372635F 		.ascii	"src_pdo_list\000"
+ 2294      70646F5F 
+ 2294      6C697374 
+ 2294      00
+ 2295              	.LASF100:
+ 2296 0547 5F426F6F 		.ascii	"_Bool\000"
+ 2296      6C00
+ 2297              	.LASF78:
+ 2298 054d 72657365 		.ascii	"reserved_10\000"
+ 2298      72766564 
+ 2298      5F313000 
+ 2299              	.LASF83:
+ 2300 0559 72657365 		.ascii	"reserved_11\000"
+ 2300      72766564 
+ 2300      5F313100 
+ 2301              	.LASF42:
+ 2302 0565 736E6B5F 		.ascii	"snk_pdo_cnt\000"
+ 2302      70646F5F 
+ 2302      636E7400 
+ 2303              	.LASF49:
+ 2304 0571 6572725F 		.ascii	"err_recovery_en\000"
+ 2304      7265636F 
+ 2304      76657279 
+ 2304      5F656E00 
+ 2305              	.LASF106:
+ARM GAS  e:\temp\ccmqioMm.s 			page 48
+
+
+ 2306 0581 706F7274 		.ascii	"port\000"
+ 2306      00
+ 2307              	.LASF22:
+ 2308 0586 73766964 		.ascii	"svid_vdm_offset\000"
+ 2308      5F76646D 
+ 2308      5F6F6666 
+ 2308      73657400 
+ 2309              	.LASF98:
+ 2310 0596 706F7274 		.ascii	"port_conf\000"
+ 2310      5F636F6E 
+ 2310      6600
+ 2311              	.LASF63:
+ 2312 05a0 7363705F 		.ascii	"scp_tbl_offset\000"
+ 2312      74626C5F 
+ 2312      6F666673 
+ 2312      657400
+ 2313              	.LASF8:
+ 2314 05af 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2314      20756E73 
+ 2314      69676E65 
+ 2314      6420696E 
+ 2314      7400
+ 2315              	.LASF16:
+ 2316 05c1 646F7562 		.ascii	"double\000"
+ 2316      6C6500
+ 2317              	.LASF44:
+ 2318 05c8 72705F73 		.ascii	"rp_supported\000"
+ 2318      7570706F 
+ 2318      72746564 
+ 2318      00
+ 2319              	.LASF51:
+ 2320 05d5 6672735F 		.ascii	"frs_enable\000"
+ 2320      656E6162 
+ 2320      6C6500
+ 2321              	.LASF85:
+ 2322 05e0 7461626C 		.ascii	"table_sign\000"
+ 2322      655F7369 
+ 2322      676E00
+ 2323              	.LASF43:
+ 2324 05eb 64656661 		.ascii	"default_sink_pdo_mask\000"
+ 2324      756C745F 
+ 2324      73696E6B 
+ 2324      5F70646F 
+ 2324      5F6D6173 
+ 2325              	.LASF58:
+ 2326 0601 70726F74 		.ascii	"protection_enable\000"
+ 2326      65637469 
+ 2326      6F6E5F65 
+ 2326      6E61626C 
+ 2326      6500
+ 2327              	.LASF76:
+ 2328 0613 62625F74 		.ascii	"bb_tbl_offset\000"
+ 2328      626C5F6F 
+ 2328      66667365 
+ 2328      7400
+ 2329              	.LASF46:
+ 2330 0621 7472795F 		.ascii	"try_src_en\000"
+ARM GAS  e:\temp\ccmqioMm.s 			page 49
+
+
+ 2330      7372635F 
+ 2330      656E00
+ 2331              	.LASF23:
+ 2332 062c 73766964 		.ascii	"svid_vdm_length\000"
+ 2332      5F76646D 
+ 2332      5F6C656E 
+ 2332      67746800 
+ 2333              	.LASF89:
+ 2334 063c 7461626C 		.ascii	"table_size\000"
+ 2334      655F7369 
+ 2334      7A6500
+ 2335              	.LASF61:
+ 2336 0647 6F63705F 		.ascii	"ocp_tbl_offset\000"
+ 2336      74626C5F 
+ 2336      6F666673 
+ 2336      657400
+ 2337              	.LASF68:
+ 2338 0656 6261745F 		.ascii	"bat_chg_tbl_offset\000"
+ 2338      6368675F 
+ 2338      74626C5F 
+ 2338      6F666673 
+ 2338      657400
+ 2339              	.LASF12:
+ 2340 0669 75696E74 		.ascii	"uint8_t\000"
+ 2340      385F7400 
+ 2341              	.LASF47:
+ 2342 0671 6361626C 		.ascii	"cable_disc_en\000"
+ 2342      655F6469 
+ 2342      73635F65 
+ 2342      6E00
+ 2343              	.LASF104:
+ 2344 067f 6765745F 		.ascii	"get_pd_config\000"
+ 2344      70645F63 
+ 2344      6F6E6669 
+ 2344      6700
+ 2345              	.LASF95:
+ 2346 068d 6D66675F 		.ascii	"mfg_info_offset\000"
+ 2346      696E666F 
+ 2346      5F6F6666 
+ 2346      73657400 
+ 2347              	.LASF48:
+ 2348 069d 64656164 		.ascii	"dead_bat_support\000"
+ 2348      5F626174 
+ 2348      5F737570 
+ 2348      706F7274 
+ 2348      00
+ 2349              	.LASF72:
+ 2350 06ae 64705F6D 		.ascii	"dp_mode_trigger\000"
+ 2350      6F64655F 
+ 2350      74726967 
+ 2350      67657200 
+ 2351              	.LASF20:
+ 2352 06be 69645F76 		.ascii	"id_vdm_offset\000"
+ 2352      646D5F6F 
+ 2352      66667365 
+ 2352      7400
+ 2353              	.LASF81:
+ARM GAS  e:\temp\ccmqioMm.s 			page 50
+
+
+ 2354 06cc 646F636B 		.ascii	"dock_cfg_tbl_offset\000"
+ 2354      5F636667 
+ 2354      5F74626C 
+ 2354      5F6F6666 
+ 2354      73657400 
+ 2355              	.LASF96:
+ 2356 06e0 6D66675F 		.ascii	"mfg_info_length\000"
+ 2356      696E666F 
+ 2356      5F6C656E 
+ 2356      67746800 
+ 2357              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

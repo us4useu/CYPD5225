@@ -1,0 +1,4686 @@
+ARM GAS  e:\temp\ccVGPNYG.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"flash.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.flash_trig_row_write_in_place,"ax",%progbits
+  20              		.align	2
+  21              		.code	16
+  22              		.thumb_func
+  23              		.type	flash_trig_row_write_in_place, %function
+  24              	flash_trig_row_write_in_place:
+  25              	.LFB32:
+  26              		.file 1 "..\\src\\system\\flash.c"
+   1:..\src\system/flash.c **** /**
+   2:..\src\system/flash.c ****  * @file flash.c
+   3:..\src\system/flash.c ****  *
+   4:..\src\system/flash.c ****  * @brief @{Flash command handler source file.@}
+   5:..\src\system/flash.c ****  */
+   6:..\src\system/flash.c **** 
+   7:..\src\system/flash.c **** /*
+   8:..\src\system/flash.c ****  * Copyright (2014-2018), Cypress Semiconductor Corporation or a subsidiary of
+   9:..\src\system/flash.c ****  * Cypress Semiconductor Corporation. All rights reserved.
+  10:..\src\system/flash.c ****  *
+  11:..\src\system/flash.c ****  * This software, including source code, documentation and related materials
+  12:..\src\system/flash.c ****  * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  13:..\src\system/flash.c ****  * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  14:..\src\system/flash.c ****  * protection (United States and foreign), United States copyright laws and
+  15:..\src\system/flash.c ****  * international treaty provisions. Therefore, you may use this Software only
+  16:..\src\system/flash.c ****  * as provided in the license agreement accompanying the software package from
+  17:..\src\system/flash.c ****  * which you obtained this Software (“EULA”).
+  18:..\src\system/flash.c ****  *
+  19:..\src\system/flash.c ****  * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  20:..\src\system/flash.c ****  * non-transferable license to copy, modify, and compile the Software source
+  21:..\src\system/flash.c ****  * code solely for use in connection with Cypress’s integrated circuit
+  22:..\src\system/flash.c ****  * products. Any reproduction, modification, translation, compilation, or
+  23:..\src\system/flash.c ****  * representation of this Software except as specified above is prohibited
+  24:..\src\system/flash.c ****  * without the express written permission of Cypress. Disclaimer: THIS SOFTWARE
+  25:..\src\system/flash.c ****  * IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+  26:..\src\system/flash.c ****  * INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED WARRANTIES OF
+  27:..\src\system/flash.c ****  * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress reserves the
+  28:..\src\system/flash.c ****  * right to make changes to the Software without notice. Cypress does not
+  29:..\src\system/flash.c ****  * assume any liability arising out of the application or use of the Software
+  30:..\src\system/flash.c ****  * or any product or circuit described in the Software. Cypress does not
+  31:..\src\system/flash.c ****  * authorize its products for use in any products where a malfunction or
+ARM GAS  e:\temp\ccVGPNYG.s 			page 2
+
+
+  32:..\src\system/flash.c ****  * failure of the Cypress product may reasonably be expected to result in
+  33:..\src\system/flash.c ****  * significant property damage, injury or death (“High Risk Product”). By
+  34:..\src\system/flash.c ****  * including Cypress’s product in a High Risk Product, the manufacturer of such
+  35:..\src\system/flash.c ****  * system or application assumes all risk of such use and in doing so agrees to
+  36:..\src\system/flash.c ****  * indemnify Cypress against all liability.
+  37:..\src\system/flash.c ****  */
+  38:..\src\system/flash.c **** 
+  39:..\src\system/flash.c **** #include <stdbool.h>
+  40:..\src\system/flash.c **** #include <config.h>
+  41:..\src\system/flash.c **** #include <utils.h>
+  42:..\src\system/flash.c **** #include <status.h>
+  43:..\src\system/flash.c **** #include <system.h>
+  44:..\src\system/flash.c **** #include <boot.h>
+  45:..\src\system/flash.c **** #include <ccgx_regs.h>
+  46:..\src\system/flash.c **** #include <flash_config.h>
+  47:..\src\system/flash.c **** #include <flash.h>
+  48:..\src\system/flash.c **** 
+  49:..\src\system/flash.c **** /* 
+  50:..\src\system/flash.c ****  * Flags to indicate Flashing mode. Flash read and write requests
+  51:..\src\system/flash.c ****  * are honoured only when any of these flags are set. Also, the
+  52:..\src\system/flash.c ****  * flash_set_access_limits() function must be called before flash
+  53:..\src\system/flash.c ****  * access can be done. The default values prevent any write or
+  54:..\src\system/flash.c ****  * read.
+  55:..\src\system/flash.c ****  */
+  56:..\src\system/flash.c **** static uint8_t gl_flash_mode_en = 0;
+  57:..\src\system/flash.c **** 
+  58:..\src\system/flash.c **** /* Lowest flash row number that can be accessed. */
+  59:..\src\system/flash.c **** static uint16_t gl_flash_access_first = CCG_LAST_FLASH_ROW_NUM + 1;
+  60:..\src\system/flash.c **** 
+  61:..\src\system/flash.c **** /* Highest flash row number that can be accessed. */
+  62:..\src\system/flash.c **** static uint16_t gl_flash_access_last = CCG_LAST_FLASH_ROW_NUM + 1;
+  63:..\src\system/flash.c **** 
+  64:..\src\system/flash.c **** /* Flash row containing metadata for the alternate firmware image. */
+  65:..\src\system/flash.c **** static uint16_t gl_flash_metadata_row = CCG_LAST_FLASH_ROW_NUM + 1;
+  66:..\src\system/flash.c **** 
+  67:..\src\system/flash.c **** /* Last boot loader flash row. Used for read protection. */
+  68:..\src\system/flash.c **** static uint16_t gl_flash_bl_last_row = CCG_LAST_FLASH_ROW_NUM + 1;
+  69:..\src\system/flash.c **** 
+  70:..\src\system/flash.c **** #if (!CCG_BOOT)
+  71:..\src\system/flash.c **** /* Whether flash write data can be used in-place as SROM API parameter. */
+  72:..\src\system/flash.c **** static volatile bool gl_flash_write_in_place = false;
+  73:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+  74:..\src\system/flash.c **** 
+  75:..\src\system/flash.c **** #if (FLASH_ENABLE_NB_MODE == 1)
+  76:..\src\system/flash.c **** /* SPC Interrupt Number. */
+  77:..\src\system/flash.c **** #ifdef CCG3
+  78:..\src\system/flash.c **** #define FLASH_SPC_INTR                  (0x0C)
+  79:..\src\system/flash.c **** #elif (defined(CCG3PA2))
+  80:..\src\system/flash.c **** #define FLASH_SPC_INTR                  (0x09)
+  81:..\src\system/flash.c **** #else /* CCGx */
+  82:..\src\system/flash.c **** #error "Not suppported device family. Non blocked flashing supported only on CCG3 and CCG3PA2."
+  83:..\src\system/flash.c **** #endif /* CCGx */
+  84:..\src\system/flash.c **** #endif /* (FLASH_ENABLE_NB_MODE == 1) */
+  85:..\src\system/flash.c **** 
+  86:..\src\system/flash.c **** /* MACROS for SROM APIs. */
+  87:..\src\system/flash.c **** 
+  88:..\src\system/flash.c **** #define SROM_API_RETURN_VALUE                   \
+ARM GAS  e:\temp\ccVGPNYG.s 			page 3
+
+
+  89:..\src\system/flash.c ****     (((CY_FLASH_CPUSS_SYSARG_REG & 0xF0000000u) \
+  90:..\src\system/flash.c ****       == 0xA0000000u) ? CYRET_SUCCESS :         \
+  91:..\src\system/flash.c ****      (CY_FLASH_CPUSS_SYSARG_REG & 0x0000000Fu))
+  92:..\src\system/flash.c **** 
+  93:..\src\system/flash.c **** /* Keys used in SROM APIs. */
+  94:..\src\system/flash.c **** #define SROM_FLASH_API_KEY_ONE          (0xB6)
+  95:..\src\system/flash.c **** #define SROM_FLASH_API_KEY_TWO(x)       (uint32_t)(0xD3u + x)
+  96:..\src\system/flash.c **** #define SROM_FLASH_KEY_TWO_OFFSET       (0x08)
+  97:..\src\system/flash.c **** 
+  98:..\src\system/flash.c **** /* Offset of Argument 1 and 2 (Words) for SROM APIs in SRAM Buffer. */
+  99:..\src\system/flash.c **** #define SROM_API_ARG0_OFFSET            (0x00)
+ 100:..\src\system/flash.c **** #define SROM_API_ARG1_OFFSET            (0x01)
+ 101:..\src\system/flash.c **** 
+ 102:..\src\system/flash.c **** /* SROM LOAD FLASH API. */
+ 103:..\src\system/flash.c **** #define SROM_LOAD_FLASH_API_OPCODE              (0x04)
+ 104:..\src\system/flash.c **** #define SROM_LOAD_FLASH_DATA_OFFSET             (0x02)
+ 105:..\src\system/flash.c **** #define SROM_LOAD_FLASH_BYTE_ADDR               (0x00)
+ 106:..\src\system/flash.c **** #define SROM_LOAD_FLASH_BYTE_ADDR_OFFSET        (0x10)
+ 107:..\src\system/flash.c **** #define SROM_LOAD_FLASH_MACRO_OFFSET            (0x18)
+ 108:..\src\system/flash.c **** 
+ 109:..\src\system/flash.c **** /* FLASH ROW PROGRAM API. */
+ 110:..\src\system/flash.c **** #define SROM_FLASH_PROGRAM_API_OPCODE           (0x05)
+ 111:..\src\system/flash.c **** 
+ 112:..\src\system/flash.c **** /* Non-BLOCKING Write Flash Row API */
+ 113:..\src\system/flash.c **** #define SROM_NB_FLASH_ROW_API_OPCODE    (0x07)
+ 114:..\src\system/flash.c **** #define SROM_NB_FLASH_ROW_NUM_OFFSET    (0x10)
+ 115:..\src\system/flash.c **** 
+ 116:..\src\system/flash.c **** /* Resume Non-Blocking API */
+ 117:..\src\system/flash.c **** #define SROM_RESUME_NB_API_OPCODE       (0x09)
+ 118:..\src\system/flash.c ****     
+ 119:..\src\system/flash.c **** /* Abort Non-Blokcing Flash Row Write API Opcode. */
+ 120:..\src\system/flash.c **** #define SROM_ABORT_FLASH_WRITE_OPCODE   (0x1C)
+ 121:..\src\system/flash.c **** 
+ 122:..\src\system/flash.c **** /* CPUSS SYSARG return value mask. */
+ 123:..\src\system/flash.c **** #define CPUSS_SYSARG_RETURN_VALUE_MASK  (0xF0000000u)
+ 124:..\src\system/flash.c **** 
+ 125:..\src\system/flash.c **** /* CPUSS SYSARG success return value. */
+ 126:..\src\system/flash.c **** #define CPUSS_SYSARG_PASS_RETURN_VALUE  (0xA0000000u)
+ 127:..\src\system/flash.c **** 
+ 128:..\src\system/flash.c **** /* CPUSS SYSARG error return value. */
+ 129:..\src\system/flash.c **** #define CPUSS_SYSARG_ERROR_RETURN_VALUE (0xF0000000u)
+ 130:..\src\system/flash.c ****     
+ 131:..\src\system/flash.c **** #define CPUSS_FLASH_PARAM_SIZE          (8u)
+ 132:..\src\system/flash.c **** 
+ 133:..\src\system/flash.c **** #if (FLASH_ENABLE_NB_MODE == 1)
+ 134:..\src\system/flash.c **** 
+ 135:..\src\system/flash.c **** /* Buffer used for SROM APIs */
+ 136:..\src\system/flash.c **** static uint32_t gl_srom_arg_buf[(CCG_FLASH_ROW_SIZE / sizeof(uint32_t)) + 2];
+ 137:..\src\system/flash.c **** 
+ 138:..\src\system/flash.c **** /* Callback function registered by user for Non Blokcing Flash Write Row operation. */
+ 139:..\src\system/flash.c **** static flash_cbk_t flash_notify;
+ 140:..\src\system/flash.c **** 
+ 141:..\src\system/flash.c **** /* Counter to keep track of the SPC Interrupts while Non-Blocking Flash update. */
+ 142:..\src\system/flash.c **** static uint8_t gl_spc_intr_counter = 0;
+ 143:..\src\system/flash.c **** 
+ 144:..\src\system/flash.c **** /* Flag to indciate Abort request for current Non Blokcing Flash write operation was received. */
+ 145:..\src\system/flash.c **** static bool gl_flash_nb_write_abort = false;
+ARM GAS  e:\temp\ccVGPNYG.s 			page 4
+
+
+ 146:..\src\system/flash.c **** 
+ 147:..\src\system/flash.c **** CY_ISR_PROTO(flash_spc_intr_handler);
+ 148:..\src\system/flash.c **** 
+ 149:..\src\system/flash.c **** /* Refer BROS 001-88589 Section 4.6.2.5 for SROM API's description. */
+ 150:..\src\system/flash.c **** 
+ 151:..\src\system/flash.c **** /*
+ 152:..\src\system/flash.c ****  * @brief Execute SROM LOAD FLASH API
+ 153:..\src\system/flash.c ****  *
+ 154:..\src\system/flash.c ****  * Description
+ 155:..\src\system/flash.c ****  * This API loads the page latch buffer with the data to be programmed in flash,
+ 156:..\src\system/flash.c ****  * This is the first API in FLASH ROW operation.
+ 157:..\src\system/flash.c ****  *
+ 158:..\src\system/flash.c ****  * @param data Pointer to data to be flashed
+ 159:..\src\system/flash.c ****  * @param flash_macro_index Flash macro number
+ 160:..\src\system/flash.c ****  *
+ 161:..\src\system/flash.c ****  * @rerurn Status of API. true if success, false otherwise
+ 162:..\src\system/flash.c ****  */
+ 163:..\src\system/flash.c **** static bool srom_load_flash_bytes_api(uint8_t *data, uint8_t flash_macro_index)
+ 164:..\src\system/flash.c **** {
+ 165:..\src\system/flash.c ****     uint8_t retValue;
+ 166:..\src\system/flash.c ****     /* Write 128 bytes in a temp buf which is eventually passed to SROM API. */
+ 167:..\src\system/flash.c ****     memcpy ((void *)&gl_srom_arg_buf[SROM_LOAD_FLASH_DATA_OFFSET], data,
+ 168:..\src\system/flash.c ****             CCG_FLASH_ROW_SIZE);
+ 169:..\src\system/flash.c **** 
+ 170:..\src\system/flash.c ****     /* Fill in the arguments for API. */
+ 171:..\src\system/flash.c ****     gl_srom_arg_buf[SROM_API_ARG0_OFFSET] = (uint32_t)
+ 172:..\src\system/flash.c ****                 ((flash_macro_index << SROM_LOAD_FLASH_MACRO_OFFSET) |
+ 173:..\src\system/flash.c ****                 (SROM_LOAD_FLASH_BYTE_ADDR << SROM_LOAD_FLASH_BYTE_ADDR_OFFSET) |
+ 174:..\src\system/flash.c ****                 (SROM_FLASH_API_KEY_TWO(SROM_LOAD_FLASH_API_OPCODE) <<
+ 175:..\src\system/flash.c ****                 SROM_FLASH_KEY_TWO_OFFSET) | SROM_FLASH_API_KEY_ONE);
+ 176:..\src\system/flash.c ****     /* Number of bytes to flash - 1 */
+ 177:..\src\system/flash.c ****     gl_srom_arg_buf[SROM_API_ARG1_OFFSET] = CCG_FLASH_ROW_SIZE-1;
+ 178:..\src\system/flash.c **** 
+ 179:..\src\system/flash.c ****     /* SYSARG */
+ 180:..\src\system/flash.c ****     CPUSS->sysarg = (uint32)&gl_srom_arg_buf[SROM_API_ARG0_OFFSET];
+ 181:..\src\system/flash.c ****     /* SYSREQ */
+ 182:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_LOAD_FLASH_API_OPCODE);
+ 183:..\src\system/flash.c **** 
+ 184:..\src\system/flash.c ****     /* Read the Result. */
+ 185:..\src\system/flash.c ****     retValue = SROM_API_RETURN_VALUE;
+ 186:..\src\system/flash.c ****     if (retValue != 0)
+ 187:..\src\system/flash.c ****     {
+ 188:..\src\system/flash.c ****         return false;
+ 189:..\src\system/flash.c ****     }
+ 190:..\src\system/flash.c ****     return true;
+ 191:..\src\system/flash.c **** }
+ 192:..\src\system/flash.c **** 
+ 193:..\src\system/flash.c **** /*
+ 194:..\src\system/flash.c ****  * @brief Execute Non Blocking Write Row
+ 195:..\src\system/flash.c ****  *
+ 196:..\src\system/flash.c ****  * Description
+ 197:..\src\system/flash.c ****  * This API performs the first part of the write row operation, which is
+ 198:..\src\system/flash.c ****  * the pre-program operation.
+ 199:..\src\system/flash.c ****  *
+ 200:..\src\system/flash.c ****  * @param row_num Flash Row Number to be programmed
+ 201:..\src\system/flash.c ****  * @rerurn Status of API. true if success, false otherwise
+ 202:..\src\system/flash.c ****  */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 5
+
+
+ 203:..\src\system/flash.c **** static bool srom_nb_flash_write_api(uint16_t row_num)
+ 204:..\src\system/flash.c **** {
+ 205:..\src\system/flash.c ****     /* Arguments */
+ 206:..\src\system/flash.c ****     gl_srom_arg_buf[SROM_API_ARG0_OFFSET]  = (uint32_t)
+ 207:..\src\system/flash.c ****             ((row_num << SROM_NB_FLASH_ROW_NUM_OFFSET) |
+ 208:..\src\system/flash.c ****             (SROM_FLASH_API_KEY_TWO(SROM_NB_FLASH_ROW_API_OPCODE) <<
+ 209:..\src\system/flash.c ****             SROM_FLASH_KEY_TWO_OFFSET) | SROM_FLASH_API_KEY_ONE);
+ 210:..\src\system/flash.c **** 
+ 211:..\src\system/flash.c ****     /* This command results in three SPC interrupts. Reset the counter. */
+ 212:..\src\system/flash.c ****     gl_spc_intr_counter = 0;
+ 213:..\src\system/flash.c ****     /* SYSARG */
+ 214:..\src\system/flash.c ****     CPUSS->sysarg = (uint32_t)&gl_srom_arg_buf[SROM_API_ARG0_OFFSET];
+ 215:..\src\system/flash.c ****     /* SYSREQ */
+ 216:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_NB_FLASH_ROW_API_OPCODE);
+ 217:..\src\system/flash.c **** 
+ 218:..\src\system/flash.c ****     /*
+ 219:..\src\system/flash.c ****      * Check if the status in SYSARG is failure. If yes, then return false.
+ 220:..\src\system/flash.c ****      * Otherwise, request was successful.
+ 221:..\src\system/flash.c ****      */
+ 222:..\src\system/flash.c ****     if ((CPUSS->sysarg & CPUSS_SYSARG_RETURN_VALUE_MASK) ==
+ 223:..\src\system/flash.c ****         CPUSS_SYSARG_ERROR_RETURN_VALUE)
+ 224:..\src\system/flash.c ****     {
+ 225:..\src\system/flash.c ****         return false;
+ 226:..\src\system/flash.c ****     }
+ 227:..\src\system/flash.c ****     return true;
+ 228:..\src\system/flash.c **** }
+ 229:..\src\system/flash.c **** 
+ 230:..\src\system/flash.c **** /*
+ 231:..\src\system/flash.c ****  * @brief Execute SROM Non Blocking Resume APIs
+ 232:..\src\system/flash.c ****  *
+ 233:..\src\system/flash.c ****  * @param None
+ 234:..\src\system/flash.c ****  * @rerurn None
+ 235:..\src\system/flash.c ****  */
+ 236:..\src\system/flash.c **** static void srom_resume_non_blocking(void)
+ 237:..\src\system/flash.c **** {
+ 238:..\src\system/flash.c ****     /* Execute Resume Non Blocking API */
+ 239:..\src\system/flash.c ****     
+ 240:..\src\system/flash.c ****     /* Arguments. */
+ 241:..\src\system/flash.c ****     gl_srom_arg_buf[SROM_API_ARG0_OFFSET]  = (uint32_t)((SROM_FLASH_API_KEY_TWO(SROM_RESUME_NB_API_
+ 242:..\src\system/flash.c ****         << SROM_FLASH_KEY_TWO_OFFSET) | SROM_FLASH_API_KEY_ONE);
+ 243:..\src\system/flash.c ****     /* SYSARG */
+ 244:..\src\system/flash.c ****     CPUSS->sysarg = (uint32_t)&gl_srom_arg_buf[SROM_API_ARG0_OFFSET];
+ 245:..\src\system/flash.c ****     /* SYSREQ */
+ 246:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_RESUME_NB_API_OPCODE);
+ 247:..\src\system/flash.c **** }
+ 248:..\src\system/flash.c **** 
+ 249:..\src\system/flash.c **** /*
+ 250:..\src\system/flash.c ****  * @brief Execute SROM Non Blocking Abort APIs
+ 251:..\src\system/flash.c ****  *
+ 252:..\src\system/flash.c ****  * @param None
+ 253:..\src\system/flash.c ****  * @rerurn None
+ 254:..\src\system/flash.c ****  */
+ 255:..\src\system/flash.c **** static void srom_abort_flash_write(void)
+ 256:..\src\system/flash.c **** {
+ 257:..\src\system/flash.c ****     /* Execute Abort Non Blaokcing Flash Row Write operation. */
+ 258:..\src\system/flash.c ****     
+ 259:..\src\system/flash.c ****     /* Arguments. */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 6
+
+
+ 260:..\src\system/flash.c ****     gl_srom_arg_buf[SROM_API_ARG0_OFFSET]  = (uint32_t)((SROM_FLASH_API_KEY_TWO(SROM_ABORT_FLASH_WR
+ 261:..\src\system/flash.c ****         << SROM_FLASH_KEY_TWO_OFFSET) | SROM_FLASH_API_KEY_ONE);
+ 262:..\src\system/flash.c ****     /* SYSARG */
+ 263:..\src\system/flash.c ****     CPUSS->sysarg = (uint32_t)&gl_srom_arg_buf[SROM_API_ARG0_OFFSET];
+ 264:..\src\system/flash.c ****     /* SYSREQ */
+ 265:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_ABORT_FLASH_WRITE_OPCODE);
+ 266:..\src\system/flash.c **** }
+ 267:..\src\system/flash.c **** 
+ 268:..\src\system/flash.c **** /* SPC Interrupt for Resume Non-Blocking SROM API */
+ 269:..\src\system/flash.c **** CY_ISR(flash_spc_intr_handler)
+ 270:..\src\system/flash.c **** {
+ 271:..\src\system/flash.c ****     flash_write_status_t status = FLASH_WRITE_COMPLETE;
+ 272:..\src\system/flash.c **** 
+ 273:..\src\system/flash.c ****     /* Check if Abort request is pending. */
+ 274:..\src\system/flash.c ****     if (gl_flash_nb_write_abort)
+ 275:..\src\system/flash.c ****     {
+ 276:..\src\system/flash.c ****         /*
+ 277:..\src\system/flash.c ****          * See if we are already in last phase of Flash update i.e the
+ 278:..\src\system/flash.c ****          * third interrupt. If yes, there is no point in aborting the flash as there
+ 279:..\src\system/flash.c ****          * is nothing left to abort.
+ 280:..\src\system/flash.c ****          */
+ 281:..\src\system/flash.c ****         if (gl_spc_intr_counter < 2)
+ 282:..\src\system/flash.c ****         {
+ 283:..\src\system/flash.c ****            srom_abort_flash_write ();
+ 284:..\src\system/flash.c ****            status = FLASH_WRITE_ABORTED;
+ 285:..\src\system/flash.c ****         }
+ 286:..\src\system/flash.c ****         else
+ 287:..\src\system/flash.c ****         {
+ 288:..\src\system/flash.c ****             srom_resume_non_blocking ();
+ 289:..\src\system/flash.c ****             status = FLASH_WRITE_COMPLETE_AND_ABORTED;
+ 290:..\src\system/flash.c ****         }            
+ 291:..\src\system/flash.c ****         gl_flash_nb_write_abort = false;        
+ 292:..\src\system/flash.c ****     }
+ 293:..\src\system/flash.c ****     else
+ 294:..\src\system/flash.c ****     {
+ 295:..\src\system/flash.c ****         /*
+ 296:..\src\system/flash.c ****          * Once Non-Blocking Flash row update process starts, this interrupt
+ 297:..\src\system/flash.c ****          * will fire three times. FW is expected to call Resume Non-Blocking
+ 298:..\src\system/flash.c ****          * SROM API from here.
+ 299:..\src\system/flash.c ****          */
+ 300:..\src\system/flash.c ****         gl_spc_intr_counter++;
+ 301:..\src\system/flash.c **** 
+ 302:..\src\system/flash.c ****         /* Resume Non-Blokcing Operation. */
+ 303:..\src\system/flash.c ****         srom_resume_non_blocking ();
+ 304:..\src\system/flash.c ****     }
+ 305:..\src\system/flash.c ****     
+ 306:..\src\system/flash.c ****     /*
+ 307:..\src\system/flash.c ****      * See if this is the third interrupt of flash write sequence or if there
+ 308:..\src\system/flash.c ****      * was an abort request. In both cases, reset the counters/clocks and invoke
+ 309:..\src\system/flash.c ****      * the registered callback.
+ 310:..\src\system/flash.c ****      */
+ 311:..\src\system/flash.c ****     if ((gl_spc_intr_counter == 3) || (status != FLASH_WRITE_COMPLETE))
+ 312:..\src\system/flash.c ****     {
+ 313:..\src\system/flash.c ****         /* Disable clock to the charge pump after flash write is complete or aborted. */
+ 314:..\src\system/flash.c ****         SRSSLT->clk_select = (SRSSLT->clk_select & ~CLK_SELECT_PUMP_SEL_MASK);
+ 315:..\src\system/flash.c **** 
+ 316:..\src\system/flash.c ****         /* Reset counter. */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 7
+
+
+ 317:..\src\system/flash.c ****         gl_spc_intr_counter = 0;
+ 318:..\src\system/flash.c ****         /* Invoke Callback. */
+ 319:..\src\system/flash.c ****         if (flash_notify != NULL)
+ 320:..\src\system/flash.c ****         {
+ 321:..\src\system/flash.c ****             /* Callback should notify the status of flash write as well. */
+ 322:..\src\system/flash.c ****             flash_notify (status);
+ 323:..\src\system/flash.c ****         }
+ 324:..\src\system/flash.c ****     }
+ 325:..\src\system/flash.c **** }
+ 326:..\src\system/flash.c **** #endif /* FLASH_ENABLE_NB_MODE */
+ 327:..\src\system/flash.c **** 
+ 328:..\src\system/flash.c **** #if (!CCG_BOOT)
+ 329:..\src\system/flash.c **** /*
+ 330:..\src\system/flash.c ****  * This function invokes the SROM API to do a flash row write.
+ 331:..\src\system/flash.c ****  * This function is used instead of the CySysFlashWriteRow, so as to avoid
+ 332:..\src\system/flash.c ****  * the clock trim updates that are done as part of that API.
+ 333:..\src\system/flash.c ****  *
+ 334:..\src\system/flash.c ****  * Note: This function expects that the data_p buffer has CPUSS_FLASH_PARAM_SIZE
+ 335:..\src\system/flash.c ****  * bytes of prefix space which can be used for setting up the SROM write API
+ 336:..\src\system/flash.c ****  * parameters.
+ 337:..\src\system/flash.c ****  */
+ 338:..\src\system/flash.c **** static ccg_status_t flash_trig_row_write_in_place(uint32_t row_num, uint8_t *data_p)
+ 339:..\src\system/flash.c **** {
+  27              		.loc 1 339 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31              	.LVL0:
+  32 0000 30B5     		push	{r4, r5, lr}
+  33              		.cfi_def_cfa_offset 12
+  34              		.cfi_offset 4, -12
+  35              		.cfi_offset 5, -8
+  36              		.cfi_offset 14, -4
+ 340:..\src\system/flash.c ****     volatile uint32_t *params = ((uint32_t *)data_p) - 2;
+  37              		.loc 1 340 0
+  38 0002 0C00     		movs	r4, r1
+  39 0004 083C     		subs	r4, r4, #8
+  40              	.LVL1:
+ 341:..\src\system/flash.c ****     ccg_status_t status = CCG_STAT_SUCCESS;
+ 342:..\src\system/flash.c **** 
+ 343:..\src\system/flash.c ****     /* Connect the charge pump to IMO clock for flash write. */
+ 344:..\src\system/flash.c ****     SRSSLT->clk_select = (SRSSLT->clk_select & ~CLK_SELECT_PUMP_SEL_MASK) | (1 << CLK_SELECT_PUMP_S
+  41              		.loc 1 344 0
+  42 0006 1B4D     		ldr	r5, .L5
+  43 0008 AB6A     		ldr	r3, [r5, #40]
+  44 000a 3022     		movs	r2, #48
+  45 000c 9343     		bics	r3, r2
+  46 000e 203A     		subs	r2, r2, #32
+  47 0010 1343     		orrs	r3, r2
+  48 0012 AB62     		str	r3, [r5, #40]
+ 345:..\src\system/flash.c **** 
+ 346:..\src\system/flash.c ****     /* Set the parameters for load data into latch operation. */
+ 347:..\src\system/flash.c ****     params[0] = SROM_FLASH_API_KEY_ONE |
+  49              		.loc 1 347 0
+  50 0014 184B     		ldr	r3, .L5+4
+  51 0016 2360     		str	r3, [r4]
+ 348:..\src\system/flash.c ****         (SROM_FLASH_API_KEY_TWO(SROM_LOAD_FLASH_API_OPCODE) << SROM_FLASH_KEY_TWO_OFFSET);
+ARM GAS  e:\temp\ccVGPNYG.s 			page 8
+
+
+ 349:..\src\system/flash.c ****     params[1] = CY_FLASH_SIZEOF_ROW - 1;
+  52              		.loc 1 349 0
+  53 0018 0B1F     		subs	r3, r1, #4
+  54 001a EF32     		adds	r2, r2, #239
+  55 001c 1A60     		str	r2, [r3]
+ 350:..\src\system/flash.c **** #if (CY_IP_FLASH_MACROS > 1)
+ 351:..\src\system/flash.c ****     if (CY_FLASH_GET_MACRO_FROM_ROW(row_num) != 0)
+ 352:..\src\system/flash.c ****     {
+ 353:..\src\system/flash.c ****         params[0] |= (1 << SROM_LOAD_FLASH_MACRO_OFFSET);
+ 354:..\src\system/flash.c ****     }
+ 355:..\src\system/flash.c **** #endif /* (CY_IP_FLASH_MACROS > 1) */
+ 356:..\src\system/flash.c **** 
+ 357:..\src\system/flash.c ****     CPUSS->sysarg = (uint32_t)(&params[0]);
+  56              		.loc 1 357 0
+  57 001e 174B     		ldr	r3, .L5+8
+  58 0020 9C60     		str	r4, [r3, #8]
+ 358:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_LOAD_FLASH_API_OPCODE);
+  59              		.loc 1 358 0
+  60 0022 174A     		ldr	r2, .L5+12
+  61 0024 5A60     		str	r2, [r3, #4]
+ 359:..\src\system/flash.c ****     __asm(
+  62              		.loc 1 359 0
+  63              		.syntax divided
+  64              	@ 359 "..\src\system\flash.c" 1
+  65 0026 C046     		NOP
+  66 0028 C046     	NOP
+  67 002a C046     	NOP
+  68              	
+  69              	@ 0 "" 2
+ 360:..\src\system/flash.c ****             "NOP\n"
+ 361:..\src\system/flash.c ****             "NOP\n"
+ 362:..\src\system/flash.c ****             "NOP\n"
+ 363:..\src\system/flash.c ****          );
+ 364:..\src\system/flash.c **** 
+ 365:..\src\system/flash.c ****     /* If load latch is successful. */
+ 366:..\src\system/flash.c ****     if ((CPUSS->sysarg & CPUSS_SYSARG_RETURN_VALUE_MASK) == CPUSS_SYSARG_PASS_RETURN_VALUE)
+  70              		.loc 1 366 0
+  71              		.thumb
+  72              		.syntax unified
+  73 002c 9B68     		ldr	r3, [r3, #8]
+  74 002e 1B0F     		lsrs	r3, r3, #28
+  75 0030 1B07     		lsls	r3, r3, #28
+  76 0032 A022     		movs	r2, #160
+  77 0034 1206     		lsls	r2, r2, #24
+  78 0036 9342     		cmp	r3, r2
+  79 0038 13D1     		bne	.L3
+ 367:..\src\system/flash.c ****     {
+ 368:..\src\system/flash.c ****         /* Perform the flash write. */
+ 369:..\src\system/flash.c ****         params[0] = ((row_num << SROM_NB_FLASH_ROW_NUM_OFFSET) | SROM_FLASH_API_KEY_ONE |
+  80              		.loc 1 369 0
+  81 003a 0004     		lsls	r0, r0, #16
+  82              	.LVL2:
+  83 003c 114B     		ldr	r3, .L5+16
+  84 003e 1843     		orrs	r0, r3
+  85 0040 2060     		str	r0, [r4]
+ 370:..\src\system/flash.c ****             (SROM_FLASH_API_KEY_TWO(SROM_FLASH_PROGRAM_API_OPCODE) << SROM_FLASH_KEY_TWO_OFFSET));
+ 371:..\src\system/flash.c ****         CPUSS->sysarg = (uint32_t)(&params[0]);
+ARM GAS  e:\temp\ccVGPNYG.s 			page 9
+
+
+  86              		.loc 1 371 0
+  87 0042 0E4B     		ldr	r3, .L5+8
+  88 0044 9C60     		str	r4, [r3, #8]
+ 372:..\src\system/flash.c ****         CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_FLASH_PROGRAM_API_OPCODE);
+  89              		.loc 1 372 0
+  90 0046 104A     		ldr	r2, .L5+20
+  91 0048 5A60     		str	r2, [r3, #4]
+ 373:..\src\system/flash.c ****         __asm(
+  92              		.loc 1 373 0
+  93              		.syntax divided
+  94              	@ 373 "..\src\system\flash.c" 1
+  95 004a C046     		NOP
+  96 004c C046     	NOP
+  97 004e C046     	NOP
+  98              	
+  99              	@ 0 "" 2
+ 374:..\src\system/flash.c ****                 "NOP\n"
+ 375:..\src\system/flash.c ****                 "NOP\n"
+ 376:..\src\system/flash.c ****                 "NOP\n"
+ 377:..\src\system/flash.c ****              );
+ 378:..\src\system/flash.c ****         if ((CPUSS->sysarg & CPUSS_SYSARG_RETURN_VALUE_MASK) != CPUSS_SYSARG_PASS_RETURN_VALUE)
+ 100              		.loc 1 378 0
+ 101              		.thumb
+ 102              		.syntax unified
+ 103 0050 9B68     		ldr	r3, [r3, #8]
+ 104 0052 1B0F     		lsrs	r3, r3, #28
+ 105 0054 1B07     		lsls	r3, r3, #28
+ 106 0056 A022     		movs	r2, #160
+ 107 0058 1206     		lsls	r2, r2, #24
+ 108 005a 9342     		cmp	r3, r2
+ 109 005c 03D1     		bne	.L4
+ 341:..\src\system/flash.c **** 
+ 110              		.loc 1 341 0
+ 111 005e 0020     		movs	r0, #0
+ 112 0060 02E0     		b	.L2
+ 113              	.LVL3:
+ 114              	.L3:
+ 379:..\src\system/flash.c ****         {
+ 380:..\src\system/flash.c ****             status = CCG_STAT_FAILURE;
+ 381:..\src\system/flash.c ****         }
+ 382:..\src\system/flash.c ****     }
+ 383:..\src\system/flash.c ****     else
+ 384:..\src\system/flash.c ****     {
+ 385:..\src\system/flash.c ****         status = CCG_STAT_FAILURE;
+ 115              		.loc 1 385 0
+ 116 0062 0C20     		movs	r0, #12
+ 117              	.LVL4:
+ 118 0064 00E0     		b	.L2
+ 119              	.L4:
+ 380:..\src\system/flash.c ****         }
+ 120              		.loc 1 380 0
+ 121 0066 0C20     		movs	r0, #12
+ 122              	.L2:
+ 123              	.LVL5:
+ 386:..\src\system/flash.c ****     }
+ 387:..\src\system/flash.c **** 
+ 388:..\src\system/flash.c ****     /* Disconnect the clock to the charge pump after flash write is complete. */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 10
+
+
+ 389:..\src\system/flash.c ****     SRSSLT->clk_select = (SRSSLT->clk_select & ~CLK_SELECT_PUMP_SEL_MASK);
+ 124              		.loc 1 389 0
+ 125 0068 024A     		ldr	r2, .L5
+ 126 006a 936A     		ldr	r3, [r2, #40]
+ 127 006c 3021     		movs	r1, #48
+ 128              	.LVL6:
+ 129 006e 8B43     		bics	r3, r1
+ 130 0070 9362     		str	r3, [r2, #40]
+ 390:..\src\system/flash.c **** 
+ 391:..\src\system/flash.c ****     return status;
+ 392:..\src\system/flash.c **** }
+ 131              		.loc 1 392 0
+ 132              		@ sp needed
+ 133              	.LVL7:
+ 134 0072 30BD     		pop	{r4, r5, pc}
+ 135              	.L6:
+ 136              		.align	2
+ 137              	.L5:
+ 138 0074 00000340 		.word	1073938432
+ 139 0078 B6D70000 		.word	55222
+ 140 007c 00001040 		.word	1074790400
+ 141 0080 04000080 		.word	-2147483644
+ 142 0084 B6D80000 		.word	55478
+ 143 0088 05000080 		.word	-2147483643
+ 144              		.cfi_endproc
+ 145              	.LFE32:
+ 146              		.size	flash_trig_row_write_in_place, .-flash_trig_row_write_in_place
+ 147              		.section	.text.flash_blocking_row_write,"ax",%progbits
+ 148              		.align	2
+ 149              		.code	16
+ 150              		.thumb_func
+ 151              		.type	flash_blocking_row_write, %function
+ 152              	flash_blocking_row_write:
+ 153              	.LFB37:
+ 393:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+ 394:..\src\system/flash.c **** 
+ 395:..\src\system/flash.c **** /*
+ 396:..\src\system/flash.c ****  * This function invokes the SROM API to do a flash row write.
+ 397:..\src\system/flash.c ****  * This function is used instead of the CySysFlashWriteRow, so as to avoid
+ 398:..\src\system/flash.c ****  * the clock trim updates that are done as part of that API.
+ 399:..\src\system/flash.c ****  */
+ 400:..\src\system/flash.c **** ccg_status_t flash_trig_row_write(uint32_t row_num, uint8_t *data_p)
+ 401:..\src\system/flash.c **** {
+ 402:..\src\system/flash.c ****     volatile uint32_t params[(CY_FLASH_SIZEOF_ROW + CPUSS_FLASH_PARAM_SIZE) / sizeof(uint32_t)];
+ 403:..\src\system/flash.c ****     ccg_status_t status = CCG_STAT_SUCCESS;
+ 404:..\src\system/flash.c **** 
+ 405:..\src\system/flash.c ****     /* Connect the charge pump to IMO clock for flash write. */
+ 406:..\src\system/flash.c ****     SRSSLT->clk_select = (SRSSLT->clk_select & ~CLK_SELECT_PUMP_SEL_MASK) | (1 << CLK_SELECT_PUMP_S
+ 407:..\src\system/flash.c **** 
+ 408:..\src\system/flash.c ****     /* Copy the data into the parameter buffer. */
+ 409:..\src\system/flash.c ****     memcpy ((uint8_t *)(&params[2]), data_p, CY_FLASH_SIZEOF_ROW);
+ 410:..\src\system/flash.c **** 
+ 411:..\src\system/flash.c ****     /* Set the parameters for load data into latch operation. */
+ 412:..\src\system/flash.c ****     params[0] = SROM_FLASH_API_KEY_ONE |
+ 413:..\src\system/flash.c ****         (SROM_FLASH_API_KEY_TWO(SROM_LOAD_FLASH_API_OPCODE) << SROM_FLASH_KEY_TWO_OFFSET);
+ 414:..\src\system/flash.c ****     params[1] = CY_FLASH_SIZEOF_ROW - 1;
+ 415:..\src\system/flash.c **** #if (CY_IP_FLASH_MACROS > 1)
+ARM GAS  e:\temp\ccVGPNYG.s 			page 11
+
+
+ 416:..\src\system/flash.c ****     if (CY_FLASH_GET_MACRO_FROM_ROW(row_num) != 0)
+ 417:..\src\system/flash.c ****     {
+ 418:..\src\system/flash.c ****         params[0] |= (1 << SROM_LOAD_FLASH_MACRO_OFFSET);
+ 419:..\src\system/flash.c ****     }
+ 420:..\src\system/flash.c **** #endif /* (CY_IP_FLASH_MACROS > 1) */
+ 421:..\src\system/flash.c **** 
+ 422:..\src\system/flash.c ****     CPUSS->sysarg = (uint32_t)(&params[0]);
+ 423:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_LOAD_FLASH_API_OPCODE);
+ 424:..\src\system/flash.c ****     __asm(
+ 425:..\src\system/flash.c ****             "NOP\n"
+ 426:..\src\system/flash.c ****             "NOP\n"
+ 427:..\src\system/flash.c ****             "NOP\n"
+ 428:..\src\system/flash.c ****          );
+ 429:..\src\system/flash.c **** 
+ 430:..\src\system/flash.c ****     /* If load latch is successful. */
+ 431:..\src\system/flash.c ****     if ((CPUSS->sysarg & CPUSS_SYSARG_RETURN_VALUE_MASK) == CPUSS_SYSARG_PASS_RETURN_VALUE)
+ 432:..\src\system/flash.c ****     {
+ 433:..\src\system/flash.c ****         /* Perform the flash write. */
+ 434:..\src\system/flash.c ****         params[0] = ((row_num << SROM_NB_FLASH_ROW_NUM_OFFSET) | SROM_FLASH_API_KEY_ONE |
+ 435:..\src\system/flash.c ****             (SROM_FLASH_API_KEY_TWO(SROM_FLASH_PROGRAM_API_OPCODE) << SROM_FLASH_KEY_TWO_OFFSET));
+ 436:..\src\system/flash.c ****         CPUSS->sysarg = (uint32_t)(&params[0]);
+ 437:..\src\system/flash.c ****         CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_FLASH_PROGRAM_API_OPCODE);
+ 438:..\src\system/flash.c ****         __asm(
+ 439:..\src\system/flash.c ****                 "NOP\n"
+ 440:..\src\system/flash.c ****                 "NOP\n"
+ 441:..\src\system/flash.c ****                 "NOP\n"
+ 442:..\src\system/flash.c ****              );
+ 443:..\src\system/flash.c ****         if ((CPUSS->sysarg & CPUSS_SYSARG_RETURN_VALUE_MASK) != CPUSS_SYSARG_PASS_RETURN_VALUE)
+ 444:..\src\system/flash.c ****         {
+ 445:..\src\system/flash.c ****             status = CCG_STAT_FAILURE;
+ 446:..\src\system/flash.c ****         }
+ 447:..\src\system/flash.c ****     }
+ 448:..\src\system/flash.c ****     else
+ 449:..\src\system/flash.c ****     {
+ 450:..\src\system/flash.c ****         status = CCG_STAT_FAILURE;
+ 451:..\src\system/flash.c ****     }
+ 452:..\src\system/flash.c **** 
+ 453:..\src\system/flash.c ****     /* Disconnect the clock to the charge pump after flash write is complete. */
+ 454:..\src\system/flash.c ****     SRSSLT->clk_select = (SRSSLT->clk_select & ~CLK_SELECT_PUMP_SEL_MASK);
+ 455:..\src\system/flash.c **** 
+ 456:..\src\system/flash.c ****     return status;
+ 457:..\src\system/flash.c **** }
+ 458:..\src\system/flash.c **** 
+ 459:..\src\system/flash.c **** void flash_enter_mode(bool is_enable, flash_interface_t mode, bool data_in_place)
+ 460:..\src\system/flash.c **** {
+ 461:..\src\system/flash.c ****     /* Enter or Exit the Flashing mode. Only one mode will be active at a time. */
+ 462:..\src\system/flash.c ****     if (is_enable)
+ 463:..\src\system/flash.c ****     {
+ 464:..\src\system/flash.c ****         gl_flash_mode_en = (1 << mode);
+ 465:..\src\system/flash.c **** #if (!CCG_BOOT)
+ 466:..\src\system/flash.c ****         gl_flash_write_in_place = data_in_place;
+ 467:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+ 468:..\src\system/flash.c ****     }
+ 469:..\src\system/flash.c ****     else
+ 470:..\src\system/flash.c ****     {
+ 471:..\src\system/flash.c ****         gl_flash_mode_en = 0;
+ 472:..\src\system/flash.c **** #if (!CCG_BOOT)
+ARM GAS  e:\temp\ccVGPNYG.s 			page 12
+
+
+ 473:..\src\system/flash.c ****         gl_flash_write_in_place = false;
+ 474:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+ 475:..\src\system/flash.c ****     }
+ 476:..\src\system/flash.c **** }
+ 477:..\src\system/flash.c **** 
+ 478:..\src\system/flash.c **** bool flash_access_get_status (uint8_t modes)
+ 479:..\src\system/flash.c **** {
+ 480:..\src\system/flash.c ****     return ((bool)((gl_flash_mode_en & modes) != 0));
+ 481:..\src\system/flash.c **** }
+ 482:..\src\system/flash.c **** 
+ 483:..\src\system/flash.c **** void flash_set_access_limits (uint16_t start_row, uint16_t last_row, uint16_t md_row,
+ 484:..\src\system/flash.c ****         uint16_t bl_last_row)
+ 485:..\src\system/flash.c **** {
+ 486:..\src\system/flash.c ****     /* 
+ 487:..\src\system/flash.c ****      * Caller is expected to provide valid parameters. No error checking
+ 488:..\src\system/flash.c ****      * is expected to be done by this function. Store the flash write and
+ 489:..\src\system/flash.c ****      * flash read access area information.
+ 490:..\src\system/flash.c ****      */
+ 491:..\src\system/flash.c ****     gl_flash_access_first = start_row;
+ 492:..\src\system/flash.c ****     gl_flash_access_last  = last_row;
+ 493:..\src\system/flash.c ****     gl_flash_metadata_row = md_row;
+ 494:..\src\system/flash.c ****     gl_flash_bl_last_row = bl_last_row;
+ 495:..\src\system/flash.c **** }
+ 496:..\src\system/flash.c **** 
+ 497:..\src\system/flash.c **** static ccg_status_t flash_blocking_row_write(uint16_t row_num, uint8_t *data)
+ 498:..\src\system/flash.c **** {
+ 154              		.loc 1 498 0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 0
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 158              	.LVL8:
+ 159 0000 10B5     		push	{r4, lr}
+ 160              		.cfi_def_cfa_offset 8
+ 161              		.cfi_offset 4, -8
+ 162              		.cfi_offset 14, -4
+ 163              	.LVL9:
+ 499:..\src\system/flash.c ****     ccg_status_t stat = CCG_STAT_SUCCESS;
+ 500:..\src\system/flash.c **** 
+ 501:..\src\system/flash.c **** #if (!CCG_BOOT)
+ 502:..\src\system/flash.c ****     /* Invoke Flash Write API. */
+ 503:..\src\system/flash.c ****     if (gl_flash_write_in_place)
+ 164              		.loc 1 503 0
+ 165 0002 064B     		ldr	r3, .L12
+ 166 0004 1B78     		ldrb	r3, [r3]
+ 167 0006 002B     		cmp	r3, #0
+ 168 0008 02D0     		beq	.L10
+ 504:..\src\system/flash.c ****     {
+ 505:..\src\system/flash.c ****         stat = flash_trig_row_write_in_place (row_num, data);
+ 169              		.loc 1 505 0
+ 170 000a FFF7FEFF 		bl	flash_trig_row_write_in_place
+ 171              	.LVL10:
+ 172 000e 00E0     		b	.L8
+ 173              	.LVL11:
+ 174              	.L10:
+ 506:..\src\system/flash.c ****     }
+ 507:..\src\system/flash.c ****     else
+ 508:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 13
+
+
+ 509:..\src\system/flash.c ****     {
+ 510:..\src\system/flash.c **** #if ((CCG_HPI_ENABLE) && (!CCG_BOOT))
+ 511:..\src\system/flash.c ****         /* Assume that only in-place writes are enabled in HPI based binaries. */
+ 512:..\src\system/flash.c ****         stat = CCG_STAT_FAILURE;
+ 175              		.loc 1 512 0
+ 176 0010 0C20     		movs	r0, #12
+ 177              	.LVL12:
+ 178              	.L8:
+ 513:..\src\system/flash.c **** #else
+ 514:..\src\system/flash.c ****         stat = flash_trig_row_write (row_num, data);
+ 515:..\src\system/flash.c **** #endif /* ((CCG_HPI_ENABLE) && (!CCG_BOOT)) */
+ 516:..\src\system/flash.c ****     }
+ 517:..\src\system/flash.c **** 
+ 518:..\src\system/flash.c ****     if (stat != CCG_STAT_SUCCESS)
+ 179              		.loc 1 518 0
+ 180 0012 0028     		cmp	r0, #0
+ 181 0014 00D0     		beq	.L9
+ 519:..\src\system/flash.c ****     {
+ 520:..\src\system/flash.c ****         stat = CCG_STAT_FLASH_UPDATE_FAILED;
+ 182              		.loc 1 520 0
+ 183 0016 0520     		movs	r0, #5
+ 184              	.LVL13:
+ 185              	.L9:
+ 521:..\src\system/flash.c ****     }
+ 522:..\src\system/flash.c **** 
+ 523:..\src\system/flash.c ****     return stat;
+ 524:..\src\system/flash.c **** }
+ 186              		.loc 1 524 0
+ 187              		@ sp needed
+ 188 0018 10BD     		pop	{r4, pc}
+ 189              	.L13:
+ 190 001a C046     		.align	2
+ 191              	.L12:
+ 192 001c 00000000 		.word	.LANCHOR0
+ 193              		.cfi_endproc
+ 194              	.LFE37:
+ 195              		.size	flash_blocking_row_write, .-flash_blocking_row_write
+ 196              		.section	.text.flash_trig_row_write,"ax",%progbits
+ 197              		.align	2
+ 198              		.global	flash_trig_row_write
+ 199              		.code	16
+ 200              		.thumb_func
+ 201              		.type	flash_trig_row_write, %function
+ 202              	flash_trig_row_write:
+ 203              	.LFB33:
+ 401:..\src\system/flash.c ****     volatile uint32_t params[(CY_FLASH_SIZEOF_ROW + CPUSS_FLASH_PARAM_SIZE) / sizeof(uint32_t)];
+ 204              		.loc 1 401 0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 264
+ 207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208              	.LVL14:
+ 209 0000 10B5     		push	{r4, lr}
+ 210              		.cfi_def_cfa_offset 8
+ 211              		.cfi_offset 4, -8
+ 212              		.cfi_offset 14, -4
+ 213 0002 C2B0     		sub	sp, sp, #264
+ 214              		.cfi_def_cfa_offset 272
+ARM GAS  e:\temp\ccVGPNYG.s 			page 14
+
+
+ 215 0004 0400     		movs	r4, r0
+ 216              	.LVL15:
+ 406:..\src\system/flash.c **** 
+ 217              		.loc 1 406 0
+ 218 0006 1E48     		ldr	r0, .L18
+ 219              	.LVL16:
+ 220 0008 836A     		ldr	r3, [r0, #40]
+ 221 000a 3022     		movs	r2, #48
+ 222 000c 9343     		bics	r3, r2
+ 223 000e 203A     		subs	r2, r2, #32
+ 224 0010 1343     		orrs	r3, r2
+ 225 0012 8362     		str	r3, [r0, #40]
+ 409:..\src\system/flash.c **** 
+ 226              		.loc 1 409 0
+ 227 0014 F032     		adds	r2, r2, #240
+ 228 0016 02A8     		add	r0, sp, #8
+ 229 0018 FFF7FEFF 		bl	memcpy
+ 230              	.LVL17:
+ 412:..\src\system/flash.c ****         (SROM_FLASH_API_KEY_TWO(SROM_LOAD_FLASH_API_OPCODE) << SROM_FLASH_KEY_TWO_OFFSET);
+ 231              		.loc 1 412 0
+ 232 001c 194B     		ldr	r3, .L18+4
+ 233 001e 0093     		str	r3, [sp]
+ 414:..\src\system/flash.c **** #if (CY_IP_FLASH_MACROS > 1)
+ 234              		.loc 1 414 0
+ 235 0020 FF23     		movs	r3, #255
+ 236 0022 0193     		str	r3, [sp, #4]
+ 422:..\src\system/flash.c ****     CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_LOAD_FLASH_API_OPCODE);
+ 237              		.loc 1 422 0
+ 238 0024 184B     		ldr	r3, .L18+8
+ 239 0026 6A46     		mov	r2, sp
+ 240 0028 9A60     		str	r2, [r3, #8]
+ 423:..\src\system/flash.c ****     __asm(
+ 241              		.loc 1 423 0
+ 242 002a 184A     		ldr	r2, .L18+12
+ 243 002c 5A60     		str	r2, [r3, #4]
+ 424:..\src\system/flash.c ****             "NOP\n"
+ 244              		.loc 1 424 0
+ 245              		.syntax divided
+ 246              	@ 424 "..\src\system\flash.c" 1
+ 247 002e C046     		NOP
+ 248 0030 C046     	NOP
+ 249 0032 C046     	NOP
+ 250              	
+ 251              	@ 0 "" 2
+ 431:..\src\system/flash.c ****     {
+ 252              		.loc 1 431 0
+ 253              		.thumb
+ 254              		.syntax unified
+ 255 0034 9B68     		ldr	r3, [r3, #8]
+ 256 0036 1B0F     		lsrs	r3, r3, #28
+ 257 0038 1B07     		lsls	r3, r3, #28
+ 258 003a A022     		movs	r2, #160
+ 259 003c 1206     		lsls	r2, r2, #24
+ 260 003e 9342     		cmp	r3, r2
+ 261 0040 14D1     		bne	.L16
+ 434:..\src\system/flash.c ****             (SROM_FLASH_API_KEY_TWO(SROM_FLASH_PROGRAM_API_OPCODE) << SROM_FLASH_KEY_TWO_OFFSET));
+ 262              		.loc 1 434 0
+ARM GAS  e:\temp\ccVGPNYG.s 			page 15
+
+
+ 263 0042 2404     		lsls	r4, r4, #16
+ 264              	.LVL18:
+ 265 0044 124B     		ldr	r3, .L18+16
+ 266 0046 1C43     		orrs	r4, r3
+ 267 0048 0094     		str	r4, [sp]
+ 436:..\src\system/flash.c ****         CPUSS->sysreq = (CPUSS_SYSREQ_SYSCALL_REQ | SROM_FLASH_PROGRAM_API_OPCODE);
+ 268              		.loc 1 436 0
+ 269 004a 0F4B     		ldr	r3, .L18+8
+ 270 004c 6A46     		mov	r2, sp
+ 271 004e 9A60     		str	r2, [r3, #8]
+ 437:..\src\system/flash.c ****         __asm(
+ 272              		.loc 1 437 0
+ 273 0050 104A     		ldr	r2, .L18+20
+ 274 0052 5A60     		str	r2, [r3, #4]
+ 438:..\src\system/flash.c ****                 "NOP\n"
+ 275              		.loc 1 438 0
+ 276              		.syntax divided
+ 277              	@ 438 "..\src\system\flash.c" 1
+ 278 0054 C046     		NOP
+ 279 0056 C046     	NOP
+ 280 0058 C046     	NOP
+ 281              	
+ 282              	@ 0 "" 2
+ 443:..\src\system/flash.c ****         {
+ 283              		.loc 1 443 0
+ 284              		.thumb
+ 285              		.syntax unified
+ 286 005a 9B68     		ldr	r3, [r3, #8]
+ 287 005c 1B0F     		lsrs	r3, r3, #28
+ 288 005e 1B07     		lsls	r3, r3, #28
+ 289 0060 A022     		movs	r2, #160
+ 290 0062 1206     		lsls	r2, r2, #24
+ 291 0064 9342     		cmp	r3, r2
+ 292 0066 03D1     		bne	.L17
+ 403:..\src\system/flash.c **** 
+ 293              		.loc 1 403 0
+ 294 0068 0020     		movs	r0, #0
+ 295 006a 02E0     		b	.L15
+ 296              	.LVL19:
+ 297              	.L16:
+ 450:..\src\system/flash.c ****     }
+ 298              		.loc 1 450 0
+ 299 006c 0C20     		movs	r0, #12
+ 300 006e 00E0     		b	.L15
+ 301              	.LVL20:
+ 302              	.L17:
+ 445:..\src\system/flash.c ****         }
+ 303              		.loc 1 445 0
+ 304 0070 0C20     		movs	r0, #12
+ 305              	.L15:
+ 306              	.LVL21:
+ 454:..\src\system/flash.c **** 
+ 307              		.loc 1 454 0
+ 308 0072 034A     		ldr	r2, .L18
+ 309 0074 936A     		ldr	r3, [r2, #40]
+ 310 0076 3021     		movs	r1, #48
+ 311 0078 8B43     		bics	r3, r1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 16
+
+
+ 312 007a 9362     		str	r3, [r2, #40]
+ 457:..\src\system/flash.c **** 
+ 313              		.loc 1 457 0
+ 314 007c 42B0     		add	sp, sp, #264
+ 315              		@ sp needed
+ 316 007e 10BD     		pop	{r4, pc}
+ 317              	.L19:
+ 318              		.align	2
+ 319              	.L18:
+ 320 0080 00000340 		.word	1073938432
+ 321 0084 B6D70000 		.word	55222
+ 322 0088 00001040 		.word	1074790400
+ 323 008c 04000080 		.word	-2147483644
+ 324 0090 B6D80000 		.word	55478
+ 325 0094 05000080 		.word	-2147483643
+ 326              		.cfi_endproc
+ 327              	.LFE33:
+ 328              		.size	flash_trig_row_write, .-flash_trig_row_write
+ 329              		.section	.text.flash_enter_mode,"ax",%progbits
+ 330              		.align	2
+ 331              		.global	flash_enter_mode
+ 332              		.code	16
+ 333              		.thumb_func
+ 334              		.type	flash_enter_mode, %function
+ 335              	flash_enter_mode:
+ 336              	.LFB34:
+ 460:..\src\system/flash.c ****     /* Enter or Exit the Flashing mode. Only one mode will be active at a time. */
+ 337              		.loc 1 460 0
+ 338              		.cfi_startproc
+ 339              		@ args = 0, pretend = 0, frame = 0
+ 340              		@ frame_needed = 0, uses_anonymous_args = 0
+ 341              		@ link register save eliminated.
+ 342              	.LVL22:
+ 462:..\src\system/flash.c ****     {
+ 343              		.loc 1 462 0
+ 344 0000 0028     		cmp	r0, #0
+ 345 0002 05D0     		beq	.L21
+ 464:..\src\system/flash.c **** #if (!CCG_BOOT)
+ 346              		.loc 1 464 0
+ 347 0004 0123     		movs	r3, #1
+ 348 0006 8B40     		lsls	r3, r3, r1
+ 349 0008 0449     		ldr	r1, .L23
+ 350              	.LVL23:
+ 351 000a 4B70     		strb	r3, [r1, #1]
+ 466:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+ 352              		.loc 1 466 0
+ 353 000c 0A70     		strb	r2, [r1]
+ 354 000e 03E0     		b	.L20
+ 355              	.LVL24:
+ 356              	.L21:
+ 471:..\src\system/flash.c **** #if (!CCG_BOOT)
+ 357              		.loc 1 471 0
+ 358 0010 024B     		ldr	r3, .L23
+ 359 0012 0022     		movs	r2, #0
+ 360              	.LVL25:
+ 361 0014 5A70     		strb	r2, [r3, #1]
+ 473:..\src\system/flash.c **** #endif /* (!CCG_BOOT) */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 17
+
+
+ 362              		.loc 1 473 0
+ 363 0016 1A70     		strb	r2, [r3]
+ 364              	.LVL26:
+ 365              	.L20:
+ 476:..\src\system/flash.c **** 
+ 366              		.loc 1 476 0
+ 367              		@ sp needed
+ 368 0018 7047     		bx	lr
+ 369              	.L24:
+ 370 001a C046     		.align	2
+ 371              	.L23:
+ 372 001c 00000000 		.word	.LANCHOR0
+ 373              		.cfi_endproc
+ 374              	.LFE34:
+ 375              		.size	flash_enter_mode, .-flash_enter_mode
+ 376              		.section	.text.flash_access_get_status,"ax",%progbits
+ 377              		.align	2
+ 378              		.global	flash_access_get_status
+ 379              		.code	16
+ 380              		.thumb_func
+ 381              		.type	flash_access_get_status, %function
+ 382              	flash_access_get_status:
+ 383              	.LFB35:
+ 479:..\src\system/flash.c ****     return ((bool)((gl_flash_mode_en & modes) != 0));
+ 384              		.loc 1 479 0
+ 385              		.cfi_startproc
+ 386              		@ args = 0, pretend = 0, frame = 0
+ 387              		@ frame_needed = 0, uses_anonymous_args = 0
+ 388              		@ link register save eliminated.
+ 389              	.LVL27:
+ 480:..\src\system/flash.c **** }
+ 390              		.loc 1 480 0
+ 391 0000 034B     		ldr	r3, .L26
+ 392 0002 5B78     		ldrb	r3, [r3, #1]
+ 393 0004 1840     		ands	r0, r3
+ 394              	.LVL28:
+ 395 0006 431E     		subs	r3, r0, #1
+ 396 0008 9841     		sbcs	r0, r0, r3
+ 397 000a C0B2     		uxtb	r0, r0
+ 481:..\src\system/flash.c **** 
+ 398              		.loc 1 481 0
+ 399              		@ sp needed
+ 400 000c 7047     		bx	lr
+ 401              	.L27:
+ 402 000e C046     		.align	2
+ 403              	.L26:
+ 404 0010 00000000 		.word	.LANCHOR0
+ 405              		.cfi_endproc
+ 406              	.LFE35:
+ 407              		.size	flash_access_get_status, .-flash_access_get_status
+ 408              		.section	.text.flash_set_access_limits,"ax",%progbits
+ 409              		.align	2
+ 410              		.global	flash_set_access_limits
+ 411              		.code	16
+ 412              		.thumb_func
+ 413              		.type	flash_set_access_limits, %function
+ 414              	flash_set_access_limits:
+ARM GAS  e:\temp\ccVGPNYG.s 			page 18
+
+
+ 415              	.LFB36:
+ 485:..\src\system/flash.c ****     /* 
+ 416              		.loc 1 485 0
+ 417              		.cfi_startproc
+ 418              		@ args = 0, pretend = 0, frame = 0
+ 419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 420              	.LVL29:
+ 421 0000 10B5     		push	{r4, lr}
+ 422              		.cfi_def_cfa_offset 8
+ 423              		.cfi_offset 4, -8
+ 424              		.cfi_offset 14, -4
+ 491:..\src\system/flash.c ****     gl_flash_access_last  = last_row;
+ 425              		.loc 1 491 0
+ 426 0002 034C     		ldr	r4, .L29
+ 427 0004 2080     		strh	r0, [r4]
+ 492:..\src\system/flash.c ****     gl_flash_metadata_row = md_row;
+ 428              		.loc 1 492 0
+ 429 0006 6180     		strh	r1, [r4, #2]
+ 493:..\src\system/flash.c ****     gl_flash_bl_last_row = bl_last_row;
+ 430              		.loc 1 493 0
+ 431 0008 A280     		strh	r2, [r4, #4]
+ 494:..\src\system/flash.c **** }
+ 432              		.loc 1 494 0
+ 433 000a E380     		strh	r3, [r4, #6]
+ 495:..\src\system/flash.c **** 
+ 434              		.loc 1 495 0
+ 435              		@ sp needed
+ 436 000c 10BD     		pop	{r4, pc}
+ 437              	.L30:
+ 438 000e C046     		.align	2
+ 439              	.L29:
+ 440 0010 00000000 		.word	.LANCHOR1
+ 441              		.cfi_endproc
+ 442              	.LFE36:
+ 443              		.size	flash_set_access_limits, .-flash_set_access_limits
+ 444              		.section	.text.flash_row_clear,"ax",%progbits
+ 445              		.align	2
+ 446              		.global	flash_row_clear
+ 447              		.code	16
+ 448              		.thumb_func
+ 449              		.type	flash_row_clear, %function
+ 450              	flash_row_clear:
+ 451              	.LFB38:
+ 525:..\src\system/flash.c **** 
+ 526:..\src\system/flash.c **** /*
+ 527:..\src\system/flash.c ****  * @brief Handle Clear Flash Row operation.
+ 528:..\src\system/flash.c ****  *
+ 529:..\src\system/flash.c ****  * Description
+ 530:..\src\system/flash.c ****  * This function clears spcified flash row
+ 531:..\src\system/flash.c ****  *
+ 532:..\src\system/flash.c ****  * @param row_num Flash Row Number
+ 533:..\src\system/flash.c ****  * @return ccg_status_t Status Code
+ 534:..\src\system/flash.c ****  */
+ 535:..\src\system/flash.c **** ccg_status_t flash_row_clear(uint16_t row_num)
+ 536:..\src\system/flash.c **** {
+ 452              		.loc 1 536 0
+ 453              		.cfi_startproc
+ARM GAS  e:\temp\ccVGPNYG.s 			page 19
+
+
+ 454              		@ args = 0, pretend = 0, frame = 264
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456              	.LVL30:
+ 457 0000 10B5     		push	{r4, lr}
+ 458              		.cfi_def_cfa_offset 8
+ 459              		.cfi_offset 4, -8
+ 460              		.cfi_offset 14, -4
+ 461 0002 C2B0     		sub	sp, sp, #264
+ 462              		.cfi_def_cfa_offset 272
+ 463 0004 0400     		movs	r4, r0
+ 537:..\src\system/flash.c ****     uint8_t buffer[CCG_FLASH_ROW_SIZE + CPUSS_FLASH_PARAM_SIZE] = {0};
+ 464              		.loc 1 537 0
+ 465 0006 8422     		movs	r2, #132
+ 466 0008 5200     		lsls	r2, r2, #1
+ 467 000a 0021     		movs	r1, #0
+ 468 000c 6846     		mov	r0, sp
+ 469              	.LVL31:
+ 470 000e FFF7FEFF 		bl	memset
+ 471              	.LVL32:
+ 538:..\src\system/flash.c ****     return flash_blocking_row_write (row_num, buffer + CPUSS_FLASH_PARAM_SIZE);
+ 472              		.loc 1 538 0
+ 473 0012 02A9     		add	r1, sp, #8
+ 474 0014 2000     		movs	r0, r4
+ 475 0016 FFF7FEFF 		bl	flash_blocking_row_write
+ 476              	.LVL33:
+ 539:..\src\system/flash.c **** }
+ 477              		.loc 1 539 0
+ 478 001a 42B0     		add	sp, sp, #264
+ 479              		@ sp needed
+ 480 001c 10BD     		pop	{r4, pc}
+ 481              		.cfi_endproc
+ 482              	.LFE38:
+ 483              		.size	flash_row_clear, .-flash_row_clear
+ 484 001e C046     		.section	.text.flash_row_write,"ax",%progbits
+ 485              		.align	2
+ 486              		.global	flash_row_write
+ 487              		.code	16
+ 488              		.thumb_func
+ 489              		.type	flash_row_write, %function
+ 490              	flash_row_write:
+ 491              	.LFB39:
+ 540:..\src\system/flash.c **** 
+ 541:..\src\system/flash.c **** #if (FLASH_ENABLE_NB_MODE == 1)
+ 542:..\src\system/flash.c **** 
+ 543:..\src\system/flash.c **** void flash_non_blocking_write_abort(void)
+ 544:..\src\system/flash.c **** {
+ 545:..\src\system/flash.c ****     /* Set a flag which which will be sampled in next SPCIF interrupt. */
+ 546:..\src\system/flash.c ****     gl_flash_nb_write_abort = true;
+ 547:..\src\system/flash.c **** }
+ 548:..\src\system/flash.c **** 
+ 549:..\src\system/flash.c **** static ccg_status_t flash_non_blocking_row_write(uint16_t row_num, uint8_t *data,
+ 550:..\src\system/flash.c ****         flash_cbk_t cbk)
+ 551:..\src\system/flash.c **** {
+ 552:..\src\system/flash.c ****     uint8_t flash_macro_index;
+ 553:..\src\system/flash.c **** 
+ 554:..\src\system/flash.c ****     /* Determine the Flash Macro from Row number. */
+ 555:..\src\system/flash.c ****     flash_macro_index = CY_FLASH_GET_MACRO_FROM_ROW(row_num);
+ARM GAS  e:\temp\ccVGPNYG.s 			page 20
+
+
+ 556:..\src\system/flash.c **** 
+ 557:..\src\system/flash.c ****     /* Load Flash Bytes SROM API. */
+ 558:..\src\system/flash.c ****     if (!srom_load_flash_bytes_api (data, flash_macro_index))
+ 559:..\src\system/flash.c ****     {
+ 560:..\src\system/flash.c ****         return CCG_STAT_FLASH_UPDATE_FAILED;
+ 561:..\src\system/flash.c ****     }
+ 562:..\src\system/flash.c **** 
+ 563:..\src\system/flash.c ****     /* Connect the charge pump to IMO clock for flash write. */
+ 564:..\src\system/flash.c ****     SRSSLT->clk_select = (SRSSLT->clk_select & ~CLK_SELECT_PUMP_SEL_MASK) | (1 << CLK_SELECT_PUMP_S
+ 565:..\src\system/flash.c **** 
+ 566:..\src\system/flash.c ****     /* Set SPC Interrupt Vector and enable Interrupt. */
+ 567:..\src\system/flash.c ****     CyIntDisable (FLASH_SPC_INTR);
+ 568:..\src\system/flash.c ****     CyIntSetVector (FLASH_SPC_INTR, &flash_spc_intr_handler);
+ 569:..\src\system/flash.c ****     CyIntEnable (FLASH_SPC_INTR);
+ 570:..\src\system/flash.c **** 
+ 571:..\src\system/flash.c ****     /* Flash Callback. */
+ 572:..\src\system/flash.c ****     flash_notify = cbk;
+ 573:..\src\system/flash.c **** 
+ 574:..\src\system/flash.c ****     /* Non Blocking Write Row API. */
+ 575:..\src\system/flash.c ****     if (!(srom_nb_flash_write_api (row_num)))
+ 576:..\src\system/flash.c ****     {
+ 577:..\src\system/flash.c ****         return CCG_STAT_FLASH_UPDATE_FAILED;
+ 578:..\src\system/flash.c ****     }
+ 579:..\src\system/flash.c ****     /*
+ 580:..\src\system/flash.c ****      * Non-Blocking Flash Write has started. Response will
+ 581:..\src\system/flash.c ****      * go back only after write completes.
+ 582:..\src\system/flash.c ****      */
+ 583:..\src\system/flash.c ****     return CCG_STAT_NO_RESPONSE;
+ 584:..\src\system/flash.c **** }
+ 585:..\src\system/flash.c **** #endif /* FLASH_ENABLE_NB_MODE */
+ 586:..\src\system/flash.c **** 
+ 587:..\src\system/flash.c **** ccg_status_t flash_row_write(uint16_t row_num, uint8_t *data, flash_cbk_t cbk)
+ 588:..\src\system/flash.c **** {
+ 492              		.loc 1 588 0
+ 493              		.cfi_startproc
+ 494              		@ args = 0, pretend = 0, frame = 0
+ 495              		@ frame_needed = 0, uses_anonymous_args = 0
+ 496              	.LVL34:
+ 497 0000 70B5     		push	{r4, r5, r6, lr}
+ 498              		.cfi_def_cfa_offset 16
+ 499              		.cfi_offset 4, -16
+ 500              		.cfi_offset 5, -12
+ 501              		.cfi_offset 6, -8
+ 502              		.cfi_offset 14, -4
+ 503 0002 0400     		movs	r4, r0
+ 504 0004 0D00     		movs	r5, r1
+ 505              	.LVL35:
+ 589:..\src\system/flash.c ****     /* Initialize Return Status Value. */
+ 590:..\src\system/flash.c ****     ccg_status_t status = CCG_STAT_NO_RESPONSE;
+ 591:..\src\system/flash.c **** 
+ 592:..\src\system/flash.c **** #if (!CCG_DUALAPP_DISABLE)
+ 593:..\src\system/flash.c **** #if ((CCG_BOOT != 0) || (CCG_PSEUDO_METADATA_DISABLE != 0))
+ 594:..\src\system/flash.c ****     uint32_t seq_num;
+ 595:..\src\system/flash.c ****     uint16_t offset;
+ 596:..\src\system/flash.c **** #else /* ((CCG_BOOT != 0) || (CCG_PSEUDO_METADATA_DISABLE != 0)) */
+ 597:..\src\system/flash.c ****     sys_fw_metadata_t *fw_metadata;
+ 598:..\src\system/flash.c **** #endif /* ((CCG_BOOT != 0) || (CCG_PSEUDO_METADATA_DISABLE != 0)) */
+ARM GAS  e:\temp\ccVGPNYG.s 			page 21
+
+
+ 599:..\src\system/flash.c **** #endif /* CCG_DUALAPP_DISABLE */
+ 600:..\src\system/flash.c **** 
+ 601:..\src\system/flash.c ****     /*
+ 602:..\src\system/flash.c ****      * On actual CCG silicon, we use customized flash update code for reduced stack usage.
+ 603:..\src\system/flash.c ****      * This version of code can only work when the HFCLK setting for the device is 48 MHz.
+ 604:..\src\system/flash.c ****      * Return error if flash write is being initiated with HFCLK set to values other than
+ 605:..\src\system/flash.c ****      * 48 MHz.
+ 606:..\src\system/flash.c ****      */
+ 607:..\src\system/flash.c **** #if (CYDEV_BCLK__HFCLK__MHZ != 48)
+ 608:..\src\system/flash.c ****     return (CCG_STAT_FLASH_UPDATE_FAILED);
+ 609:..\src\system/flash.c **** #endif /* (CYDEV_BCLK__HFCLK__MHZ != 48) */
+ 610:..\src\system/flash.c **** 
+ 611:..\src\system/flash.c ****     /* Can't handle flash update request if Flashing mode is not active. */
+ 612:..\src\system/flash.c ****     if (gl_flash_mode_en == 0)
+ 506              		.loc 1 612 0
+ 507 0006 1B4B     		ldr	r3, .L42
+ 508 0008 5B78     		ldrb	r3, [r3, #1]
+ 509 000a 002B     		cmp	r3, #0
+ 510 000c 28D0     		beq	.L37
+ 613:..\src\system/flash.c ****     {
+ 614:..\src\system/flash.c ****         return CCG_STAT_NOT_READY;
+ 615:..\src\system/flash.c ****     }
+ 616:..\src\system/flash.c **** 
+ 617:..\src\system/flash.c ****     if ((data == NULL) || (row_num < gl_flash_access_first) ||
+ 511              		.loc 1 617 0
+ 512 000e 0029     		cmp	r1, #0
+ 513 0010 28D0     		beq	.L38
+ 514              		.loc 1 617 0 is_stmt 0 discriminator 1
+ 515 0012 194B     		ldr	r3, .L42+4
+ 516 0014 1B88     		ldrh	r3, [r3]
+ 517 0016 8342     		cmp	r3, r0
+ 518 0018 26D8     		bhi	.L39
+ 618:..\src\system/flash.c ****             ((row_num > gl_flash_access_last) && (row_num != gl_flash_metadata_row)) ||
+ 519              		.loc 1 618 0 is_stmt 1 discriminator 2
+ 520 001a 174B     		ldr	r3, .L42+4
+ 521 001c 5B88     		ldrh	r3, [r3, #2]
+ 617:..\src\system/flash.c ****             ((row_num > gl_flash_access_last) && (row_num != gl_flash_metadata_row)) ||
+ 522              		.loc 1 617 0 discriminator 2
+ 523 001e 9842     		cmp	r0, r3
+ 524 0020 03D9     		bls	.L34
+ 525              		.loc 1 618 0
+ 526 0022 154B     		ldr	r3, .L42+4
+ 527 0024 9B88     		ldrh	r3, [r3, #4]
+ 528 0026 9842     		cmp	r0, r3
+ 529 0028 20D1     		bne	.L40
+ 530              	.L34:
+ 531              		.loc 1 618 0 is_stmt 0 discriminator 1
+ 532 002a 144B     		ldr	r3, .L42+8
+ 533 002c 9C42     		cmp	r4, r3
+ 534 002e 1FD8     		bhi	.L41
+ 535              	.LVL36:
+ 619:..\src\system/flash.c ****             (row_num > CCG_LAST_FLASH_ROW_NUM))
+ 620:..\src\system/flash.c ****     {
+ 621:..\src\system/flash.c ****         return CCG_STAT_INVALID_ARGUMENT;
+ 622:..\src\system/flash.c ****     }
+ 623:..\src\system/flash.c **** #if (!CCG_DUALAPP_DISABLE)     
+ 624:..\src\system/flash.c **** #if CCG_BOOT
+ARM GAS  e:\temp\ccVGPNYG.s 			page 22
+
+
+ 625:..\src\system/flash.c ****     /*
+ 626:..\src\system/flash.c ****      * Ensure boot loader is not allowed to write to reserved rows (if any) in FW2 Image area.
+ 627:..\src\system/flash.c ****      * Certain applications use FW Image 2 area to store APP priority, Customer info etc.
+ 628:..\src\system/flash.c ****      * This rows are sandwiched between last row of image 2 and image 2's metadata table row.
+ 629:..\src\system/flash.c ****      */
+ 630:..\src\system/flash.c ****     if ((row_num > CCG_IMG2_LAST_FLASH_ROW_NUM) && (row_num < CCG_IMG2_METADATA_ROW_NUM))
+ 631:..\src\system/flash.c ****     {
+ 632:..\src\system/flash.c ****         return CCG_STAT_INVALID_ARGUMENT;
+ 633:..\src\system/flash.c ****     }
+ 634:..\src\system/flash.c **** #endif /* CCG_BOOT */
+ 635:..\src\system/flash.c **** 
+ 636:..\src\system/flash.c **** #if ((CCG_BOOT != 0) || (CCG_PSEUDO_METADATA_DISABLE != 0))
+ 637:..\src\system/flash.c ****     /* Byte offset to the sequence number field in metadata. */
+ 638:..\src\system/flash.c ****     offset  = (CCG_FLASH_ROW_SIZE - CCG_METADATA_TABLE_SIZE + CCG_FW_METADATA_BOOTSEQ_OFFSET);
+ 639:..\src\system/flash.c ****     if (row_num == CCG_IMG1_METADATA_ROW_NUM)
+ 536              		.loc 1 639 0 is_stmt 1
+ 537 0030 06D1     		bne	.L35
+ 640:..\src\system/flash.c ****     {
+ 641:..\src\system/flash.c **** #if CCG_PRIORITIZE_FW2
+ 642:..\src\system/flash.c ****         /* Set sequence number to 0. */
+ 643:..\src\system/flash.c ****         seq_num = 0;
+ 644:..\src\system/flash.c **** #else /* !CCG_PRIORITIZE_FW2 */
+ 645:..\src\system/flash.c ****         /* Set sequence number to 1 + that of FW2. */
+ 646:..\src\system/flash.c ****         seq_num = boot_get_boot_seq (SYS_FW_MODE_FWIMAGE_2) + 1;
+ 538              		.loc 1 646 0
+ 539 0032 0220     		movs	r0, #2
+ 540              	.LVL37:
+ 541 0034 FFF7FEFF 		bl	boot_get_boot_seq
+ 542              	.LVL38:
+ 543 0038 0130     		adds	r0, r0, #1
+ 544              	.LVL39:
+ 647:..\src\system/flash.c **** #endif /* CCG_PRIORITIZE_FW2 */
+ 648:..\src\system/flash.c **** 
+ 649:..\src\system/flash.c ****         ((uint32_t *)data)[offset / 4] = seq_num;
+ 545              		.loc 1 649 0
+ 546 003a 2B00     		movs	r3, r5
+ 547 003c DC33     		adds	r3, r3, #220
+ 548 003e 1860     		str	r0, [r3]
+ 549              	.LVL40:
+ 550              	.L35:
+ 650:..\src\system/flash.c ****     }
+ 651:..\src\system/flash.c ****     if (row_num == CCG_IMG2_METADATA_ROW_NUM)
+ 551              		.loc 1 651 0
+ 552 0040 FF23     		movs	r3, #255
+ 553 0042 5B00     		lsls	r3, r3, #1
+ 554 0044 9C42     		cmp	r4, r3
+ 555 0046 06D1     		bne	.L36
+ 652:..\src\system/flash.c ****     {
+ 653:..\src\system/flash.c **** #if CCG_PRIORITIZE_FW1
+ 654:..\src\system/flash.c ****         /* Set sequence number to 0. */
+ 655:..\src\system/flash.c ****         seq_num = 0;
+ 656:..\src\system/flash.c **** #else /* !CCG_PRIORITIZE_FW1 */
+ 657:..\src\system/flash.c ****         /* Set sequence number to 1 + that of FW1. */
+ 658:..\src\system/flash.c ****         seq_num = boot_get_boot_seq (SYS_FW_MODE_FWIMAGE_1) + 1;
+ 556              		.loc 1 658 0
+ 557 0048 0120     		movs	r0, #1
+ 558 004a FFF7FEFF 		bl	boot_get_boot_seq
+ARM GAS  e:\temp\ccVGPNYG.s 			page 23
+
+
+ 559              	.LVL41:
+ 560 004e 0130     		adds	r0, r0, #1
+ 561              	.LVL42:
+ 659:..\src\system/flash.c **** #endif /* CCG_PRIORITIZE_FW1 */
+ 660:..\src\system/flash.c **** 
+ 661:..\src\system/flash.c ****         ((uint32_t *)data)[offset / 4] = seq_num;
+ 562              		.loc 1 661 0
+ 563 0050 2B00     		movs	r3, r5
+ 564 0052 DC33     		adds	r3, r3, #220
+ 565 0054 1860     		str	r0, [r3]
+ 566              	.LVL43:
+ 567              	.L36:
+ 662:..\src\system/flash.c ****     }
+ 663:..\src\system/flash.c **** #else /* ((CCG_BOOT != 0) || (CCG_PSEUDO_METADATA_DISABLE != 0)) */
+ 664:..\src\system/flash.c ****     /*
+ 665:..\src\system/flash.c ****      * Refer JITM#2, In FW mode, For metadata rows write,
+ 666:..\src\system/flash.c ****      * FW image updates the coresponding pseudo metadata
+ 667:..\src\system/flash.c ****      * row instead of actual metadata row.
+ 668:..\src\system/flash.c ****      */
+ 669:..\src\system/flash.c ****     if (row_num == CCG_IMG1_METADATA_ROW_NUM)
+ 670:..\src\system/flash.c ****     {
+ 671:..\src\system/flash.c ****         row_num = gl_img2_fw_metadata->boot_last_row;
+ 672:..\src\system/flash.c ****         /*
+ 673:..\src\system/flash.c ****          * Mark the METADATA_VALID as "CP" which indicates that FW flashing is
+ 674:..\src\system/flash.c ****          * now complete. After RESET, this will signal the current FW to
+ 675:..\src\system/flash.c ****          * validate the other image and then jump to it.
+ 676:..\src\system/flash.c ****          */
+ 677:..\src\system/flash.c ****         fw_metadata= (sys_fw_metadata_t *)(data + (CCG_FLASH_ROW_SIZE
+ 678:..\src\system/flash.c ****                 - CCG_METADATA_TABLE_SIZE));
+ 679:..\src\system/flash.c ****         fw_metadata->metadata_valid = SYS_PSEUDO_METADATA_VALID_SIG;
+ 680:..\src\system/flash.c ****     }
+ 681:..\src\system/flash.c ****     else if (row_num == CCG_IMG2_METADATA_ROW_NUM)
+ 682:..\src\system/flash.c ****     {
+ 683:..\src\system/flash.c ****         row_num = CCG_IMG2_PSEUDO_METADATA_ROW_NUM;
+ 684:..\src\system/flash.c ****         /* 
+ 685:..\src\system/flash.c ****          * Mark the METADATA_VALID as "CP" which indicates that FW flashing is
+ 686:..\src\system/flash.c ****          * now complete. After RESET, this will signal the current FW to validate
+ 687:..\src\system/flash.c ****          * the other image and then jump to it.
+ 688:..\src\system/flash.c ****          */
+ 689:..\src\system/flash.c ****         fw_metadata= (sys_fw_metadata_t *)(data + (CCG_FLASH_ROW_SIZE
+ 690:..\src\system/flash.c ****                 - CCG_METADATA_TABLE_SIZE));
+ 691:..\src\system/flash.c ****         fw_metadata->metadata_valid = SYS_PSEUDO_METADATA_VALID_SIG;
+ 692:..\src\system/flash.c ****     }
+ 693:..\src\system/flash.c **** #endif /* ((CCG_BOOT != 0) || (CCG_PSEUDO_METADATA_DISABLE != 0)) */
+ 694:..\src\system/flash.c **** #endif /* (CCG_DUALAPP_DISABLE) */
+ 695:..\src\system/flash.c **** 
+ 696:..\src\system/flash.c **** #if (FLASH_ENABLE_NB_MODE == 1)
+ 697:..\src\system/flash.c ****    /*
+ 698:..\src\system/flash.c ****     * Determine mode of flashing: Blocking or Non-Blocking based
+ 699:..\src\system/flash.c ****     * on the callback function pointer.
+ 700:..\src\system/flash.c ****     */
+ 701:..\src\system/flash.c ****     if (cbk == NULL)
+ 702:..\src\system/flash.c ****     {
+ 703:..\src\system/flash.c ****         status = flash_blocking_row_write (row_num, data);
+ 704:..\src\system/flash.c ****     }
+ 705:..\src\system/flash.c ****     else
+ 706:..\src\system/flash.c ****     {
+ARM GAS  e:\temp\ccVGPNYG.s 			page 24
+
+
+ 707:..\src\system/flash.c ****         status = flash_non_blocking_row_write (row_num, data, cbk);
+ 708:..\src\system/flash.c ****     }
+ 709:..\src\system/flash.c **** #else
+ 710:..\src\system/flash.c ****     /* Blocking Flash Row Write in Bootloader mode. */
+ 711:..\src\system/flash.c ****     /* Handle only if Flashing mode is active. */
+ 712:..\src\system/flash.c ****     status = flash_blocking_row_write (row_num, data);
+ 568              		.loc 1 712 0
+ 569 0056 2900     		movs	r1, r5
+ 570 0058 2000     		movs	r0, r4
+ 571 005a FFF7FEFF 		bl	flash_blocking_row_write
+ 572              	.LVL44:
+ 713:..\src\system/flash.c **** #endif /* FLASH_ENABLE_NB_MODE */
+ 714:..\src\system/flash.c ****     return status;
+ 573              		.loc 1 714 0
+ 574 005e 08E0     		b	.L33
+ 575              	.LVL45:
+ 576              	.L37:
+ 614:..\src\system/flash.c ****     }
+ 577              		.loc 1 614 0
+ 578 0060 0E20     		movs	r0, #14
+ 579              	.LVL46:
+ 580 0062 06E0     		b	.L33
+ 581              	.LVL47:
+ 582              	.L38:
+ 621:..\src\system/flash.c ****     }
+ 583              		.loc 1 621 0
+ 584 0064 0720     		movs	r0, #7
+ 585              	.LVL48:
+ 586 0066 04E0     		b	.L33
+ 587              	.LVL49:
+ 588              	.L39:
+ 589 0068 0720     		movs	r0, #7
+ 590              	.LVL50:
+ 591 006a 02E0     		b	.L33
+ 592              	.LVL51:
+ 593              	.L40:
+ 594 006c 0720     		movs	r0, #7
+ 595              	.LVL52:
+ 596 006e 00E0     		b	.L33
+ 597              	.LVL53:
+ 598              	.L41:
+ 599 0070 0720     		movs	r0, #7
+ 600              	.LVL54:
+ 601              	.L33:
+ 715:..\src\system/flash.c **** }
+ 602              		.loc 1 715 0
+ 603              		@ sp needed
+ 604              	.LVL55:
+ 605 0072 70BD     		pop	{r4, r5, r6, pc}
+ 606              	.L43:
+ 607              		.align	2
+ 608              	.L42:
+ 609 0074 00000000 		.word	.LANCHOR0
+ 610 0078 00000000 		.word	.LANCHOR1
+ 611 007c FF010000 		.word	511
+ 612              		.cfi_endproc
+ 613              	.LFE39:
+ARM GAS  e:\temp\ccVGPNYG.s 			page 25
+
+
+ 614              		.size	flash_row_write, .-flash_row_write
+ 615              		.section	.text.flash_row_read,"ax",%progbits
+ 616              		.align	2
+ 617              		.global	flash_row_read
+ 618              		.code	16
+ 619              		.thumb_func
+ 620              		.type	flash_row_read, %function
+ 621              	flash_row_read:
+ 622              	.LFB40:
+ 716:..\src\system/flash.c **** 
+ 717:..\src\system/flash.c **** ccg_status_t flash_row_read(uint16_t row_num, uint8_t* data)
+ 718:..\src\system/flash.c **** {
+ 623              		.loc 1 718 0
+ 624              		.cfi_startproc
+ 625              		@ args = 0, pretend = 0, frame = 0
+ 626              		@ frame_needed = 0, uses_anonymous_args = 0
+ 627              	.LVL56:
+ 628 0000 10B5     		push	{r4, lr}
+ 629              		.cfi_def_cfa_offset 8
+ 630              		.cfi_offset 4, -8
+ 631              		.cfi_offset 14, -4
+ 632 0002 0C00     		movs	r4, r1
+ 719:..\src\system/flash.c ****     /* Can't handle flash update request if Flashing mode is not active. */
+ 720:..\src\system/flash.c ****     if (gl_flash_mode_en == 0)
+ 633              		.loc 1 720 0
+ 634 0004 0E4B     		ldr	r3, .L50
+ 635 0006 5B78     		ldrb	r3, [r3, #1]
+ 636 0008 002B     		cmp	r3, #0
+ 637 000a 10D0     		beq	.L46
+ 721:..\src\system/flash.c ****     {
+ 722:..\src\system/flash.c ****         return CCG_STAT_NOT_READY;
+ 723:..\src\system/flash.c ****     }
+ 724:..\src\system/flash.c **** 
+ 725:..\src\system/flash.c ****     /* We allow any row outside of the boot-loader to be read. */
+ 726:..\src\system/flash.c ****     if ((data == NULL) || (row_num <= gl_flash_bl_last_row) ||
+ 638              		.loc 1 726 0
+ 639 000c 0029     		cmp	r1, #0
+ 640 000e 10D0     		beq	.L47
+ 641              		.loc 1 726 0 is_stmt 0 discriminator 1
+ 642 0010 0C4B     		ldr	r3, .L50+4
+ 643 0012 DB88     		ldrh	r3, [r3, #6]
+ 644 0014 8342     		cmp	r3, r0
+ 645 0016 0ED2     		bcs	.L48
+ 646              		.loc 1 726 0 discriminator 2
+ 647 0018 0B4B     		ldr	r3, .L50+8
+ 648 001a 9842     		cmp	r0, r3
+ 649 001c 0DD8     		bhi	.L49
+ 727:..\src\system/flash.c ****             (row_num > CCG_LAST_FLASH_ROW_NUM))
+ 728:..\src\system/flash.c ****     {
+ 729:..\src\system/flash.c ****         return CCG_STAT_INVALID_ARGUMENT;
+ 730:..\src\system/flash.c ****     }
+ 731:..\src\system/flash.c **** 
+ 732:..\src\system/flash.c ****     memcpy (data, (void *)(row_num << CCG_FLASH_ROW_SHIFT_NUM), CCG_FLASH_ROW_SIZE);
+ 650              		.loc 1 732 0 is_stmt 1
+ 651 001e 0102     		lsls	r1, r0, #8
+ 652              	.LVL57:
+ 653 0020 8022     		movs	r2, #128
+ARM GAS  e:\temp\ccVGPNYG.s 			page 26
+
+
+ 654 0022 5200     		lsls	r2, r2, #1
+ 655 0024 2000     		movs	r0, r4
+ 656              	.LVL58:
+ 657 0026 FFF7FEFF 		bl	memcpy
+ 658              	.LVL59:
+ 733:..\src\system/flash.c ****     return CCG_STAT_SUCCESS;
+ 659              		.loc 1 733 0
+ 660 002a 0020     		movs	r0, #0
+ 661 002c 06E0     		b	.L45
+ 662              	.LVL60:
+ 663              	.L46:
+ 722:..\src\system/flash.c ****     }
+ 664              		.loc 1 722 0
+ 665 002e 0E20     		movs	r0, #14
+ 666              	.LVL61:
+ 667 0030 04E0     		b	.L45
+ 668              	.LVL62:
+ 669              	.L47:
+ 729:..\src\system/flash.c ****     }
+ 670              		.loc 1 729 0
+ 671 0032 0720     		movs	r0, #7
+ 672              	.LVL63:
+ 673 0034 02E0     		b	.L45
+ 674              	.LVL64:
+ 675              	.L48:
+ 676 0036 0720     		movs	r0, #7
+ 677              	.LVL65:
+ 678 0038 00E0     		b	.L45
+ 679              	.LVL66:
+ 680              	.L49:
+ 681 003a 0720     		movs	r0, #7
+ 682              	.LVL67:
+ 683              	.L45:
+ 734:..\src\system/flash.c **** }
+ 684              		.loc 1 734 0
+ 685              		@ sp needed
+ 686              	.LVL68:
+ 687 003c 10BD     		pop	{r4, pc}
+ 688              	.L51:
+ 689 003e C046     		.align	2
+ 690              	.L50:
+ 691 0040 00000000 		.word	.LANCHOR0
+ 692 0044 00000000 		.word	.LANCHOR1
+ 693 0048 FF010000 		.word	511
+ 694              		.cfi_endproc
+ 695              	.LFE40:
+ 696              		.size	flash_row_read, .-flash_row_read
+ 697              		.data
+ 698              		.align	1
+ 699              		.set	.LANCHOR1,. + 0
+ 700              		.type	gl_flash_access_first, %object
+ 701              		.size	gl_flash_access_first, 2
+ 702              	gl_flash_access_first:
+ 703 0000 0002     		.short	512
+ 704              		.type	gl_flash_access_last, %object
+ 705              		.size	gl_flash_access_last, 2
+ 706              	gl_flash_access_last:
+ARM GAS  e:\temp\ccVGPNYG.s 			page 27
+
+
+ 707 0002 0002     		.short	512
+ 708              		.type	gl_flash_metadata_row, %object
+ 709              		.size	gl_flash_metadata_row, 2
+ 710              	gl_flash_metadata_row:
+ 711 0004 0002     		.short	512
+ 712              		.type	gl_flash_bl_last_row, %object
+ 713              		.size	gl_flash_bl_last_row, 2
+ 714              	gl_flash_bl_last_row:
+ 715 0006 0002     		.short	512
+ 716              		.bss
+ 717              		.set	.LANCHOR0,. + 0
+ 718              		.type	gl_flash_write_in_place, %object
+ 719              		.size	gl_flash_write_in_place, 1
+ 720              	gl_flash_write_in_place:
+ 721 0000 00       		.space	1
+ 722              		.type	gl_flash_mode_en, %object
+ 723              		.size	gl_flash_mode_en, 1
+ 724              	gl_flash_mode_en:
+ 725 0001 00       		.space	1
+ 726              		.text
+ 727              	.Letext0:
+ 728              		.file 2 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 729              		.file 3 "e:\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-eabi\\inc
+ 730              		.file 4 "..\\src\\system/status.h"
+ 731              		.file 5 "..\\src\\system/ccg5_regs.h"
+ 732              		.file 6 "..\\src\\system/system.h"
+ 733              		.file 7 "..\\src\\system/flash.h"
+ 734              		.file 8 "..\\src\\system/boot.h"
+ 735              		.section	.debug_info,"",%progbits
+ 736              	.Ldebug_info0:
+ 737 0000 80090000 		.4byte	0x980
+ 738 0004 0400     		.2byte	0x4
+ 739 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 740 000a 04       		.byte	0x4
+ 741 000b 01       		.uleb128 0x1
+ 742 000c 1C050000 		.4byte	.LASF145
+ 743 0010 0C       		.byte	0xc
+ 744 0011 7F070000 		.4byte	.LASF146
+ 745 0015 6D020000 		.4byte	.LASF147
+ 746 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 747 001d 00000000 		.4byte	0
+ 748 0021 00000000 		.4byte	.Ldebug_line0
+ 749 0025 02       		.uleb128 0x2
+ 750 0026 01       		.byte	0x1
+ 751 0027 06       		.byte	0x6
+ 752 0028 27010000 		.4byte	.LASF0
+ 753 002c 03       		.uleb128 0x3
+ 754 002d 53000000 		.4byte	.LASF3
+ 755 0031 02       		.byte	0x2
+ 756 0032 1D       		.byte	0x1d
+ 757 0033 37000000 		.4byte	0x37
+ 758 0037 02       		.uleb128 0x2
+ 759 0038 01       		.byte	0x1
+ 760 0039 08       		.byte	0x8
+ 761 003a D8050000 		.4byte	.LASF1
+ 762 003e 02       		.uleb128 0x2
+ 763 003f 02       		.byte	0x2
+ARM GAS  e:\temp\ccVGPNYG.s 			page 28
+
+
+ 764 0040 05       		.byte	0x5
+ 765 0041 5C060000 		.4byte	.LASF2
+ 766 0045 03       		.uleb128 0x3
+ 767 0046 27070000 		.4byte	.LASF4
+ 768 004a 02       		.byte	0x2
+ 769 004b 2B       		.byte	0x2b
+ 770 004c 50000000 		.4byte	0x50
+ 771 0050 02       		.uleb128 0x2
+ 772 0051 02       		.byte	0x2
+ 773 0052 07       		.byte	0x7
+ 774 0053 5A030000 		.4byte	.LASF5
+ 775 0057 02       		.uleb128 0x2
+ 776 0058 04       		.byte	0x4
+ 777 0059 05       		.byte	0x5
+ 778 005a 71010000 		.4byte	.LASF6
+ 779 005e 03       		.uleb128 0x3
+ 780 005f 1C020000 		.4byte	.LASF7
+ 781 0063 02       		.byte	0x2
+ 782 0064 41       		.byte	0x41
+ 783 0065 69000000 		.4byte	0x69
+ 784 0069 02       		.uleb128 0x2
+ 785 006a 04       		.byte	0x4
+ 786 006b 07       		.byte	0x7
+ 787 006c 43030000 		.4byte	.LASF8
+ 788 0070 02       		.uleb128 0x2
+ 789 0071 08       		.byte	0x8
+ 790 0072 05       		.byte	0x5
+ 791 0073 AC010000 		.4byte	.LASF9
+ 792 0077 02       		.uleb128 0x2
+ 793 0078 08       		.byte	0x8
+ 794 0079 07       		.byte	0x7
+ 795 007a 72000000 		.4byte	.LASF10
+ 796 007e 04       		.uleb128 0x4
+ 797 007f 04       		.byte	0x4
+ 798 0080 05       		.byte	0x5
+ 799 0081 696E7400 		.ascii	"int\000"
+ 800 0085 02       		.uleb128 0x2
+ 801 0086 04       		.byte	0x4
+ 802 0087 07       		.byte	0x7
+ 803 0088 EA020000 		.4byte	.LASF11
+ 804 008c 03       		.uleb128 0x3
+ 805 008d 88080000 		.4byte	.LASF12
+ 806 0091 03       		.byte	0x3
+ 807 0092 18       		.byte	0x18
+ 808 0093 2C000000 		.4byte	0x2c
+ 809 0097 03       		.uleb128 0x3
+ 810 0098 F7020000 		.4byte	.LASF13
+ 811 009c 03       		.byte	0x3
+ 812 009d 24       		.byte	0x24
+ 813 009e 45000000 		.4byte	0x45
+ 814 00a2 03       		.uleb128 0x3
+ 815 00a3 D0070000 		.4byte	.LASF14
+ 816 00a7 03       		.byte	0x3
+ 817 00a8 30       		.byte	0x30
+ 818 00a9 5E000000 		.4byte	0x5e
+ 819 00ad 02       		.uleb128 0x2
+ 820 00ae 04       		.byte	0x4
+ARM GAS  e:\temp\ccVGPNYG.s 			page 29
+
+
+ 821 00af 04       		.byte	0x4
+ 822 00b0 DB040000 		.4byte	.LASF15
+ 823 00b4 02       		.uleb128 0x2
+ 824 00b5 08       		.byte	0x8
+ 825 00b6 04       		.byte	0x4
+ 826 00b7 C9010000 		.4byte	.LASF16
+ 827 00bb 02       		.uleb128 0x2
+ 828 00bc 01       		.byte	0x1
+ 829 00bd 08       		.byte	0x8
+ 830 00be F9060000 		.4byte	.LASF17
+ 831 00c2 02       		.uleb128 0x2
+ 832 00c3 08       		.byte	0x8
+ 833 00c4 04       		.byte	0x4
+ 834 00c5 ED060000 		.4byte	.LASF18
+ 835 00c9 02       		.uleb128 0x2
+ 836 00ca 04       		.byte	0x4
+ 837 00cb 07       		.byte	0x7
+ 838 00cc 30040000 		.4byte	.LASF19
+ 839 00d0 05       		.uleb128 0x5
+ 840 00d1 A2000000 		.4byte	0xa2
+ 841 00d5 06       		.uleb128 0x6
+ 842 00d6 D0000000 		.4byte	0xd0
+ 843 00da E5000000 		.4byte	0xe5
+ 844 00de 07       		.uleb128 0x7
+ 845 00df C9000000 		.4byte	0xc9
+ 846 00e3 01       		.byte	0x1
+ 847 00e4 00       		.byte	0
+ 848 00e5 08       		.uleb128 0x8
+ 849 00e6 66010000 		.4byte	.LASF148
+ 850 00ea 01       		.byte	0x1
+ 851 00eb 25000000 		.4byte	0x25
+ 852 00ef 04       		.byte	0x4
+ 853 00f0 48       		.byte	0x48
+ 854 00f1 5C010000 		.4byte	0x15c
+ 855 00f5 09       		.uleb128 0x9
+ 856 00f6 F1010000 		.4byte	.LASF20
+ 857 00fa 7E       		.sleb128 -2
+ 858 00fb 0A       		.uleb128 0xa
+ 859 00fc 39040000 		.4byte	.LASF21
+ 860 0100 00       		.byte	0
+ 861 0101 0A       		.uleb128 0xa
+ 862 0102 0E080000 		.4byte	.LASF22
+ 863 0106 01       		.byte	0x1
+ 864 0107 0A       		.uleb128 0xa
+ 865 0108 EA070000 		.4byte	.LASF23
+ 866 010c 02       		.byte	0x2
+ 867 010d 0A       		.uleb128 0xa
+ 868 010e 14030000 		.4byte	.LASF24
+ 869 0112 03       		.byte	0x3
+ 870 0113 0A       		.uleb128 0xa
+ 871 0114 C7030000 		.4byte	.LASF25
+ 872 0118 05       		.byte	0x5
+ 873 0119 0A       		.uleb128 0xa
+ 874 011a 00030000 		.4byte	.LASF26
+ 875 011e 06       		.byte	0x6
+ 876 011f 0A       		.uleb128 0xa
+ 877 0120 A9080000 		.4byte	.LASF27
+ARM GAS  e:\temp\ccVGPNYG.s 			page 30
+
+
+ 878 0124 07       		.byte	0x7
+ 879 0125 0A       		.uleb128 0xa
+ 880 0126 6D030000 		.4byte	.LASF28
+ 881 012a 08       		.byte	0x8
+ 882 012b 0A       		.uleb128 0xa
+ 883 012c A8060000 		.4byte	.LASF29
+ 884 0130 09       		.byte	0x9
+ 885 0131 0A       		.uleb128 0xa
+ 886 0132 84030000 		.4byte	.LASF30
+ 887 0136 0A       		.byte	0xa
+ 888 0137 0A       		.uleb128 0xa
+ 889 0138 C6000000 		.4byte	.LASF31
+ 890 013c 0B       		.byte	0xb
+ 891 013d 0A       		.uleb128 0xa
+ 892 013e 3F090000 		.4byte	.LASF32
+ 893 0142 0C       		.byte	0xc
+ 894 0143 0A       		.uleb128 0xa
+ 895 0144 0E040000 		.4byte	.LASF33
+ 896 0148 0D       		.byte	0xd
+ 897 0149 0A       		.uleb128 0xa
+ 898 014a 33080000 		.4byte	.LASF34
+ 899 014e 0E       		.byte	0xe
+ 900 014f 0A       		.uleb128 0xa
+ 901 0150 5F020000 		.4byte	.LASF35
+ 902 0154 0F       		.byte	0xf
+ 903 0155 0A       		.uleb128 0xa
+ 904 0156 FD070000 		.4byte	.LASF36
+ 905 015a 10       		.byte	0x10
+ 906 015b 00       		.byte	0
+ 907 015c 03       		.uleb128 0x3
+ 908 015d 3E070000 		.4byte	.LASF37
+ 909 0161 04       		.byte	0x4
+ 910 0162 5E       		.byte	0x5e
+ 911 0163 E5000000 		.4byte	0xe5
+ 912 0167 0B       		.uleb128 0xb
+ 913 0168 01       		.byte	0x1
+ 914 0169 37000000 		.4byte	0x37
+ 915 016d 06       		.byte	0x6
+ 916 016e 84       		.byte	0x84
+ 917 016f 8C010000 		.4byte	0x18c
+ 918 0173 0A       		.uleb128 0xa
+ 919 0174 3C000000 		.4byte	.LASF38
+ 920 0178 00       		.byte	0
+ 921 0179 0A       		.uleb128 0xa
+ 922 017a 30060000 		.4byte	.LASF39
+ 923 017e 01       		.byte	0x1
+ 924 017f 0A       		.uleb128 0xa
+ 925 0180 46060000 		.4byte	.LASF40
+ 926 0184 02       		.byte	0x2
+ 927 0185 0A       		.uleb128 0xa
+ 928 0186 46080000 		.4byte	.LASF41
+ 929 018a 03       		.byte	0x3
+ 930 018b 00       		.byte	0
+ 931 018c 06       		.uleb128 0x6
+ 932 018d D0000000 		.4byte	0xd0
+ 933 0191 9C010000 		.4byte	0x19c
+ 934 0195 07       		.uleb128 0x7
+ARM GAS  e:\temp\ccVGPNYG.s 			page 31
+
+
+ 935 0196 C9000000 		.4byte	0xc9
+ 936 019a 02       		.byte	0x2
+ 937 019b 00       		.byte	0
+ 938 019c 0C       		.uleb128 0xc
+ 939 019d 1C0F     		.2byte	0xf1c
+ 940 019f 05       		.byte	0x5
+ 941 01a0 9E       		.byte	0x9e
+ 942 01a1 21030000 		.4byte	0x321
+ 943 01a5 0D       		.uleb128 0xd
+ 944 01a6 9C040000 		.4byte	.LASF42
+ 945 01aa 05       		.byte	0x5
+ 946 01ab 9F       		.byte	0x9f
+ 947 01ac D0000000 		.4byte	0xd0
+ 948 01b0 00       		.byte	0
+ 949 01b1 0D       		.uleb128 0xd
+ 950 01b2 95070000 		.4byte	.LASF43
+ 951 01b6 05       		.byte	0x5
+ 952 01b7 A0       		.byte	0xa0
+ 953 01b8 D0000000 		.4byte	0xd0
+ 954 01bc 04       		.byte	0x4
+ 955 01bd 0D       		.uleb128 0xd
+ 956 01be 99080000 		.4byte	.LASF44
+ 957 01c2 05       		.byte	0x5
+ 958 01c3 A1       		.byte	0xa1
+ 959 01c4 D0000000 		.4byte	0xd0
+ 960 01c8 08       		.byte	0x8
+ 961 01c9 0D       		.uleb128 0xd
+ 962 01ca B8070000 		.4byte	.LASF45
+ 963 01ce 05       		.byte	0x5
+ 964 01cf A2       		.byte	0xa2
+ 965 01d0 D0000000 		.4byte	0xd0
+ 966 01d4 0C       		.byte	0xc
+ 967 01d5 0D       		.uleb128 0xd
+ 968 01d6 CD040000 		.4byte	.LASF46
+ 969 01da 05       		.byte	0x5
+ 970 01db A3       		.byte	0xa3
+ 971 01dc D0000000 		.4byte	0xd0
+ 972 01e0 10       		.byte	0x10
+ 973 01e1 0D       		.uleb128 0xd
+ 974 01e2 A8040000 		.4byte	.LASF47
+ 975 01e6 05       		.byte	0x5
+ 976 01e7 A4       		.byte	0xa4
+ 977 01e8 D0000000 		.4byte	0xd0
+ 978 01ec 14       		.byte	0x14
+ 979 01ed 0D       		.uleb128 0xd
+ 980 01ee B1040000 		.4byte	.LASF48
+ 981 01f2 05       		.byte	0x5
+ 982 01f3 A5       		.byte	0xa5
+ 983 01f4 D0000000 		.4byte	0xd0
+ 984 01f8 18       		.byte	0x18
+ 985 01f9 0D       		.uleb128 0xd
+ 986 01fa 33010000 		.4byte	.LASF49
+ 987 01fe 05       		.byte	0x5
+ 988 01ff A6       		.byte	0xa6
+ 989 0200 D0000000 		.4byte	0xd0
+ 990 0204 1C       		.byte	0x1c
+ 991 0205 0D       		.uleb128 0xd
+ARM GAS  e:\temp\ccVGPNYG.s 			page 32
+
+
+ 992 0206 42010000 		.4byte	.LASF50
+ 993 020a 05       		.byte	0x5
+ 994 020b A7       		.byte	0xa7
+ 995 020c D0000000 		.4byte	0xd0
+ 996 0210 20       		.byte	0x20
+ 997 0211 0D       		.uleb128 0xd
+ 998 0212 B8000000 		.4byte	.LASF51
+ 999 0216 05       		.byte	0x5
+ 1000 0217 A8       		.byte	0xa8
+ 1001 0218 D0000000 		.4byte	0xd0
+ 1002 021c 24       		.byte	0x24
+ 1003 021d 0D       		.uleb128 0xd
+ 1004 021e 2A000000 		.4byte	.LASF52
+ 1005 0222 05       		.byte	0x5
+ 1006 0223 A9       		.byte	0xa9
+ 1007 0224 D0000000 		.4byte	0xd0
+ 1008 0228 28       		.byte	0x28
+ 1009 0229 0D       		.uleb128 0xd
+ 1010 022a 18070000 		.4byte	.LASF53
+ 1011 022e 05       		.byte	0x5
+ 1012 022f AA       		.byte	0xaa
+ 1013 0230 D0000000 		.4byte	0xd0
+ 1014 0234 2C       		.byte	0x2c
+ 1015 0235 0D       		.uleb128 0xd
+ 1016 0236 C3080000 		.4byte	.LASF54
+ 1017 023a 05       		.byte	0x5
+ 1018 023b AB       		.byte	0xab
+ 1019 023c D0000000 		.4byte	0xd0
+ 1020 0240 30       		.byte	0x30
+ 1021 0241 0D       		.uleb128 0xd
+ 1022 0242 21040000 		.4byte	.LASF55
+ 1023 0246 05       		.byte	0x5
+ 1024 0247 AC       		.byte	0xac
+ 1025 0248 D0000000 		.4byte	0xd0
+ 1026 024c 34       		.byte	0x34
+ 1027 024d 0D       		.uleb128 0xd
+ 1028 024e 01060000 		.4byte	.LASF56
+ 1029 0252 05       		.byte	0x5
+ 1030 0253 AD       		.byte	0xad
+ 1031 0254 D0000000 		.4byte	0xd0
+ 1032 0258 38       		.byte	0x38
+ 1033 0259 0D       		.uleb128 0xd
+ 1034 025a A3070000 		.4byte	.LASF57
+ 1035 025e 05       		.byte	0x5
+ 1036 025f AE       		.byte	0xae
+ 1037 0260 D0000000 		.4byte	0xd0
+ 1038 0264 3C       		.byte	0x3c
+ 1039 0265 0D       		.uleb128 0xd
+ 1040 0266 FB040000 		.4byte	.LASF58
+ 1041 026a 05       		.byte	0x5
+ 1042 026b AF       		.byte	0xaf
+ 1043 026c D0000000 		.4byte	0xd0
+ 1044 0270 40       		.byte	0x40
+ 1045 0271 0D       		.uleb128 0xd
+ 1046 0272 0E070000 		.4byte	.LASF59
+ 1047 0276 05       		.byte	0x5
+ 1048 0277 B0       		.byte	0xb0
+ARM GAS  e:\temp\ccVGPNYG.s 			page 33
+
+
+ 1049 0278 D0000000 		.4byte	0xd0
+ 1050 027c 44       		.byte	0x44
+ 1051 027d 0D       		.uleb128 0xd
+ 1052 027e 0E050000 		.4byte	.LASF60
+ 1053 0282 05       		.byte	0x5
+ 1054 0283 B1       		.byte	0xb1
+ 1055 0284 D0000000 		.4byte	0xd0
+ 1056 0288 48       		.byte	0x48
+ 1057 0289 0D       		.uleb128 0xd
+ 1058 028a FF030000 		.4byte	.LASF61
+ 1059 028e 05       		.byte	0x5
+ 1060 028f B2       		.byte	0xb2
+ 1061 0290 D0000000 		.4byte	0xd0
+ 1062 0294 4C       		.byte	0x4c
+ 1063 0295 0D       		.uleb128 0xd
+ 1064 0296 7B060000 		.4byte	.LASF62
+ 1065 029a 05       		.byte	0x5
+ 1066 029b B3       		.byte	0xb3
+ 1067 029c D0000000 		.4byte	0xd0
+ 1068 02a0 50       		.byte	0x50
+ 1069 02a1 0D       		.uleb128 0xd
+ 1070 02a2 71060000 		.4byte	.LASF63
+ 1071 02a6 05       		.byte	0x5
+ 1072 02a7 B4       		.byte	0xb4
+ 1073 02a8 D0000000 		.4byte	0xd0
+ 1074 02ac 54       		.byte	0x54
+ 1075 02ad 0D       		.uleb128 0xd
+ 1076 02ae C8070000 		.4byte	.LASF64
+ 1077 02b2 05       		.byte	0x5
+ 1078 02b3 B5       		.byte	0xb5
+ 1079 02b4 D0000000 		.4byte	0xd0
+ 1080 02b8 58       		.byte	0x58
+ 1081 02b9 0D       		.uleb128 0xd
+ 1082 02ba E4030000 		.4byte	.LASF65
+ 1083 02be 05       		.byte	0x5
+ 1084 02bf B6       		.byte	0xb6
+ 1085 02c0 32030000 		.4byte	0x332
+ 1086 02c4 5C       		.byte	0x5c
+ 1087 02c5 0E       		.uleb128 0xe
+ 1088 02c6 3E020000 		.4byte	.LASF66
+ 1089 02ca 05       		.byte	0x5
+ 1090 02cb B7       		.byte	0xb7
+ 1091 02cc D0000000 		.4byte	0xd0
+ 1092 02d0 000F     		.2byte	0xf00
+ 1093 02d2 0E       		.uleb128 0xe
+ 1094 02d3 4B020000 		.4byte	.LASF67
+ 1095 02d7 05       		.byte	0x5
+ 1096 02d8 B8       		.byte	0xb8
+ 1097 02d9 D0000000 		.4byte	0xd0
+ 1098 02dd 040F     		.2byte	0xf04
+ 1099 02df 0E       		.uleb128 0xe
+ 1100 02e0 C3060000 		.4byte	.LASF68
+ 1101 02e4 05       		.byte	0x5
+ 1102 02e5 B9       		.byte	0xb9
+ 1103 02e6 D0000000 		.4byte	0xd0
+ 1104 02ea 080F     		.2byte	0xf08
+ 1105 02ec 0E       		.uleb128 0xe
+ARM GAS  e:\temp\ccVGPNYG.s 			page 34
+
+
+ 1106 02ed 15090000 		.4byte	.LASF69
+ 1107 02f1 05       		.byte	0x5
+ 1108 02f2 BA       		.byte	0xba
+ 1109 02f3 D0000000 		.4byte	0xd0
+ 1110 02f7 0C0F     		.2byte	0xf0c
+ 1111 02f9 0E       		.uleb128 0xe
+ 1112 02fa 23090000 		.4byte	.LASF70
+ 1113 02fe 05       		.byte	0x5
+ 1114 02ff BB       		.byte	0xbb
+ 1115 0300 D0000000 		.4byte	0xd0
+ 1116 0304 100F     		.2byte	0xf10
+ 1117 0306 0E       		.uleb128 0xe
+ 1118 0307 89000000 		.4byte	.LASF71
+ 1119 030b 05       		.byte	0x5
+ 1120 030c BC       		.byte	0xbc
+ 1121 030d D0000000 		.4byte	0xd0
+ 1122 0311 140F     		.2byte	0xf14
+ 1123 0313 0E       		.uleb128 0xe
+ 1124 0314 31090000 		.4byte	.LASF72
+ 1125 0318 05       		.byte	0x5
+ 1126 0319 BD       		.byte	0xbd
+ 1127 031a D0000000 		.4byte	0xd0
+ 1128 031e 180F     		.2byte	0xf18
+ 1129 0320 00       		.byte	0
+ 1130 0321 06       		.uleb128 0x6
+ 1131 0322 D0000000 		.4byte	0xd0
+ 1132 0326 32030000 		.4byte	0x332
+ 1133 032a 0F       		.uleb128 0xf
+ 1134 032b C9000000 		.4byte	0xc9
+ 1135 032f A803     		.2byte	0x3a8
+ 1136 0331 00       		.byte	0
+ 1137 0332 05       		.uleb128 0x5
+ 1138 0333 21030000 		.4byte	0x321
+ 1139 0337 03       		.uleb128 0x3
+ 1140 0338 51010000 		.4byte	.LASF73
+ 1141 033c 05       		.byte	0x5
+ 1142 033d BE       		.byte	0xbe
+ 1143 033e 42030000 		.4byte	0x342
+ 1144 0342 10       		.uleb128 0x10
+ 1145 0343 04       		.byte	0x4
+ 1146 0344 9C010000 		.4byte	0x19c
+ 1147 0348 06       		.uleb128 0x6
+ 1148 0349 D0000000 		.4byte	0xd0
+ 1149 034d 58030000 		.4byte	0x358
+ 1150 0351 07       		.uleb128 0x7
+ 1151 0352 C9000000 		.4byte	0xc9
+ 1152 0356 0A       		.byte	0xa
+ 1153 0357 00       		.byte	0
+ 1154 0358 11       		.uleb128 0x11
+ 1155 0359 C4       		.byte	0xc4
+ 1156 035a 05       		.byte	0x5
+ 1157 035b 7402     		.2byte	0x274
+ 1158 035d B4040000 		.4byte	0x4b4
+ 1159 0361 12       		.uleb128 0x12
+ 1160 0362 07070000 		.4byte	.LASF74
+ 1161 0366 05       		.byte	0x5
+ 1162 0367 7502     		.2byte	0x275
+ARM GAS  e:\temp\ccVGPNYG.s 			page 35
+
+
+ 1163 0369 D0000000 		.4byte	0xd0
+ 1164 036d 00       		.byte	0
+ 1165 036e 12       		.uleb128 0x12
+ 1166 036f 58020000 		.4byte	.LASF75
+ 1167 0373 05       		.byte	0x5
+ 1168 0374 7602     		.2byte	0x276
+ 1169 0376 D0000000 		.4byte	0xd0
+ 1170 037a 04       		.byte	0x4
+ 1171 037b 12       		.uleb128 0x12
+ 1172 037c 5D000000 		.4byte	.LASF76
+ 1173 0380 05       		.byte	0x5
+ 1174 0381 7702     		.2byte	0x277
+ 1175 0383 D0000000 		.4byte	0xd0
+ 1176 0387 08       		.byte	0x8
+ 1177 0388 12       		.uleb128 0x12
+ 1178 0389 66060000 		.4byte	.LASF77
+ 1179 038d 05       		.byte	0x5
+ 1180 038e 7802     		.2byte	0x278
+ 1181 0390 D0000000 		.4byte	0xd0
+ 1182 0394 0C       		.byte	0xc
+ 1183 0395 12       		.uleb128 0x12
+ 1184 0396 05050000 		.4byte	.LASF78
+ 1185 039a 05       		.byte	0x5
+ 1186 039b 7902     		.2byte	0x279
+ 1187 039d D0000000 		.4byte	0xd0
+ 1188 03a1 10       		.byte	0x10
+ 1189 03a2 12       		.uleb128 0x12
+ 1190 03a3 FE060000 		.4byte	.LASF79
+ 1191 03a7 05       		.byte	0x5
+ 1192 03a8 7A02     		.2byte	0x27a
+ 1193 03aa D0000000 		.4byte	0xd0
+ 1194 03ae 14       		.byte	0x14
+ 1195 03af 12       		.uleb128 0x12
+ 1196 03b0 F0040000 		.4byte	.LASF80
+ 1197 03b4 05       		.byte	0x5
+ 1198 03b5 7B02     		.2byte	0x27b
+ 1199 03b7 D0000000 		.4byte	0xd0
+ 1200 03bb 18       		.byte	0x18
+ 1201 03bc 12       		.uleb128 0x12
+ 1202 03bd 62040000 		.4byte	.LASF81
+ 1203 03c1 05       		.byte	0x5
+ 1204 03c2 7C02     		.2byte	0x27c
+ 1205 03c4 D0000000 		.4byte	0xd0
+ 1206 03c8 1C       		.byte	0x1c
+ 1207 03c9 12       		.uleb128 0x12
+ 1208 03ca E4030000 		.4byte	.LASF65
+ 1209 03ce 05       		.byte	0x5
+ 1210 03cf 7D02     		.2byte	0x27d
+ 1211 03d1 B4040000 		.4byte	0x4b4
+ 1212 03d5 20       		.byte	0x20
+ 1213 03d6 13       		.uleb128 0x13
+ 1214 03d7 64667400 		.ascii	"dft\000"
+ 1215 03db 05       		.byte	0x5
+ 1216 03dc 7E02     		.2byte	0x27e
+ 1217 03de D0000000 		.4byte	0xd0
+ 1218 03e2 2C       		.byte	0x2c
+ 1219 03e3 12       		.uleb128 0x12
+ARM GAS  e:\temp\ccVGPNYG.s 			page 36
+
+
+ 1220 03e4 5F070000 		.4byte	.LASF82
+ 1221 03e8 05       		.byte	0x5
+ 1222 03e9 7F02     		.2byte	0x27f
+ 1223 03eb D0000000 		.4byte	0xd0
+ 1224 03ef 30       		.byte	0x30
+ 1225 03f0 12       		.uleb128 0x12
+ 1226 03f1 3B030000 		.4byte	.LASF83
+ 1227 03f5 05       		.byte	0x5
+ 1228 03f6 8002     		.2byte	0x280
+ 1229 03f8 D0000000 		.4byte	0xd0
+ 1230 03fc 34       		.byte	0x34
+ 1231 03fd 12       		.uleb128 0x12
+ 1232 03fe 80040000 		.4byte	.LASF84
+ 1233 0402 05       		.byte	0x5
+ 1234 0403 8102     		.2byte	0x281
+ 1235 0405 B9040000 		.4byte	0x4b9
+ 1236 0409 38       		.byte	0x38
+ 1237 040a 12       		.uleb128 0x12
+ 1238 040b 90080000 		.4byte	.LASF85
+ 1239 040f 05       		.byte	0x5
+ 1240 0410 8202     		.2byte	0x282
+ 1241 0412 D0000000 		.4byte	0xd0
+ 1242 0416 40       		.byte	0x40
+ 1243 0417 12       		.uleb128 0x12
+ 1244 0418 E3080000 		.4byte	.LASF86
+ 1245 041c 05       		.byte	0x5
+ 1246 041d 8302     		.2byte	0x283
+ 1247 041f D0000000 		.4byte	0xd0
+ 1248 0423 44       		.byte	0x44
+ 1249 0424 12       		.uleb128 0x12
+ 1250 0425 87040000 		.4byte	.LASF87
+ 1251 0429 05       		.byte	0x5
+ 1252 042a 8402     		.2byte	0x284
+ 1253 042c D0000000 		.4byte	0xd0
+ 1254 0430 48       		.byte	0x48
+ 1255 0431 12       		.uleb128 0x12
+ 1256 0432 AF070000 		.4byte	.LASF88
+ 1257 0436 05       		.byte	0x5
+ 1258 0437 8502     		.2byte	0x285
+ 1259 0439 D0000000 		.4byte	0xd0
+ 1260 043d 4C       		.byte	0x4c
+ 1261 043e 12       		.uleb128 0x12
+ 1262 043f DE060000 		.4byte	.LASF89
+ 1263 0443 05       		.byte	0x5
+ 1264 0444 8602     		.2byte	0x286
+ 1265 0446 D0000000 		.4byte	0xd0
+ 1266 044a 50       		.byte	0x50
+ 1267 044b 12       		.uleb128 0x12
+ 1268 044c 8E040000 		.4byte	.LASF90
+ 1269 0450 05       		.byte	0x5
+ 1270 0451 8702     		.2byte	0x287
+ 1271 0453 BE040000 		.4byte	0x4be
+ 1272 0457 54       		.byte	0x54
+ 1273 0458 12       		.uleb128 0x12
+ 1274 0459 D2060000 		.4byte	.LASF91
+ 1275 045d 05       		.byte	0x5
+ 1276 045e 8802     		.2byte	0x288
+ARM GAS  e:\temp\ccVGPNYG.s 			page 37
+
+
+ 1277 0460 D0000000 		.4byte	0xd0
+ 1278 0464 80       		.byte	0x80
+ 1279 0465 12       		.uleb128 0x12
+ 1280 0466 DB000000 		.4byte	.LASF92
+ 1281 046a 05       		.byte	0x5
+ 1282 046b 8902     		.2byte	0x289
+ 1283 046d D0000000 		.4byte	0xd0
+ 1284 0471 84       		.byte	0x84
+ 1285 0472 12       		.uleb128 0x12
+ 1286 0473 19010000 		.4byte	.LASF93
+ 1287 0477 05       		.byte	0x5
+ 1288 0478 8A02     		.2byte	0x28a
+ 1289 047a D0000000 		.4byte	0xd0
+ 1290 047e 88       		.byte	0x88
+ 1291 047f 12       		.uleb128 0x12
+ 1292 0480 26060000 		.4byte	.LASF94
+ 1293 0484 05       		.byte	0x5
+ 1294 0485 8B02     		.2byte	0x28b
+ 1295 0487 D0000000 		.4byte	0xd0
+ 1296 048b 8C       		.byte	0x8c
+ 1297 048c 12       		.uleb128 0x12
+ 1298 048d BD030000 		.4byte	.LASF95
+ 1299 0491 05       		.byte	0x5
+ 1300 0492 8C02     		.2byte	0x28c
+ 1301 0494 D0000000 		.4byte	0xd0
+ 1302 0498 90       		.byte	0x90
+ 1303 0499 12       		.uleb128 0x12
+ 1304 049a 95040000 		.4byte	.LASF96
+ 1305 049e 05       		.byte	0x5
+ 1306 049f 8D02     		.2byte	0x28d
+ 1307 04a1 C3040000 		.4byte	0x4c3
+ 1308 04a5 94       		.byte	0x94
+ 1309 04a6 12       		.uleb128 0x12
+ 1310 04a7 BA010000 		.4byte	.LASF97
+ 1311 04ab 05       		.byte	0x5
+ 1312 04ac 8E02     		.2byte	0x28e
+ 1313 04ae D0000000 		.4byte	0xd0
+ 1314 04b2 C0       		.byte	0xc0
+ 1315 04b3 00       		.byte	0
+ 1316 04b4 05       		.uleb128 0x5
+ 1317 04b5 8C010000 		.4byte	0x18c
+ 1318 04b9 05       		.uleb128 0x5
+ 1319 04ba D5000000 		.4byte	0xd5
+ 1320 04be 05       		.uleb128 0x5
+ 1321 04bf 48030000 		.4byte	0x348
+ 1322 04c3 05       		.uleb128 0x5
+ 1323 04c4 48030000 		.4byte	0x348
+ 1324 04c8 14       		.uleb128 0x14
+ 1325 04c9 64000000 		.4byte	.LASF98
+ 1326 04cd 05       		.byte	0x5
+ 1327 04ce 8F02     		.2byte	0x28f
+ 1328 04d0 D4040000 		.4byte	0x4d4
+ 1329 04d4 10       		.uleb128 0x10
+ 1330 04d5 04       		.byte	0x4
+ 1331 04d6 58030000 		.4byte	0x358
+ 1332 04da 0B       		.uleb128 0xb
+ 1333 04db 01       		.byte	0x1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 38
+
+
+ 1334 04dc 37000000 		.4byte	0x37
+ 1335 04e0 07       		.byte	0x7
+ 1336 04e1 4E       		.byte	0x4e
+ 1337 04e2 FF040000 		.4byte	0x4ff
+ 1338 04e6 0A       		.uleb128 0xa
+ 1339 04e7 52070000 		.4byte	.LASF99
+ 1340 04eb 00       		.byte	0
+ 1341 04ec 0A       		.uleb128 0xa
+ 1342 04ed BF040000 		.4byte	.LASF100
+ 1343 04f1 01       		.byte	0x1
+ 1344 04f2 0A       		.uleb128 0xa
+ 1345 04f3 7A010000 		.4byte	.LASF101
+ 1346 04f7 02       		.byte	0x2
+ 1347 04f8 0A       		.uleb128 0xa
+ 1348 04f9 E9000000 		.4byte	.LASF102
+ 1349 04fd 03       		.byte	0x3
+ 1350 04fe 00       		.byte	0
+ 1351 04ff 03       		.uleb128 0x3
+ 1352 0500 93010000 		.4byte	.LASF103
+ 1353 0504 07       		.byte	0x7
+ 1354 0505 53       		.byte	0x53
+ 1355 0506 DA040000 		.4byte	0x4da
+ 1356 050a 0B       		.uleb128 0xb
+ 1357 050b 01       		.byte	0x1
+ 1358 050c 37000000 		.4byte	0x37
+ 1359 0510 07       		.byte	0x7
+ 1360 0511 5A       		.byte	0x5a
+ 1361 0512 2F050000 		.4byte	0x52f
+ 1362 0516 0A       		.uleb128 0xa
+ 1363 0517 00000000 		.4byte	.LASF104
+ 1364 051b 00       		.byte	0
+ 1365 051c 0A       		.uleb128 0xa
+ 1366 051d EB030000 		.4byte	.LASF105
+ 1367 0521 01       		.byte	0x1
+ 1368 0522 0A       		.uleb128 0xa
+ 1369 0523 D0010000 		.4byte	.LASF106
+ 1370 0527 02       		.byte	0x2
+ 1371 0528 0A       		.uleb128 0xa
+ 1372 0529 4A040000 		.4byte	.LASF107
+ 1373 052d 03       		.byte	0x3
+ 1374 052e 00       		.byte	0
+ 1375 052f 03       		.uleb128 0x3
+ 1376 0530 15000000 		.4byte	.LASF108
+ 1377 0534 07       		.byte	0x7
+ 1378 0535 5F       		.byte	0x5f
+ 1379 0536 0A050000 		.4byte	0x50a
+ 1380 053a 03       		.uleb128 0x3
+ 1381 053b 32070000 		.4byte	.LASF109
+ 1382 053f 07       		.byte	0x7
+ 1383 0540 76       		.byte	0x76
+ 1384 0541 45050000 		.4byte	0x545
+ 1385 0545 10       		.uleb128 0x10
+ 1386 0546 04       		.byte	0x4
+ 1387 0547 4B050000 		.4byte	0x54b
+ 1388 054b 15       		.uleb128 0x15
+ 1389 054c 56050000 		.4byte	0x556
+ 1390 0550 16       		.uleb128 0x16
+ARM GAS  e:\temp\ccVGPNYG.s 			page 39
+
+
+ 1391 0551 2F050000 		.4byte	0x52f
+ 1392 0555 00       		.byte	0
+ 1393 0556 17       		.uleb128 0x17
+ 1394 0557 9A000000 		.4byte	.LASF114
+ 1395 055b 01       		.byte	0x1
+ 1396 055c 5201     		.2byte	0x152
+ 1397 055e 5C010000 		.4byte	0x15c
+ 1398 0562 00000000 		.4byte	.LFB32
+ 1399 0566 8C000000 		.4byte	.LFE32-.LFB32
+ 1400 056a 01       		.uleb128 0x1
+ 1401 056b 9C       		.byte	0x9c
+ 1402 056c B1050000 		.4byte	0x5b1
+ 1403 0570 18       		.uleb128 0x18
+ 1404 0571 8B010000 		.4byte	.LASF110
+ 1405 0575 01       		.byte	0x1
+ 1406 0576 5201     		.2byte	0x152
+ 1407 0578 A2000000 		.4byte	0xa2
+ 1408 057c 00000000 		.4byte	.LLST0
+ 1409 0580 18       		.uleb128 0x18
+ 1410 0581 35000000 		.4byte	.LASF111
+ 1411 0585 01       		.byte	0x1
+ 1412 0586 5201     		.2byte	0x152
+ 1413 0588 B1050000 		.4byte	0x5b1
+ 1414 058c 3A000000 		.4byte	.LLST1
+ 1415 0590 19       		.uleb128 0x19
+ 1416 0591 8D060000 		.4byte	.LASF112
+ 1417 0595 01       		.byte	0x1
+ 1418 0596 5401     		.2byte	0x154
+ 1419 0598 B7050000 		.4byte	0x5b7
+ 1420 059c 68000000 		.4byte	.LLST2
+ 1421 05a0 19       		.uleb128 0x19
+ 1422 05a1 2C080000 		.4byte	.LASF113
+ 1423 05a5 01       		.byte	0x1
+ 1424 05a6 5501     		.2byte	0x155
+ 1425 05a8 5C010000 		.4byte	0x15c
+ 1426 05ac 8B000000 		.4byte	.LLST3
+ 1427 05b0 00       		.byte	0
+ 1428 05b1 10       		.uleb128 0x10
+ 1429 05b2 04       		.byte	0x4
+ 1430 05b3 8C000000 		.4byte	0x8c
+ 1431 05b7 10       		.uleb128 0x10
+ 1432 05b8 04       		.byte	0x4
+ 1433 05b9 D0000000 		.4byte	0xd0
+ 1434 05bd 17       		.uleb128 0x17
+ 1435 05be 5A080000 		.4byte	.LASF115
+ 1436 05c2 01       		.byte	0x1
+ 1437 05c3 F101     		.2byte	0x1f1
+ 1438 05c5 5C010000 		.4byte	0x15c
+ 1439 05c9 00000000 		.4byte	.LFB37
+ 1440 05cd 20000000 		.4byte	.LFE37-.LFB37
+ 1441 05d1 01       		.uleb128 0x1
+ 1442 05d2 9C       		.byte	0x9c
+ 1443 05d3 19060000 		.4byte	0x619
+ 1444 05d7 18       		.uleb128 0x18
+ 1445 05d8 8B010000 		.4byte	.LASF110
+ 1446 05dc 01       		.byte	0x1
+ 1447 05dd F101     		.2byte	0x1f1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 40
+
+
+ 1448 05df 97000000 		.4byte	0x97
+ 1449 05e3 AA000000 		.4byte	.LLST4
+ 1450 05e7 18       		.uleb128 0x18
+ 1451 05e8 55030000 		.4byte	.LASF116
+ 1452 05ec 01       		.byte	0x1
+ 1453 05ed F101     		.2byte	0x1f1
+ 1454 05ef B1050000 		.4byte	0x5b1
+ 1455 05f3 E4000000 		.4byte	.LLST5
+ 1456 05f7 19       		.uleb128 0x19
+ 1457 05f8 FC000000 		.4byte	.LASF117
+ 1458 05fc 01       		.byte	0x1
+ 1459 05fd F301     		.2byte	0x1f3
+ 1460 05ff 5C010000 		.4byte	0x15c
+ 1461 0603 1E010000 		.4byte	.LLST6
+ 1462 0607 1A       		.uleb128 0x1a
+ 1463 0608 0E000000 		.4byte	.LVL10
+ 1464 060c 56050000 		.4byte	0x556
+ 1465 0610 1B       		.uleb128 0x1b
+ 1466 0611 01       		.uleb128 0x1
+ 1467 0612 51       		.byte	0x51
+ 1468 0613 03       		.uleb128 0x3
+ 1469 0614 F3       		.byte	0xf3
+ 1470 0615 01       		.uleb128 0x1
+ 1471 0616 51       		.byte	0x51
+ 1472 0617 00       		.byte	0
+ 1473 0618 00       		.byte	0
+ 1474 0619 1C       		.uleb128 0x1c
+ 1475 061a 6B040000 		.4byte	.LASF122
+ 1476 061e 01       		.byte	0x1
+ 1477 061f 9001     		.2byte	0x190
+ 1478 0621 5C010000 		.4byte	0x15c
+ 1479 0625 00000000 		.4byte	.LFB33
+ 1480 0629 98000000 		.4byte	.LFE33-.LFB33
+ 1481 062d 01       		.uleb128 0x1
+ 1482 062e 9C       		.byte	0x9c
+ 1483 062f 93060000 		.4byte	0x693
+ 1484 0633 18       		.uleb128 0x18
+ 1485 0634 8B010000 		.4byte	.LASF110
+ 1486 0638 01       		.byte	0x1
+ 1487 0639 9001     		.2byte	0x190
+ 1488 063b A2000000 		.4byte	0xa2
+ 1489 063f 54010000 		.4byte	.LLST7
+ 1490 0643 18       		.uleb128 0x18
+ 1491 0644 35000000 		.4byte	.LASF111
+ 1492 0648 01       		.byte	0x1
+ 1493 0649 9001     		.2byte	0x190
+ 1494 064b B1050000 		.4byte	0x5b1
+ 1495 064f 99010000 		.4byte	.LLST8
+ 1496 0653 1D       		.uleb128 0x1d
+ 1497 0654 8D060000 		.4byte	.LASF112
+ 1498 0658 01       		.byte	0x1
+ 1499 0659 9201     		.2byte	0x192
+ 1500 065b A3060000 		.4byte	0x6a3
+ 1501 065f 03       		.uleb128 0x3
+ 1502 0660 91       		.byte	0x91
+ 1503 0661 F07D     		.sleb128 -272
+ 1504 0663 19       		.uleb128 0x19
+ARM GAS  e:\temp\ccVGPNYG.s 			page 41
+
+
+ 1505 0664 2C080000 		.4byte	.LASF113
+ 1506 0668 01       		.byte	0x1
+ 1507 0669 9301     		.2byte	0x193
+ 1508 066b 5C010000 		.4byte	0x15c
+ 1509 066f BA010000 		.4byte	.LLST9
+ 1510 0673 1A       		.uleb128 0x1a
+ 1511 0674 1C000000 		.4byte	.LVL17
+ 1512 0678 65090000 		.4byte	0x965
+ 1513 067c 1B       		.uleb128 0x1b
+ 1514 067d 01       		.uleb128 0x1
+ 1515 067e 50       		.byte	0x50
+ 1516 067f 03       		.uleb128 0x3
+ 1517 0680 91       		.byte	0x91
+ 1518 0681 F87D     		.sleb128 -264
+ 1519 0683 1B       		.uleb128 0x1b
+ 1520 0684 01       		.uleb128 0x1
+ 1521 0685 51       		.byte	0x51
+ 1522 0686 03       		.uleb128 0x3
+ 1523 0687 F3       		.byte	0xf3
+ 1524 0688 01       		.uleb128 0x1
+ 1525 0689 51       		.byte	0x51
+ 1526 068a 1B       		.uleb128 0x1b
+ 1527 068b 01       		.uleb128 0x1
+ 1528 068c 52       		.byte	0x52
+ 1529 068d 03       		.uleb128 0x3
+ 1530 068e 0A       		.byte	0xa
+ 1531 068f 0001     		.2byte	0x100
+ 1532 0691 00       		.byte	0
+ 1533 0692 00       		.byte	0
+ 1534 0693 06       		.uleb128 0x6
+ 1535 0694 D0000000 		.4byte	0xd0
+ 1536 0698 A3060000 		.4byte	0x6a3
+ 1537 069c 07       		.uleb128 0x7
+ 1538 069d C9000000 		.4byte	0xc9
+ 1539 06a1 41       		.byte	0x41
+ 1540 06a2 00       		.byte	0
+ 1541 06a3 05       		.uleb128 0x5
+ 1542 06a4 93060000 		.4byte	0x693
+ 1543 06a8 1E       		.uleb128 0x1e
+ 1544 06a9 50090000 		.4byte	.LASF125
+ 1545 06ad 01       		.byte	0x1
+ 1546 06ae CB01     		.2byte	0x1cb
+ 1547 06b0 00000000 		.4byte	.LFB34
+ 1548 06b4 20000000 		.4byte	.LFE34-.LFB34
+ 1549 06b8 01       		.uleb128 0x1
+ 1550 06b9 9C       		.byte	0x9c
+ 1551 06ba ED060000 		.4byte	0x6ed
+ 1552 06be 1F       		.uleb128 0x1f
+ 1553 06bf D9070000 		.4byte	.LASF118
+ 1554 06c3 01       		.byte	0x1
+ 1555 06c4 CB01     		.2byte	0x1cb
+ 1556 06c6 ED060000 		.4byte	0x6ed
+ 1557 06ca 01       		.uleb128 0x1
+ 1558 06cb 50       		.byte	0x50
+ 1559 06cc 18       		.uleb128 0x18
+ 1560 06cd E5020000 		.4byte	.LASF119
+ 1561 06d1 01       		.byte	0x1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 42
+
+
+ 1562 06d2 CB01     		.2byte	0x1cb
+ 1563 06d4 FF040000 		.4byte	0x4ff
+ 1564 06d8 D9010000 		.4byte	.LLST10
+ 1565 06dc 18       		.uleb128 0x18
+ 1566 06dd 2D030000 		.4byte	.LASF120
+ 1567 06e1 01       		.byte	0x1
+ 1568 06e2 CB01     		.2byte	0x1cb
+ 1569 06e4 ED060000 		.4byte	0x6ed
+ 1570 06e8 13020000 		.4byte	.LLST11
+ 1571 06ec 00       		.byte	0
+ 1572 06ed 02       		.uleb128 0x2
+ 1573 06ee 01       		.byte	0x1
+ 1574 06ef 02       		.byte	0x2
+ 1575 06f0 D2050000 		.4byte	.LASF121
+ 1576 06f4 1C       		.uleb128 0x1c
+ 1577 06f5 01010000 		.4byte	.LASF123
+ 1578 06f9 01       		.byte	0x1
+ 1579 06fa DE01     		.2byte	0x1de
+ 1580 06fc ED060000 		.4byte	0x6ed
+ 1581 0700 00000000 		.4byte	.LFB35
+ 1582 0704 14000000 		.4byte	.LFE35-.LFB35
+ 1583 0708 01       		.uleb128 0x1
+ 1584 0709 9C       		.byte	0x9c
+ 1585 070a 1F070000 		.4byte	0x71f
+ 1586 070e 18       		.uleb128 0x18
+ 1587 070f 60010000 		.4byte	.LASF124
+ 1588 0713 01       		.byte	0x1
+ 1589 0714 DE01     		.2byte	0x1de
+ 1590 0716 8C000000 		.4byte	0x8c
+ 1591 071a 34020000 		.4byte	.LLST12
+ 1592 071e 00       		.byte	0
+ 1593 071f 1E       		.uleb128 0x1e
+ 1594 0720 FD080000 		.4byte	.LASF126
+ 1595 0724 01       		.byte	0x1
+ 1596 0725 E301     		.2byte	0x1e3
+ 1597 0727 00000000 		.4byte	.LFB36
+ 1598 072b 14000000 		.4byte	.LFE36-.LFB36
+ 1599 072f 01       		.uleb128 0x1
+ 1600 0730 9C       		.byte	0x9c
+ 1601 0731 6E070000 		.4byte	0x76e
+ 1602 0735 1F       		.uleb128 0x1f
+ 1603 0736 B3030000 		.4byte	.LASF127
+ 1604 073a 01       		.byte	0x1
+ 1605 073b E301     		.2byte	0x1e3
+ 1606 073d 97000000 		.4byte	0x97
+ 1607 0741 01       		.uleb128 0x1
+ 1608 0742 50       		.byte	0x50
+ 1609 0743 1F       		.uleb128 0x1f
+ 1610 0744 E6050000 		.4byte	.LASF128
+ 1611 0748 01       		.byte	0x1
+ 1612 0749 E301     		.2byte	0x1e3
+ 1613 074b 97000000 		.4byte	0x97
+ 1614 074f 01       		.uleb128 0x1
+ 1615 0750 51       		.byte	0x51
+ 1616 0751 1F       		.uleb128 0x1f
+ 1617 0752 27020000 		.4byte	.LASF129
+ 1618 0756 01       		.byte	0x1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 43
+
+
+ 1619 0757 E301     		.2byte	0x1e3
+ 1620 0759 97000000 		.4byte	0x97
+ 1621 075d 01       		.uleb128 0x1
+ 1622 075e 52       		.byte	0x52
+ 1623 075f 1F       		.uleb128 0x1f
+ 1624 0760 9C060000 		.4byte	.LASF130
+ 1625 0764 01       		.byte	0x1
+ 1626 0765 E401     		.2byte	0x1e4
+ 1627 0767 97000000 		.4byte	0x97
+ 1628 076b 01       		.uleb128 0x1
+ 1629 076c 53       		.byte	0x53
+ 1630 076d 00       		.byte	0
+ 1631 076e 1C       		.uleb128 0x1c
+ 1632 076f 2E020000 		.4byte	.LASF131
+ 1633 0773 01       		.byte	0x1
+ 1634 0774 1702     		.2byte	0x217
+ 1635 0776 5C010000 		.4byte	0x15c
+ 1636 077a 00000000 		.4byte	.LFB38
+ 1637 077e 1E000000 		.4byte	.LFE38-.LFB38
+ 1638 0782 01       		.uleb128 0x1
+ 1639 0783 9C       		.byte	0x9c
+ 1640 0784 E0070000 		.4byte	0x7e0
+ 1641 0788 18       		.uleb128 0x18
+ 1642 0789 8B010000 		.4byte	.LASF110
+ 1643 078d 01       		.byte	0x1
+ 1644 078e 1702     		.2byte	0x217
+ 1645 0790 97000000 		.4byte	0x97
+ 1646 0794 55020000 		.4byte	.LLST13
+ 1647 0798 1D       		.uleb128 0x1d
+ 1648 0799 4B070000 		.4byte	.LASF132
+ 1649 079d 01       		.byte	0x1
+ 1650 079e 1902     		.2byte	0x219
+ 1651 07a0 E0070000 		.4byte	0x7e0
+ 1652 07a4 03       		.uleb128 0x3
+ 1653 07a5 91       		.byte	0x91
+ 1654 07a6 F07D     		.sleb128 -272
+ 1655 07a8 20       		.uleb128 0x20
+ 1656 07a9 12000000 		.4byte	.LVL32
+ 1657 07ad 6E090000 		.4byte	0x96e
+ 1658 07b1 C8070000 		.4byte	0x7c8
+ 1659 07b5 1B       		.uleb128 0x1b
+ 1660 07b6 01       		.uleb128 0x1
+ 1661 07b7 50       		.byte	0x50
+ 1662 07b8 02       		.uleb128 0x2
+ 1663 07b9 7D       		.byte	0x7d
+ 1664 07ba 00       		.sleb128 0
+ 1665 07bb 1B       		.uleb128 0x1b
+ 1666 07bc 01       		.uleb128 0x1
+ 1667 07bd 51       		.byte	0x51
+ 1668 07be 01       		.uleb128 0x1
+ 1669 07bf 30       		.byte	0x30
+ 1670 07c0 1B       		.uleb128 0x1b
+ 1671 07c1 01       		.uleb128 0x1
+ 1672 07c2 52       		.byte	0x52
+ 1673 07c3 03       		.uleb128 0x3
+ 1674 07c4 0A       		.byte	0xa
+ 1675 07c5 0801     		.2byte	0x108
+ARM GAS  e:\temp\ccVGPNYG.s 			page 44
+
+
+ 1676 07c7 00       		.byte	0
+ 1677 07c8 1A       		.uleb128 0x1a
+ 1678 07c9 1A000000 		.4byte	.LVL33
+ 1679 07cd BD050000 		.4byte	0x5bd
+ 1680 07d1 1B       		.uleb128 0x1b
+ 1681 07d2 01       		.uleb128 0x1
+ 1682 07d3 50       		.byte	0x50
+ 1683 07d4 02       		.uleb128 0x2
+ 1684 07d5 74       		.byte	0x74
+ 1685 07d6 00       		.sleb128 0
+ 1686 07d7 1B       		.uleb128 0x1b
+ 1687 07d8 01       		.uleb128 0x1
+ 1688 07d9 51       		.byte	0x51
+ 1689 07da 03       		.uleb128 0x3
+ 1690 07db 91       		.byte	0x91
+ 1691 07dc F87D     		.sleb128 -264
+ 1692 07de 00       		.byte	0
+ 1693 07df 00       		.byte	0
+ 1694 07e0 06       		.uleb128 0x6
+ 1695 07e1 8C000000 		.4byte	0x8c
+ 1696 07e5 F1070000 		.4byte	0x7f1
+ 1697 07e9 0F       		.uleb128 0xf
+ 1698 07ea C9000000 		.4byte	0xc9
+ 1699 07ee 0701     		.2byte	0x107
+ 1700 07f0 00       		.byte	0
+ 1701 07f1 1C       		.uleb128 0x1c
+ 1702 07f2 ED080000 		.4byte	.LASF133
+ 1703 07f6 01       		.byte	0x1
+ 1704 07f7 4B02     		.2byte	0x24b
+ 1705 07f9 5C010000 		.4byte	0x15c
+ 1706 07fd 00000000 		.4byte	.LFB39
+ 1707 0801 80000000 		.4byte	.LFE39-.LFB39
+ 1708 0805 01       		.uleb128 0x1
+ 1709 0806 9C       		.byte	0x9c
+ 1710 0807 A8080000 		.4byte	0x8a8
+ 1711 080b 18       		.uleb128 0x18
+ 1712 080c 8B010000 		.4byte	.LASF110
+ 1713 0810 01       		.byte	0x1
+ 1714 0811 4B02     		.2byte	0x24b
+ 1715 0813 97000000 		.4byte	0x97
+ 1716 0817 76020000 		.4byte	.LLST14
+ 1717 081b 18       		.uleb128 0x18
+ 1718 081c 55030000 		.4byte	.LASF116
+ 1719 0820 01       		.byte	0x1
+ 1720 0821 4B02     		.2byte	0x24b
+ 1721 0823 B1050000 		.4byte	0x5b1
+ 1722 0827 14030000 		.4byte	.LLST15
+ 1723 082b 21       		.uleb128 0x21
+ 1724 082c 63626B00 		.ascii	"cbk\000"
+ 1725 0830 01       		.byte	0x1
+ 1726 0831 4B02     		.2byte	0x24b
+ 1727 0833 3A050000 		.4byte	0x53a
+ 1728 0837 56030000 		.4byte	.LLST16
+ 1729 083b 19       		.uleb128 0x19
+ 1730 083c 2C080000 		.4byte	.LASF113
+ 1731 0840 01       		.byte	0x1
+ 1732 0841 4E02     		.2byte	0x24e
+ARM GAS  e:\temp\ccVGPNYG.s 			page 45
+
+
+ 1733 0843 5C010000 		.4byte	0x15c
+ 1734 0847 90030000 		.4byte	.LLST17
+ 1735 084b 19       		.uleb128 0x19
+ 1736 084c 94060000 		.4byte	.LASF134
+ 1737 0850 01       		.byte	0x1
+ 1738 0851 5202     		.2byte	0x252
+ 1739 0853 A2000000 		.4byte	0xa2
+ 1740 0857 BD030000 		.4byte	.LLST18
+ 1741 085b 19       		.uleb128 0x19
+ 1742 085c C2010000 		.4byte	.LASF135
+ 1743 0860 01       		.byte	0x1
+ 1744 0861 5302     		.2byte	0x253
+ 1745 0863 97000000 		.4byte	0x97
+ 1746 0867 DB030000 		.4byte	.LLST19
+ 1747 086b 20       		.uleb128 0x20
+ 1748 086c 38000000 		.4byte	.LVL38
+ 1749 0870 77090000 		.4byte	0x977
+ 1750 0874 7E080000 		.4byte	0x87e
+ 1751 0878 1B       		.uleb128 0x1b
+ 1752 0879 01       		.uleb128 0x1
+ 1753 087a 50       		.byte	0x50
+ 1754 087b 01       		.uleb128 0x1
+ 1755 087c 32       		.byte	0x32
+ 1756 087d 00       		.byte	0
+ 1757 087e 20       		.uleb128 0x20
+ 1758 087f 4E000000 		.4byte	.LVL41
+ 1759 0883 77090000 		.4byte	0x977
+ 1760 0887 91080000 		.4byte	0x891
+ 1761 088b 1B       		.uleb128 0x1b
+ 1762 088c 01       		.uleb128 0x1
+ 1763 088d 50       		.byte	0x50
+ 1764 088e 01       		.uleb128 0x1
+ 1765 088f 31       		.byte	0x31
+ 1766 0890 00       		.byte	0
+ 1767 0891 1A       		.uleb128 0x1a
+ 1768 0892 5E000000 		.4byte	.LVL44
+ 1769 0896 BD050000 		.4byte	0x5bd
+ 1770 089a 1B       		.uleb128 0x1b
+ 1771 089b 01       		.uleb128 0x1
+ 1772 089c 50       		.byte	0x50
+ 1773 089d 02       		.uleb128 0x2
+ 1774 089e 74       		.byte	0x74
+ 1775 089f 00       		.sleb128 0
+ 1776 08a0 1B       		.uleb128 0x1b
+ 1777 08a1 01       		.uleb128 0x1
+ 1778 08a2 51       		.byte	0x51
+ 1779 08a3 02       		.uleb128 0x2
+ 1780 08a4 75       		.byte	0x75
+ 1781 08a5 00       		.sleb128 0
+ 1782 08a6 00       		.byte	0
+ 1783 08a7 00       		.byte	0
+ 1784 08a8 1C       		.uleb128 0x1c
+ 1785 08a9 E1040000 		.4byte	.LASF136
+ 1786 08ad 01       		.byte	0x1
+ 1787 08ae CD02     		.2byte	0x2cd
+ 1788 08b0 5C010000 		.4byte	0x15c
+ 1789 08b4 00000000 		.4byte	.LFB40
+ARM GAS  e:\temp\ccVGPNYG.s 			page 46
+
+
+ 1790 08b8 4C000000 		.4byte	.LFE40-.LFB40
+ 1791 08bc 01       		.uleb128 0x1
+ 1792 08bd 9C       		.byte	0x9c
+ 1793 08be FA080000 		.4byte	0x8fa
+ 1794 08c2 18       		.uleb128 0x18
+ 1795 08c3 8B010000 		.4byte	.LASF110
+ 1796 08c7 01       		.byte	0x1
+ 1797 08c8 CD02     		.2byte	0x2cd
+ 1798 08ca 97000000 		.4byte	0x97
+ 1799 08ce F0030000 		.4byte	.LLST20
+ 1800 08d2 18       		.uleb128 0x18
+ 1801 08d3 55030000 		.4byte	.LASF116
+ 1802 08d7 01       		.byte	0x1
+ 1803 08d8 CD02     		.2byte	0x2cd
+ 1804 08da B1050000 		.4byte	0x5b1
+ 1805 08de 75040000 		.4byte	.LLST21
+ 1806 08e2 1A       		.uleb128 0x1a
+ 1807 08e3 2A000000 		.4byte	.LVL59
+ 1808 08e7 65090000 		.4byte	0x965
+ 1809 08eb 1B       		.uleb128 0x1b
+ 1810 08ec 01       		.uleb128 0x1
+ 1811 08ed 50       		.byte	0x50
+ 1812 08ee 02       		.uleb128 0x2
+ 1813 08ef 74       		.byte	0x74
+ 1814 08f0 00       		.sleb128 0
+ 1815 08f1 1B       		.uleb128 0x1b
+ 1816 08f2 01       		.uleb128 0x1
+ 1817 08f3 52       		.byte	0x52
+ 1818 08f4 03       		.uleb128 0x3
+ 1819 08f5 0A       		.byte	0xa
+ 1820 08f6 0001     		.2byte	0x100
+ 1821 08f8 00       		.byte	0
+ 1822 08f9 00       		.byte	0
+ 1823 08fa 22       		.uleb128 0x22
+ 1824 08fb D2080000 		.4byte	.LASF137
+ 1825 08ff 01       		.byte	0x1
+ 1826 0900 38       		.byte	0x38
+ 1827 0901 8C000000 		.4byte	0x8c
+ 1828 0905 05       		.uleb128 0x5
+ 1829 0906 03       		.byte	0x3
+ 1830 0907 01000000 		.4byte	gl_flash_mode_en
+ 1831 090b 22       		.uleb128 0x22
+ 1832 090c 06020000 		.4byte	.LASF138
+ 1833 0910 01       		.byte	0x1
+ 1834 0911 3B       		.byte	0x3b
+ 1835 0912 97000000 		.4byte	0x97
+ 1836 0916 05       		.uleb128 0x5
+ 1837 0917 03       		.byte	0x3
+ 1838 0918 00000000 		.4byte	gl_flash_access_first
+ 1839 091c 22       		.uleb128 0x22
+ 1840 091d 11060000 		.4byte	.LASF139
+ 1841 0921 01       		.byte	0x1
+ 1842 0922 3E       		.byte	0x3e
+ 1843 0923 97000000 		.4byte	0x97
+ 1844 0927 05       		.uleb128 0x5
+ 1845 0928 03       		.byte	0x3
+ 1846 0929 02000000 		.4byte	gl_flash_access_last
+ARM GAS  e:\temp\ccVGPNYG.s 			page 47
+
+
+ 1847 092d 22       		.uleb128 0x22
+ 1848 092e 69070000 		.4byte	.LASF140
+ 1849 0932 01       		.byte	0x1
+ 1850 0933 41       		.byte	0x41
+ 1851 0934 97000000 		.4byte	0x97
+ 1852 0938 05       		.uleb128 0x5
+ 1853 0939 03       		.byte	0x3
+ 1854 093a 04000000 		.4byte	gl_flash_metadata_row
+ 1855 093e 22       		.uleb128 0x22
+ 1856 093f 73080000 		.4byte	.LASF141
+ 1857 0943 01       		.byte	0x1
+ 1858 0944 44       		.byte	0x44
+ 1859 0945 97000000 		.4byte	0x97
+ 1860 0949 05       		.uleb128 0x5
+ 1861 094a 03       		.byte	0x3
+ 1862 094b 06000000 		.4byte	gl_flash_bl_last_row
+ 1863 094f 22       		.uleb128 0x22
+ 1864 0950 9B030000 		.4byte	.LASF142
+ 1865 0954 01       		.byte	0x1
+ 1866 0955 48       		.byte	0x48
+ 1867 0956 60090000 		.4byte	0x960
+ 1868 095a 05       		.uleb128 0x5
+ 1869 095b 03       		.byte	0x3
+ 1870 095c 00000000 		.4byte	gl_flash_write_in_place
+ 1871 0960 05       		.uleb128 0x5
+ 1872 0961 ED060000 		.4byte	0x6ed
+ 1873 0965 23       		.uleb128 0x23
+ 1874 0966 A5010000 		.4byte	.LASF143
+ 1875 096a A5010000 		.4byte	.LASF143
+ 1876 096e 23       		.uleb128 0x23
+ 1877 096f E3070000 		.4byte	.LASF144
+ 1878 0973 E3070000 		.4byte	.LASF144
+ 1879 0977 24       		.uleb128 0x24
+ 1880 0978 EF050000 		.4byte	.LASF149
+ 1881 097c EF050000 		.4byte	.LASF149
+ 1882 0980 08       		.byte	0x8
+ 1883 0981 4101     		.2byte	0x141
+ 1884 0983 00       		.byte	0
+ 1885              		.section	.debug_abbrev,"",%progbits
+ 1886              	.Ldebug_abbrev0:
+ 1887 0000 01       		.uleb128 0x1
+ 1888 0001 11       		.uleb128 0x11
+ 1889 0002 01       		.byte	0x1
+ 1890 0003 25       		.uleb128 0x25
+ 1891 0004 0E       		.uleb128 0xe
+ 1892 0005 13       		.uleb128 0x13
+ 1893 0006 0B       		.uleb128 0xb
+ 1894 0007 03       		.uleb128 0x3
+ 1895 0008 0E       		.uleb128 0xe
+ 1896 0009 1B       		.uleb128 0x1b
+ 1897 000a 0E       		.uleb128 0xe
+ 1898 000b 55       		.uleb128 0x55
+ 1899 000c 17       		.uleb128 0x17
+ 1900 000d 11       		.uleb128 0x11
+ 1901 000e 01       		.uleb128 0x1
+ 1902 000f 10       		.uleb128 0x10
+ 1903 0010 17       		.uleb128 0x17
+ARM GAS  e:\temp\ccVGPNYG.s 			page 48
+
+
+ 1904 0011 00       		.byte	0
+ 1905 0012 00       		.byte	0
+ 1906 0013 02       		.uleb128 0x2
+ 1907 0014 24       		.uleb128 0x24
+ 1908 0015 00       		.byte	0
+ 1909 0016 0B       		.uleb128 0xb
+ 1910 0017 0B       		.uleb128 0xb
+ 1911 0018 3E       		.uleb128 0x3e
+ 1912 0019 0B       		.uleb128 0xb
+ 1913 001a 03       		.uleb128 0x3
+ 1914 001b 0E       		.uleb128 0xe
+ 1915 001c 00       		.byte	0
+ 1916 001d 00       		.byte	0
+ 1917 001e 03       		.uleb128 0x3
+ 1918 001f 16       		.uleb128 0x16
+ 1919 0020 00       		.byte	0
+ 1920 0021 03       		.uleb128 0x3
+ 1921 0022 0E       		.uleb128 0xe
+ 1922 0023 3A       		.uleb128 0x3a
+ 1923 0024 0B       		.uleb128 0xb
+ 1924 0025 3B       		.uleb128 0x3b
+ 1925 0026 0B       		.uleb128 0xb
+ 1926 0027 49       		.uleb128 0x49
+ 1927 0028 13       		.uleb128 0x13
+ 1928 0029 00       		.byte	0
+ 1929 002a 00       		.byte	0
+ 1930 002b 04       		.uleb128 0x4
+ 1931 002c 24       		.uleb128 0x24
+ 1932 002d 00       		.byte	0
+ 1933 002e 0B       		.uleb128 0xb
+ 1934 002f 0B       		.uleb128 0xb
+ 1935 0030 3E       		.uleb128 0x3e
+ 1936 0031 0B       		.uleb128 0xb
+ 1937 0032 03       		.uleb128 0x3
+ 1938 0033 08       		.uleb128 0x8
+ 1939 0034 00       		.byte	0
+ 1940 0035 00       		.byte	0
+ 1941 0036 05       		.uleb128 0x5
+ 1942 0037 35       		.uleb128 0x35
+ 1943 0038 00       		.byte	0
+ 1944 0039 49       		.uleb128 0x49
+ 1945 003a 13       		.uleb128 0x13
+ 1946 003b 00       		.byte	0
+ 1947 003c 00       		.byte	0
+ 1948 003d 06       		.uleb128 0x6
+ 1949 003e 01       		.uleb128 0x1
+ 1950 003f 01       		.byte	0x1
+ 1951 0040 49       		.uleb128 0x49
+ 1952 0041 13       		.uleb128 0x13
+ 1953 0042 01       		.uleb128 0x1
+ 1954 0043 13       		.uleb128 0x13
+ 1955 0044 00       		.byte	0
+ 1956 0045 00       		.byte	0
+ 1957 0046 07       		.uleb128 0x7
+ 1958 0047 21       		.uleb128 0x21
+ 1959 0048 00       		.byte	0
+ 1960 0049 49       		.uleb128 0x49
+ARM GAS  e:\temp\ccVGPNYG.s 			page 49
+
+
+ 1961 004a 13       		.uleb128 0x13
+ 1962 004b 2F       		.uleb128 0x2f
+ 1963 004c 0B       		.uleb128 0xb
+ 1964 004d 00       		.byte	0
+ 1965 004e 00       		.byte	0
+ 1966 004f 08       		.uleb128 0x8
+ 1967 0050 04       		.uleb128 0x4
+ 1968 0051 01       		.byte	0x1
+ 1969 0052 03       		.uleb128 0x3
+ 1970 0053 0E       		.uleb128 0xe
+ 1971 0054 0B       		.uleb128 0xb
+ 1972 0055 0B       		.uleb128 0xb
+ 1973 0056 49       		.uleb128 0x49
+ 1974 0057 13       		.uleb128 0x13
+ 1975 0058 3A       		.uleb128 0x3a
+ 1976 0059 0B       		.uleb128 0xb
+ 1977 005a 3B       		.uleb128 0x3b
+ 1978 005b 0B       		.uleb128 0xb
+ 1979 005c 01       		.uleb128 0x1
+ 1980 005d 13       		.uleb128 0x13
+ 1981 005e 00       		.byte	0
+ 1982 005f 00       		.byte	0
+ 1983 0060 09       		.uleb128 0x9
+ 1984 0061 28       		.uleb128 0x28
+ 1985 0062 00       		.byte	0
+ 1986 0063 03       		.uleb128 0x3
+ 1987 0064 0E       		.uleb128 0xe
+ 1988 0065 1C       		.uleb128 0x1c
+ 1989 0066 0D       		.uleb128 0xd
+ 1990 0067 00       		.byte	0
+ 1991 0068 00       		.byte	0
+ 1992 0069 0A       		.uleb128 0xa
+ 1993 006a 28       		.uleb128 0x28
+ 1994 006b 00       		.byte	0
+ 1995 006c 03       		.uleb128 0x3
+ 1996 006d 0E       		.uleb128 0xe
+ 1997 006e 1C       		.uleb128 0x1c
+ 1998 006f 0B       		.uleb128 0xb
+ 1999 0070 00       		.byte	0
+ 2000 0071 00       		.byte	0
+ 2001 0072 0B       		.uleb128 0xb
+ 2002 0073 04       		.uleb128 0x4
+ 2003 0074 01       		.byte	0x1
+ 2004 0075 0B       		.uleb128 0xb
+ 2005 0076 0B       		.uleb128 0xb
+ 2006 0077 49       		.uleb128 0x49
+ 2007 0078 13       		.uleb128 0x13
+ 2008 0079 3A       		.uleb128 0x3a
+ 2009 007a 0B       		.uleb128 0xb
+ 2010 007b 3B       		.uleb128 0x3b
+ 2011 007c 0B       		.uleb128 0xb
+ 2012 007d 01       		.uleb128 0x1
+ 2013 007e 13       		.uleb128 0x13
+ 2014 007f 00       		.byte	0
+ 2015 0080 00       		.byte	0
+ 2016 0081 0C       		.uleb128 0xc
+ 2017 0082 13       		.uleb128 0x13
+ARM GAS  e:\temp\ccVGPNYG.s 			page 50
+
+
+ 2018 0083 01       		.byte	0x1
+ 2019 0084 0B       		.uleb128 0xb
+ 2020 0085 05       		.uleb128 0x5
+ 2021 0086 3A       		.uleb128 0x3a
+ 2022 0087 0B       		.uleb128 0xb
+ 2023 0088 3B       		.uleb128 0x3b
+ 2024 0089 0B       		.uleb128 0xb
+ 2025 008a 01       		.uleb128 0x1
+ 2026 008b 13       		.uleb128 0x13
+ 2027 008c 00       		.byte	0
+ 2028 008d 00       		.byte	0
+ 2029 008e 0D       		.uleb128 0xd
+ 2030 008f 0D       		.uleb128 0xd
+ 2031 0090 00       		.byte	0
+ 2032 0091 03       		.uleb128 0x3
+ 2033 0092 0E       		.uleb128 0xe
+ 2034 0093 3A       		.uleb128 0x3a
+ 2035 0094 0B       		.uleb128 0xb
+ 2036 0095 3B       		.uleb128 0x3b
+ 2037 0096 0B       		.uleb128 0xb
+ 2038 0097 49       		.uleb128 0x49
+ 2039 0098 13       		.uleb128 0x13
+ 2040 0099 38       		.uleb128 0x38
+ 2041 009a 0B       		.uleb128 0xb
+ 2042 009b 00       		.byte	0
+ 2043 009c 00       		.byte	0
+ 2044 009d 0E       		.uleb128 0xe
+ 2045 009e 0D       		.uleb128 0xd
+ 2046 009f 00       		.byte	0
+ 2047 00a0 03       		.uleb128 0x3
+ 2048 00a1 0E       		.uleb128 0xe
+ 2049 00a2 3A       		.uleb128 0x3a
+ 2050 00a3 0B       		.uleb128 0xb
+ 2051 00a4 3B       		.uleb128 0x3b
+ 2052 00a5 0B       		.uleb128 0xb
+ 2053 00a6 49       		.uleb128 0x49
+ 2054 00a7 13       		.uleb128 0x13
+ 2055 00a8 38       		.uleb128 0x38
+ 2056 00a9 05       		.uleb128 0x5
+ 2057 00aa 00       		.byte	0
+ 2058 00ab 00       		.byte	0
+ 2059 00ac 0F       		.uleb128 0xf
+ 2060 00ad 21       		.uleb128 0x21
+ 2061 00ae 00       		.byte	0
+ 2062 00af 49       		.uleb128 0x49
+ 2063 00b0 13       		.uleb128 0x13
+ 2064 00b1 2F       		.uleb128 0x2f
+ 2065 00b2 05       		.uleb128 0x5
+ 2066 00b3 00       		.byte	0
+ 2067 00b4 00       		.byte	0
+ 2068 00b5 10       		.uleb128 0x10
+ 2069 00b6 0F       		.uleb128 0xf
+ 2070 00b7 00       		.byte	0
+ 2071 00b8 0B       		.uleb128 0xb
+ 2072 00b9 0B       		.uleb128 0xb
+ 2073 00ba 49       		.uleb128 0x49
+ 2074 00bb 13       		.uleb128 0x13
+ARM GAS  e:\temp\ccVGPNYG.s 			page 51
+
+
+ 2075 00bc 00       		.byte	0
+ 2076 00bd 00       		.byte	0
+ 2077 00be 11       		.uleb128 0x11
+ 2078 00bf 13       		.uleb128 0x13
+ 2079 00c0 01       		.byte	0x1
+ 2080 00c1 0B       		.uleb128 0xb
+ 2081 00c2 0B       		.uleb128 0xb
+ 2082 00c3 3A       		.uleb128 0x3a
+ 2083 00c4 0B       		.uleb128 0xb
+ 2084 00c5 3B       		.uleb128 0x3b
+ 2085 00c6 05       		.uleb128 0x5
+ 2086 00c7 01       		.uleb128 0x1
+ 2087 00c8 13       		.uleb128 0x13
+ 2088 00c9 00       		.byte	0
+ 2089 00ca 00       		.byte	0
+ 2090 00cb 12       		.uleb128 0x12
+ 2091 00cc 0D       		.uleb128 0xd
+ 2092 00cd 00       		.byte	0
+ 2093 00ce 03       		.uleb128 0x3
+ 2094 00cf 0E       		.uleb128 0xe
+ 2095 00d0 3A       		.uleb128 0x3a
+ 2096 00d1 0B       		.uleb128 0xb
+ 2097 00d2 3B       		.uleb128 0x3b
+ 2098 00d3 05       		.uleb128 0x5
+ 2099 00d4 49       		.uleb128 0x49
+ 2100 00d5 13       		.uleb128 0x13
+ 2101 00d6 38       		.uleb128 0x38
+ 2102 00d7 0B       		.uleb128 0xb
+ 2103 00d8 00       		.byte	0
+ 2104 00d9 00       		.byte	0
+ 2105 00da 13       		.uleb128 0x13
+ 2106 00db 0D       		.uleb128 0xd
+ 2107 00dc 00       		.byte	0
+ 2108 00dd 03       		.uleb128 0x3
+ 2109 00de 08       		.uleb128 0x8
+ 2110 00df 3A       		.uleb128 0x3a
+ 2111 00e0 0B       		.uleb128 0xb
+ 2112 00e1 3B       		.uleb128 0x3b
+ 2113 00e2 05       		.uleb128 0x5
+ 2114 00e3 49       		.uleb128 0x49
+ 2115 00e4 13       		.uleb128 0x13
+ 2116 00e5 38       		.uleb128 0x38
+ 2117 00e6 0B       		.uleb128 0xb
+ 2118 00e7 00       		.byte	0
+ 2119 00e8 00       		.byte	0
+ 2120 00e9 14       		.uleb128 0x14
+ 2121 00ea 16       		.uleb128 0x16
+ 2122 00eb 00       		.byte	0
+ 2123 00ec 03       		.uleb128 0x3
+ 2124 00ed 0E       		.uleb128 0xe
+ 2125 00ee 3A       		.uleb128 0x3a
+ 2126 00ef 0B       		.uleb128 0xb
+ 2127 00f0 3B       		.uleb128 0x3b
+ 2128 00f1 05       		.uleb128 0x5
+ 2129 00f2 49       		.uleb128 0x49
+ 2130 00f3 13       		.uleb128 0x13
+ 2131 00f4 00       		.byte	0
+ARM GAS  e:\temp\ccVGPNYG.s 			page 52
+
+
+ 2132 00f5 00       		.byte	0
+ 2133 00f6 15       		.uleb128 0x15
+ 2134 00f7 15       		.uleb128 0x15
+ 2135 00f8 01       		.byte	0x1
+ 2136 00f9 27       		.uleb128 0x27
+ 2137 00fa 19       		.uleb128 0x19
+ 2138 00fb 01       		.uleb128 0x1
+ 2139 00fc 13       		.uleb128 0x13
+ 2140 00fd 00       		.byte	0
+ 2141 00fe 00       		.byte	0
+ 2142 00ff 16       		.uleb128 0x16
+ 2143 0100 05       		.uleb128 0x5
+ 2144 0101 00       		.byte	0
+ 2145 0102 49       		.uleb128 0x49
+ 2146 0103 13       		.uleb128 0x13
+ 2147 0104 00       		.byte	0
+ 2148 0105 00       		.byte	0
+ 2149 0106 17       		.uleb128 0x17
+ 2150 0107 2E       		.uleb128 0x2e
+ 2151 0108 01       		.byte	0x1
+ 2152 0109 03       		.uleb128 0x3
+ 2153 010a 0E       		.uleb128 0xe
+ 2154 010b 3A       		.uleb128 0x3a
+ 2155 010c 0B       		.uleb128 0xb
+ 2156 010d 3B       		.uleb128 0x3b
+ 2157 010e 05       		.uleb128 0x5
+ 2158 010f 27       		.uleb128 0x27
+ 2159 0110 19       		.uleb128 0x19
+ 2160 0111 49       		.uleb128 0x49
+ 2161 0112 13       		.uleb128 0x13
+ 2162 0113 11       		.uleb128 0x11
+ 2163 0114 01       		.uleb128 0x1
+ 2164 0115 12       		.uleb128 0x12
+ 2165 0116 06       		.uleb128 0x6
+ 2166 0117 40       		.uleb128 0x40
+ 2167 0118 18       		.uleb128 0x18
+ 2168 0119 9742     		.uleb128 0x2117
+ 2169 011b 19       		.uleb128 0x19
+ 2170 011c 01       		.uleb128 0x1
+ 2171 011d 13       		.uleb128 0x13
+ 2172 011e 00       		.byte	0
+ 2173 011f 00       		.byte	0
+ 2174 0120 18       		.uleb128 0x18
+ 2175 0121 05       		.uleb128 0x5
+ 2176 0122 00       		.byte	0
+ 2177 0123 03       		.uleb128 0x3
+ 2178 0124 0E       		.uleb128 0xe
+ 2179 0125 3A       		.uleb128 0x3a
+ 2180 0126 0B       		.uleb128 0xb
+ 2181 0127 3B       		.uleb128 0x3b
+ 2182 0128 05       		.uleb128 0x5
+ 2183 0129 49       		.uleb128 0x49
+ 2184 012a 13       		.uleb128 0x13
+ 2185 012b 02       		.uleb128 0x2
+ 2186 012c 17       		.uleb128 0x17
+ 2187 012d 00       		.byte	0
+ 2188 012e 00       		.byte	0
+ARM GAS  e:\temp\ccVGPNYG.s 			page 53
+
+
+ 2189 012f 19       		.uleb128 0x19
+ 2190 0130 34       		.uleb128 0x34
+ 2191 0131 00       		.byte	0
+ 2192 0132 03       		.uleb128 0x3
+ 2193 0133 0E       		.uleb128 0xe
+ 2194 0134 3A       		.uleb128 0x3a
+ 2195 0135 0B       		.uleb128 0xb
+ 2196 0136 3B       		.uleb128 0x3b
+ 2197 0137 05       		.uleb128 0x5
+ 2198 0138 49       		.uleb128 0x49
+ 2199 0139 13       		.uleb128 0x13
+ 2200 013a 02       		.uleb128 0x2
+ 2201 013b 17       		.uleb128 0x17
+ 2202 013c 00       		.byte	0
+ 2203 013d 00       		.byte	0
+ 2204 013e 1A       		.uleb128 0x1a
+ 2205 013f 898201   		.uleb128 0x4109
+ 2206 0142 01       		.byte	0x1
+ 2207 0143 11       		.uleb128 0x11
+ 2208 0144 01       		.uleb128 0x1
+ 2209 0145 31       		.uleb128 0x31
+ 2210 0146 13       		.uleb128 0x13
+ 2211 0147 00       		.byte	0
+ 2212 0148 00       		.byte	0
+ 2213 0149 1B       		.uleb128 0x1b
+ 2214 014a 8A8201   		.uleb128 0x410a
+ 2215 014d 00       		.byte	0
+ 2216 014e 02       		.uleb128 0x2
+ 2217 014f 18       		.uleb128 0x18
+ 2218 0150 9142     		.uleb128 0x2111
+ 2219 0152 18       		.uleb128 0x18
+ 2220 0153 00       		.byte	0
+ 2221 0154 00       		.byte	0
+ 2222 0155 1C       		.uleb128 0x1c
+ 2223 0156 2E       		.uleb128 0x2e
+ 2224 0157 01       		.byte	0x1
+ 2225 0158 3F       		.uleb128 0x3f
+ 2226 0159 19       		.uleb128 0x19
+ 2227 015a 03       		.uleb128 0x3
+ 2228 015b 0E       		.uleb128 0xe
+ 2229 015c 3A       		.uleb128 0x3a
+ 2230 015d 0B       		.uleb128 0xb
+ 2231 015e 3B       		.uleb128 0x3b
+ 2232 015f 05       		.uleb128 0x5
+ 2233 0160 27       		.uleb128 0x27
+ 2234 0161 19       		.uleb128 0x19
+ 2235 0162 49       		.uleb128 0x49
+ 2236 0163 13       		.uleb128 0x13
+ 2237 0164 11       		.uleb128 0x11
+ 2238 0165 01       		.uleb128 0x1
+ 2239 0166 12       		.uleb128 0x12
+ 2240 0167 06       		.uleb128 0x6
+ 2241 0168 40       		.uleb128 0x40
+ 2242 0169 18       		.uleb128 0x18
+ 2243 016a 9742     		.uleb128 0x2117
+ 2244 016c 19       		.uleb128 0x19
+ 2245 016d 01       		.uleb128 0x1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 54
+
+
+ 2246 016e 13       		.uleb128 0x13
+ 2247 016f 00       		.byte	0
+ 2248 0170 00       		.byte	0
+ 2249 0171 1D       		.uleb128 0x1d
+ 2250 0172 34       		.uleb128 0x34
+ 2251 0173 00       		.byte	0
+ 2252 0174 03       		.uleb128 0x3
+ 2253 0175 0E       		.uleb128 0xe
+ 2254 0176 3A       		.uleb128 0x3a
+ 2255 0177 0B       		.uleb128 0xb
+ 2256 0178 3B       		.uleb128 0x3b
+ 2257 0179 05       		.uleb128 0x5
+ 2258 017a 49       		.uleb128 0x49
+ 2259 017b 13       		.uleb128 0x13
+ 2260 017c 02       		.uleb128 0x2
+ 2261 017d 18       		.uleb128 0x18
+ 2262 017e 00       		.byte	0
+ 2263 017f 00       		.byte	0
+ 2264 0180 1E       		.uleb128 0x1e
+ 2265 0181 2E       		.uleb128 0x2e
+ 2266 0182 01       		.byte	0x1
+ 2267 0183 3F       		.uleb128 0x3f
+ 2268 0184 19       		.uleb128 0x19
+ 2269 0185 03       		.uleb128 0x3
+ 2270 0186 0E       		.uleb128 0xe
+ 2271 0187 3A       		.uleb128 0x3a
+ 2272 0188 0B       		.uleb128 0xb
+ 2273 0189 3B       		.uleb128 0x3b
+ 2274 018a 05       		.uleb128 0x5
+ 2275 018b 27       		.uleb128 0x27
+ 2276 018c 19       		.uleb128 0x19
+ 2277 018d 11       		.uleb128 0x11
+ 2278 018e 01       		.uleb128 0x1
+ 2279 018f 12       		.uleb128 0x12
+ 2280 0190 06       		.uleb128 0x6
+ 2281 0191 40       		.uleb128 0x40
+ 2282 0192 18       		.uleb128 0x18
+ 2283 0193 9742     		.uleb128 0x2117
+ 2284 0195 19       		.uleb128 0x19
+ 2285 0196 01       		.uleb128 0x1
+ 2286 0197 13       		.uleb128 0x13
+ 2287 0198 00       		.byte	0
+ 2288 0199 00       		.byte	0
+ 2289 019a 1F       		.uleb128 0x1f
+ 2290 019b 05       		.uleb128 0x5
+ 2291 019c 00       		.byte	0
+ 2292 019d 03       		.uleb128 0x3
+ 2293 019e 0E       		.uleb128 0xe
+ 2294 019f 3A       		.uleb128 0x3a
+ 2295 01a0 0B       		.uleb128 0xb
+ 2296 01a1 3B       		.uleb128 0x3b
+ 2297 01a2 05       		.uleb128 0x5
+ 2298 01a3 49       		.uleb128 0x49
+ 2299 01a4 13       		.uleb128 0x13
+ 2300 01a5 02       		.uleb128 0x2
+ 2301 01a6 18       		.uleb128 0x18
+ 2302 01a7 00       		.byte	0
+ARM GAS  e:\temp\ccVGPNYG.s 			page 55
+
+
+ 2303 01a8 00       		.byte	0
+ 2304 01a9 20       		.uleb128 0x20
+ 2305 01aa 898201   		.uleb128 0x4109
+ 2306 01ad 01       		.byte	0x1
+ 2307 01ae 11       		.uleb128 0x11
+ 2308 01af 01       		.uleb128 0x1
+ 2309 01b0 31       		.uleb128 0x31
+ 2310 01b1 13       		.uleb128 0x13
+ 2311 01b2 01       		.uleb128 0x1
+ 2312 01b3 13       		.uleb128 0x13
+ 2313 01b4 00       		.byte	0
+ 2314 01b5 00       		.byte	0
+ 2315 01b6 21       		.uleb128 0x21
+ 2316 01b7 05       		.uleb128 0x5
+ 2317 01b8 00       		.byte	0
+ 2318 01b9 03       		.uleb128 0x3
+ 2319 01ba 08       		.uleb128 0x8
+ 2320 01bb 3A       		.uleb128 0x3a
+ 2321 01bc 0B       		.uleb128 0xb
+ 2322 01bd 3B       		.uleb128 0x3b
+ 2323 01be 05       		.uleb128 0x5
+ 2324 01bf 49       		.uleb128 0x49
+ 2325 01c0 13       		.uleb128 0x13
+ 2326 01c1 02       		.uleb128 0x2
+ 2327 01c2 17       		.uleb128 0x17
+ 2328 01c3 00       		.byte	0
+ 2329 01c4 00       		.byte	0
+ 2330 01c5 22       		.uleb128 0x22
+ 2331 01c6 34       		.uleb128 0x34
+ 2332 01c7 00       		.byte	0
+ 2333 01c8 03       		.uleb128 0x3
+ 2334 01c9 0E       		.uleb128 0xe
+ 2335 01ca 3A       		.uleb128 0x3a
+ 2336 01cb 0B       		.uleb128 0xb
+ 2337 01cc 3B       		.uleb128 0x3b
+ 2338 01cd 0B       		.uleb128 0xb
+ 2339 01ce 49       		.uleb128 0x49
+ 2340 01cf 13       		.uleb128 0x13
+ 2341 01d0 02       		.uleb128 0x2
+ 2342 01d1 18       		.uleb128 0x18
+ 2343 01d2 00       		.byte	0
+ 2344 01d3 00       		.byte	0
+ 2345 01d4 23       		.uleb128 0x23
+ 2346 01d5 2E       		.uleb128 0x2e
+ 2347 01d6 00       		.byte	0
+ 2348 01d7 3F       		.uleb128 0x3f
+ 2349 01d8 19       		.uleb128 0x19
+ 2350 01d9 3C       		.uleb128 0x3c
+ 2351 01da 19       		.uleb128 0x19
+ 2352 01db 6E       		.uleb128 0x6e
+ 2353 01dc 0E       		.uleb128 0xe
+ 2354 01dd 03       		.uleb128 0x3
+ 2355 01de 0E       		.uleb128 0xe
+ 2356 01df 00       		.byte	0
+ 2357 01e0 00       		.byte	0
+ 2358 01e1 24       		.uleb128 0x24
+ 2359 01e2 2E       		.uleb128 0x2e
+ARM GAS  e:\temp\ccVGPNYG.s 			page 56
+
+
+ 2360 01e3 00       		.byte	0
+ 2361 01e4 3F       		.uleb128 0x3f
+ 2362 01e5 19       		.uleb128 0x19
+ 2363 01e6 3C       		.uleb128 0x3c
+ 2364 01e7 19       		.uleb128 0x19
+ 2365 01e8 6E       		.uleb128 0x6e
+ 2366 01e9 0E       		.uleb128 0xe
+ 2367 01ea 03       		.uleb128 0x3
+ 2368 01eb 0E       		.uleb128 0xe
+ 2369 01ec 3A       		.uleb128 0x3a
+ 2370 01ed 0B       		.uleb128 0xb
+ 2371 01ee 3B       		.uleb128 0x3b
+ 2372 01ef 05       		.uleb128 0x5
+ 2373 01f0 00       		.byte	0
+ 2374 01f1 00       		.byte	0
+ 2375 01f2 00       		.byte	0
+ 2376              		.section	.debug_loc,"",%progbits
+ 2377              	.Ldebug_loc0:
+ 2378              	.LLST0:
+ 2379 0000 00000000 		.4byte	.LVL0
+ 2380 0004 3C000000 		.4byte	.LVL2
+ 2381 0008 0100     		.2byte	0x1
+ 2382 000a 50       		.byte	0x50
+ 2383 000b 3C000000 		.4byte	.LVL2
+ 2384 000f 62000000 		.4byte	.LVL3
+ 2385 0013 0400     		.2byte	0x4
+ 2386 0015 F3       		.byte	0xf3
+ 2387 0016 01       		.uleb128 0x1
+ 2388 0017 50       		.byte	0x50
+ 2389 0018 9F       		.byte	0x9f
+ 2390 0019 62000000 		.4byte	.LVL3
+ 2391 001d 64000000 		.4byte	.LVL4
+ 2392 0021 0100     		.2byte	0x1
+ 2393 0023 50       		.byte	0x50
+ 2394 0024 64000000 		.4byte	.LVL4
+ 2395 0028 8C000000 		.4byte	.LFE32
+ 2396 002c 0400     		.2byte	0x4
+ 2397 002e F3       		.byte	0xf3
+ 2398 002f 01       		.uleb128 0x1
+ 2399 0030 50       		.byte	0x50
+ 2400 0031 9F       		.byte	0x9f
+ 2401 0032 00000000 		.4byte	0
+ 2402 0036 00000000 		.4byte	0
+ 2403              	.LLST1:
+ 2404 003a 00000000 		.4byte	.LVL0
+ 2405 003e 6E000000 		.4byte	.LVL6
+ 2406 0042 0100     		.2byte	0x1
+ 2407 0044 51       		.byte	0x51
+ 2408 0045 6E000000 		.4byte	.LVL6
+ 2409 0049 72000000 		.4byte	.LVL7
+ 2410 004d 0300     		.2byte	0x3
+ 2411 004f 74       		.byte	0x74
+ 2412 0050 08       		.sleb128 8
+ 2413 0051 9F       		.byte	0x9f
+ 2414 0052 72000000 		.4byte	.LVL7
+ 2415 0056 8C000000 		.4byte	.LFE32
+ 2416 005a 0400     		.2byte	0x4
+ARM GAS  e:\temp\ccVGPNYG.s 			page 57
+
+
+ 2417 005c F3       		.byte	0xf3
+ 2418 005d 01       		.uleb128 0x1
+ 2419 005e 51       		.byte	0x51
+ 2420 005f 9F       		.byte	0x9f
+ 2421 0060 00000000 		.4byte	0
+ 2422 0064 00000000 		.4byte	0
+ 2423              	.LLST2:
+ 2424 0068 06000000 		.4byte	.LVL1
+ 2425 006c 72000000 		.4byte	.LVL7
+ 2426 0070 0100     		.2byte	0x1
+ 2427 0072 54       		.byte	0x54
+ 2428 0073 72000000 		.4byte	.LVL7
+ 2429 0077 8C000000 		.4byte	.LFE32
+ 2430 007b 0600     		.2byte	0x6
+ 2431 007d F3       		.byte	0xf3
+ 2432 007e 01       		.uleb128 0x1
+ 2433 007f 51       		.byte	0x51
+ 2434 0080 38       		.byte	0x38
+ 2435 0081 1C       		.byte	0x1c
+ 2436 0082 9F       		.byte	0x9f
+ 2437 0083 00000000 		.4byte	0
+ 2438 0087 00000000 		.4byte	0
+ 2439              	.LLST3:
+ 2440 008b 06000000 		.4byte	.LVL1
+ 2441 008f 68000000 		.4byte	.LVL5
+ 2442 0093 0200     		.2byte	0x2
+ 2443 0095 30       		.byte	0x30
+ 2444 0096 9F       		.byte	0x9f
+ 2445 0097 68000000 		.4byte	.LVL5
+ 2446 009b 8C000000 		.4byte	.LFE32
+ 2447 009f 0100     		.2byte	0x1
+ 2448 00a1 50       		.byte	0x50
+ 2449 00a2 00000000 		.4byte	0
+ 2450 00a6 00000000 		.4byte	0
+ 2451              	.LLST4:
+ 2452 00aa 00000000 		.4byte	.LVL8
+ 2453 00ae 0D000000 		.4byte	.LVL10-1
+ 2454 00b2 0100     		.2byte	0x1
+ 2455 00b4 50       		.byte	0x50
+ 2456 00b5 0D000000 		.4byte	.LVL10-1
+ 2457 00b9 10000000 		.4byte	.LVL11
+ 2458 00bd 0400     		.2byte	0x4
+ 2459 00bf F3       		.byte	0xf3
+ 2460 00c0 01       		.uleb128 0x1
+ 2461 00c1 50       		.byte	0x50
+ 2462 00c2 9F       		.byte	0x9f
+ 2463 00c3 10000000 		.4byte	.LVL11
+ 2464 00c7 12000000 		.4byte	.LVL12
+ 2465 00cb 0100     		.2byte	0x1
+ 2466 00cd 50       		.byte	0x50
+ 2467 00ce 12000000 		.4byte	.LVL12
+ 2468 00d2 20000000 		.4byte	.LFE37
+ 2469 00d6 0400     		.2byte	0x4
+ 2470 00d8 F3       		.byte	0xf3
+ 2471 00d9 01       		.uleb128 0x1
+ 2472 00da 50       		.byte	0x50
+ 2473 00db 9F       		.byte	0x9f
+ARM GAS  e:\temp\ccVGPNYG.s 			page 58
+
+
+ 2474 00dc 00000000 		.4byte	0
+ 2475 00e0 00000000 		.4byte	0
+ 2476              	.LLST5:
+ 2477 00e4 00000000 		.4byte	.LVL8
+ 2478 00e8 0D000000 		.4byte	.LVL10-1
+ 2479 00ec 0100     		.2byte	0x1
+ 2480 00ee 51       		.byte	0x51
+ 2481 00ef 0D000000 		.4byte	.LVL10-1
+ 2482 00f3 10000000 		.4byte	.LVL11
+ 2483 00f7 0400     		.2byte	0x4
+ 2484 00f9 F3       		.byte	0xf3
+ 2485 00fa 01       		.uleb128 0x1
+ 2486 00fb 51       		.byte	0x51
+ 2487 00fc 9F       		.byte	0x9f
+ 2488 00fd 10000000 		.4byte	.LVL11
+ 2489 0101 12000000 		.4byte	.LVL12
+ 2490 0105 0100     		.2byte	0x1
+ 2491 0107 51       		.byte	0x51
+ 2492 0108 12000000 		.4byte	.LVL12
+ 2493 010c 20000000 		.4byte	.LFE37
+ 2494 0110 0400     		.2byte	0x4
+ 2495 0112 F3       		.byte	0xf3
+ 2496 0113 01       		.uleb128 0x1
+ 2497 0114 51       		.byte	0x51
+ 2498 0115 9F       		.byte	0x9f
+ 2499 0116 00000000 		.4byte	0
+ 2500 011a 00000000 		.4byte	0
+ 2501              	.LLST6:
+ 2502 011e 02000000 		.4byte	.LVL9
+ 2503 0122 0E000000 		.4byte	.LVL10
+ 2504 0126 0200     		.2byte	0x2
+ 2505 0128 30       		.byte	0x30
+ 2506 0129 9F       		.byte	0x9f
+ 2507 012a 0E000000 		.4byte	.LVL10
+ 2508 012e 10000000 		.4byte	.LVL11
+ 2509 0132 0100     		.2byte	0x1
+ 2510 0134 50       		.byte	0x50
+ 2511 0135 10000000 		.4byte	.LVL11
+ 2512 0139 12000000 		.4byte	.LVL12
+ 2513 013d 0200     		.2byte	0x2
+ 2514 013f 30       		.byte	0x30
+ 2515 0140 9F       		.byte	0x9f
+ 2516 0141 12000000 		.4byte	.LVL12
+ 2517 0145 20000000 		.4byte	.LFE37
+ 2518 0149 0100     		.2byte	0x1
+ 2519 014b 50       		.byte	0x50
+ 2520 014c 00000000 		.4byte	0
+ 2521 0150 00000000 		.4byte	0
+ 2522              	.LLST7:
+ 2523 0154 00000000 		.4byte	.LVL14
+ 2524 0158 08000000 		.4byte	.LVL16
+ 2525 015c 0100     		.2byte	0x1
+ 2526 015e 50       		.byte	0x50
+ 2527 015f 08000000 		.4byte	.LVL16
+ 2528 0163 44000000 		.4byte	.LVL18
+ 2529 0167 0100     		.2byte	0x1
+ 2530 0169 54       		.byte	0x54
+ARM GAS  e:\temp\ccVGPNYG.s 			page 59
+
+
+ 2531 016a 44000000 		.4byte	.LVL18
+ 2532 016e 6C000000 		.4byte	.LVL19
+ 2533 0172 0400     		.2byte	0x4
+ 2534 0174 F3       		.byte	0xf3
+ 2535 0175 01       		.uleb128 0x1
+ 2536 0176 50       		.byte	0x50
+ 2537 0177 9F       		.byte	0x9f
+ 2538 0178 6C000000 		.4byte	.LVL19
+ 2539 017c 70000000 		.4byte	.LVL20
+ 2540 0180 0100     		.2byte	0x1
+ 2541 0182 54       		.byte	0x54
+ 2542 0183 70000000 		.4byte	.LVL20
+ 2543 0187 98000000 		.4byte	.LFE33
+ 2544 018b 0400     		.2byte	0x4
+ 2545 018d F3       		.byte	0xf3
+ 2546 018e 01       		.uleb128 0x1
+ 2547 018f 50       		.byte	0x50
+ 2548 0190 9F       		.byte	0x9f
+ 2549 0191 00000000 		.4byte	0
+ 2550 0195 00000000 		.4byte	0
+ 2551              	.LLST8:
+ 2552 0199 00000000 		.4byte	.LVL14
+ 2553 019d 1B000000 		.4byte	.LVL17-1
+ 2554 01a1 0100     		.2byte	0x1
+ 2555 01a3 51       		.byte	0x51
+ 2556 01a4 1B000000 		.4byte	.LVL17-1
+ 2557 01a8 98000000 		.4byte	.LFE33
+ 2558 01ac 0400     		.2byte	0x4
+ 2559 01ae F3       		.byte	0xf3
+ 2560 01af 01       		.uleb128 0x1
+ 2561 01b0 51       		.byte	0x51
+ 2562 01b1 9F       		.byte	0x9f
+ 2563 01b2 00000000 		.4byte	0
+ 2564 01b6 00000000 		.4byte	0
+ 2565              	.LLST9:
+ 2566 01ba 06000000 		.4byte	.LVL15
+ 2567 01be 72000000 		.4byte	.LVL21
+ 2568 01c2 0200     		.2byte	0x2
+ 2569 01c4 30       		.byte	0x30
+ 2570 01c5 9F       		.byte	0x9f
+ 2571 01c6 72000000 		.4byte	.LVL21
+ 2572 01ca 98000000 		.4byte	.LFE33
+ 2573 01ce 0100     		.2byte	0x1
+ 2574 01d0 50       		.byte	0x50
+ 2575 01d1 00000000 		.4byte	0
+ 2576 01d5 00000000 		.4byte	0
+ 2577              	.LLST10:
+ 2578 01d9 00000000 		.4byte	.LVL22
+ 2579 01dd 0A000000 		.4byte	.LVL23
+ 2580 01e1 0100     		.2byte	0x1
+ 2581 01e3 51       		.byte	0x51
+ 2582 01e4 0A000000 		.4byte	.LVL23
+ 2583 01e8 10000000 		.4byte	.LVL24
+ 2584 01ec 0400     		.2byte	0x4
+ 2585 01ee F3       		.byte	0xf3
+ 2586 01ef 01       		.uleb128 0x1
+ 2587 01f0 51       		.byte	0x51
+ARM GAS  e:\temp\ccVGPNYG.s 			page 60
+
+
+ 2588 01f1 9F       		.byte	0x9f
+ 2589 01f2 10000000 		.4byte	.LVL24
+ 2590 01f6 18000000 		.4byte	.LVL26
+ 2591 01fa 0100     		.2byte	0x1
+ 2592 01fc 51       		.byte	0x51
+ 2593 01fd 18000000 		.4byte	.LVL26
+ 2594 0201 20000000 		.4byte	.LFE34
+ 2595 0205 0400     		.2byte	0x4
+ 2596 0207 F3       		.byte	0xf3
+ 2597 0208 01       		.uleb128 0x1
+ 2598 0209 51       		.byte	0x51
+ 2599 020a 9F       		.byte	0x9f
+ 2600 020b 00000000 		.4byte	0
+ 2601 020f 00000000 		.4byte	0
+ 2602              	.LLST11:
+ 2603 0213 00000000 		.4byte	.LVL22
+ 2604 0217 14000000 		.4byte	.LVL25
+ 2605 021b 0100     		.2byte	0x1
+ 2606 021d 52       		.byte	0x52
+ 2607 021e 14000000 		.4byte	.LVL25
+ 2608 0222 20000000 		.4byte	.LFE34
+ 2609 0226 0400     		.2byte	0x4
+ 2610 0228 F3       		.byte	0xf3
+ 2611 0229 01       		.uleb128 0x1
+ 2612 022a 52       		.byte	0x52
+ 2613 022b 9F       		.byte	0x9f
+ 2614 022c 00000000 		.4byte	0
+ 2615 0230 00000000 		.4byte	0
+ 2616              	.LLST12:
+ 2617 0234 00000000 		.4byte	.LVL27
+ 2618 0238 06000000 		.4byte	.LVL28
+ 2619 023c 0100     		.2byte	0x1
+ 2620 023e 50       		.byte	0x50
+ 2621 023f 06000000 		.4byte	.LVL28
+ 2622 0243 14000000 		.4byte	.LFE35
+ 2623 0247 0400     		.2byte	0x4
+ 2624 0249 F3       		.byte	0xf3
+ 2625 024a 01       		.uleb128 0x1
+ 2626 024b 50       		.byte	0x50
+ 2627 024c 9F       		.byte	0x9f
+ 2628 024d 00000000 		.4byte	0
+ 2629 0251 00000000 		.4byte	0
+ 2630              	.LLST13:
+ 2631 0255 00000000 		.4byte	.LVL30
+ 2632 0259 0E000000 		.4byte	.LVL31
+ 2633 025d 0100     		.2byte	0x1
+ 2634 025f 50       		.byte	0x50
+ 2635 0260 0E000000 		.4byte	.LVL31
+ 2636 0264 1E000000 		.4byte	.LFE38
+ 2637 0268 0400     		.2byte	0x4
+ 2638 026a F3       		.byte	0xf3
+ 2639 026b 01       		.uleb128 0x1
+ 2640 026c 50       		.byte	0x50
+ 2641 026d 9F       		.byte	0x9f
+ 2642 026e 00000000 		.4byte	0
+ 2643 0272 00000000 		.4byte	0
+ 2644              	.LLST14:
+ARM GAS  e:\temp\ccVGPNYG.s 			page 61
+
+
+ 2645 0276 00000000 		.4byte	.LVL34
+ 2646 027a 34000000 		.4byte	.LVL37
+ 2647 027e 0100     		.2byte	0x1
+ 2648 0280 50       		.byte	0x50
+ 2649 0281 34000000 		.4byte	.LVL37
+ 2650 0285 60000000 		.4byte	.LVL45
+ 2651 0289 0400     		.2byte	0x4
+ 2652 028b F3       		.byte	0xf3
+ 2653 028c 01       		.uleb128 0x1
+ 2654 028d 50       		.byte	0x50
+ 2655 028e 9F       		.byte	0x9f
+ 2656 028f 60000000 		.4byte	.LVL45
+ 2657 0293 62000000 		.4byte	.LVL46
+ 2658 0297 0100     		.2byte	0x1
+ 2659 0299 50       		.byte	0x50
+ 2660 029a 62000000 		.4byte	.LVL46
+ 2661 029e 64000000 		.4byte	.LVL47
+ 2662 02a2 0400     		.2byte	0x4
+ 2663 02a4 F3       		.byte	0xf3
+ 2664 02a5 01       		.uleb128 0x1
+ 2665 02a6 50       		.byte	0x50
+ 2666 02a7 9F       		.byte	0x9f
+ 2667 02a8 64000000 		.4byte	.LVL47
+ 2668 02ac 66000000 		.4byte	.LVL48
+ 2669 02b0 0100     		.2byte	0x1
+ 2670 02b2 50       		.byte	0x50
+ 2671 02b3 66000000 		.4byte	.LVL48
+ 2672 02b7 68000000 		.4byte	.LVL49
+ 2673 02bb 0400     		.2byte	0x4
+ 2674 02bd F3       		.byte	0xf3
+ 2675 02be 01       		.uleb128 0x1
+ 2676 02bf 50       		.byte	0x50
+ 2677 02c0 9F       		.byte	0x9f
+ 2678 02c1 68000000 		.4byte	.LVL49
+ 2679 02c5 6A000000 		.4byte	.LVL50
+ 2680 02c9 0100     		.2byte	0x1
+ 2681 02cb 50       		.byte	0x50
+ 2682 02cc 6A000000 		.4byte	.LVL50
+ 2683 02d0 6C000000 		.4byte	.LVL51
+ 2684 02d4 0400     		.2byte	0x4
+ 2685 02d6 F3       		.byte	0xf3
+ 2686 02d7 01       		.uleb128 0x1
+ 2687 02d8 50       		.byte	0x50
+ 2688 02d9 9F       		.byte	0x9f
+ 2689 02da 6C000000 		.4byte	.LVL51
+ 2690 02de 6E000000 		.4byte	.LVL52
+ 2691 02e2 0100     		.2byte	0x1
+ 2692 02e4 50       		.byte	0x50
+ 2693 02e5 6E000000 		.4byte	.LVL52
+ 2694 02e9 70000000 		.4byte	.LVL53
+ 2695 02ed 0400     		.2byte	0x4
+ 2696 02ef F3       		.byte	0xf3
+ 2697 02f0 01       		.uleb128 0x1
+ 2698 02f1 50       		.byte	0x50
+ 2699 02f2 9F       		.byte	0x9f
+ 2700 02f3 70000000 		.4byte	.LVL53
+ 2701 02f7 72000000 		.4byte	.LVL54
+ARM GAS  e:\temp\ccVGPNYG.s 			page 62
+
+
+ 2702 02fb 0100     		.2byte	0x1
+ 2703 02fd 50       		.byte	0x50
+ 2704 02fe 72000000 		.4byte	.LVL54
+ 2705 0302 80000000 		.4byte	.LFE39
+ 2706 0306 0400     		.2byte	0x4
+ 2707 0308 F3       		.byte	0xf3
+ 2708 0309 01       		.uleb128 0x1
+ 2709 030a 50       		.byte	0x50
+ 2710 030b 9F       		.byte	0x9f
+ 2711 030c 00000000 		.4byte	0
+ 2712 0310 00000000 		.4byte	0
+ 2713              	.LLST15:
+ 2714 0314 00000000 		.4byte	.LVL34
+ 2715 0318 37000000 		.4byte	.LVL38-1
+ 2716 031c 0100     		.2byte	0x1
+ 2717 031e 51       		.byte	0x51
+ 2718 031f 37000000 		.4byte	.LVL38-1
+ 2719 0323 60000000 		.4byte	.LVL45
+ 2720 0327 0100     		.2byte	0x1
+ 2721 0329 55       		.byte	0x55
+ 2722 032a 60000000 		.4byte	.LVL45
+ 2723 032e 72000000 		.4byte	.LVL54
+ 2724 0332 0100     		.2byte	0x1
+ 2725 0334 51       		.byte	0x51
+ 2726 0335 72000000 		.4byte	.LVL54
+ 2727 0339 72000000 		.4byte	.LVL55
+ 2728 033d 0100     		.2byte	0x1
+ 2729 033f 55       		.byte	0x55
+ 2730 0340 72000000 		.4byte	.LVL55
+ 2731 0344 80000000 		.4byte	.LFE39
+ 2732 0348 0400     		.2byte	0x4
+ 2733 034a F3       		.byte	0xf3
+ 2734 034b 01       		.uleb128 0x1
+ 2735 034c 51       		.byte	0x51
+ 2736 034d 9F       		.byte	0x9f
+ 2737 034e 00000000 		.4byte	0
+ 2738 0352 00000000 		.4byte	0
+ 2739              	.LLST16:
+ 2740 0356 00000000 		.4byte	.LVL34
+ 2741 035a 37000000 		.4byte	.LVL38-1
+ 2742 035e 0100     		.2byte	0x1
+ 2743 0360 52       		.byte	0x52
+ 2744 0361 37000000 		.4byte	.LVL38-1
+ 2745 0365 60000000 		.4byte	.LVL45
+ 2746 0369 0400     		.2byte	0x4
+ 2747 036b F3       		.byte	0xf3
+ 2748 036c 01       		.uleb128 0x1
+ 2749 036d 52       		.byte	0x52
+ 2750 036e 9F       		.byte	0x9f
+ 2751 036f 60000000 		.4byte	.LVL45
+ 2752 0373 72000000 		.4byte	.LVL54
+ 2753 0377 0100     		.2byte	0x1
+ 2754 0379 52       		.byte	0x52
+ 2755 037a 72000000 		.4byte	.LVL54
+ 2756 037e 80000000 		.4byte	.LFE39
+ 2757 0382 0400     		.2byte	0x4
+ 2758 0384 F3       		.byte	0xf3
+ARM GAS  e:\temp\ccVGPNYG.s 			page 63
+
+
+ 2759 0385 01       		.uleb128 0x1
+ 2760 0386 52       		.byte	0x52
+ 2761 0387 9F       		.byte	0x9f
+ 2762 0388 00000000 		.4byte	0
+ 2763 038c 00000000 		.4byte	0
+ 2764              	.LLST17:
+ 2765 0390 06000000 		.4byte	.LVL35
+ 2766 0394 5E000000 		.4byte	.LVL44
+ 2767 0398 0300     		.2byte	0x3
+ 2768 039a 09       		.byte	0x9
+ 2769 039b FE       		.byte	0xfe
+ 2770 039c 9F       		.byte	0x9f
+ 2771 039d 5E000000 		.4byte	.LVL44
+ 2772 03a1 60000000 		.4byte	.LVL45
+ 2773 03a5 0100     		.2byte	0x1
+ 2774 03a7 50       		.byte	0x50
+ 2775 03a8 60000000 		.4byte	.LVL45
+ 2776 03ac 72000000 		.4byte	.LVL54
+ 2777 03b0 0300     		.2byte	0x3
+ 2778 03b2 09       		.byte	0x9
+ 2779 03b3 FE       		.byte	0xfe
+ 2780 03b4 9F       		.byte	0x9f
+ 2781 03b5 00000000 		.4byte	0
+ 2782 03b9 00000000 		.4byte	0
+ 2783              	.LLST18:
+ 2784 03bd 3A000000 		.4byte	.LVL39
+ 2785 03c1 40000000 		.4byte	.LVL40
+ 2786 03c5 0100     		.2byte	0x1
+ 2787 03c7 50       		.byte	0x50
+ 2788 03c8 50000000 		.4byte	.LVL42
+ 2789 03cc 56000000 		.4byte	.LVL43
+ 2790 03d0 0100     		.2byte	0x1
+ 2791 03d2 50       		.byte	0x50
+ 2792 03d3 00000000 		.4byte	0
+ 2793 03d7 00000000 		.4byte	0
+ 2794              	.LLST19:
+ 2795 03db 30000000 		.4byte	.LVL36
+ 2796 03df 60000000 		.4byte	.LVL45
+ 2797 03e3 0300     		.2byte	0x3
+ 2798 03e5 08       		.byte	0x8
+ 2799 03e6 DC       		.byte	0xdc
+ 2800 03e7 9F       		.byte	0x9f
+ 2801 03e8 00000000 		.4byte	0
+ 2802 03ec 00000000 		.4byte	0
+ 2803              	.LLST20:
+ 2804 03f0 00000000 		.4byte	.LVL56
+ 2805 03f4 26000000 		.4byte	.LVL58
+ 2806 03f8 0100     		.2byte	0x1
+ 2807 03fa 50       		.byte	0x50
+ 2808 03fb 26000000 		.4byte	.LVL58
+ 2809 03ff 2E000000 		.4byte	.LVL60
+ 2810 0403 0400     		.2byte	0x4
+ 2811 0405 F3       		.byte	0xf3
+ 2812 0406 01       		.uleb128 0x1
+ 2813 0407 50       		.byte	0x50
+ 2814 0408 9F       		.byte	0x9f
+ 2815 0409 2E000000 		.4byte	.LVL60
+ARM GAS  e:\temp\ccVGPNYG.s 			page 64
+
+
+ 2816 040d 30000000 		.4byte	.LVL61
+ 2817 0411 0100     		.2byte	0x1
+ 2818 0413 50       		.byte	0x50
+ 2819 0414 30000000 		.4byte	.LVL61
+ 2820 0418 32000000 		.4byte	.LVL62
+ 2821 041c 0400     		.2byte	0x4
+ 2822 041e F3       		.byte	0xf3
+ 2823 041f 01       		.uleb128 0x1
+ 2824 0420 50       		.byte	0x50
+ 2825 0421 9F       		.byte	0x9f
+ 2826 0422 32000000 		.4byte	.LVL62
+ 2827 0426 34000000 		.4byte	.LVL63
+ 2828 042a 0100     		.2byte	0x1
+ 2829 042c 50       		.byte	0x50
+ 2830 042d 34000000 		.4byte	.LVL63
+ 2831 0431 36000000 		.4byte	.LVL64
+ 2832 0435 0400     		.2byte	0x4
+ 2833 0437 F3       		.byte	0xf3
+ 2834 0438 01       		.uleb128 0x1
+ 2835 0439 50       		.byte	0x50
+ 2836 043a 9F       		.byte	0x9f
+ 2837 043b 36000000 		.4byte	.LVL64
+ 2838 043f 38000000 		.4byte	.LVL65
+ 2839 0443 0100     		.2byte	0x1
+ 2840 0445 50       		.byte	0x50
+ 2841 0446 38000000 		.4byte	.LVL65
+ 2842 044a 3A000000 		.4byte	.LVL66
+ 2843 044e 0400     		.2byte	0x4
+ 2844 0450 F3       		.byte	0xf3
+ 2845 0451 01       		.uleb128 0x1
+ 2846 0452 50       		.byte	0x50
+ 2847 0453 9F       		.byte	0x9f
+ 2848 0454 3A000000 		.4byte	.LVL66
+ 2849 0458 3C000000 		.4byte	.LVL67
+ 2850 045c 0100     		.2byte	0x1
+ 2851 045e 50       		.byte	0x50
+ 2852 045f 3C000000 		.4byte	.LVL67
+ 2853 0463 4C000000 		.4byte	.LFE40
+ 2854 0467 0400     		.2byte	0x4
+ 2855 0469 F3       		.byte	0xf3
+ 2856 046a 01       		.uleb128 0x1
+ 2857 046b 50       		.byte	0x50
+ 2858 046c 9F       		.byte	0x9f
+ 2859 046d 00000000 		.4byte	0
+ 2860 0471 00000000 		.4byte	0
+ 2861              	.LLST21:
+ 2862 0475 00000000 		.4byte	.LVL56
+ 2863 0479 20000000 		.4byte	.LVL57
+ 2864 047d 0100     		.2byte	0x1
+ 2865 047f 51       		.byte	0x51
+ 2866 0480 20000000 		.4byte	.LVL57
+ 2867 0484 2E000000 		.4byte	.LVL60
+ 2868 0488 0100     		.2byte	0x1
+ 2869 048a 54       		.byte	0x54
+ 2870 048b 2E000000 		.4byte	.LVL60
+ 2871 048f 3C000000 		.4byte	.LVL67
+ 2872 0493 0100     		.2byte	0x1
+ARM GAS  e:\temp\ccVGPNYG.s 			page 65
+
+
+ 2873 0495 51       		.byte	0x51
+ 2874 0496 3C000000 		.4byte	.LVL67
+ 2875 049a 3C000000 		.4byte	.LVL68
+ 2876 049e 0100     		.2byte	0x1
+ 2877 04a0 54       		.byte	0x54
+ 2878 04a1 3C000000 		.4byte	.LVL68
+ 2879 04a5 4C000000 		.4byte	.LFE40
+ 2880 04a9 0400     		.2byte	0x4
+ 2881 04ab F3       		.byte	0xf3
+ 2882 04ac 01       		.uleb128 0x1
+ 2883 04ad 51       		.byte	0x51
+ 2884 04ae 9F       		.byte	0x9f
+ 2885 04af 00000000 		.4byte	0
+ 2886 04b3 00000000 		.4byte	0
+ 2887              		.section	.debug_aranges,"",%progbits
+ 2888 0000 5C000000 		.4byte	0x5c
+ 2889 0004 0200     		.2byte	0x2
+ 2890 0006 00000000 		.4byte	.Ldebug_info0
+ 2891 000a 04       		.byte	0x4
+ 2892 000b 00       		.byte	0
+ 2893 000c 0000     		.2byte	0
+ 2894 000e 0000     		.2byte	0
+ 2895 0010 00000000 		.4byte	.LFB32
+ 2896 0014 8C000000 		.4byte	.LFE32-.LFB32
+ 2897 0018 00000000 		.4byte	.LFB37
+ 2898 001c 20000000 		.4byte	.LFE37-.LFB37
+ 2899 0020 00000000 		.4byte	.LFB33
+ 2900 0024 98000000 		.4byte	.LFE33-.LFB33
+ 2901 0028 00000000 		.4byte	.LFB34
+ 2902 002c 20000000 		.4byte	.LFE34-.LFB34
+ 2903 0030 00000000 		.4byte	.LFB35
+ 2904 0034 14000000 		.4byte	.LFE35-.LFB35
+ 2905 0038 00000000 		.4byte	.LFB36
+ 2906 003c 14000000 		.4byte	.LFE36-.LFB36
+ 2907 0040 00000000 		.4byte	.LFB38
+ 2908 0044 1E000000 		.4byte	.LFE38-.LFB38
+ 2909 0048 00000000 		.4byte	.LFB39
+ 2910 004c 80000000 		.4byte	.LFE39-.LFB39
+ 2911 0050 00000000 		.4byte	.LFB40
+ 2912 0054 4C000000 		.4byte	.LFE40-.LFB40
+ 2913 0058 00000000 		.4byte	0
+ 2914 005c 00000000 		.4byte	0
+ 2915              		.section	.debug_ranges,"",%progbits
+ 2916              	.Ldebug_ranges0:
+ 2917 0000 00000000 		.4byte	.LFB32
+ 2918 0004 8C000000 		.4byte	.LFE32
+ 2919 0008 00000000 		.4byte	.LFB37
+ 2920 000c 20000000 		.4byte	.LFE37
+ 2921 0010 00000000 		.4byte	.LFB33
+ 2922 0014 98000000 		.4byte	.LFE33
+ 2923 0018 00000000 		.4byte	.LFB34
+ 2924 001c 20000000 		.4byte	.LFE34
+ 2925 0020 00000000 		.4byte	.LFB35
+ 2926 0024 14000000 		.4byte	.LFE35
+ 2927 0028 00000000 		.4byte	.LFB36
+ 2928 002c 14000000 		.4byte	.LFE36
+ 2929 0030 00000000 		.4byte	.LFB38
+ARM GAS  e:\temp\ccVGPNYG.s 			page 66
+
+
+ 2930 0034 1E000000 		.4byte	.LFE38
+ 2931 0038 00000000 		.4byte	.LFB39
+ 2932 003c 80000000 		.4byte	.LFE39
+ 2933 0040 00000000 		.4byte	.LFB40
+ 2934 0044 4C000000 		.4byte	.LFE40
+ 2935 0048 00000000 		.4byte	0
+ 2936 004c 00000000 		.4byte	0
+ 2937              		.section	.debug_line,"",%progbits
+ 2938              	.Ldebug_line0:
+ 2939 0000 60020000 		.section	.debug_str,"MS",%progbits,1
+ 2939      02003D01 
+ 2939      00000201 
+ 2939      FB0E0D00 
+ 2939      01010101 
+ 2940              	.LASF104:
+ 2941 0000 464C4153 		.ascii	"FLASH_WRITE_COMPLETE\000"
+ 2941      485F5752 
+ 2941      4954455F 
+ 2941      434F4D50 
+ 2941      4C455445 
+ 2942              	.LASF108:
+ 2943 0015 666C6173 		.ascii	"flash_write_status_t\000"
+ 2943      685F7772 
+ 2943      6974655F 
+ 2943      73746174 
+ 2943      75735F74 
+ 2944              	.LASF52:
+ 2945 002a 636C6B5F 		.ascii	"clk_select\000"
+ 2945      73656C65 
+ 2945      637400
+ 2946              	.LASF111:
+ 2947 0035 64617461 		.ascii	"data_p\000"
+ 2947      5F7000
+ 2948              	.LASF38:
+ 2949 003c 5359535F 		.ascii	"SYS_FW_MODE_BOOTLOADER\000"
+ 2949      46575F4D 
+ 2949      4F44455F 
+ 2949      424F4F54 
+ 2949      4C4F4144 
+ 2950              	.LASF3:
+ 2951 0053 5F5F7569 		.ascii	"__uint8_t\000"
+ 2951      6E74385F 
+ 2951      7400
+ 2952              	.LASF76:
+ 2953 005d 73797361 		.ascii	"sysarg\000"
+ 2953      726700
+ 2954              	.LASF98:
+ 2955 0064 50435055 		.ascii	"PCPUSS_REGS_T\000"
+ 2955      53535F52 
+ 2955      4547535F 
+ 2955      5400
+ 2956              	.LASF10:
+ 2957 0072 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2957      206C6F6E 
+ 2957      6720756E 
+ 2957      7369676E 
+ 2957      65642069 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 67
+
+
+ 2958              	.LASF71:
+ 2959 0089 7077725F 		.ascii	"pwr_pwrsys_trim1\000"
+ 2959      70777273 
+ 2959      79735F74 
+ 2959      72696D31 
+ 2959      00
+ 2960              	.LASF114:
+ 2961 009a 666C6173 		.ascii	"flash_trig_row_write_in_place\000"
+ 2961      685F7472 
+ 2961      69675F72 
+ 2961      6F775F77 
+ 2961      72697465 
+ 2962              	.LASF51:
+ 2963 00b8 7473745F 		.ascii	"tst_adft_ctrl\000"
+ 2963      61646674 
+ 2963      5F637472 
+ 2963      6C00
+ 2964              	.LASF31:
+ 2965 00c6 4343475F 		.ascii	"CCG_STAT_CMD_FAILURE\000"
+ 2965      53544154 
+ 2965      5F434D44 
+ 2965      5F464149 
+ 2965      4C555245 
+ 2966              	.LASF92:
+ 2967 00db 62697374 		.ascii	"bist_data_act\000"
+ 2967      5F646174 
+ 2967      615F6163 
+ 2967      7400
+ 2968              	.LASF102:
+ 2969 00e9 464C4153 		.ascii	"FLASH_IF_IECS_UART\000"
+ 2969      485F4946 
+ 2969      5F494543 
+ 2969      535F5541 
+ 2969      525400
+ 2970              	.LASF117:
+ 2971 00fc 73746174 		.ascii	"stat\000"
+ 2971      00
+ 2972              	.LASF123:
+ 2973 0101 666C6173 		.ascii	"flash_access_get_status\000"
+ 2973      685F6163 
+ 2973      63657373 
+ 2973      5F676574 
+ 2973      5F737461 
+ 2974              	.LASF93:
+ 2975 0119 62697374 		.ascii	"bist_data_exp\000"
+ 2975      5F646174 
+ 2975      615F6578 
+ 2975      7000
+ 2976              	.LASF0:
+ 2977 0127 7369676E 		.ascii	"signed char\000"
+ 2977      65642063 
+ 2977      68617200 
+ 2978              	.LASF49:
+ 2979 0133 7473745F 		.ascii	"tst_trim_cntr1\000"
+ 2979      7472696D 
+ 2979      5F636E74 
+ 2979      723100
+ARM GAS  e:\temp\ccVGPNYG.s 			page 68
+
+
+ 2980              	.LASF50:
+ 2981 0142 7473745F 		.ascii	"tst_trim_cntr2\000"
+ 2981      7472696D 
+ 2981      5F636E74 
+ 2981      723200
+ 2982              	.LASF73:
+ 2983 0151 50535253 		.ascii	"PSRSSLT_REGS_T\000"
+ 2983      534C545F 
+ 2983      52454753 
+ 2983      5F5400
+ 2984              	.LASF124:
+ 2985 0160 6D6F6465 		.ascii	"modes\000"
+ 2985      7300
+ 2986              	.LASF148:
+ 2987 0166 6363675F 		.ascii	"ccg_status\000"
+ 2987      73746174 
+ 2987      757300
+ 2988              	.LASF6:
+ 2989 0171 6C6F6E67 		.ascii	"long int\000"
+ 2989      20696E74 
+ 2989      00
+ 2990              	.LASF101:
+ 2991 017a 464C4153 		.ascii	"FLASH_IF_USB_HID\000"
+ 2991      485F4946 
+ 2991      5F555342 
+ 2991      5F484944 
+ 2991      00
+ 2992              	.LASF110:
+ 2993 018b 726F775F 		.ascii	"row_num\000"
+ 2993      6E756D00 
+ 2994              	.LASF103:
+ 2995 0193 666C6173 		.ascii	"flash_interface_t\000"
+ 2995      685F696E 
+ 2995      74657266 
+ 2995      6163655F 
+ 2995      7400
+ 2996              	.LASF143:
+ 2997 01a5 6D656D63 		.ascii	"memcpy\000"
+ 2997      707900
+ 2998              	.LASF9:
+ 2999 01ac 6C6F6E67 		.ascii	"long long int\000"
+ 2999      206C6F6E 
+ 2999      6720696E 
+ 2999      7400
+ 3000              	.LASF97:
+ 3001 01ba 70746D5F 		.ascii	"ptm_ctl\000"
+ 3001      63746C00 
+ 3002              	.LASF135:
+ 3003 01c2 6F666673 		.ascii	"offset\000"
+ 3003      657400
+ 3004              	.LASF16:
+ 3005 01c9 646F7562 		.ascii	"double\000"
+ 3005      6C6500
+ 3006              	.LASF106:
+ 3007 01d0 464C4153 		.ascii	"FLASH_WRITE_COMPLETE_AND_ABORTED\000"
+ 3007      485F5752 
+ 3007      4954455F 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 69
+
+
+ 3007      434F4D50 
+ 3007      4C455445 
+ 3008              	.LASF20:
+ 3009 01f1 4343475F 		.ascii	"CCG_STAT_NO_RESPONSE\000"
+ 3009      53544154 
+ 3009      5F4E4F5F 
+ 3009      52455350 
+ 3009      4F4E5345 
+ 3010              	.LASF138:
+ 3011 0206 676C5F66 		.ascii	"gl_flash_access_first\000"
+ 3011      6C617368 
+ 3011      5F616363 
+ 3011      6573735F 
+ 3011      66697273 
+ 3012              	.LASF7:
+ 3013 021c 5F5F7569 		.ascii	"__uint32_t\000"
+ 3013      6E743332 
+ 3013      5F7400
+ 3014              	.LASF129:
+ 3015 0227 6D645F72 		.ascii	"md_row\000"
+ 3015      6F7700
+ 3016              	.LASF131:
+ 3017 022e 666C6173 		.ascii	"flash_row_clear\000"
+ 3017      685F726F 
+ 3017      775F636C 
+ 3017      65617200 
+ 3018              	.LASF66:
+ 3019 023e 7077725F 		.ascii	"pwr_bg_trim1\000"
+ 3019      62675F74 
+ 3019      72696D31 
+ 3019      00
+ 3020              	.LASF67:
+ 3021 024b 7077725F 		.ascii	"pwr_bg_trim2\000"
+ 3021      62675F74 
+ 3021      72696D32 
+ 3021      00
+ 3022              	.LASF75:
+ 3023 0258 73797372 		.ascii	"sysreq\000"
+ 3023      657100
+ 3024              	.LASF35:
+ 3025 025f 4343475F 		.ascii	"CCG_STAT_BUSY\000"
+ 3025      53544154 
+ 3025      5F425553 
+ 3025      5900
+ 3026              	.LASF147:
+ 3027 026d 433A5C55 		.ascii	"C:\\Users\\Admin\\Desktop\\_FIRMWARE\\DBARLite\\CYP"
+ 3027      73657273 
+ 3027      5C41646D 
+ 3027      696E5C44 
+ 3027      65736B74 
+ 3028 029a 44353232 		.ascii	"D5225\\CYPD5225-96BZXI_notebook\\CYPD5225-96BZXI_no"
+ 3028      355C4359 
+ 3028      50443532 
+ 3028      32352D39 
+ 3028      36425A58 
+ 3029 02cb 7465626F 		.ascii	"tebook.cydsn\\noboot.cydsn\000"
+ 3029      6F6B2E63 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 70
+
+
+ 3029      7964736E 
+ 3029      5C6E6F62 
+ 3029      6F6F742E 
+ 3030              	.LASF119:
+ 3031 02e5 6D6F6465 		.ascii	"mode\000"
+ 3031      00
+ 3032              	.LASF11:
+ 3033 02ea 756E7369 		.ascii	"unsigned int\000"
+ 3033      676E6564 
+ 3033      20696E74 
+ 3033      00
+ 3034              	.LASF13:
+ 3035 02f7 75696E74 		.ascii	"uint16_t\000"
+ 3035      31365F74 
+ 3035      00
+ 3036              	.LASF26:
+ 3037 0300 4343475F 		.ascii	"CCG_STAT_INVALID_FW\000"
+ 3037      53544154 
+ 3037      5F494E56 
+ 3037      414C4944 
+ 3037      5F465700 
+ 3038              	.LASF24:
+ 3039 0314 4343475F 		.ascii	"CCG_STAT_INVALID_COMMAND\000"
+ 3039      53544154 
+ 3039      5F494E56 
+ 3039      414C4944 
+ 3039      5F434F4D 
+ 3040              	.LASF120:
+ 3041 032d 64617461 		.ascii	"data_in_place\000"
+ 3041      5F696E5F 
+ 3041      706C6163 
+ 3041      6500
+ 3042              	.LASF83:
+ 3043 033b 726F6D5F 		.ascii	"rom_ctl\000"
+ 3043      63746C00 
+ 3044              	.LASF8:
+ 3045 0343 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3045      20756E73 
+ 3045      69676E65 
+ 3045      6420696E 
+ 3045      7400
+ 3046              	.LASF116:
+ 3047 0355 64617461 		.ascii	"data\000"
+ 3047      00
+ 3048              	.LASF5:
+ 3049 035a 73686F72 		.ascii	"short unsigned int\000"
+ 3049      7420756E 
+ 3049      7369676E 
+ 3049      65642069 
+ 3049      6E7400
+ 3050              	.LASF28:
+ 3051 036d 4343475F 		.ascii	"CCG_STAT_NOT_SUPPORTED\000"
+ 3051      53544154 
+ 3051      5F4E4F54 
+ 3051      5F535550 
+ 3051      504F5254 
+ 3052              	.LASF30:
+ARM GAS  e:\temp\ccVGPNYG.s 			page 71
+
+
+ 3053 0384 4343475F 		.ascii	"CCG_STAT_TRANS_FAILURE\000"
+ 3053      53544154 
+ 3053      5F545241 
+ 3053      4E535F46 
+ 3053      41494C55 
+ 3054              	.LASF142:
+ 3055 039b 676C5F66 		.ascii	"gl_flash_write_in_place\000"
+ 3055      6C617368 
+ 3055      5F777269 
+ 3055      74655F69 
+ 3055      6E5F706C 
+ 3056              	.LASF127:
+ 3057 03b3 73746172 		.ascii	"start_row\000"
+ 3057      745F726F 
+ 3057      7700
+ 3058              	.LASF95:
+ 3059 03bd 62697374 		.ascii	"bist_misr\000"
+ 3059      5F6D6973 
+ 3059      7200
+ 3060              	.LASF25:
+ 3061 03c7 4343475F 		.ascii	"CCG_STAT_FLASH_UPDATE_FAILED\000"
+ 3061      53544154 
+ 3061      5F464C41 
+ 3061      53485F55 
+ 3061      50444154 
+ 3062              	.LASF65:
+ 3063 03e4 72737276 		.ascii	"rsrvd0\000"
+ 3063      643000
+ 3064              	.LASF105:
+ 3065 03eb 464C4153 		.ascii	"FLASH_WRITE_ABORTED\000"
+ 3065      485F5752 
+ 3065      4954455F 
+ 3065      41424F52 
+ 3065      54454400 
+ 3066              	.LASF61:
+ 3067 03ff 73727373 		.ascii	"srss_intr_mask\000"
+ 3067      5F696E74 
+ 3067      725F6D61 
+ 3067      736B00
+ 3068              	.LASF33:
+ 3069 040e 4343475F 		.ascii	"CCG_STAT_READ_DATA\000"
+ 3069      53544154 
+ 3069      5F524541 
+ 3069      445F4441 
+ 3069      544100
+ 3070              	.LASF55:
+ 3071 0421 636C6B5F 		.ascii	"clk_dft_select\000"
+ 3071      6466745F 
+ 3071      73656C65 
+ 3071      637400
+ 3072              	.LASF19:
+ 3073 0430 73697A65 		.ascii	"sizetype\000"
+ 3073      74797065 
+ 3073      00
+ 3074              	.LASF21:
+ 3075 0439 4343475F 		.ascii	"CCG_STAT_SUCCESS\000"
+ 3075      53544154 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 72
+
+
+ 3075      5F535543 
+ 3075      43455353 
+ 3075      00
+ 3076              	.LASF107:
+ 3077 044a 464C4153 		.ascii	"FLASH_WRITE_IN_PROGRESS\000"
+ 3077      485F5752 
+ 3077      4954455F 
+ 3077      494E5F50 
+ 3077      524F4752 
+ 3078              	.LASF81:
+ 3079 0462 776F756E 		.ascii	"wounding\000"
+ 3079      64696E67 
+ 3079      00
+ 3080              	.LASF122:
+ 3081 046b 666C6173 		.ascii	"flash_trig_row_write\000"
+ 3081      685F7472 
+ 3081      69675F72 
+ 3081      6F775F77 
+ 3081      72697465 
+ 3082              	.LASF84:
+ 3083 0480 72737276 		.ascii	"rsrvd1\000"
+ 3083      643100
+ 3084              	.LASF87:
+ 3085 0487 72737276 		.ascii	"rsrvd2\000"
+ 3085      643200
+ 3086              	.LASF90:
+ 3087 048e 72737276 		.ascii	"rsrvd3\000"
+ 3087      643300
+ 3088              	.LASF96:
+ 3089 0495 72737276 		.ascii	"rsrvd4\000"
+ 3089      643400
+ 3090              	.LASF42:
+ 3091 049c 7077725F 		.ascii	"pwr_control\000"
+ 3091      636F6E74 
+ 3091      726F6C00 
+ 3092              	.LASF47:
+ 3093 04a8 7473745F 		.ascii	"tst_mode\000"
+ 3093      6D6F6465 
+ 3093      00
+ 3094              	.LASF48:
+ 3095 04b1 7473745F 		.ascii	"tst_ddft_ctrl\000"
+ 3095      64646674 
+ 3095      5F637472 
+ 3095      6C00
+ 3096              	.LASF100:
+ 3097 04bf 464C4153 		.ascii	"FLASH_IF_UVDM\000"
+ 3097      485F4946 
+ 3097      5F555644 
+ 3097      4D00
+ 3098              	.LASF46:
+ 3099 04cd 7077725F 		.ascii	"pwr_ddft_xres\000"
+ 3099      64646674 
+ 3099      5F787265 
+ 3099      7300
+ 3100              	.LASF15:
+ 3101 04db 666C6F61 		.ascii	"float\000"
+ 3101      7400
+ARM GAS  e:\temp\ccVGPNYG.s 			page 73
+
+
+ 3102              	.LASF136:
+ 3103 04e1 666C6173 		.ascii	"flash_row_read\000"
+ 3103      685F726F 
+ 3103      775F7265 
+ 3103      616400
+ 3104              	.LASF80:
+ 3105 04f0 70726976 		.ascii	"priv_flash\000"
+ 3105      5F666C61 
+ 3105      736800
+ 3106              	.LASF58:
+ 3107 04fb 7764745F 		.ascii	"wdt_match\000"
+ 3107      6D617463 
+ 3107      6800
+ 3108              	.LASF78:
+ 3109 0505 70726976 		.ascii	"priv_rom\000"
+ 3109      5F726F6D 
+ 3109      00
+ 3110              	.LASF60:
+ 3111 050e 73727373 		.ascii	"srss_intr_set\000"
+ 3111      5F696E74 
+ 3111      725F7365 
+ 3111      7400
+ 3112              	.LASF145:
+ 3113 051c 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 3113      43313120 
+ 3113      352E342E 
+ 3113      31203230 
+ 3113      31363036 
+ 3114 054f 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 3114      20726576 
+ 3114      6973696F 
+ 3114      6E203233 
+ 3114      37373135 
+ 3115 0582 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects -finline-fu"
+ 3115      66756E63 
+ 3115      74696F6E 
+ 3115      2D736563 
+ 3115      74696F6E 
+ 3116 05b5 6E637469 		.ascii	"nctions -fno-strict-aliasing\000"
+ 3116      6F6E7320 
+ 3116      2D666E6F 
+ 3116      2D737472 
+ 3116      6963742D 
+ 3117              	.LASF121:
+ 3118 05d2 5F426F6F 		.ascii	"_Bool\000"
+ 3118      6C00
+ 3119              	.LASF1:
+ 3120 05d8 756E7369 		.ascii	"unsigned char\000"
+ 3120      676E6564 
+ 3120      20636861 
+ 3120      7200
+ 3121              	.LASF128:
+ 3122 05e6 6C617374 		.ascii	"last_row\000"
+ 3122      5F726F77 
+ 3122      00
+ 3123              	.LASF149:
+ 3124 05ef 626F6F74 		.ascii	"boot_get_boot_seq\000"
+ARM GAS  e:\temp\ccVGPNYG.s 			page 74
+
+
+ 3124      5F676574 
+ 3124      5F626F6F 
+ 3124      745F7365 
+ 3124      7100
+ 3125              	.LASF56:
+ 3126 0601 7764745F 		.ascii	"wdt_disable_key\000"
+ 3126      64697361 
+ 3126      626C655F 
+ 3126      6B657900 
+ 3127              	.LASF139:
+ 3128 0611 676C5F66 		.ascii	"gl_flash_access_last\000"
+ 3128      6C617368 
+ 3128      5F616363 
+ 3128      6573735F 
+ 3128      6C617374 
+ 3129              	.LASF94:
+ 3130 0626 62697374 		.ascii	"bist_addr\000"
+ 3130      5F616464 
+ 3130      7200
+ 3131              	.LASF39:
+ 3132 0630 5359535F 		.ascii	"SYS_FW_MODE_FWIMAGE_1\000"
+ 3132      46575F4D 
+ 3132      4F44455F 
+ 3132      4657494D 
+ 3132      4147455F 
+ 3133              	.LASF40:
+ 3134 0646 5359535F 		.ascii	"SYS_FW_MODE_FWIMAGE_2\000"
+ 3134      46575F4D 
+ 3134      4F44455F 
+ 3134      4657494D 
+ 3134      4147455F 
+ 3135              	.LASF2:
+ 3136 065c 73686F72 		.ascii	"short int\000"
+ 3136      7420696E 
+ 3136      7400
+ 3137              	.LASF77:
+ 3138 0666 70726F74 		.ascii	"protection\000"
+ 3138      65637469 
+ 3138      6F6E00
+ 3139              	.LASF63:
+ 3140 0671 7265735F 		.ascii	"res_cause\000"
+ 3140      63617573 
+ 3140      6500
+ 3141              	.LASF62:
+ 3142 067b 73727373 		.ascii	"srss_adft_control\000"
+ 3142      5F616466 
+ 3142      745F636F 
+ 3142      6E74726F 
+ 3142      6C00
+ 3143              	.LASF112:
+ 3144 068d 70617261 		.ascii	"params\000"
+ 3144      6D7300
+ 3145              	.LASF134:
+ 3146 0694 7365715F 		.ascii	"seq_num\000"
+ 3146      6E756D00 
+ 3147              	.LASF130:
+ 3148 069c 626C5F6C 		.ascii	"bl_last_row\000"
+ARM GAS  e:\temp\ccVGPNYG.s 			page 75
+
+
+ 3148      6173745F 
+ 3148      726F7700 
+ 3149              	.LASF29:
+ 3150 06a8 4343475F 		.ascii	"CCG_STAT_INVALID_SIGNATURE\000"
+ 3150      53544154 
+ 3150      5F494E56 
+ 3150      414C4944 
+ 3150      5F534947 
+ 3151              	.LASF68:
+ 3152 06c3 636C6B5F 		.ascii	"clk_imo_select\000"
+ 3152      696D6F5F 
+ 3152      73656C65 
+ 3152      637400
+ 3153              	.LASF91:
+ 3154 06d2 62697374 		.ascii	"bist_status\000"
+ 3154      5F737461 
+ 3154      74757300 
+ 3155              	.LASF89:
+ 3156 06de 62697374 		.ascii	"bist_step0_ctl\000"
+ 3156      5F737465 
+ 3156      70305F63 
+ 3156      746C00
+ 3157              	.LASF18:
+ 3158 06ed 6C6F6E67 		.ascii	"long double\000"
+ 3158      20646F75 
+ 3158      626C6500 
+ 3159              	.LASF17:
+ 3160 06f9 63686172 		.ascii	"char\000"
+ 3160      00
+ 3161              	.LASF79:
+ 3162 06fe 70726976 		.ascii	"priv_ram\000"
+ 3162      5F72616D 
+ 3162      00
+ 3163              	.LASF74:
+ 3164 0707 636F6E66 		.ascii	"config\000"
+ 3164      696700
+ 3165              	.LASF59:
+ 3166 070e 73727373 		.ascii	"srss_intr\000"
+ 3166      5F696E74 
+ 3166      7200
+ 3167              	.LASF53:
+ 3168 0718 636C6B5F 		.ascii	"clk_ilo_config\000"
+ 3168      696C6F5F 
+ 3168      636F6E66 
+ 3168      696700
+ 3169              	.LASF4:
+ 3170 0727 5F5F7569 		.ascii	"__uint16_t\000"
+ 3170      6E743136 
+ 3170      5F7400
+ 3171              	.LASF109:
+ 3172 0732 666C6173 		.ascii	"flash_cbk_t\000"
+ 3172      685F6362 
+ 3172      6B5F7400 
+ 3173              	.LASF37:
+ 3174 073e 6363675F 		.ascii	"ccg_status_t\000"
+ 3174      73746174 
+ 3174      75735F74 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 76
+
+
+ 3174      00
+ 3175              	.LASF132:
+ 3176 074b 62756666 		.ascii	"buffer\000"
+ 3176      657200
+ 3177              	.LASF99:
+ 3178 0752 464C4153 		.ascii	"FLASH_IF_HPI\000"
+ 3178      485F4946 
+ 3178      5F485049 
+ 3178      00
+ 3179              	.LASF82:
+ 3180 075f 666C6173 		.ascii	"flash_ctl\000"
+ 3180      685F6374 
+ 3180      6C00
+ 3181              	.LASF140:
+ 3182 0769 676C5F66 		.ascii	"gl_flash_metadata_row\000"
+ 3182      6C617368 
+ 3182      5F6D6574 
+ 3182      61646174 
+ 3182      615F726F 
+ 3183              	.LASF146:
+ 3184 077f 2E2E5C73 		.ascii	"..\\src\\system\\flash.c\000"
+ 3184      72635C73 
+ 3184      79737465 
+ 3184      6D5C666C 
+ 3184      6173682E 
+ 3185              	.LASF43:
+ 3186 0795 7077725F 		.ascii	"pwr_key_delay\000"
+ 3186      6B65795F 
+ 3186      64656C61 
+ 3186      7900
+ 3187              	.LASF57:
+ 3188 07a3 7764745F 		.ascii	"wdt_counter\000"
+ 3188      636F756E 
+ 3188      74657200 
+ 3189              	.LASF88:
+ 3190 07af 62697374 		.ascii	"bist_ctl\000"
+ 3190      5F63746C 
+ 3190      00
+ 3191              	.LASF45:
+ 3192 07b8 7077725F 		.ascii	"pwr_ddft_select\000"
+ 3192      64646674 
+ 3192      5F73656C 
+ 3192      65637400 
+ 3193              	.LASF64:
+ 3194 07c8 7265735F 		.ascii	"res_dft\000"
+ 3194      64667400 
+ 3195              	.LASF14:
+ 3196 07d0 75696E74 		.ascii	"uint32_t\000"
+ 3196      33325F74 
+ 3196      00
+ 3197              	.LASF118:
+ 3198 07d9 69735F65 		.ascii	"is_enable\000"
+ 3198      6E61626C 
+ 3198      6500
+ 3199              	.LASF144:
+ 3200 07e3 6D656D73 		.ascii	"memset\000"
+ 3200      657400
+ARM GAS  e:\temp\ccVGPNYG.s 			page 77
+
+
+ 3201              	.LASF23:
+ 3202 07ea 4343475F 		.ascii	"CCG_STAT_BAD_PARAM\000"
+ 3202      53544154 
+ 3202      5F424144 
+ 3202      5F504152 
+ 3202      414D00
+ 3203              	.LASF36:
+ 3204 07fd 4343475F 		.ascii	"CCG_STAT_TIMEOUT\000"
+ 3204      53544154 
+ 3204      5F54494D 
+ 3204      454F5554 
+ 3204      00
+ 3205              	.LASF22:
+ 3206 080e 4343475F 		.ascii	"CCG_STAT_FLASH_DATA_AVAILABLE\000"
+ 3206      53544154 
+ 3206      5F464C41 
+ 3206      53485F44 
+ 3206      4154415F 
+ 3207              	.LASF113:
+ 3208 082c 73746174 		.ascii	"status\000"
+ 3208      757300
+ 3209              	.LASF34:
+ 3210 0833 4343475F 		.ascii	"CCG_STAT_NOT_READY\000"
+ 3210      53544154 
+ 3210      5F4E4F54 
+ 3210      5F524541 
+ 3210      445900
+ 3211              	.LASF41:
+ 3212 0846 5359535F 		.ascii	"SYS_FW_MODE_INVALID\000"
+ 3212      46575F4D 
+ 3212      4F44455F 
+ 3212      494E5641 
+ 3212      4C494400 
+ 3213              	.LASF115:
+ 3214 085a 666C6173 		.ascii	"flash_blocking_row_write\000"
+ 3214      685F626C 
+ 3214      6F636B69 
+ 3214      6E675F72 
+ 3214      6F775F77 
+ 3215              	.LASF141:
+ 3216 0873 676C5F66 		.ascii	"gl_flash_bl_last_row\000"
+ 3216      6C617368 
+ 3216      5F626C5F 
+ 3216      6C617374 
+ 3216      5F726F77 
+ 3217              	.LASF12:
+ 3218 0888 75696E74 		.ascii	"uint8_t\000"
+ 3218      385F7400 
+ 3219              	.LASF85:
+ 3220 0890 62697374 		.ascii	"bist_cmd\000"
+ 3220      5F636D64 
+ 3220      00
+ 3221              	.LASF44:
+ 3222 0899 7077725F 		.ascii	"pwr_adft_select\000"
+ 3222      61646674 
+ 3222      5F73656C 
+ 3222      65637400 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 78
+
+
+ 3223              	.LASF27:
+ 3224 08a9 4343475F 		.ascii	"CCG_STAT_INVALID_ARGUMENT\000"
+ 3224      53544154 
+ 3224      5F494E56 
+ 3224      414C4944 
+ 3224      5F415247 
+ 3225              	.LASF54:
+ 3226 08c3 636C6B5F 		.ascii	"clk_imo_config\000"
+ 3226      696D6F5F 
+ 3226      636F6E66 
+ 3226      696700
+ 3227              	.LASF137:
+ 3228 08d2 676C5F66 		.ascii	"gl_flash_mode_en\000"
+ 3228      6C617368 
+ 3228      5F6D6F64 
+ 3228      655F656E 
+ 3228      00
+ 3229              	.LASF86:
+ 3230 08e3 62697374 		.ascii	"bist_data\000"
+ 3230      5F646174 
+ 3230      6100
+ 3231              	.LASF133:
+ 3232 08ed 666C6173 		.ascii	"flash_row_write\000"
+ 3232      685F726F 
+ 3232      775F7772 
+ 3232      69746500 
+ 3233              	.LASF126:
+ 3234 08fd 666C6173 		.ascii	"flash_set_access_limits\000"
+ 3234      685F7365 
+ 3234      745F6163 
+ 3234      63657373 
+ 3234      5F6C696D 
+ 3235              	.LASF69:
+ 3236 0915 636C6B5F 		.ascii	"clk_imo_trim1\000"
+ 3236      696D6F5F 
+ 3236      7472696D 
+ 3236      3100
+ 3237              	.LASF70:
+ 3238 0923 636C6B5F 		.ascii	"clk_imo_trim2\000"
+ 3238      696D6F5F 
+ 3238      7472696D 
+ 3238      3200
+ 3239              	.LASF72:
+ 3240 0931 636C6B5F 		.ascii	"clk_imo_trim3\000"
+ 3240      696D6F5F 
+ 3240      7472696D 
+ 3240      3300
+ 3241              	.LASF32:
+ 3242 093f 4343475F 		.ascii	"CCG_STAT_FAILURE\000"
+ 3242      53544154 
+ 3242      5F464149 
+ 3242      4C555245 
+ 3242      00
+ 3243              	.LASF125:
+ 3244 0950 666C6173 		.ascii	"flash_enter_mode\000"
+ 3244      685F656E 
+ 3244      7465725F 
+ARM GAS  e:\temp\ccVGPNYG.s 			page 79
+
+
+ 3244      6D6F6465 
+ 3244      00
+ 3245              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
